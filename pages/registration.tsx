@@ -1,5 +1,4 @@
 import { RegistrationFlow, UpdateRegistrationFlowBody } from "@ory/client"
-import { CardTitle } from "@ory/themes"
 import { AxiosError } from "axios"
 import type { NextPage } from "next"
 import Head from "next/head"
@@ -7,7 +6,7 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
 // Import render helpers
-import { ActionCard, CenterLink, Flow, MarginCard } from "../pkg"
+import { ActionCard, CenterLink, Flow, MarginCard, CardTitle } from "../pkg"
 import { handleFlowError } from "../pkg/errors"
 // Import the SDK
 import ory from "../pkg/sdk"
@@ -101,18 +100,12 @@ const Registration: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Create account - Ory NextJS Integration Example</title>
-        <meta name="description" content="NextJS + React + Vercel + Ory" />
+        <title>Create account</title>
       </Head>
       <MarginCard>
-        <CardTitle>Create account</CardTitle>
+        <CardTitle>Create Your Account</CardTitle>
         <Flow onSubmit={onSubmit} flow={flow} />
       </MarginCard>
-      <ActionCard>
-        <CenterLink data-testid="cta-link" href="/login">
-          Sign in
-        </CenterLink>
-      </ActionCard>
     </>
   )
 }

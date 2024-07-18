@@ -1,1 +1,83 @@
 @import "./flexboxgrid.css";
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+
+* {
+  font-family: "Quicksand" !important;
+}
+
+html,
+body {
+  background-color: #ededfc !important;
+}
+
+button,
+.button {
+  border-radius: 8px !important;
+  background-color: #706ef4 !important;
+  color: #fff !important;
+  font-weight: bold;
+  width: 100%;
+  border: none;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.Toastify__close-button {
+  width: 10% !important;
+  border-radius: 30px !important;
+  padding: auto;
+}
+
+.input {
+  border-radius: 10px !important;
+  font-size: 18px !important;
+  color: #aaa;
+  font-weight: bold !important;
+  input,
+  input:hover {
+    background-color: #f8f9fc;
+    border: none;
+    color: black;
+    padding: 8px;
+  }
+}
+
+input {
+  background-color: #f8f9fc;
+  border: none;
+  color: black;
+  padding: 12px;
+  font-size: 16px !important;
+  width: 95%;
+  border-radius: 10px !important;
+  margin: 8px 0px !important;
+}
+
+.inputLabel {
+  border-radius: 10px !important;
+  font-size: 18px !important;
+  color: #aaa;
+  font-weight: 600;
+}
+
+.center {
+  text-align: center !important;
+  margin: 8px;
+}
+
+.consent-form {
+  display: flex;
+  justify-content: center; /* Center the form elements horizontally */
+  align-items: center !important;
+  margin-left: 20%;
+}
+
+.inputLabelCheck {
+  display: flex;
+  align-items: center;
+  width: 100%; /* Ensure the label takes full width */
+}
+
+.checkbox {
+  width: 10%; /* Ensure the label takes full width */
+}
