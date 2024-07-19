@@ -121,7 +121,7 @@ const Home: NextPage = () => {
                 Below you will find the decoded Ory Session if you are logged
                 in.
               </P>
-              <CodeBox data-testid="session-content" code={session} />
+              <CodeBox data-testid="session-content" code={session} className="codebox"/>
             </div>
           </div>
         </div>

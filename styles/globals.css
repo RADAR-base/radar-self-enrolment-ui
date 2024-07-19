@@ -81,3 +81,10 @@ input {
 .checkbox {
   width: 10%; /* Ensure the label takes full width */
 }
+
+.codebox {
+    white-space: pre-wrap; /* Allows long lines to be wrapped */
+    overflow: auto; /* Adds scrollbars if necessary */
+    word-break: break-word; /* Breaks words if necessary to prevent overflow */
+    max-width: 100%; /* Ensures the codebox does not exceed its container width */
+}
