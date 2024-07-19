@@ -100,6 +100,12 @@ const Home: NextPage = () => {
                   disabled={!hasSession}
                 />
                 <DocsButton
+                  testid="profile"
+                  href="/profile"
+                  title="Profile"
+                  disabled={!hasSession}
+                />
+                <DocsButton
                   testid="account-settings"
                   href="/settings"
                   disabled={!hasSession}
