@@ -5,6 +5,7 @@ import Head from "next/head"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
+import { eligibilityQuestions } from "../data/eligibility-questionnaire"
 
 // Import render helpers
 import { MarginCard, CardTitle, TextCenterButton } from "../pkg"
@@ -14,10 +15,11 @@ const Eligibility: NextPage = () => {
   const IS_ELIGIBLE = "yes"
   const router = useRouter()
   const [eligibility, setEligibility] = useState(null)
+  const questions: any[] = eligibilityQuestions
 
   const checkEligibility = async (values: any) => {
     // Eligibility check
-    return values.fitbit == IS_ELIGIBLE
+    return values.is_eligible == IS_ELIGIBLE
   }
 
   // In this effect we either initiate a new registration flow, or we fetch an existing registration flow.
@@ -39,6 +41,7 @@ const Eligibility: NextPage = () => {
       sessionStorage.setItem("eligible", JSON.stringify(formValues))
       toast.success("Congrats, you're eligible!", {
         position: toast.POSITION.TOP_CENTER,
+        closeButton: false,
         onClose: () => router.push("/registration"),
       })
     }
@@ -48,12 +51,11 @@ const Eligibility: NextPage = () => {
     <>
       <Head>
         <title>Eligibility</title>
-        <meta name="description" content="NextJS + React + Vercel + Ory" />
       </Head>
       {eligibility === false ? (
         <NotEligibleMessage />
       ) : (
-        <EligibilityForm onSubmit={onSubmit} />
+        <EligibilityForm questions={questions} onSubmit={onSubmit} />
       )}
     </>
   )
@@ -67,23 +69,27 @@ const NotEligibleMessage = () => (
   </MarginCard>
 )
 
-const EligibilityForm = ({ onSubmit }) => (
+const EligibilityForm = ({ questions, onSubmit }) => (
   <MarginCard>
     <CardTitle>Eligibility Screening</CardTitle>
     <form method="POST" onSubmit={onSubmit}>
-      <div>
-        <label className="inputLabel">Age</label>
-        <input id="age" name="age" type="text" required />
-      </div>
-      <div>
-        <label className="inputLabel">City</label>
-        <input id="city" name="city" type="text" required />
-      </div>
-      <div>
-        <label className="inputLabel">Do you have a Fitbit?</label>
-        <input id="has_fitbit" name="fitbit" type="text" required />
-      </div>
-      <br></br>
+      {questions.map((question) => {
+        const isRequired = question.required_field === "yes"
+        return (
+          <div key={question.field_name}>
+            <label className="inputLabel" htmlFor={question.field_name}>
+              {question.field_label}
+            </label>
+            <input
+              id={question.field_name}
+              name={question.field_name}
+              type={question.field_type}
+              required={isRequired}
+            />
+          </div>
+        )
+      })}
+      <br />
       <button type="submit">Next</button>
     </form>
   </MarginCard>
