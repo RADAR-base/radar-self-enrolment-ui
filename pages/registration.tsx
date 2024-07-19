@@ -18,9 +18,18 @@ const Registration: NextPage = () => {
   // The "flow" represents a registration process and contains
   // information about the form we need to render (e.g. username + password)
   const [flow, setFlow] = useState<RegistrationFlow>()
+  const [eligibility, setEligibility] = useState<any>()
 
   // Get ?flow=... from the URL
   const { flow: flowId, return_to: returnTo } = router.query
+
+  useEffect(() => {
+    const eligible = sessionStorage.getItem("eligible")
+    if (eligible == null) {
+      router.push("/eligibility")
+    }
+    setEligibility(eligible)
+  }, [])
 
   // In this effect we either initiate a new registration flow, or we fetch an existing registration flow.
   useEffect(() => {
@@ -28,7 +37,6 @@ const Registration: NextPage = () => {
     if (!router.isReady || flow) {
       return
     }
-
     // If ?flow=.. was in the URL, we fetch it
     if (flowId) {
       ory
@@ -53,6 +61,10 @@ const Registration: NextPage = () => {
   }, [flowId, router, router.isReady, returnTo, flow])
 
   const onSubmit = async (values: UpdateRegistrationFlowBody) => {
+    const updatedValues = {
+      ...values,
+      traits: { eligibility: JSON.parse(eligibility) },
+    }
     await router
       // On submission, add the flow ID to the URL but do not navigate. This prevents the user loosing
       // his data when she/he reloads the page.
@@ -61,7 +73,7 @@ const Registration: NextPage = () => {
     ory
       .updateRegistrationFlow({
         flow: String(flow?.id),
-        updateRegistrationFlowBody: values,
+        updateRegistrationFlowBody: updatedValues,
       })
       .then(async ({ data }) => {
         // If we ended up here, it means we are successfully signed up!

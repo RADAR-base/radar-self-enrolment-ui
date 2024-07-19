@@ -56,6 +56,7 @@ const Consent: NextPage = () => {
   const { flow: flowId, return_to: returnTo } = router.query
   const [csrfToken, setCsrfToken] = useState<string>("")
   const [traits, setTraits] = useState<any>()
+  const [consent, setConsent] = useState<any>()
 
   useEffect(() => {
     // If the router is not ready yet, or we already have a flow, do nothing.
@@ -87,22 +88,24 @@ const Consent: NextPage = () => {
         const traits = data.identity.traits
         setCsrfToken(csrfTokenFromHeaders || "")
         setTraits(traits)
+        setConsent(traits.consent)
       })
       .catch(handleFlowError(router, "settings", setFlow))
   }, [flowId, router, router.isReady, returnTo, flow])
 
+  const handleChange = (event) => {
+    setConsent({ has_consent: String(event.target.checked) })
+  }
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const formData = new FormData(event.currentTarget)
-    const consent = String(!!formData.get("has_consent"))
-    const updatedTraits = {
-      ...traits,
-      consent: { has_consent: consent },
-    }
-    const newValues = {
+    const updatedValues = {
       csrf_token: csrfToken,
       method: "profile",
-      traits: updatedTraits,
+      traits: {
+        ...traits,
+        consent,
+      },
     }
 
     return (
@@ -114,7 +117,7 @@ const Consent: NextPage = () => {
           ory
             .updateSettingsFlow({
               flow: String(flow?.id),
-              updateSettingsFlowBody: newValues,
+              updateSettingsFlowBody: updatedValues,
             })
             .then(({ data }) => {
               // The settings have been saved and the flow was updated. Let's show it to the user!
@@ -173,6 +176,8 @@ const Consent: NextPage = () => {
                 id="has_consent"
                 name="has_consent"
                 type="checkbox"
+                checked={consent?.has_consent == "true"}
+                onChange={handleChange}
               />
               <label className="inputLabel inputLabelCheck">
                 I give my consent to take part in this study.

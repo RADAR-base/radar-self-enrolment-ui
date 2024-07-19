@@ -13,7 +13,7 @@ import { MarginCard, CardTitle, TextCenterButton } from "../pkg"
 const Eligibility: NextPage = () => {
   const IS_ELIGIBLE = "yes"
   const router = useRouter()
-  const [isEligible, setIsEligible] = useState(null)
+  const [eligibility, setEligibility] = useState(null)
 
   const checkEligibility = async (values: any) => {
     // Eligibility check
@@ -33,10 +33,10 @@ const Eligibility: NextPage = () => {
     const formData = new FormData(event.currentTarget)
     const formValues = Object.fromEntries(formData.entries())
     const eligible = await checkEligibility(formValues)
-    setIsEligible(eligible)
+    setEligibility(eligible)
 
     if (eligible) {
-      localStorage.setItem("formData", JSON.stringify(formValues))
+      sessionStorage.setItem("eligible", JSON.stringify(formValues))
       toast.success("Congrats, you're eligible!", {
         position: toast.POSITION.TOP_CENTER,
         onClose: () => router.push("/registration"),
@@ -50,7 +50,7 @@ const Eligibility: NextPage = () => {
         <title>Eligibility</title>
         <meta name="description" content="NextJS + React + Vercel + Ory" />
       </Head>
-      {isEligible === false ? (
+      {eligibility === false ? (
         <NotEligibleMessage />
       ) : (
         <EligibilityForm onSubmit={onSubmit} />
