@@ -10,6 +10,7 @@ import Head from "next/head"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { ReactNode, useEffect, useState } from "react"
+import { consentQuestions } from "../data/consent-questionnaire"
 
 import {
   ActionCard,
@@ -33,18 +34,6 @@ function SettingsCard({
   only,
   children,
 }: Props & { children: ReactNode }) {
-  if (!flow) {
-    return null
-  }
-
-  const nodes = only
-    ? flow.ui.nodes.filter(({ group }) => group === only)
-    : flow.ui.nodes
-
-  if (nodes.length === 0) {
-    return null
-  }
-
   return <ActionCard wide>{children}</ActionCard>
 }
 
@@ -56,7 +45,7 @@ const Consent: NextPage = () => {
   const { flow: flowId, return_to: returnTo } = router.query
   const [csrfToken, setCsrfToken] = useState<string>("")
   const [traits, setTraits] = useState<any>()
-  const [consent, setConsent] = useState<any>()
+  const [consent, setConsent] = useState<any>({})
 
   useEffect(() => {
     // If the router is not ready yet, or we already have a flow, do nothing.
@@ -152,41 +141,12 @@ const Consent: NextPage = () => {
       <CardTitle style={{ marginTop: 80 }}></CardTitle>
       <SettingsCard only="profile" flow={flow}>
         <CardTitle>Study Consent</CardTitle>
-
-        <div className="center">
-          <label className="inputLabel">Patient Information Sheet</label>
-          <InnerCard>
-            We invite you to take part in this research study. This Participant
-            Information Questionnaire will explain the study to help you decide
-            whether you want to take part. It is entirely up to you whether or
-            not to join the study.
-          </InnerCard>
-          <label className="inputLabel">Data Information</label>
-          <InnerCard>
-            If you join the study you will contribute to research that might
-            help find ways to improve health and medical care. However, taking
-            part does not give direct benefits. You will be able to see the data
-            being recorded each day, to give you information on your activity
-            and mobility.
-          </InnerCard>
-          <form method="POST" onSubmit={onSubmit}>
-            <div className="consent-form">
-              <input
-                className="checkbox"
-                id="has_consent"
-                name="has_consent"
-                type="checkbox"
-                checked={consent?.has_consent == "true"}
-                onChange={handleChange}
-              />
-              <label className="inputLabel inputLabelCheck">
-                I give my consent to take part in this study.
-              </label>
-            </div>
-            <br></br>
-            <button type="submit">Save</button>
-          </form>
-        </div>
+        <ConsentForm
+          questions={consentQuestions}
+          onSubmit={onSubmit}
+          handleChange={handleChange}
+          consent={consent}
+        />
       </SettingsCard>
       <ActionCard wide>
         <Link href="/" passHref>
@@ -194,6 +154,52 @@ const Consent: NextPage = () => {
         </Link>
       </ActionCard>
     </>
+  )
+}
+
+const ConsentForm: React.FC<any> = ({
+  questions,
+  onSubmit,
+  handleChange,
+  consent,
+}) => {
+  return (
+    <div className="center">
+      {questions.map((question, index) => {
+        if (question.field_type === "info") {
+          return (
+            question.select_choices_or_calculations instanceof Array &&
+            question.select_choices_or_calculations.map((info, idx) => (
+              <div key={`${index}-${idx}`}>
+                <label className="inputLabel">{info.code}</label>
+                <InnerCard>{info.label}</InnerCard>
+              </div>
+            ))
+          )
+        } else if (question.field_type === "checkbox") {
+          return (
+            <form key={index} method="POST" onSubmit={onSubmit}>
+              <div className="consent-form">
+                <input
+                  className="checkbox"
+                  id={question.field_name}
+                  name={question.field_name}
+                  type="checkbox"
+                  checked={consent[question.field_name] === "true"}
+                  onChange={handleChange}
+                />
+                <label className="inputLabel inputLabelCheck">
+                  {question.field_label}
+                </label>
+              </div>
+              <br />
+              <button type="submit">Save</button>
+            </form>
+          )
+        }
+        return null
+      })}
+    </div>
   )
 }
 
