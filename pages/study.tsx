@@ -10,12 +10,15 @@ import { MarginCard, CardTitle, TextCenterButton, InnerCard } from "../pkg"
 // Renders the eligibility page
 const Study: NextPage = () => {
   const router = useRouter()
-  const projectId = "EDIFY"
+  const [projectId, setProjectId] = useState<string | null>(null)
 
   useEffect(() => {
     // If the router is not ready yet, or we already have a flow, do nothing.
-    if (!router.isReady) {
-      return
+    if (router.isReady) {
+      const { projectId } = router.query
+      if (typeof projectId === "string") {
+        setProjectId(projectId)
+      }
     }
   })
 
