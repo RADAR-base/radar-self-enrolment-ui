@@ -21,7 +21,7 @@
   "typings": "dist/index.d.ts",
   "dependencies": {
     "@ory/client": "^0.0.0-next.f88d10559361",
-    "@ory/integrations": "0.2.8",
+    "@ory/integrations": "1.2.1",
     "@ory/themes": "~0.0.101",
     "classnames": "^2.3.1",
     "next": "12.1.6",
