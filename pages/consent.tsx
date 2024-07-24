@@ -83,7 +83,10 @@ const Consent: NextPage = () => {
   }, [flowId, router, router.isReady, returnTo, flow])
 
   const handleChange = (event) => {
-    setConsent({ has_consent: String(event.target.checked) })
+    setConsent({
+      ...consent,
+      [event.target.name]: String(event.target.checked),
+    })
   }
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -185,7 +188,7 @@ const ConsentForm: React.FC<any> = ({
                   id={question.field_name}
                   name={question.field_name}
                   type="checkbox"
-                  checked={consent[question.field_name] === "true"}
+                  checked={consent && consent[question.field_name] === "true"}
                   onChange={handleChange}
                 />
                 <label className="inputLabel inputLabelCheck">
