@@ -95,7 +95,7 @@ const Home: NextPage = () => {
                 />
                 <DocsButton
                   testid="consent"
-                  href="/consent"
+                  href="/study-consent"
                   title="Study Consent"
                   disabled={!hasSession}
                 />
