@@ -31,6 +31,7 @@ const Login: NextPage = () => {
     // AAL = Authorization Assurance Level. This implies that we want to upgrade the AAL, meaning that we want
     // to perform two-factor authentication/verification.
     aal,
+    login_challenge: loginChallenge,
   } = router.query
 
   // This might be confusing, but we want to show the user an option
@@ -60,12 +61,13 @@ const Login: NextPage = () => {
         refresh: Boolean(refresh),
         aal: aal ? String(aal) : undefined,
         returnTo: returnTo ? String(returnTo) : undefined,
+        loginChallenge: loginChallenge ? String(loginChallenge) : undefined,
       })
       .then(({ data }) => {
         setFlow(data)
       })
       .catch(handleFlowError(router, "login", setFlow))
-  }, [flowId, router, router.isReady, aal, refresh, returnTo, flow])
+  }, [flowId, router, router.isReady, aal, refresh, returnTo, loginChallenge, flow])
 
   const onSubmit = (values: UpdateLoginFlowBody) =>
     router

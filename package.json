@@ -20,7 +20,7 @@
   "module": "dist/index.mjs",
   "typings": "dist/index.d.ts",
   "dependencies": {
-    "@ory/client": "^0.0.0-next.f88d10559361",
+    "@ory/client": "1.6.2",
     "@ory/integrations": "0.2.8",
     "@ory/themes": "~0.0.101",
     "classnames": "^2.3.1",
