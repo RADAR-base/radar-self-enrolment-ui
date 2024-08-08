@@ -1,5 +1,4 @@
 import { VerificationFlow, UpdateVerificationFlowBody } from "@ory/client"
-import { CardTitle } from "@ory/themes"
 import { AxiosError } from "axios"
 import type { NextPage } from "next"
 import Head from "next/head"
@@ -7,7 +6,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
-import { Flow, ActionCard, CenterLink, MarginCard } from "../pkg"
+import { Flow, ActionCard, CenterLink, MarginCard, CardTitle } from "../pkg"
 import ory from "../pkg/sdk"
 
 const Verification: NextPage = () => {

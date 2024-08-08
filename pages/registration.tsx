@@ -1,5 +1,4 @@
 import { RegistrationFlow, UpdateRegistrationFlowBody } from "@ory/client"
-import { CardTitle } from "@ory/themes"
 import { AxiosError } from "axios"
 import type { NextPage } from "next"
 import Head from "next/head"
@@ -7,10 +6,11 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
 // Import render helpers
-import { ActionCard, CenterLink, Flow, MarginCard } from "../pkg"
+import { ActionCard, CenterLink, Flow, MarginCard, CardTitle } from "../pkg"
 import { handleFlowError } from "../pkg/errors"
 // Import the SDK
 import ory from "../pkg/sdk"
+import { parseObject } from "../pkg/ui/helpers"
 
 // Renders the registration page
 const Registration: NextPage = () => {
@@ -19,9 +19,21 @@ const Registration: NextPage = () => {
   // The "flow" represents a registration process and contains
   // information about the form we need to render (e.g. username + password)
   const [flow, setFlow] = useState<RegistrationFlow>()
+  const [eligibility, setEligibility] = useState<any>()
+  const [projectId, setProjectId] = useState<any>()
 
   // Get ?flow=... from the URL
   const { flow: flowId, return_to: returnTo } = router.query
+
+  useEffect(() => {
+    const eligible = sessionStorage.getItem("eligible")
+    const projectId = sessionStorage.getItem("project_id")
+    if (eligible == null) {
+      router.push("/eligibility")
+    }
+    setEligibility(eligible)
+    setProjectId(projectId)
+  }, [])
 
   // In this effect we either initiate a new registration flow, or we fetch an existing registration flow.
   useEffect(() => {
@@ -29,7 +41,6 @@ const Registration: NextPage = () => {
     if (!router.isReady || flow) {
       return
     }
-
     // If ?flow=.. was in the URL, we fetch it
     if (flowId) {
       ory
@@ -54,6 +65,14 @@ const Registration: NextPage = () => {
   }, [flowId, router, router.isReady, returnTo, flow])
 
   const onSubmit = async (values: UpdateRegistrationFlowBody) => {
+    const updatedValues = {
+      ...parseObject(values),
+      traits: {
+        ...parseObject(values).traits,
+        eligibility: JSON.parse(eligibility),
+        project_id: projectId
+      }
+    }
     await router
       // On submission, add the flow ID to the URL but do not navigate. This prevents the user loosing
       // his data when she/he reloads the page.
@@ -62,7 +81,7 @@ const Registration: NextPage = () => {
     ory
       .updateRegistrationFlow({
         flow: String(flow?.id),
-        updateRegistrationFlowBody: values,
+        updateRegistrationFlowBody: updatedValues,
       })
       .then(async ({ data }) => {
         // If we ended up here, it means we are successfully signed up!
@@ -101,18 +120,12 @@ const Registration: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Create account - Ory NextJS Integration Example</title>
-        <meta name="description" content="NextJS + React + Vercel + Ory" />
+        <title>Create account</title>
       </Head>
       <MarginCard>
-        <CardTitle>Create account</CardTitle>
+        <CardTitle>Create Your Account</CardTitle>
         <Flow onSubmit={onSubmit} flow={flow} />
       </MarginCard>
-      <ActionCard>
-        <CenterLink data-testid="cta-link" href="/login">
-          Sign in
-        </CenterLink>
-      </ActionCard>
     </>
   )
 }
