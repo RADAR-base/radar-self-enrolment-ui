@@ -1,208 +1,145 @@
-import {
-  SettingsFlow,
-  UpdateSettingsFlowBody,
-  UpdateSettingsFlowWithProfileMethod,
-} from "@ory/client"
-import { H3, P } from "@ory/themes"
-import { AxiosError } from "axios"
-import type { NextPage } from "next"
-import Head from "next/head"
-import Link from "next/link"
+import React, { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import { ReactNode, useEffect, useState } from "react"
-import { consentQuestions } from "../data/consent-questionnaire"
-
-import {
-  ActionCard,
-  CenterLink,
-  Flow,
-  Messages,
-  Methods,
-  CardTitle,
-  InnerCard,
-} from "../pkg"
-import { handleFlowError } from "../pkg/errors"
 import ory from "../pkg/sdk"
 
-interface Props {
-  flow?: SettingsFlow
-  only?: Methods
-}
+import { MarginCard, CardTitle, TextCenterButton } from "../pkg"
 
-function SettingsCard({
-  flow,
-  only,
-  children,
-}: Props & { children: ReactNode }) {
-  return <ActionCard wide>{children}</ActionCard>
-}
-
-const Consent: NextPage = () => {
-  const [flow, setFlow] = useState<SettingsFlow>()
-
-  // Get ?flow=... from the URL
+const Consent = () => {
   const router = useRouter()
-  const { flow: flowId, return_to: returnTo } = router.query
-  const [csrfToken, setCsrfToken] = useState<string>("")
-  const [traits, setTraits] = useState<any>()
-  const [consent, setConsent] = useState<any>({})
+  const [consent, setConsent] = useState<any>(null)
+  const [identity, setIdentity] = useState<any>(null)
+  const [csrfToken, setCsrfToken] = useState<string | null>(null)
 
   useEffect(() => {
-    // If the router is not ready yet, or we already have a flow, do nothing.
-    if (!router.isReady || flow) {
-      return
-    }
+    const { consent_challenge } = router.query
 
-    // If ?flow=.. was in the URL, we fetch it
-    if (flowId) {
-      ory
-        .getSettingsFlow({ id: String(flowId) })
-        .then(({ data }) => {
-          setFlow(data)
-        })
-        .catch(handleFlowError(router, "settings", setFlow))
-      return
-    }
-
-    // Otherwise we initialize it
     ory
-      .createBrowserSettingsFlow({
-        returnTo: String(returnTo || ""),
-      })
+      .toSession()
       .then(({ data }) => {
-        setFlow(data)
-        const csrfTokenFromHeaders = data.ui.nodes.find(
-          (node: any) => node.attributes.name === "csrf_token",
-        )?.attributes.value
-        const traits = data.identity.traits
-        setCsrfToken(csrfTokenFromHeaders || "")
-        setTraits(traits)
-        setConsent(traits.consent)
+        setIdentity(data.identity)
       })
-      .catch(handleFlowError(router, "settings", setFlow))
-  }, [flowId, router, router.isReady, returnTo, flow])
+      .catch((e) => console.log(e))
 
-  const handleChange = (event) => {
-    setConsent({
-      ...consent,
-      [event.target.name]: String(event.target.checked),
-    })
-  }
-
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const updatedValues = {
-      csrf_token: csrfToken,
-      method: "profile",
-      traits: {
-        ...traits,
-        consent,
-      },
+    if (!consent_challenge) {
+      // router.push("/404")
+      return
     }
 
-    return (
-      router
-        // On submission, add the flow ID to the URL but do not navigate. This prevents the user loosing
-        // his data when she/he reloads the page.
-        .push(`/`)
-        .then(() =>
-          ory
-            .updateSettingsFlow({
-              flow: String(flow?.id),
-              updateSettingsFlowBody: updatedValues,
-            })
-            .then(({ data }) => {
-              // The settings have been saved and the flow was updated. Let's show it to the user!
-              setFlow(data)
+    fetch(`/api/consent?consent_challenge=${consent_challenge}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.error)
+        }
+        setConsent(data)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }, [router])
 
-              if (data.return_to) {
-                window.location.href = data.return_to
-                return
-              }
-            })
-            .catch(handleFlowError(router, "consent", setFlow))
-            .catch(async (err: AxiosError) => {
-              // If the previous handler did not catch the error it's most likely a form validation error
-              if (err.response?.status === 400) {
-                // Yup, it is!
-                setFlow(err.response?.data)
-                return
-              }
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
+    const form = event.target as HTMLFormElement
+    const formData = new FormData(form)
 
-              return Promise.reject(err)
-            }),
-        )
-    )
+    const submitter = event.nativeEvent.submitter as HTMLButtonElement
+    const consentAction = submitter.value
+
+    const consentChallenge = formData.get("consent_challenge") as string
+    const remember = formData.get("remember") as string
+    const grantScope = formData.getAll("grant_scope") as string[]
+
+    if (!consentChallenge || !consentAction) {
+      console.error("consentChallenge or consentAction is missing")
+      return
+    }
+
+    fetch("/api/consent", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        consentChallenge,
+        consentAction,
+        grantScope,
+        remember,
+        identity, // Include any additional identity data if needed
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          console.error(data.error)
+          return
+        }
+        router.push(data.redirect_to)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }
+
+  if (!consent) {
+    return <div>Loading...</div>
   }
 
   return (
-    <>
-      <Head>
-        <title>Study Consent</title>
-        <meta name="description" content="NextJS + React + Vercel + Ory" />
-      </Head>
-      <CardTitle style={{ marginTop: 80 }}></CardTitle>
-      <SettingsCard only="profile" flow={flow}>
-        <CardTitle>Study Consent</CardTitle>
-        <ConsentForm
-          questions={consentQuestions}
-          onSubmit={onSubmit}
-          handleChange={handleChange}
-          consent={consent}
-        />
-      </SettingsCard>
-      <ActionCard wide>
-        <Link href="/" passHref>
-          <CenterLink>Go back</CenterLink>
-        </Link>
-      </ActionCard>
-    </>
-  )
-}
-
-const ConsentForm: React.FC<any> = ({
-  questions,
-  onSubmit,
-  handleChange,
-  consent,
-}) => {
-  return (
-    <div className="center">
-      {questions.map((question, index) => {
-        if (question.field_type === "info") {
-          return (
-            question.select_choices_or_calculations instanceof Array &&
-            question.select_choices_or_calculations.map((info, idx) => (
-              <div key={`${index}-${idx}`}>
-                <label className="inputLabel">{info.code}</label>
-                <InnerCard>{info.label}</InnerCard>
-              </div>
-            ))
-          )
-        } else if (question.field_type === "checkbox") {
-          return (
-            <form key={index} method="POST" onSubmit={onSubmit}>
-              <div className="consent-form">
+    <MarginCard>
+      <div className="center">
+        <CardTitle>Consent Request</CardTitle>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="hidden"
+            name="consent_challenge"
+            value={consent.challenge}
+          />
+          <input type="hidden" name="_csrf" value={csrfToken} />
+          <div>
+            <label className="inputLabel">Client</label>
+            <p>{consent.client.client_name || consent.client.client_id}</p>
+          </div>
+          <div>
+            <label className="inputLabel">Requested Scopes</label>
+            {consent.requested_scope.map((scope: string) => (
+              <div key={scope}>
                 <input
-                  className="checkbox"
-                  id={question.field_name}
-                  name={question.field_name}
                   type="checkbox"
-                  checked={consent && consent[question.field_name] === "true"}
-                  onChange={handleChange}
+                  className="checkbox"
+                  name="grant_scope"
+                  value={scope}
+                  defaultChecked
                 />
-                <label className="inputLabel inputLabelCheck">
-                  {question.field_label}
-                </label>
+                <label className="inputLabel">{scope}</label>
               </div>
-              <br />
-              <button type="submit">Save</button>
-            </form>
-          )
-        }
-        return null
-      })}
-    </div>
+            ))}
+          </div>
+          <br></br>
+          <div>
+            <input type="checkbox" className="checkbox" name="remember" />
+            <label>Remember this decision</label>
+          </div>
+          <br></br>
+          <button
+            className="consent-button"
+            type="submit"
+            name="consent_action"
+            value="accept"
+          >
+            Accept
+          </button>
+          <button
+            className="consent-button"
+            type="submit"
+            name="consent_action"
+            value="deny"
+          >
+            Deny
+          </button>
+        </form>
+      </div>
+    </MarginCard>
   )
 }
 
