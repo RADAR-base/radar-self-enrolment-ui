@@ -19,7 +19,7 @@ const extractSession = (identity: any, grantScope: string[]) => {
       scope: identity.metadata_public.scope,
       authorities: identity.metadata_public.authorities,
       sources: identity.metadata_public.sources,
-      user_name: identity.id,
+      user_name: identity.metadata_public.mp_login,
     },
     id_token: {},
   }
