@@ -65,9 +65,14 @@ const Registration: NextPage = () => {
   }, [flowId, router, router.isReady, returnTo, flow])
 
   const onSubmit = async (values: UpdateRegistrationFlowBody) => {
-    const updatedValues = parseObject(values)
-    updatedValues.traits["eligibility"] = JSON.parse(eligibility)
-    updatedValues.traits["project_id"] = projectId
+    const updatedValues = {
+      ...parseObject(values),
+      traits: {
+        ...parseObject(values).traits,
+        eligibility: JSON.parse(eligibility),
+        project_id: projectId
+      }
+    }
     await router
       // On submission, add the flow ID to the URL but do not navigate. This prevents the user loosing
       // his data when she/he reloads the page.
