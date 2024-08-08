@@ -10,6 +10,7 @@ import { ActionCard, CenterLink, Flow, MarginCard, CardTitle } from "../pkg"
 import { handleFlowError } from "../pkg/errors"
 // Import the SDK
 import ory from "../pkg/sdk"
+import { parseObject } from "../pkg/ui/helpers"
 
 // Renders the registration page
 const Registration: NextPage = () => {
@@ -19,16 +20,19 @@ const Registration: NextPage = () => {
   // information about the form we need to render (e.g. username + password)
   const [flow, setFlow] = useState<RegistrationFlow>()
   const [eligibility, setEligibility] = useState<any>()
+  const [projectId, setProjectId] = useState<any>()
 
   // Get ?flow=... from the URL
   const { flow: flowId, return_to: returnTo } = router.query
 
   useEffect(() => {
     const eligible = sessionStorage.getItem("eligible")
+    const projectId = sessionStorage.getItem("project_id")
     if (eligible == null) {
       router.push("/eligibility")
     }
     setEligibility(eligible)
+    setProjectId(projectId)
   }, [])
 
   // In this effect we either initiate a new registration flow, or we fetch an existing registration flow.
@@ -61,10 +65,9 @@ const Registration: NextPage = () => {
   }, [flowId, router, router.isReady, returnTo, flow])
 
   const onSubmit = async (values: UpdateRegistrationFlowBody) => {
-    const updatedValues = {
-      ...values,
-      traits: { eligibility: JSON.parse(eligibility) },
-    }
+    const updatedValues = parseObject(values)
+    updatedValues.traits["eligibility"] = JSON.parse(eligibility)
+    updatedValues.traits["project_id"] = projectId
     await router
       // On submission, add the flow ID to the URL but do not navigate. This prevents the user loosing
       // his data when she/he reloads the page.

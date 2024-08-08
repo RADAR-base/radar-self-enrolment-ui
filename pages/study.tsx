@@ -17,6 +17,7 @@ const Study: NextPage = () => {
     if (router.isReady) {
       const { projectId } = router.query
       if (typeof projectId === "string") {
+        sessionStorage.setItem("project_id", projectId)
         setProjectId(projectId)
       }
     }
