@@ -1,4 +1,4 @@
-type DataCacheOptions = {
+export type DataCacheOptions = {
     cacheDuration?: number;
     maxSize?: number;
 }
@@ -46,7 +46,6 @@ export class DataCache<K, V> {
             }
         }
     }
-
 }
 
 class CachedValue<T> {
