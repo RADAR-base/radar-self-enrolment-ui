@@ -7,45 +7,13 @@ on:
       - dev
 
 jobs:
-  production:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-      - run: npm ci
-      - run: npm run format:check
-      - run: npm run build
-      - run: |
-          npm run start &
-          npm run test
-        env:
-          ORY_KRATOS_URL: https://playground.projects.oryapis.com/
-
-  staging:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-      - run: npm ci
-      - run: npm run format:check
-      - run: npm run build
-      - run: |
-          npm run start &
-          npm run test
-        env:
-          ORY_KRATOS_URL: https://blissful-greider-9hmtg26xai.projects.staging.oryapis.dev/
-
   self-hosted:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '20'
       - run: npm ci
       - run: npm run format:check
       - run: npm run build
@@ -54,7 +22,7 @@ jobs:
           cd ../kratos
           git checkout master
           make docker
-          docker-compose -f quickstart.yml -f quickstart-latest.yml -f contrib/quickstart/kratos/cloud/quickstart.yml up --build --force-recreate -d
+          docker compose -f quickstart.yml -f quickstart-latest.yml -f contrib/quickstart/kratos/cloud/quickstart.yml up --build --force-recreate -d
       - run: |
           npm run start &
           npm run test
