@@ -5,8 +5,8 @@ import Head from "next/head"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
-import { eligibilityQuestions } from "../data/eligibility-questionnaire"
 
+import { eligibilityQuestions } from "../data/eligibility-questionnaire"
 // Import render helpers
 import { MarginCard, CardTitle, TextCenterButton } from "../pkg"
 

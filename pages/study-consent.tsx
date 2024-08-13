@@ -10,8 +10,8 @@ import Head from "next/head"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { ReactNode, useEffect, useState } from "react"
-import { consentQuestions } from "../data/consent-questionnaire"
 
+import { consentQuestions } from "../data/consent-questionnaire"
 import {
   ActionCard,
   CenterLink,

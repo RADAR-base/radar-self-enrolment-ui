@@ -70,8 +70,8 @@ const Registration: NextPage = () => {
       transient_payload: { project_id: projectId },
       traits: {
         ...parseObject(values).traits,
-        eligibility: JSON.parse(eligibility)
-      }
+        eligibility: JSON.parse(eligibility),
+      },
     }
     await router
       // On submission, add the flow ID to the URL but do not navigate. This prevents the user loosing

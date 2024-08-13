@@ -2,8 +2,8 @@ import type { NextPage } from "next"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { studyInfo } from "../data/study-questionnaire"
 
+import { studyInfo } from "../data/study-questionnaire"
 // Import render helpers
 import { MarginCard, CardTitle, TextCenterButton, InnerCard } from "../pkg"
 

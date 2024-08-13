@@ -5,8 +5,8 @@ import Head from "next/head"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { ReactNode, useEffect, useState } from "react"
-import { profileQuestions } from "../data/profile-questionnaire"
 
+import { profileQuestions } from "../data/profile-questionnaire"
 import {
   ActionCard,
   CenterLink,
