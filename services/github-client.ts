@@ -1,16 +1,17 @@
-import {GITHUB_AUTH_CONFIG, GITHUB_CONFIG, GITHUB_REQUEST_TIMEOUT} from "../config/github-config";
+import {GITHUB_AUTH_CONFIG, GITHUB_CONFIG} from "../config/github-config";
 import {HeadersInit} from "next/dist/server/web/spec-compliant/headers";
 
 export class GithubClient {
-    private authorizationHeader: string;
-    private maxContentLength: number;
+    private readonly authorizationHeader: string;
+    private readonly maxContentLength: number;
 
     constructor() {
         this.authorizationHeader = GITHUB_AUTH_CONFIG.GITHUB_AUTH_TOKEN ? `Bearer ${GITHUB_AUTH_CONFIG.GITHUB_AUTH_TOKEN.trim()}` : "";
         this.maxContentLength = GITHUB_CONFIG.MAX_CONTENT_LENGTH;
     }
 
-    async getData(url: string): Promise<string> {
+    getData: (url: string) => Promise<string>  = async (url: string)=>  {
+        console.log("CP 2", url)
         const headers: HeadersInit = {
             Accept: GITHUB_CONFIG.ACCEPT_HEADER
         }
@@ -24,7 +25,7 @@ export class GithubClient {
             method: 'GET',
         })
 
-        if (!response.ok) throw new Error(`Failed to fetch content from GitHub: ${response.statusText}`);
+        if (!response.ok) throw new Error(`Failed to fetch content from GitHub: ${await response.text()}`);
 
         this.checkContentLength(parseInt(response.headers.get('Content-Length') || '0', 10));
 
