@@ -22,7 +22,7 @@ jobs:
           cd ../kratos
           git checkout master
           make docker
-          docker-compose -f quickstart.yml -f quickstart-latest.yml -f contrib/quickstart/kratos/cloud/quickstart.yml up --build --force-recreate -d
+          docker compose -f quickstart.yml -f quickstart-latest.yml -f contrib/quickstart/kratos/cloud/quickstart.yml up --build --force-recreate -d
       - run: |
           npm run start &
           npm run test
