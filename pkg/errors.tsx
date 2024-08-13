@@ -1,3 +1,7 @@
+import {
+  ErrorAuthenticatorAssuranceLevelNotSatisfied,
+  FlowError,
+} from "@ory/client"
 import { AxiosError } from "axios"
 import { NextRouter } from "next/router"
 import { Dispatch, SetStateAction } from "react"
@@ -10,13 +14,16 @@ export function handleGetFlowError<S>(
   resetFlow: Dispatch<SetStateAction<S | undefined>>,
 ) {
   return async (err: AxiosError) => {
-    switch (err.response?.data.error?.id) {
+    const data = err.response?.data as FlowError
+    switch (data.id) {
       case "session_inactive":
         await router.push("/login?return_to=" + window.location.href)
         return
       case "session_aal2_required":
-        if (err.response?.data.redirect_browser_to) {
-          const redirectTo = new URL(err.response?.data.redirect_browser_to)
+        const e = err.response
+          ?.data as ErrorAuthenticatorAssuranceLevelNotSatisfied
+        if (e.redirect_browser_to) {
+          const redirectTo = new URL(e.redirect_browser_to)
           if (flowType === "settings") {
             redirectTo.searchParams.set("return_to", window.location.href)
           }
@@ -32,7 +39,7 @@ export function handleGetFlowError<S>(
         return
       case "session_refresh_required":
         // We need to re-authenticate to perform this action
-        window.location.href = err.response?.data.redirect_browser_to
+        await router.push("/")
         return
       case "self_service_flow_return_to_forbidden":
         // The flow expired, let's request a new one.
@@ -61,7 +68,7 @@ export function handleGetFlowError<S>(
         return
       case "browser_location_change_required":
         // Ory Kratos asked us to point the user to this URL.
-        window.location.href = err.response.data.redirect_browser_to
+        await router.push("/")
         return
     }
 

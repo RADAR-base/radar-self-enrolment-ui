@@ -1,5 +1,6 @@
 import {
   SettingsFlow,
+  UiNodeInputAttributes,
   UpdateSettingsFlowBody,
   UpdateSettingsFlowWithProfileMethod,
 } from "@ory/client"
@@ -10,8 +11,8 @@ import Head from "next/head"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { ReactNode, useEffect, useState } from "react"
-import { consentQuestions } from "../data/consent-questionnaire"
 
+import { consentQuestions } from "../data/consent-questionnaire"
 import {
   ActionCard,
   CenterLink,
@@ -29,12 +30,12 @@ interface Props {
   only?: Methods
 }
 
-function SettingsCard({
-  flow,
-  only,
-  children,
-}: Props & { children: ReactNode }) {
-  return <ActionCard wide>{children}</ActionCard>
+function StudyConsentCard({ children }: Props & { children: ReactNode }) {
+  return (
+    <ActionCard wide className="cardMargin">
+      {children}
+    </ActionCard>
+  )
 }
 
 const StudyConsent: NextPage = () => {
@@ -71,9 +72,11 @@ const StudyConsent: NextPage = () => {
       })
       .then(({ data }) => {
         setFlow(data)
-        const csrfTokenFromHeaders = data.ui.nodes.find(
-          (node: any) => node.attributes.name === "csrf_token",
-        )?.attributes.value
+        const csrfTokenFromHeaders = (
+          data.ui.nodes.find(
+            (node: any) => node.attributes.name === "csrf_token",
+          )?.attributes as UiNodeInputAttributes
+        ).value
         const traits = data.identity.traits
         setCsrfToken(csrfTokenFromHeaders || "")
         setTraits(traits)
@@ -82,7 +85,7 @@ const StudyConsent: NextPage = () => {
       .catch(handleFlowError(router, "settings", setFlow))
   }, [flowId, router, router.isReady, returnTo, flow])
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setConsent({
       ...consent,
       [event.target.name]: String(event.target.checked),
@@ -91,7 +94,7 @@ const StudyConsent: NextPage = () => {
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const updatedValues = {
+    const updatedValues: UpdateSettingsFlowBody = {
       csrf_token: csrfToken,
       method: "profile",
       traits: {
@@ -120,12 +123,12 @@ const StudyConsent: NextPage = () => {
                 return
               }
             })
-            .catch(handleFlowError(router, "consent", setFlow))
+            .catch(handleFlowError(router, "settings", setFlow))
             .catch(async (err: AxiosError) => {
               // If the previous handler did not catch the error it's most likely a form validation error
               if (err.response?.status === 400) {
                 // Yup, it is!
-                setFlow(err.response?.data)
+                setFlow(err.response?.data as SettingsFlow)
                 return
               }
 
@@ -141,8 +144,7 @@ const StudyConsent: NextPage = () => {
         <title>Study Consent</title>
         <meta name="description" content="NextJS + React + Vercel + Ory" />
       </Head>
-      <CardTitle style={{ marginTop: 80 }}></CardTitle>
-      <SettingsCard only="profile" flow={flow}>
+      <StudyConsentCard>
         <CardTitle>Study Consent</CardTitle>
         <ConsentForm
           questions={consentQuestions}
@@ -150,7 +152,7 @@ const StudyConsent: NextPage = () => {
           handleChange={handleChange}
           consent={consent}
         />
-      </SettingsCard>
+      </StudyConsentCard>
       <ActionCard wide>
         <Link href="/" passHref>
           <CenterLink>Go back</CenterLink>
@@ -168,16 +170,18 @@ const ConsentForm: React.FC<any> = ({
 }) => {
   return (
     <div className="center">
-      {questions.map((question, index) => {
+      {questions.map((question: any, index: number) => {
         if (question.field_type === "info") {
           return (
             question.select_choices_or_calculations instanceof Array &&
-            question.select_choices_or_calculations.map((info, idx) => (
-              <div key={`${index}-${idx}`}>
-                <label className="inputLabel">{info.code}</label>
-                <InnerCard>{info.label}</InnerCard>
-              </div>
-            ))
+            question.select_choices_or_calculations.map(
+              (info: any, idx: number) => (
+                <div key={`${index}-${idx}`}>
+                  <label className="inputLabel">{info.code}</label>
+                  <InnerCard>{info.label}</InnerCard>
+                </div>
+              ),
+            )
           )
         } else if (question.field_type === "checkbox") {
           return (

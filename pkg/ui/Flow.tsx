@@ -4,6 +4,7 @@ import {
   RegistrationFlow,
   SettingsFlow,
   UiNode,
+  UiNodeInputAttributes,
   UpdateLoginFlowBody,
   UpdateRecoveryFlowBody,
   UpdateRegistrationFlowBody,
@@ -108,10 +109,18 @@ export class Flow<T extends Values> extends Component<Props<T>, State<T>> {
     if (!flow) {
       return []
     }
-    return flow.ui.nodes.filter(({ group }) => {
-      if (!only) {
-        return true
+    return flow.ui.nodes.filter(({ group, attributes }) => {
+      if (!only) return true
+
+      const isEmailNode = (attrs: UiNodeInputAttributes) =>
+        ["email", "submit"].includes(attrs.type) || group === "default"
+
+      if (only === "profile") {
+        return (
+          isEmailNode(attributes as UiNodeInputAttributes) && group === only
+        )
       }
+
       return group === "default" || group === only
     })
   }
