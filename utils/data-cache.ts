@@ -1,6 +1,6 @@
 export type DataCacheOptions = {
-    cacheDuration?: number;
-    maxSize?: number;
+    cacheDuration: number;
+    maxSize: number;
 }
 
 type WorkFunction<K, V> = (key: K) => Promise<V>;
@@ -49,9 +49,9 @@ export class DataCache<K, V> {
 }
 
 class CachedValue<T> {
-    private value: T | undefined;
-    private expiration: number;
-    private exception: Error | undefined;
+    private readonly value: T | undefined;
+    private readonly expiration: number;
+    private readonly exception: Error | undefined;
 
     constructor(value: T | undefined, duration: number, exception?: Error) {
         this.value = value;
