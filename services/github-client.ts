@@ -1,14 +1,9 @@
-import { GITHUB_AUTH_CONFIG, GITHUB_CONFIG } from "../config/github-config"
-import { ContentLengthError } from "../utils/errors/ContentLengthError"
-import { GithubApiError } from "../utils/errors/GithubApiError"
+import { GITHUB_AUTH_CONFIG, GITHUB_CONFIG } from "../config/github-config";
+import { HeadersInit } from "next/dist/server/web/spec-compliant/headers";
 
-/**
- * A client for interacting with the GitHub API.
- * Manages authentication, request headers, content length validation, and error handling.
- */
-class GithubClient {
-  private readonly authorizationHeader: string
-  private readonly maxContentLength: number
+export class GithubClient {
+  private readonly authorizationHeader: string;
+  private readonly maxContentLength: number;
 
   constructor() {
     this.authorizationHeader = GITHUB_AUTH_CONFIG.GITHUB_AUTH_TOKEN
@@ -41,11 +36,26 @@ class GithubClient {
       )
     }
 
-    if (response.status === 403) {
-      throw new GithubApiError(
-        `Forbidden: You have exceeded the rate limit or do not have permission to access this resource.`,
-        403,
-      )
+    getData: (url: string) => Promise<string> = async (url: string) => {
+      console.log("CP 2", url)
+      const headers: HeadersInit = {
+        Accept: GITHUB_CONFIG.ACCEPT_HEADER
+      }
+
+      if (this.authorizationHeader) {
+        headers.Authorization = this.authorizationHeader;
+      }
+
+      const response = await fetch(url, {
+        headers: headers,
+        method: 'GET',
+      })
+
+      if (!response.ok) throw new Error(`Failed to fetch content from GitHub: ${await response.text()}`);
+
+      this.checkContentLength(parseInt(response.headers.get('Content-Length') || '0', 10));
+
+      return await response.json();
     }
 
     if (response.status === 404) {
@@ -65,8 +75,7 @@ class GithubClient {
     if (!response.ok) {
       const errorText = await response.text()
       throw new GithubApiError(
-        `Failed to fetch content from GitHub: ${
-          errorText || "Unknown error occurred"
+        `Failed to fetch content from GitHub: ${errorText || "Unknown error occurred"
         }`,
         response.status,
       )
