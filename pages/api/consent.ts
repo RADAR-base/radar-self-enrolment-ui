@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next"
 import { Configuration, OAuth2Api } from "@ory/client"
+import { NextApiRequest, NextApiResponse } from "next"
 
 const hydra = new OAuth2Api(
   new Configuration({

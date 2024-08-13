@@ -67,7 +67,16 @@ const Login: NextPage = () => {
         setFlow(data)
       })
       .catch(handleFlowError(router, "login", setFlow))
-  }, [flowId, router, router.isReady, aal, refresh, returnTo, loginChallenge, flow])
+  }, [
+    flowId,
+    router,
+    router.isReady,
+    aal,
+    refresh,
+    returnTo,
+    loginChallenge,
+    flow,
+  ])
 
   const onSubmit = (values: UpdateLoginFlowBody) =>
     router

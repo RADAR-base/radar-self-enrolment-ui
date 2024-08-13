@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import ory from "../pkg/sdk"
+import React, { useEffect, useState } from "react"
 
 import { MarginCard, CardTitle, TextCenterButton } from "../pkg"
+import ory from "../pkg/sdk"
 
 const Consent = () => {
   const router = useRouter()
