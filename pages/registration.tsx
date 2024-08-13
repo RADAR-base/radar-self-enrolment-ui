@@ -109,7 +109,7 @@ const Registration: NextPage = () => {
         // If the previous handler did not catch the error it's most likely a form validation error
         if (err.response?.status === 400) {
           // Yup, it is!
-          setFlow(err.response?.data)
+          setFlow(err.response?.data as RegistrationFlow)
           return
         }
 

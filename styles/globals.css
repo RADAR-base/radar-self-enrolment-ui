@@ -91,3 +91,7 @@ input {
   word-break: break-word; /* Breaks words if necessary to prevent overflow */
   max-width: 100%; /* Ensures the codebox does not exceed its container width */
 }
+
+.cardMargin {
+  margin-top: 80px !important;
+}

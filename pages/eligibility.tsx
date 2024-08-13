@@ -10,11 +10,16 @@ import { eligibilityQuestions } from "../data/eligibility-questionnaire"
 // Import render helpers
 import { MarginCard, CardTitle, TextCenterButton } from "../pkg"
 
+interface EligibilityFormProps {
+  questions: any[]
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
+}
+
 // Renders the eligibility page
 const Eligibility: NextPage = () => {
   const IS_ELIGIBLE = "yes"
   const router = useRouter()
-  const [eligibility, setEligibility] = useState(null)
+  const [eligibility, setEligibility] = useState<boolean>()
   const questions: any[] = eligibilityQuestions
 
   const checkEligibility = async (values: any) => {
@@ -69,7 +74,10 @@ const NotEligibleMessage = () => (
   </MarginCard>
 )
 
-const EligibilityForm = ({ questions, onSubmit }) => (
+const EligibilityForm: React.FC<EligibilityFormProps> = ({
+  questions,
+  onSubmit,
+}) => (
   <MarginCard>
     <CardTitle>Eligibility Screening</CardTitle>
     <form method="POST" onSubmit={onSubmit}>

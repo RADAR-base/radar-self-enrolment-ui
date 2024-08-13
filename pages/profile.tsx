@@ -1,4 +1,9 @@
-import { SettingsFlow } from "@ory/client"
+import {
+  SettingsFlow,
+  UiNode,
+  UiNodeInputAttributes,
+  UpdateSettingsFlowBody,
+} from "@ory/client"
 import { AxiosError } from "axios"
 import type { NextPage } from "next"
 import Head from "next/head"
@@ -24,12 +29,19 @@ interface Props {
   only?: Methods
 }
 
-function ProfileCard({
-  flow,
-  only,
-  children,
-}: Props & { children: ReactNode }) {
-  return <ActionCard wide>{children}</ActionCard>
+interface ProfileFormProps {
+  questions: any[]
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  profile: any
+}
+
+function ProfileCard({ children }: Props & { children: ReactNode }) {
+  return (
+    <ActionCard wide className="cardMargin">
+      {children}
+    </ActionCard>
+  )
 }
 
 const Profile: NextPage = () => {
@@ -66,9 +78,11 @@ const Profile: NextPage = () => {
       })
       .then(({ data }) => {
         setFlow(data)
-        const csrfTokenFromHeaders = data.ui.nodes.find(
-          (node: any) => node.attributes.name === "csrf_token",
-        )?.attributes.value
+        const csrfTokenFromHeaders = (
+          data.ui.nodes.find(
+            (node: any) => node.attributes.name === "csrf_token",
+          )?.attributes as UiNodeInputAttributes
+        ).value
         const traits = data.identity.traits
         setCsrfToken(csrfTokenFromHeaders || "")
         setTraits(traits)
@@ -86,7 +100,7 @@ const Profile: NextPage = () => {
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const updatedValues = {
+    const updatedValues: UpdateSettingsFlowBody = {
       csrf_token: csrfToken,
       method: "profile",
       traits: {
@@ -115,12 +129,12 @@ const Profile: NextPage = () => {
                 return
               }
             })
-            .catch(handleFlowError(router, "profile", setFlow))
+            .catch(handleFlowError(router, "settings", setFlow))
             .catch(async (err: AxiosError) => {
               // If the previous handler did not catch the error it's most likely a form validation error
               if (err.response?.status === 400) {
                 // Yup, it is!
-                setFlow(err.response?.data)
+                setFlow(err.response?.data as SettingsFlow)
                 return
               }
 
@@ -136,8 +150,7 @@ const Profile: NextPage = () => {
         <title>Profile Page</title>
         <meta name="description" content="NextJS + React + Vercel + Ory" />
       </Head>
-      <CardTitle style={{ marginTop: 80 }}></CardTitle>
-      <ProfileCard only="profile" flow={flow}>
+      <ProfileCard>
         <CardTitle>User Information</CardTitle>
         <ProfileForm
           questions={profileQuestions}
@@ -155,7 +168,7 @@ const Profile: NextPage = () => {
   )
 }
 
-const ProfileForm: React.FC<any> = ({
+const ProfileForm: React.FC<ProfileFormProps> = ({
   questions,
   onSubmit,
   handleChange,
