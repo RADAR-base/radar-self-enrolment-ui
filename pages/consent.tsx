@@ -8,7 +8,7 @@ const Consent = () => {
   const router = useRouter()
   const [consent, setConsent] = useState<any>(null)
   const [identity, setIdentity] = useState<any>(null)
-  const [csrfToken, setCsrfToken] = useState<string | null>(null)
+  const [csrfToken, setCsrfToken] = useState<string>("")
 
   useEffect(() => {
     const { consent_challenge } = router.query
@@ -43,7 +43,8 @@ const Consent = () => {
     const form = event.target as HTMLFormElement
     const formData = new FormData(form)
 
-    const submitter = event.nativeEvent.submitter as HTMLButtonElement
+    const submitter = (event.nativeEvent as SubmitEvent)
+      .submitter as HTMLButtonElement
     const consentAction = submitter.value
 
     const consentChallenge = formData.get("consent_challenge") as string
