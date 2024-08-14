@@ -14,20 +14,24 @@ export class DataCache<K, V> {
     private readonly work: WorkFunction<K, V>;
 
     constructor(work: WorkFunction<K, V>, options: DataCacheOptions) {
+        console.log("Constructor Cached Function")
         this.work = work;
         this.maxSize = options.maxSize;
         this.cacheDuration = options.cacheDuration;
-        this.dataMap = new Map();
+        this.dataMap = new Map<K, CachedValue<V>>();
     }
 
-    async executeWithException(key: K): Promise<V> {
+    async executeOrThrow(key: K): Promise<V> {
         let result: CachedValue<V> | undefined = this.dataMap.get(key);
         try {
             if (!result || result.isExpired()) {
+                console.log("Data from cached function: false")
                 const data: V = await this.work(key)
                 result = new CachedValue(data, this.cacheDuration)
                 this.dataMap.set(key, result)
                 this.refreshSize();
+            } else{
+                console.log("Data from cached function: true.")
             }
         } catch (error) {
             result = new CachedValue<V>(undefined, 0, error as Error);

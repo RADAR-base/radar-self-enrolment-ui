@@ -1,11 +1,11 @@
-import {GithubClient} from "./github-client";
+import githubClient from "./github-client";
 import {DataCache, DataCacheOptions} from "../utils/data-cache";
 import {GITHUB_CONFIG} from "../config/github-config";
 import {CachedRecord, CachedRetriever} from "../utils/cached-record";
 
 const options: DataCacheOptions = {
-    cacheDuration: GITHUB_CONFIG.CACHE_DURATION, // 5 minutes
-    maxSize: GITHUB_CONFIG.CACHE_SIZE
+    cacheDuration: GITHUB_CONFIG.CACHE_DURATION, // 3 minutes
+    maxSize: GITHUB_CONFIG.CACHE_SIZE  // 50
 }
 
 interface TreeNode {
@@ -39,42 +39,42 @@ const definitionsBranch = GITHUB_CONFIG.DEFINITIONS_BRANCH;
 
 export class GithubService {
 
-    private client: GithubClient
-    private cache: DataCache<string, string>
-    private cachedRecord: CachedRecord<string, string>
+    private dataCache: DataCache<string, string>
+    private cachedRecord: CachedRecord<string, string, string>
 
     constructor() {
-        this.client = new GithubClient()
-        this.cache = new DataCache<string, string>(
-            this.client.getData,
+        this.dataCache = new DataCache<string, string>(
+            githubClient.getData,
             options
         )
         this.cachedRecord = new CachedRecord(
-            this.getDefinitionDirectories,
+            this.getPageDefinitionsMap,
             options.cacheDuration
         )
     }
 
     async getDefinitionUriMap(...projectFinders: string[]): Promise<Map<string, string>> {
-        return this.cachedRecord.getMap(...projectFinders)
+        return this.cachedRecord.retrieveMap(...projectFinders)
     }
 
     async getDefinitionFileUrl(fileName: string): Promise<string | undefined> {
-        return this.cachedRecord.getValue(fileName)
+        let data = this.cachedRecord.retrieveValue(fileName)
+        console.log("Fetching: ", data)
+        return data;
     }
 
-    private getDefinitionDirectories: CachedRetriever<string, string> = async (...dependencies: string[]) => {
+    private getPageDefinitionsMap: CachedRetriever<string, string, string> = async (...dependencies: string[]) => {
         const [projectName, definitionsFor, version] = dependencies;
         const shaUrl = this.SHAUrl()
         const content = await this.fetchDataWithoutCache(shaUrl)
         const data = JSON.parse(JSON.stringify(content))
         const sha = this.findPathTo(data, 'tree', 'sha')
         const apiUrl = `${GITHUB_CONFIG.API_URL}/repos/${definitionsRepo}/git/trees/${sha}?recursive=true`
-        return await this.getPageDefinitionMap(apiUrl, projectName, definitionsFor, version)
+        return await this.getDefinitionDirectories(apiUrl, projectName, definitionsFor, version)
     }
 
-    private async getPageDefinitionMap(apiUrl: string, projectName: string, definitionsFor: string, version: string): Promise<Map<string, string>> {
-        const content = await this.fetchGithubContent(apiUrl, false)
+    private async getDefinitionDirectories(apiUrl: string, projectName: string, definitionsFor: string, version: string): Promise<Map<string, string>> {
+        const content = await this.fetchDataWithoutCache(apiUrl) // check again
         const treeResponse = JSON.parse(JSON.stringify(content)) as TreeResponse
         return this.extractFileUrlMap(treeResponse, projectName, definitionsFor, version)
     }
@@ -86,13 +86,10 @@ export class GithubService {
     async fetchGithubContent(url: string, needsDecoding: boolean): Promise<string> {
         try {
             if (!needsDecoding) {
-                return this.cache.executeWithException(url)
+                return this.dataCache.executeOrThrow(url)
             }
-            console.log("One")
-            const fileContent = await this.cache.executeWithException(url)
-            console.log("Two", fileContent)
+            const fileContent = await this.dataCache.executeOrThrow(url)
             const parsedContent = JSON.parse(JSON.stringify(fileContent)) as GithubFileContent
-            console.log("Three", parsedContent)
             return this.base64Decoder(parsedContent.content)
         } catch (error) {
             console.error(`Failed to fetch or cache content from github url ${url}. Error: ${error}`)
@@ -101,9 +98,7 @@ export class GithubService {
     }
 
     base64Decoder(encodedString: string): string {
-        console.log("Four")
         const buffer = Buffer.from(encodedString, 'base64')
-        console.log("Five")
         return buffer.toString('utf-8')
     }
 
@@ -112,7 +107,7 @@ export class GithubService {
      * @param url url to fetch data definitions from
      */
     async fetchDataWithoutCache(url: string): Promise<string> {
-        return this.client.getData(url)
+        return githubClient.getData(url)
     }
 
     buildDefinitionFileName(projectName: string, page: string, version: string, fileExtension: string): string {
@@ -135,7 +130,6 @@ export class GithubService {
     }
 
     private extractFileUrlMap = (data: TreeResponse, projectName: string, definitionsFor: string, version: string): Map<string, string> => {
-        console.log("Tree: ", )
         return data.tree
             .filter((node: TreeNode) => node.path.includes(projectName) && node.path.includes(definitionsFor) &&
                 node.path.includes(version) && node.path.endsWith('.json'))
@@ -144,8 +138,9 @@ export class GithubService {
                 if (fileName) {
                     map.set(fileName, node.url)
                 }
-                console.log("Content", map)
                 return map;
             }, new Map<string, string>());
     };
 }
+
+export default new GithubService()
