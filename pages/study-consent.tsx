@@ -6,13 +6,12 @@ import {
 } from "@ory/client"
 import { H3, P } from "@ory/themes"
 import { AxiosError } from "axios"
-import type { NextPage } from "next"
+import type {GetServerSideProps, NextPage} from "next"
 import Head from "next/head"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { ReactNode, useEffect, useState } from "react"
+import {MutableRefObject, ReactNode, useEffect, useRef, useState} from "react"
 
-import { consentQuestions } from "../data/consent-questionnaire"
 import {
   ActionCard,
   CenterLink,
@@ -24,10 +23,17 @@ import {
 } from "../pkg"
 import { handleFlowError } from "../pkg/errors"
 import ory from "../pkg/sdk"
+import githubService from "../services/github-service";
+import {Definition} from "../utils/structures";
+import {REMOTE_DEFINITIONS_CONFIG} from "../config/github-config";
 
 interface Props {
   flow?: SettingsFlow
   only?: Methods
+}
+
+interface StudyConsentPageProps {
+  definitions: string
 }
 
 function StudyConsentCard({ children }: Props & { children: ReactNode }) {
@@ -38,7 +44,7 @@ function StudyConsentCard({ children }: Props & { children: ReactNode }) {
   )
 }
 
-const StudyConsent: NextPage = () => {
+const StudyConsent: NextPage<StudyConsentPageProps> = ({definitions}) => {
   const [flow, setFlow] = useState<SettingsFlow>()
 
   // Get ?flow=... from the URL
@@ -48,10 +54,15 @@ const StudyConsent: NextPage = () => {
   const [traits, setTraits] = useState<any>()
   const [consent, setConsent] = useState<any>({})
 
+  const [consentQuestions, setConsentQuestions] = useState<Definition[]>([])
+
   useEffect(() => {
     // If the router is not ready yet, or we already have a flow, do nothing.
     if (!router.isReady || flow) {
       return
+    }
+    if (definitions != null) {
+      setConsentQuestions(JSON.parse(definitions) as Definition[])
     }
 
     // If ?flow=.. was in the URL, we fetch it
@@ -83,7 +94,7 @@ const StudyConsent: NextPage = () => {
         setConsent(traits.consent)
       })
       .catch(handleFlowError(router, "settings", setFlow))
-  }, [flowId, router, router.isReady, returnTo, flow])
+  }, [flowId, router, router.isReady, returnTo, flow, definitions])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setConsent({
@@ -208,6 +219,23 @@ const ConsentForm: React.FC<any> = ({
       })}
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const {projectId} = context.query
+
+  if (typeof projectId === "string") {
+    const consentDefinitions: string | undefined = await githubService.initiateFetch(projectId,
+        REMOTE_DEFINITIONS_CONFIG.CONSENT_DEFINITION_FILE_NAME_CONTENT ,REMOTE_DEFINITIONS_CONFIG.CONSENT_VERSION)
+
+    if (consentDefinitions == undefined) return {props: {}}
+
+    return {
+      props: {
+        definitions: consentDefinitions,
+      }
+    }
+  } else return {props: {}}
 }
 
 export default StudyConsent

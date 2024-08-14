@@ -1,27 +1,37 @@
-import type { NextPage } from "next"
+import type {GetServerSideProps, NextPage} from "next"
 import Head from "next/head"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import {MutableRefObject, useEffect, useRef, useState} from "react"
 
-import { studyInfo } from "../data/study-questionnaire"
 // Import render helpers
 import { MarginCard, CardTitle, TextCenterButton, InnerCard } from "../pkg"
+import githubService from "../services/github-service";
+import {REMOTE_DEFINITIONS_CONFIG} from "../config/github-config";
+import {Definition} from "../utils/structures";
+
+interface StudyPageProps {
+  definitions: string
+}
 
 // Renders the eligibility page
-const Study: NextPage = () => {
+const Study: NextPage<StudyPageProps> = ({definitions}) => {
   const router = useRouter()
   const [projectId, setProjectId] = useState<string | null>(null)
+  const studyInfo: MutableRefObject<Definition[]> = useRef([])
 
   useEffect(() => {
     // If the router is not ready yet, or we already have a flow, do nothing.
     if (router.isReady) {
-      const { projectId } = router.query
+      const {projectId} = router.query
+      if (definitions != null) {
+        studyInfo.current = JSON.parse(definitions) as Definition[]
+      }
       if (typeof projectId === "string") {
         sessionStorage.setItem("project_id", projectId)
         setProjectId(projectId)
       }
     }
-  })
+  }, [router.query, router.isReady, definitions])
 
   return (
     <>
@@ -31,7 +41,7 @@ const Study: NextPage = () => {
       <MarginCard>
         <CardTitle>{projectId} Research Study</CardTitle>
         <img src="image.png" />
-        <StudyInfo questions={studyInfo} />
+        <StudyInfo questions={studyInfo.current} />
         <TextCenterButton className="" data-testid="" href="/eligibility">
           Join Now
         </TextCenterButton>
@@ -62,6 +72,22 @@ const StudyInfo: React.FC<any> = ({ questions }) => {
       })}
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const {projectId} = context.query
+  if (typeof projectId === "string") {
+    const studyDefinitions: string | undefined = await githubService.initiateFetch(projectId,
+        REMOTE_DEFINITIONS_CONFIG.STUDY_INFO_DEFINITION_FILE_NAME_CONTENT, REMOTE_DEFINITIONS_CONFIG.STUDY_INFO_VERSION)
+
+    if (studyDefinitions == undefined) return {props: {}}
+
+    return {
+      props: {
+        definitions: studyDefinitions,
+      }
+    }
+  } else return {props: {}}
 }
 
 export default Study

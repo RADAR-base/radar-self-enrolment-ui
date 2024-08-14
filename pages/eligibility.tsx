@@ -1,26 +1,32 @@
 import { RegistrationFlow, UpdateRegistrationFlowBody } from "@ory/client"
 import { AxiosError } from "axios"
-import type { NextPage } from "next"
+import type {GetServerSideProps, NextPage} from "next"
 import Head from "next/head"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import {MutableRefObject, useEffect, useRef, useState} from "react"
 import { toast } from "react-toastify"
 
-import { eligibilityQuestions } from "../data/eligibility-questionnaire"
 // Import render helpers
 import { MarginCard, CardTitle, TextCenterButton } from "../pkg"
+import githubService from "../services/github-service";
+import {REMOTE_DEFINITIONS_CONFIG} from "../config/github-config";
+import {Definition} from "../utils/structures";
 
 interface EligibilityFormProps {
   questions: any[]
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
 }
 
+interface EligibilityPageProps {
+  definitions: string
+}
+
 // Renders the eligibility page
-const Eligibility: NextPage = () => {
+const Eligibility: NextPage<EligibilityPageProps> = ({definitions}) => {
   const IS_ELIGIBLE = "yes"
   const router = useRouter()
   const [eligibility, setEligibility] = useState<boolean>()
-  const questions: any[] = eligibilityQuestions
+  const [eligibilityQuestions, setEligibilityQuestions] = useState<Definition[]>([])
 
   const checkEligibility = async (values: any) => {
     // Eligibility check
@@ -33,7 +39,10 @@ const Eligibility: NextPage = () => {
     if (!router.isReady) {
       return
     }
-  })
+    if (definitions != null) {
+      setEligibilityQuestions(JSON.parse(definitions) as Definition[])
+    }
+  }, [router.isReady, definitions])
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -60,7 +69,7 @@ const Eligibility: NextPage = () => {
       {eligibility === false ? (
         <NotEligibleMessage />
       ) : (
-        <EligibilityForm questions={questions} onSubmit={onSubmit} />
+        <EligibilityForm questions={eligibilityQuestions} onSubmit={onSubmit} />
       )}
     </>
   )
@@ -102,5 +111,22 @@ const EligibilityForm: React.FC<EligibilityFormProps> = ({
     </form>
   </MarginCard>
 )
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const {projectId} = context.query
+
+  if (typeof projectId === "string") {
+    const consentDefinitions: string | undefined = await githubService.initiateFetch(projectId,
+        REMOTE_DEFINITIONS_CONFIG.ELIGIBILITY_DEFINITION_FILE_NAME_CONTENT ,REMOTE_DEFINITIONS_CONFIG.ELIGIBILITY_VERSION)
+
+    if (consentDefinitions == undefined) return {props: {}}
+
+    return {
+      props: {
+        definitions: consentDefinitions,
+      }
+    }
+  } else return {props: {}}
+}
 
 export default Eligibility
