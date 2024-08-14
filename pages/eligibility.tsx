@@ -3,7 +3,7 @@ import { AxiosError } from "axios"
 import type {GetServerSideProps, NextPage} from "next"
 import Head from "next/head"
 import { useRouter } from "next/router"
-import {MutableRefObject, useEffect, useRef, useState} from "react"
+import {MutableRefObject, useEffect, useState} from "react"
 import { toast } from "react-toastify"
 
 // Import render helpers

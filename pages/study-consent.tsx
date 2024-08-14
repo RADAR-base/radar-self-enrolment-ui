@@ -10,7 +10,7 @@ import type {GetServerSideProps, NextPage} from "next"
 import Head from "next/head"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import {MutableRefObject, ReactNode, useEffect, useRef, useState} from "react"
+import {MutableRefObject, ReactNode, useEffect, useState} from "react"
 
 import {
   ActionCard,
