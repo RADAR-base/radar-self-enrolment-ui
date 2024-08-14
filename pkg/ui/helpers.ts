@@ -42,3 +42,16 @@ export const callWebauthnFunction = (functionBody: string) => {
 
   return intervalHandle
 }
+
+export function parseObject(input: any): any {
+  return Object.keys(input).reduce((output, key) => {
+    const [mainKey, subKey] = key.split(".")
+    if (subKey) {
+      output[mainKey] = output[mainKey] || {}
+      output[mainKey][subKey] = input[key]
+    } else {
+      output[key] = input[key]
+    }
+    return output
+  }, {} as any)
+}

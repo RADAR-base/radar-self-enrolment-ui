@@ -84,7 +84,7 @@ const Settings: NextPage = () => {
       .catch(handleFlowError(router, "settings", setFlow))
   }, [flowId, router, router.isReady, returnTo, flow])
 
-  const onSubmit = (values: UpdateSettingsFlowWithProfileMethod) =>
+  const onSubmit = (values: UpdateSettingsFlowBody) =>
     router
       // On submission, add the flow ID to the URL but do not navigate. This prevents the user loosing
       // his data when she/he reloads the page.
@@ -121,7 +121,7 @@ const Settings: NextPage = () => {
             // If the previous handler did not catch the error it's most likely a form validation error
             if (err.response?.status === 400) {
               // Yup, it is!
-              setFlow(err.response?.data)
+              setFlow(err.response?.data as SettingsFlow)
               return
             }
 
@@ -142,23 +142,13 @@ const Settings: NextPage = () => {
         Profile Management and Security Settings
       </CardTitle>
       <SettingsCard only="profile" flow={flow}>
-        <div>
-          <H3>Profile Settings</H3>
-          <form onSubmit={onSubmit}>
-            <div>
-              <label className="inputLabel">
-                Email:
-                <input
-                  name="traits.email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </label>
-            </div>
-            <button type="submit">Save</button>
-          </form>
-        </div>
+        <H3>Profile Settings</H3>
+        <Flow
+          hideGlobalMessages
+          onSubmit={onSubmit}
+          only="profile"
+          flow={flow}
+        />
       </SettingsCard>
       <SettingsCard only="password" flow={flow}>
         <H3>Change Password</H3>
