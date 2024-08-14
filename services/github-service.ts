@@ -129,6 +129,22 @@ export class GithubService {
         return null
     }
 
+    async initiateFetch(projectId: string, fileNameSubset: string, version: string): Promise<string | undefined> {
+        await this.getDefinitionUriMap(projectId, fileNameSubset, "json")
+        const fileName = this.buildDefinitionFileName(projectId, fileNameSubset, version, 'json')
+
+        console.log("FileName:", fileName)
+        const definitionFileUrl: string | undefined = await this.getDefinitionFileUrl(fileName)
+
+
+        if (definitionFileUrl !== undefined) {
+            return await this.fetchGithubContent(definitionFileUrl, true)
+        } else {
+            console.log("No file present")
+            return undefined
+        }
+    }
+
     private extractFileUrlMap = (data: TreeResponse, projectName: string, definitionsFor: string, version: string): Map<string, string> => {
         return data.tree
             .filter((node: TreeNode) => node.path.includes(projectName) && node.path.includes(definitionsFor) &&
