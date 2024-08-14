@@ -58,9 +58,7 @@ export class GithubService {
     }
 
     async getDefinitionFileUrl(fileName: string): Promise<string | undefined> {
-        let data = this.cachedRecord.retrieveValue(fileName)
-        console.log("Fetching: ", data)
-        return data;
+        return this.cachedRecord.retrieveValue(fileName);
     }
 
     private getPageDefinitionsMap: CachedRetriever<string, string, string> = async (...dependencies: string[]) => {
@@ -133,7 +131,6 @@ export class GithubService {
         await this.getDefinitionUriMap(projectId, fileNameSubset, "json")
         const fileName = this.buildDefinitionFileName(projectId, fileNameSubset, version, 'json')
 
-        console.log("FileName:", fileName)
         const definitionFileUrl: string | undefined = await this.getDefinitionFileUrl(fileName)
 
 
