@@ -13,7 +13,7 @@ COPY . .
 
 RUN npm run build 
 
-EXPOSE 4455
+EXPOSE 3000
 
 # Start the app on port 4455 as recommended by ory
-CMD ["npm", "start", "--", "-p", "4455"]
+CMD ["npm", "start", "--", "-p", "3000"]
