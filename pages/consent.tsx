@@ -48,7 +48,7 @@ const Consent = () => {
     const consentAction = submitter.value
 
     const consentChallenge = formData.get("consent_challenge") as string
-    const remember = formData.get("remember") as string
+    const remember = !!formData.get("remember")
     const grantScope = formData.getAll("grant_scope") as string[]
 
     if (!consentChallenge || !consentAction) {

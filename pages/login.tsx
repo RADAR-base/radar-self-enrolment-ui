@@ -58,7 +58,7 @@ const Login: NextPage = () => {
     // Otherwise we initialize it
     ory
       .createBrowserLoginFlow({
-        refresh: Boolean(refresh),
+        refresh: loginChallenge? true : Boolean(refresh),
         aal: aal ? String(aal) : undefined,
         returnTo: returnTo ? String(returnTo) : undefined,
         loginChallenge: loginChallenge ? String(loginChallenge) : undefined,
