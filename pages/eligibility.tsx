@@ -47,7 +47,7 @@ const Eligibility: NextPage = () => {
       toast.success("Congrats, you're eligible!", {
         position: toast.POSITION.TOP_CENTER,
         closeButton: false,
-        onClose: () => router.push("/registration"),
+        onClose: () => router.replace("/registration"),
       })
     }
   }
