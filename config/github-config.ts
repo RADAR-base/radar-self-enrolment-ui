@@ -22,3 +22,8 @@ export const REMOTE_DEFINITIONS_CONFIG = {
     ELIGIBILITY_DEFINITION_FILE_NAME_CONTENT: 'eligibility',
     STUDY_INFO_DEFINITION_FILE_NAME_CONTENT: 'study_info'
 }
+
+export const MP_CONFIG = {
+    BASE_URL: process.env.MP_CONFIG_BASE_URL || 'http://127.0.1.1:8080/managementportal/api',
+    PROJECTS_ENDPOINT: process.env.MP_PROJECTS_ENDPOINT || 'public/projects',
+}
