@@ -25,7 +25,7 @@ export type Definition = {
 };
 
 export type Project = {
-    projectName?: string;
+    projectName: string;
     description?: string;
     sourceTypes: SourceType[];
 }
