@@ -9,14 +9,20 @@ import githubService from "../services/github-service";
 import {REMOTE_DEFINITIONS_CONFIG} from "../config/github-config";
 import {Definition, Project} from "../utils/structures";
 import fetchProjectsFromMp from "../services/mp-projects-fetcher";
+import {MPFetchError} from "../utils/errors/MPFetchError";
+import {ContentLengthError} from "../utils/errors/ContentLengthError";
+import {GithubApiError} from "../utils/errors/GithubApiError";
+import {NoContentError} from "../utils/errors/NoContentError";
 
 interface StudyPageProps {
-  definitions: string
-  projectExists: boolean
+  definitions: string;
+  projectExists: boolean;
+  exceptionMessage: string;
+  exceptionStatusCode: number;
 }
 
 // Renders the eligibility page
-const Study: NextPage<StudyPageProps> = ({definitions, projectExists}) => {
+const Study: NextPage<StudyPageProps> = ({definitions, projectExists, exceptionMessage, exceptionStatusCode}) => {
   const router = useRouter()
   const [projectId, setProjectId] = useState<string | null>(null)
   const studyInfo: MutableRefObject<Definition[]> = useRef([])
@@ -35,7 +41,17 @@ const Study: NextPage<StudyPageProps> = ({definitions, projectExists}) => {
     }
   }, [router.query, router.isReady, definitions])
 
-  if (!projectExists) {
+  if(exceptionMessage) {
+    return (
+        <MarginCard>
+          <CardTitle>An exception occurred while fetching the project or definitions</CardTitle>
+          <p>{exceptionMessage}</p>
+          {exceptionStatusCode && <p>Status Code: {exceptionStatusCode}</p>}
+        </MarginCard>
+    )
+  }
+
+  if (projectExists === false) {
     return (
         <MarginCard>
           <CardTitle>Project Not Found</CardTitle>
@@ -89,28 +105,50 @@ const StudyInfo: React.FC<any> = ({ questions }) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const {projectId} = context.query
   if (typeof projectId === "string") {
+    try {
+      const fetchedProjects: Project[] = await fetchProjectsFromMp()
+      console.log(fetchedProjects)
+      const mpProjectNames: string[] = fetchedProjects.map((project: Project) => project.projectName)
+      if (!mpProjectNames.includes(projectId)) {
+        console.log("No project found")
+        return {
+          props: {
+            projectExists: false
+          }
+        };
+      }
 
-    const fetchedProjects: Project[] = await fetchProjectsFromMp()
-    console.log(fetchedProjects)
-    const mpProjectNames: string[] = fetchedProjects.map((project: Project) => project.projectName)
-    if (!mpProjectNames.includes(projectId)) {
-      console.log("No project found")
+      const studyDefinitions: string | undefined = await githubService.initiateFetch(projectId,
+          REMOTE_DEFINITIONS_CONFIG.STUDY_INFO_DEFINITION_FILE_NAME_CONTENT, REMOTE_DEFINITIONS_CONFIG.STUDY_INFO_VERSION)
+
+      if (studyDefinitions == undefined) return {props: {projectExists: true}}
+
       return {
         props: {
-          projectExists: false
+          definitions: studyDefinitions,
+          projectExists: true
         }
-      };
-    }
-
-    const studyDefinitions: string | undefined = await githubService.initiateFetch(projectId,
-        REMOTE_DEFINITIONS_CONFIG.STUDY_INFO_DEFINITION_FILE_NAME_CONTENT, REMOTE_DEFINITIONS_CONFIG.STUDY_INFO_VERSION)
-
-    if (studyDefinitions == undefined) return {props: {projectExists: true}}
-
-    return {
-      props: {
-        definitions: studyDefinitions,
-        projectExists: true
+      }
+    } catch (error: any) {
+      if (error instanceof MPFetchError || error instanceof ContentLengthError || error instanceof NoContentError) {
+        return {
+          props: {
+            exceptionMessage: error.message
+          }
+        }
+      } else if (error instanceof  GithubApiError) {
+        return {
+          props: {
+            exceptionMessage: error.message,
+            exceptionStatusCode: error.statusCode
+          }
+        }
+      } else {
+        return {
+          props: {
+            exceptionMessage: error.message
+          }
+        }
       }
     }
   } else return {props: {projectExists: false}}
