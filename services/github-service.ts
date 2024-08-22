@@ -2,6 +2,7 @@ import githubClient from "./github-client";
 import {DataCache, DataCacheOptions} from "../utils/data-cache";
 import {GITHUB_CONFIG} from "../config/github-config";
 import {CachedRecord, CachedRetriever} from "../utils/cached-record";
+import {NoContentError} from "../utils/errors/NoContentError";
 
 const options: DataCacheOptions = {
     cacheDuration: GITHUB_CONFIG.CACHE_DURATION, // 3 minutes
@@ -137,8 +138,7 @@ export class GithubService {
         if (definitionFileUrl !== undefined) {
             return await this.fetchGithubContent(definitionFileUrl, true)
         } else {
-            console.log("No file present")
-            return undefined
+            throw new NoContentError(`No File exists with the name "${fileName}" in the remote definitions repository`)
         }
     }
 
