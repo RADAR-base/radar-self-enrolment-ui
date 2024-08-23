@@ -6,12 +6,13 @@ import {
 } from "@ory/client"
 import { H3, P } from "@ory/themes"
 import { AxiosError } from "axios"
-import type {GetServerSideProps, NextPage} from "next"
+import type { GetServerSideProps, NextPage } from "next"
 import Head from "next/head"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import {MutableRefObject, ReactNode, useEffect, useState} from "react"
+import { MutableRefObject, ReactNode, useEffect, useState } from "react"
 
+import { REMOTE_DEFINITIONS_CONFIG } from "../config/github-config"
 import {
   ActionCard,
   CenterLink,
@@ -23,9 +24,8 @@ import {
 } from "../pkg"
 import { handleFlowError } from "../pkg/errors"
 import ory from "../pkg/sdk"
-import githubService from "../services/github-service";
-import {Definition} from "../utils/structures";
-import {REMOTE_DEFINITIONS_CONFIG} from "../config/github-config";
+import githubService from "../services/github-service"
+import { Definition } from "../utils/structures"
 
 interface Props {
   flow?: SettingsFlow
@@ -44,7 +44,7 @@ function StudyConsentCard({ children }: Props & { children: ReactNode }) {
   )
 }
 
-const StudyConsent: NextPage<StudyConsentPageProps> = ({definitions}) => {
+const StudyConsent: NextPage<StudyConsentPageProps> = ({ definitions }) => {
   const [flow, setFlow] = useState<SettingsFlow>()
 
   // Get ?flow=... from the URL
@@ -222,20 +222,24 @@ const ConsentForm: React.FC<any> = ({
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const {projectId} = context.query
+  const { projectId } = context.query
 
   if (typeof projectId === "string") {
-    const consentDefinitions: string | undefined = await githubService.initiateFetch(projectId,
-        REMOTE_DEFINITIONS_CONFIG.CONSENT_DEFINITION_FILE_NAME_CONTENT ,REMOTE_DEFINITIONS_CONFIG.CONSENT_VERSION)
+    const consentDefinitions: string | undefined =
+      await githubService.initiateFetch(
+        projectId,
+        REMOTE_DEFINITIONS_CONFIG.CONSENT_DEFINITION_FILE_NAME_CONTENT,
+        REMOTE_DEFINITIONS_CONFIG.CONSENT_VERSION,
+      )
 
-    if (consentDefinitions == undefined) return {props: {}}
+    if (consentDefinitions == undefined) return { props: {} }
 
     return {
       props: {
         definitions: consentDefinitions,
-      }
+      },
     }
-  } else return {props: {}}
+  } else return { props: {} }
 }
 
 export default StudyConsent
