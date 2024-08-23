@@ -121,14 +121,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       const studyDefinitions: string | undefined = await githubService.initiateFetch(projectId,
           REMOTE_DEFINITIONS_CONFIG.STUDY_INFO_DEFINITION_FILE_NAME_CONTENT, REMOTE_DEFINITIONS_CONFIG.STUDY_INFO_VERSION)
 
-      if (studyDefinitions == undefined) return {props: {projectExists: true}}
-
-      return {
-        props: {
-          definitions: studyDefinitions,
-          projectExists: true
-        }
-      }
+return studyDefinitions === undefined 
+  ? { props: { projectExists: true } } 
+  : { props: { definitions: studyDefinitions, projectExists: true } }
     } catch (error: any) {
       if (error instanceof MPFetchError || error instanceof ContentLengthError || error instanceof NoContentError) {
         return {
