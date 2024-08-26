@@ -9,7 +9,12 @@ import { toast } from "react-toastify"
 import { REMOTE_DEFINITIONS_CONFIG } from "../config/github-config"
 // Import render helpers
 import { MarginCard, CardTitle, TextCenterButton } from "../pkg"
+import FormattedExcpetion from "../pkg/ui/FormattedExcpetion"
 import githubService from "../services/github-service"
+import { ContentLengthError } from "../utils/errors/ContentLengthError"
+import { GithubApiError } from "../utils/errors/GithubApiError"
+import { MPFetchError } from "../utils/errors/MPFetchError"
+import { NoContentError } from "../utils/errors/NoContentError"
 import { Definition } from "../utils/structures"
 
 interface EligibilityFormProps {
@@ -19,10 +24,16 @@ interface EligibilityFormProps {
 
 interface EligibilityPageProps {
   definitions: string
+  exceptionMessage: string
+  exceptionStatusCode: number
 }
 
 // Renders the eligibility page
-const Eligibility: NextPage<EligibilityPageProps> = ({ definitions }) => {
+const Eligibility: NextPage<EligibilityPageProps> = ({
+  definitions,
+  exceptionMessage,
+  exceptionStatusCode,
+}) => {
   const IS_ELIGIBLE = "yes"
   const router = useRouter()
   const [eligibility, setEligibility] = useState<boolean>()
@@ -61,6 +72,15 @@ const Eligibility: NextPage<EligibilityPageProps> = ({ definitions }) => {
         onClose: () => router.push("/registration"),
       })
     }
+  }
+
+  if (exceptionMessage) {
+    return (
+      <FormattedExcpetion tileText="An exception occurred while fetching the project or definitions">
+        <p>{exceptionMessage}</p>
+        {exceptionStatusCode && <p>Status Code: {exceptionStatusCode}</p>}
+      </FormattedExcpetion>
+    )
   }
 
   return (
@@ -118,19 +138,45 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { projectId } = context.query
 
   if (typeof projectId === "string") {
-    const consentDefinitions: string | undefined =
-      await githubService.initiateFetch(
-        projectId,
-        REMOTE_DEFINITIONS_CONFIG.ELIGIBILITY_DEFINITION_FILE_NAME_CONTENT,
-        REMOTE_DEFINITIONS_CONFIG.ELIGIBILITY_VERSION,
-      )
+    try {
+      const consentDefinitions: string | undefined =
+        await githubService.initiateFetch(
+          projectId,
+          REMOTE_DEFINITIONS_CONFIG.ELIGIBILITY_DEFINITION_FILE_NAME_CONTENT,
+          REMOTE_DEFINITIONS_CONFIG.ELIGIBILITY_VERSION,
+        )
 
-    if (consentDefinitions == undefined) return { props: {} }
+      if (consentDefinitions == undefined) return { props: {} }
 
-    return {
-      props: {
-        definitions: consentDefinitions,
-      },
+      return {
+        props: {
+          definitions: consentDefinitions,
+        },
+      }
+    } catch (error: any) {
+      if (
+        error instanceof ContentLengthError ||
+        error instanceof NoContentError
+      ) {
+        return {
+          props: {
+            exceptionMessage: error.message,
+          },
+        }
+      } else if (error instanceof GithubApiError) {
+        return {
+          props: {
+            exceptionMessage: error.message,
+            exceptionStatusCode: error.statusCode,
+          },
+        }
+      } else {
+        return {
+          props: {
+            exceptionMessage: error.message,
+          },
+        }
+      }
     }
   } else return { props: {} }
 }

@@ -6,6 +6,7 @@ import { MutableRefObject, useEffect, useRef, useState } from "react"
 import { REMOTE_DEFINITIONS_CONFIG } from "../config/github-config"
 // Import render helpers
 import { MarginCard, CardTitle, TextCenterButton, InnerCard } from "../pkg"
+import FormattedExcpetion from "../pkg/ui/FormattedExcpetion"
 import githubService from "../services/github-service"
 import fetchProjectsFromMp from "../services/mp-projects-fetcher"
 import { ContentLengthError } from "../utils/errors/ContentLengthError"
@@ -48,26 +49,22 @@ const Study: NextPage<StudyPageProps> = ({
 
   if (exceptionMessage) {
     return (
-      <MarginCard>
-        <CardTitle>
-          An exception occurred while fetching the project or definitions
-        </CardTitle>
+      <FormattedExcpetion tileText="An exception occurred while fetching the project or definitions">
         <p>{exceptionMessage}</p>
         {exceptionStatusCode && <p>Status Code: {exceptionStatusCode}</p>}
-      </MarginCard>
+      </FormattedExcpetion>
     )
   }
 
   if (projectExists === false) {
     return (
-      <MarginCard>
-        <CardTitle>Project Not Found</CardTitle>
+      <FormattedExcpetion tileText="Project Not Found">
         <p>
           The project with the name {projectId} does not exist in the Management
           Portal.
         </p>
         <p>Please enter a valid project name.</p>
-      </MarginCard>
+      </FormattedExcpetion>
     )
   }
 
@@ -80,7 +77,11 @@ const Study: NextPage<StudyPageProps> = ({
         <CardTitle>{projectId} Research Study</CardTitle>
         <img src="image.png" />
         <StudyInfo questions={studyInfo.current} />
-        <TextCenterButton className="" data-testid="" href="/eligibility">
+        <TextCenterButton
+          className=""
+          data-testid=""
+          href={`/eligibility?projectId=${projectId}`}
+        >
           Join Now
         </TextCenterButton>
         {/* <Flow onSubmit={onSubmit} flow={flow} /> */}
@@ -141,7 +142,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         : { props: { definitions: studyDefinitions, projectExists: true } }
     } catch (error: any) {
       if (
-        error instanceof MPFetchError ||
         error instanceof ContentLengthError ||
         error instanceof NoContentError
       ) {

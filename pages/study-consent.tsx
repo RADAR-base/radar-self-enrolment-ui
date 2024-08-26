@@ -24,7 +24,11 @@ import {
 } from "../pkg"
 import { handleFlowError } from "../pkg/errors"
 import ory from "../pkg/sdk"
+import FormattedExcpetion from "../pkg/ui/FormattedExcpetion"
 import githubService from "../services/github-service"
+import { ContentLengthError } from "../utils/errors/ContentLengthError"
+import { GithubApiError } from "../utils/errors/GithubApiError"
+import { NoContentError } from "../utils/errors/NoContentError"
 import { Definition } from "../utils/structures"
 
 interface Props {
@@ -34,6 +38,8 @@ interface Props {
 
 interface StudyConsentPageProps {
   definitions: string
+  exceptionMessage: string
+  exceptionStatusCode: number
 }
 
 function StudyConsentCard({ children }: Props & { children: ReactNode }) {
@@ -44,7 +50,11 @@ function StudyConsentCard({ children }: Props & { children: ReactNode }) {
   )
 }
 
-const StudyConsent: NextPage<StudyConsentPageProps> = ({ definitions }) => {
+const StudyConsent: NextPage<StudyConsentPageProps> = ({
+  definitions,
+  exceptionMessage,
+  exceptionStatusCode,
+}) => {
   const [flow, setFlow] = useState<SettingsFlow>()
 
   // Get ?flow=... from the URL
@@ -112,6 +122,15 @@ const StudyConsent: NextPage<StudyConsentPageProps> = ({ definitions }) => {
         ...traits,
         consent,
       },
+    }
+
+    if (exceptionMessage) {
+      return (
+        <FormattedExcpetion tileText="An exception occurred while fetching the project or definitions">
+          <p>{exceptionMessage}</p>
+          {exceptionStatusCode && <p>Status Code: {exceptionStatusCode}</p>}
+        </FormattedExcpetion>
+      )
     }
 
     return (
@@ -225,19 +244,45 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { projectId } = context.query
 
   if (typeof projectId === "string") {
-    const consentDefinitions: string | undefined =
-      await githubService.initiateFetch(
-        projectId,
-        REMOTE_DEFINITIONS_CONFIG.CONSENT_DEFINITION_FILE_NAME_CONTENT,
-        REMOTE_DEFINITIONS_CONFIG.CONSENT_VERSION,
-      )
+    try {
+      const consentDefinitions: string | undefined =
+        await githubService.initiateFetch(
+          projectId,
+          REMOTE_DEFINITIONS_CONFIG.CONSENT_DEFINITION_FILE_NAME_CONTENT,
+          REMOTE_DEFINITIONS_CONFIG.CONSENT_VERSION,
+        )
 
-    if (consentDefinitions == undefined) return { props: {} }
+      if (consentDefinitions == undefined) return { props: {} }
 
-    return {
-      props: {
-        definitions: consentDefinitions,
-      },
+      return {
+        props: {
+          definitions: consentDefinitions,
+        },
+      }
+    } catch (error: any) {
+      if (
+        error instanceof ContentLengthError ||
+        error instanceof NoContentError
+      ) {
+        return {
+          props: {
+            exceptionMessage: error.message,
+          },
+        }
+      } else if (error instanceof GithubApiError) {
+        return {
+          props: {
+            exceptionMessage: error.message,
+            exceptionStatusCode: error.statusCode,
+          },
+        }
+      } else {
+        return {
+          props: {
+            exceptionMessage: error.message,
+          },
+        }
+      }
     }
   } else return { props: {} }
 }
