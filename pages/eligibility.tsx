@@ -1,16 +1,16 @@
 import { RegistrationFlow, UpdateRegistrationFlowBody } from "@ory/client"
 import { AxiosError } from "axios"
-import type {GetServerSideProps, NextPage} from "next"
+import type { GetServerSideProps, NextPage } from "next"
 import Head from "next/head"
 import { useRouter } from "next/router"
-import {MutableRefObject, useEffect, useState} from "react"
+import { MutableRefObject, useEffect, useState } from "react"
 import { toast } from "react-toastify"
 
+import { REMOTE_DEFINITIONS_CONFIG } from "../config/github-config"
 // Import render helpers
 import { MarginCard, CardTitle, TextCenterButton } from "../pkg"
-import githubService from "../services/github-service";
-import {REMOTE_DEFINITIONS_CONFIG} from "../config/github-config";
-import {Definition} from "../utils/structures";
+import githubService from "../services/github-service"
+import { Definition } from "../utils/structures"
 
 interface EligibilityFormProps {
   questions: any[]
@@ -22,11 +22,13 @@ interface EligibilityPageProps {
 }
 
 // Renders the eligibility page
-const Eligibility: NextPage<EligibilityPageProps> = ({definitions}) => {
+const Eligibility: NextPage<EligibilityPageProps> = ({ definitions }) => {
   const IS_ELIGIBLE = "yes"
   const router = useRouter()
   const [eligibility, setEligibility] = useState<boolean>()
-  const [eligibilityQuestions, setEligibilityQuestions] = useState<Definition[]>([])
+  const [eligibilityQuestions, setEligibilityQuestions] = useState<
+    Definition[]
+  >([])
 
   const checkEligibility = async (values: any) => {
     // Eligibility check
@@ -113,20 +115,24 @@ const EligibilityForm: React.FC<EligibilityFormProps> = ({
 )
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const {projectId} = context.query
+  const { projectId } = context.query
 
   if (typeof projectId === "string") {
-    const consentDefinitions: string | undefined = await githubService.initiateFetch(projectId,
-        REMOTE_DEFINITIONS_CONFIG.ELIGIBILITY_DEFINITION_FILE_NAME_CONTENT ,REMOTE_DEFINITIONS_CONFIG.ELIGIBILITY_VERSION)
+    const consentDefinitions: string | undefined =
+      await githubService.initiateFetch(
+        projectId,
+        REMOTE_DEFINITIONS_CONFIG.ELIGIBILITY_DEFINITION_FILE_NAME_CONTENT,
+        REMOTE_DEFINITIONS_CONFIG.ELIGIBILITY_VERSION,
+      )
 
-    if (consentDefinitions == undefined) return {props: {}}
+    if (consentDefinitions == undefined) return { props: {} }
 
     return {
       props: {
         definitions: consentDefinitions,
-      }
+      },
     }
-  } else return {props: {}}
+  } else return { props: {} }
 }
 
 export default Eligibility
