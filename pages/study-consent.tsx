@@ -6,13 +6,13 @@ import {
 } from "@ory/client"
 import { H3, P } from "@ory/themes"
 import { AxiosError } from "axios"
-import type { NextPage } from "next"
+import type { GetServerSideProps, NextPage } from "next"
 import Head from "next/head"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { ReactNode, useEffect, useState } from "react"
+import { MutableRefObject, ReactNode, useEffect, useState } from "react"
 
-import { consentQuestions } from "../data/consent-questionnaire"
+import { REMOTE_DEFINITIONS_CONFIG } from "../config/github-config"
 import {
   ActionCard,
   CenterLink,
@@ -24,10 +24,22 @@ import {
 } from "../pkg"
 import { handleFlowError } from "../pkg/errors"
 import ory from "../pkg/sdk"
+import FormattedExcpetion from "../pkg/ui/FormattedExcpetion"
+import githubService from "../services/github-service"
+import { ContentLengthError } from "../utils/errors/ContentLengthError"
+import { GithubApiError } from "../utils/errors/GithubApiError"
+import { NoContentError } from "../utils/errors/NoContentError"
+import { Definition } from "../utils/structures"
 
 interface Props {
   flow?: SettingsFlow
   only?: Methods
+}
+
+interface StudyConsentPageProps {
+  definitions: string
+  exceptionMessage: string
+  exceptionStatusCode: number
 }
 
 function StudyConsentCard({ children }: Props & { children: ReactNode }) {
@@ -38,7 +50,11 @@ function StudyConsentCard({ children }: Props & { children: ReactNode }) {
   )
 }
 
-const StudyConsent: NextPage = () => {
+const StudyConsent: NextPage<StudyConsentPageProps> = ({
+  definitions,
+  exceptionMessage,
+  exceptionStatusCode,
+}) => {
   const [flow, setFlow] = useState<SettingsFlow>()
 
   // Get ?flow=... from the URL
@@ -48,10 +64,15 @@ const StudyConsent: NextPage = () => {
   const [traits, setTraits] = useState<any>()
   const [consent, setConsent] = useState<any>({})
 
+  const [consentQuestions, setConsentQuestions] = useState<Definition[]>([])
+
   useEffect(() => {
     // If the router is not ready yet, or we already have a flow, do nothing.
     if (!router.isReady || flow) {
       return
+    }
+    if (definitions != null) {
+      setConsentQuestions(JSON.parse(definitions) as Definition[])
     }
 
     // If ?flow=.. was in the URL, we fetch it
@@ -83,7 +104,7 @@ const StudyConsent: NextPage = () => {
         setConsent(traits.consent)
       })
       .catch(handleFlowError(router, "settings", setFlow))
-  }, [flowId, router, router.isReady, returnTo, flow])
+  }, [flowId, router, router.isReady, returnTo, flow, definitions])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setConsent({
@@ -101,6 +122,15 @@ const StudyConsent: NextPage = () => {
         ...traits,
         consent,
       },
+    }
+
+    if (exceptionMessage) {
+      return (
+        <FormattedExcpetion tileText="An exception occurred while fetching the project or definitions">
+          <p>{exceptionMessage}</p>
+          {exceptionStatusCode && <p>Status Code: {exceptionStatusCode}</p>}
+        </FormattedExcpetion>
+      )
     }
 
     return (
@@ -208,6 +238,53 @@ const ConsentForm: React.FC<any> = ({
       })}
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { projectId } = context.query
+
+  if (typeof projectId === "string") {
+    try {
+      const consentDefinitions: string | undefined =
+        await githubService.initiateFetch(
+          projectId,
+          REMOTE_DEFINITIONS_CONFIG.CONSENT_DEFINITION_FILE_NAME_CONTENT,
+          REMOTE_DEFINITIONS_CONFIG.CONSENT_VERSION,
+        )
+
+      if (consentDefinitions == undefined) return { props: {} }
+
+      return {
+        props: {
+          definitions: consentDefinitions,
+        },
+      }
+    } catch (error: any) {
+      if (
+        error instanceof ContentLengthError ||
+        error instanceof NoContentError
+      ) {
+        return {
+          props: {
+            exceptionMessage: error.message,
+          },
+        }
+      } else if (error instanceof GithubApiError) {
+        return {
+          props: {
+            exceptionMessage: error.message,
+            exceptionStatusCode: error.statusCode,
+          },
+        }
+      } else {
+        return {
+          props: {
+            exceptionMessage: error.message,
+          },
+        }
+      }
+    }
+  } else return { props: {} }
 }
 
 export default StudyConsent
