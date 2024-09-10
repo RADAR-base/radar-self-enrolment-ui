@@ -103,7 +103,7 @@ const Settings: NextPage = () => {
             flow: String(flow?.id),
             updateSettingsFlowBody: {
               ...values,
-              'csrf_token': csrfToken
+              csrf_token: csrfToken,
             },
           })
           .then(({ data }) => {

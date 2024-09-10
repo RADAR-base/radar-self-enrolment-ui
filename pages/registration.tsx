@@ -74,7 +74,7 @@ const Registration: NextPage = () => {
       ...parseObject(values),
       traits: {
         ...parseObject(values).traits,
-        projects: [project]
+        projects: [project],
       },
     }
     await router
