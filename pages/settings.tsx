@@ -1,5 +1,6 @@
 import {
   SettingsFlow,
+  UiNodeInputAttributes,
   UpdateSettingsFlowBody,
   UpdateSettingsFlowWithProfileMethod,
 } from "@ory/client"
@@ -54,6 +55,7 @@ const Settings: NextPage = () => {
   const router = useRouter()
   const { flow: flowId, return_to: returnTo } = router.query
   const [email, setEmail] = useState("")
+  const [csrfToken, setCsrfToken] = useState("")
 
   useEffect(() => {
     // If the router is not ready yet, or we already have a flow, do nothing.
@@ -78,6 +80,12 @@ const Settings: NextPage = () => {
         returnTo: String(returnTo || ""),
       })
       .then(({ data }) => {
+        const csrfTokenFromHeaders = (
+          data.ui.nodes.find(
+            (node: any) => node.attributes.name === "csrf_token",
+          )?.attributes as UiNodeInputAttributes
+        ).value
+        setCsrfToken(csrfTokenFromHeaders || "")
         setEmail(data.identity.traits.email)
         setFlow(data)
       })
@@ -93,7 +101,10 @@ const Settings: NextPage = () => {
         ory
           .updateSettingsFlow({
             flow: String(flow?.id),
-            updateSettingsFlowBody: values,
+            updateSettingsFlowBody: {
+              ...values,
+              'csrf_token': csrfToken
+            },
           })
           .then(({ data }) => {
             // The settings have been saved and the flow was updated. Let's show it to the user!
@@ -143,6 +154,7 @@ const Settings: NextPage = () => {
       </CardTitle>
       <SettingsCard only="profile" flow={flow}>
         <H3>Profile Settings</H3>
+        <Messages messages={flow?.ui.messages} />
         <Flow
           hideGlobalMessages
           onSubmit={onSubmit}

@@ -65,12 +65,16 @@ const Registration: NextPage = () => {
   }, [flowId, router, router.isReady, returnTo, flow])
 
   const onSubmit = async (values: UpdateRegistrationFlowBody) => {
+    const project = {
+      id: projectId,
+      name: projectId,
+      eligbility: JSON.parse(eligibility),
+    }
     const updatedValues = {
       ...parseObject(values),
-      transient_payload: { project_id: projectId },
       traits: {
         ...parseObject(values).traits,
-        eligibility: JSON.parse(eligibility),
+        projects: [project]
       },
     }
     await router

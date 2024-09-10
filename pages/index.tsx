@@ -60,7 +60,7 @@ const Home: NextPage = () => {
               <div className="row">
                 <DocsButton
                   testid="study"
-                  href="/study"
+                  href="/study?projectId=STAGING_PROJECT"
                   disabled={hasSession}
                   title={"Study"}
                 />
