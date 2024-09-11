@@ -68,7 +68,7 @@ const Registration: NextPage = () => {
     const project = {
       id: projectId,
       name: projectId,
-      eligbility: JSON.parse(eligibility),
+      eligibility: JSON.parse(eligibility),
     }
     const updatedValues = {
       ...parseObject(values),
