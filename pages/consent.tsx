@@ -24,7 +24,9 @@ const Consent = () => {
           return
         }
 
-        const consentResponse = await fetch(`/api/consent?consent_challenge=${consent_challenge}`)
+        const consentResponse = await fetch(
+          `/api/consent?consent_challenge=${consent_challenge}`,
+        )
         const consentData = await consentResponse.json()
 
         if (consentData.error) {
@@ -46,7 +48,7 @@ const Consent = () => {
               consentAction: "accept",
               grantScope: [],
               remember: false,
-              identity: sessionData.identity, 
+              identity: sessionData.identity,
             }),
           })
           const skipData = await skipResponse.json()
@@ -72,7 +74,8 @@ const Consent = () => {
     const form = event.target as HTMLFormElement
     const formData = new FormData(form)
 
-    const submitter = (event.nativeEvent as SubmitEvent).submitter as HTMLButtonElement
+    const submitter = (event.nativeEvent as SubmitEvent)
+      .submitter as HTMLButtonElement
     const consentAction = submitter.value
     const consentChallenge = formData.get("consent_challenge") as string
     const remember = !!formData.get("remember")

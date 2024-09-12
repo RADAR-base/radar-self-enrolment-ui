@@ -207,13 +207,15 @@ const ConsentForm: React.FC<ConsentFormProps> = ({
             if (question.field_type === "info") {
               return (
                 question.select_choices_or_calculations instanceof Array &&
-                question.select_choices_or_calculations.map((info, idx) => (
-                  <div key={`${index}-${idx}`}>
-                    <label className="inputLabel">{info.code}</label>
-                    <div className="inner-card">{info.label}</div>
-                    <br />
-                  </div>
-                ))
+                question.select_choices_or_calculations.map(
+                  (info: any, idx: number) => (
+                    <div key={`${index}-${idx}`}>
+                      <label className="inputLabel">{info.code}</label>
+                      <div className="inner-card">{info.label}</div>
+                      <br />
+                    </div>
+                  ),
+                )
               )
             } else if (question.field_type === "checkbox") {
               return (

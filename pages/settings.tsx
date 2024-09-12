@@ -104,7 +104,7 @@ const Settings: NextPage = () => {
             updateSettingsFlowBody: {
               ...values,
               csrf_token: csrfToken,
-            },
+            } as any,
           })
           .then(({ data }) => {
             // The settings have been saved and the flow was updated. Let's show it to the user!
