@@ -13,73 +13,101 @@ const Consent = () => {
   useEffect(() => {
     const { consent_challenge } = router.query
 
-    ory
-      .toSession()
-      .then(({ data }) => {
-        setIdentity(data.identity)
-      })
-      .catch((e) => console.log(e))
+    const fetchSessionAndConsent = async () => {
+      try {
+        const sessionResponse = await ory.toSession()
+        const sessionData = sessionResponse.data
+        setIdentity(sessionData.identity)
 
-    if (!consent_challenge) {
-      // router.push("/404")
-      return
+        if (!consent_challenge) {
+          console.error("Consent challenge is missing.")
+          return
+        }
+
+        const consentResponse = await fetch(`/api/consent?consent_challenge=${consent_challenge}`)
+        const consentData = await consentResponse.json()
+
+        if (consentData.error) {
+          throw new Error(consentData.error)
+        }
+
+        setConsent(consentData)
+
+        // Automatically handle skipping consent if enabled
+        if (consentData.client?.skip_consent) {
+          console.log("Skipping consent, automatically submitting.")
+          const skipResponse = await fetch("/api/consent", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              consentChallenge: consent_challenge,
+              consentAction: "accept",
+              grantScope: [],
+              remember: false,
+              identity: sessionData.identity, 
+            }),
+          })
+          const skipData = await skipResponse.json()
+
+          if (skipData.error) {
+            throw new Error(skipData.error)
+          }
+
+          router.push(skipData.redirect_to)
+        }
+      } catch (error) {
+        console.error("Error fetching session or consent:", error)
+      }
     }
 
-    fetch(`/api/consent?consent_challenge=${consent_challenge}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          throw new Error(data.error)
-        }
-        setConsent(data)
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-  }, [router])
+    if (router.query.consent_challenge) {
+      fetchSessionAndConsent()
+    }
+  }, [router.query])
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
     const form = event.target as HTMLFormElement
     const formData = new FormData(form)
 
-    const submitter = (event.nativeEvent as SubmitEvent)
-      .submitter as HTMLButtonElement
+    const submitter = (event.nativeEvent as SubmitEvent).submitter as HTMLButtonElement
     const consentAction = submitter.value
-
     const consentChallenge = formData.get("consent_challenge") as string
     const remember = !!formData.get("remember")
     const grantScope = formData.getAll("grant_scope") as string[]
 
     if (!consentChallenge || !consentAction) {
-      console.error("consentChallenge or consentAction is missing")
+      console.error("Consent challenge or action is missing.")
       return
     }
 
-    fetch("/api/consent", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        consentChallenge,
-        consentAction,
-        grantScope,
-        remember,
-        identity, // Include any additional identity data if needed
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          console.error(data.error)
-          return
-        }
-        router.push(data.redirect_to)
+    try {
+      const response = await fetch("/api/consent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          consentChallenge,
+          consentAction,
+          grantScope,
+          remember,
+          identity,
+        }),
       })
-      .catch((err) => {
-        console.error(err)
-      })
+      const data = await response.json()
+
+      if (data.error) {
+        console.error("Error submitting consent:", data.error)
+        return
+      }
+
+      router.push(data.redirect_to)
+    } catch (error) {
+      console.error("Error during consent submission:", error)
+    }
   }
 
   if (!consent) {
