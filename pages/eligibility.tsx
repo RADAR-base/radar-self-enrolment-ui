@@ -20,6 +20,7 @@ const Eligibility: NextPage = () => {
   const IS_ELIGIBLE = "yes"
   const router = useRouter()
   const [eligibility, setEligibility] = useState<boolean>()
+  const [toastVisible, setToastVisible] = useState(false)
   const questions: any[] = eligibilityQuestions
 
   const checkEligibility = async (values: any) => {
@@ -36,6 +37,8 @@ const Eligibility: NextPage = () => {
   })
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    if (toastVisible == true) return
+
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const formValues = Object.fromEntries(formData.entries())
@@ -43,11 +46,16 @@ const Eligibility: NextPage = () => {
     setEligibility(eligible)
 
     if (eligible) {
+      setToastVisible(true)
       sessionStorage.setItem("eligible", JSON.stringify(formValues))
       toast.success("Congrats, you're eligible!", {
+        autoClose: 1000,
         position: toast.POSITION.TOP_CENTER,
         closeButton: false,
-        onClose: () => router.replace("/registration"),
+        onClose: () => {
+          setToastVisible(false)
+          router.replace("/registration")
+        },
       })
     }
   }
