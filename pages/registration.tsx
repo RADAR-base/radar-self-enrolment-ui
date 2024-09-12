@@ -3,7 +3,7 @@ import { AxiosError } from "axios"
 import type { NextPage } from "next"
 import Head from "next/head"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 // Import render helpers
 import { ActionCard, CenterLink, Flow, MarginCard, CardTitle } from "../pkg"
@@ -14,6 +14,7 @@ import { parseObject } from "../pkg/ui/helpers"
 
 // Renders the registration page
 const Registration: NextPage = () => {
+  const isMounted = useRef(true) // Tracking the mounted status of the component across renders
   const router = useRouter()
 
   // The "flow" represents a registration process and contains
@@ -24,6 +25,12 @@ const Registration: NextPage = () => {
 
   // Get ?flow=... from the URL
   const { flow: flowId, return_to: returnTo } = router.query
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false
+    }
+  }, [])
 
   useEffect(() => {
     const eligible = sessionStorage.getItem("eligible")
@@ -47,7 +54,7 @@ const Registration: NextPage = () => {
         .getRegistrationFlow({ id: String(flowId) })
         .then(({ data }) => {
           // We received the flow - let's use its data and render the form!
-          setFlow(data)
+          if (isMounted.current) setFlow(data)
         })
         .catch(handleFlowError(router, "registration", setFlow))
       return
@@ -59,7 +66,7 @@ const Registration: NextPage = () => {
         returnTo: returnTo ? String(returnTo) : undefined,
       })
       .then(({ data }) => {
-        setFlow(data)
+        if (isMounted.current) setFlow(data)
       })
       .catch(handleFlowError(router, "registration", setFlow))
   }, [flowId, router, router.isReady, returnTo, flow])

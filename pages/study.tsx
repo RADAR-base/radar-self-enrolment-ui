@@ -23,6 +23,10 @@ const Study: NextPage = () => {
     }
   })
 
+  const handleNavigation = () => {
+    router.replace("/eligibility")
+  }
+
   return (
     <>
       <Head>
@@ -32,7 +36,11 @@ const Study: NextPage = () => {
         <CardTitle>{projectId} Research Study</CardTitle>
         <img src="image.png" />
         <StudyInfo questions={studyInfo} />
-        <TextCenterButton className="" data-testid="" href="/eligibility">
+        <TextCenterButton
+          className=""
+          data-testid=""
+          onClick={handleNavigation}
+        >
           Join Now
         </TextCenterButton>
         {/* <Flow onSubmit={onSubmit} flow={flow} /> */}
