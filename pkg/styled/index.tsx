@@ -1,5 +1,6 @@
 import {
   Card,
+  H2,
   LinkButton,
   typographyH2Styles,
   typographyLinkStyles,
@@ -10,17 +11,36 @@ import styled from "styled-components"
 export const MarginCard = styled(Card)`
   margin-top: 70px;
   margin-bottom: 18px;
+  border-radius: 30px;
+  background-color: #fff !important;
+`
+export const InnerCard = styled(Card)`
+  margin: 8px 0;
+  color: #555;
+  text-align: left;
+  border-radius: 30px;
+  background-color: #f8f9fc !important;
+  width: 90%;
+  border: none;
 `
 
+export const CardTitle = styled(H2)`
+  color: #333;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+`
 export const ActionCard = styled(Card)`
   margin-bottom: 18px;
+  background-color: #fff !important;
+  border-radius: 20px;
 `
-
 export const CenterLink = styled.a`
   ${typographyH2Styles};
   ${typographyLinkStyles};
   text-align: center;
   font-size: 15px;
+  color: black !important;
 `
 
 export const TextLeftButton = styled(LinkButton)`
@@ -28,6 +48,9 @@ export const TextLeftButton = styled(LinkButton)`
 
   & .linkButton {
     box-sizing: border-box;
+    background-color: #706ef4;
+    color: #fff;
+    font-weight: bold;
   }
 
   & a {
@@ -37,6 +60,32 @@ export const TextLeftButton = styled(LinkButton)`
     &:focus,
     &:visited {
       text-align: left;
+      background-color: #706ef4 !important;
+      color: #fff;
+    }
+  }
+`
+
+export const TextCenterButton = styled(LinkButton)`
+  box-sizing: border-box;
+
+  & .linkButton {
+    box-sizing: border-box;
+    background-color: #706ef4;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 8px !important;
+  }
+
+  & a {
+    &:hover,
+    &,
+    &:active,
+    &:focus,
+    &:visited {
+      text-align: center;
+      background-color: #706ef4 !important;
+      color: #fff;
     }
   }
 `

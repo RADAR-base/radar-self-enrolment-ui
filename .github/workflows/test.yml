@@ -27,4 +27,4 @@ jobs:
           npm run start &
           npm run test
         env:
-          ORY_KRATOS_URL: http://localhost:4455
+          ORY_KRATOS_URL: http://localhost:4433

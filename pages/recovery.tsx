@@ -1,5 +1,4 @@
 import { RecoveryFlow, UpdateRecoveryFlowBody } from "@ory/client"
-import { CardTitle } from "@ory/themes"
 import { AxiosError } from "axios"
 import type { NextPage } from "next"
 import Head from "next/head"
@@ -7,7 +6,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
-import { Flow, ActionCard, CenterLink, MarginCard } from "../pkg"
+import { Flow, ActionCard, CenterLink, MarginCard, CardTitle } from "../pkg"
 import { handleFlowError } from "../pkg/errors"
 import ory from "../pkg/sdk"
 
@@ -48,7 +47,7 @@ const Recovery: NextPage = () => {
         // If the previous handler did not catch the error it's most likely a form validation error
         if (err.response?.status === 400) {
           // Yup, it is!
-          setFlow(err.response?.data)
+          setFlow(err.response?.data as RecoveryFlow)
           return
         }
 
@@ -76,7 +75,7 @@ const Recovery: NextPage = () => {
             switch (err.response?.status) {
               case 400:
                 // Status code 400 implies the form validation had an error
-                setFlow(err.response?.data)
+                setFlow(err.response?.data as RecoveryFlow)
                 return
             }
 
