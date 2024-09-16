@@ -1,0 +1,46 @@
+{
+    "title": "Test study",
+    "studyId": "test",
+    "onboarding": {
+        "metadata": {},
+        "steps": []
+    },
+    "armtList": [],
+    "studyUiConfig": {
+        "materialTheme": {},
+        "studyIconSrc": "https://avatars.githubusercontent.com/u/22225205",
+        "navbarLinks": [
+            {"text": "RADAR", "href": "/"},
+            {"text": "Home", "href": "/study/test"},
+            {"text": "Enrol", "href": "/study/test/enrol"},
+            {"text": "Portal", "href": "/study/test/portal"}
+          ],
+        "footer": {
+            "columns": [
+                {
+                    "title": "Study Links",
+                    "items": [
+                        {"text": "Home", "href": "#"},
+                        {"text": "RADAR", "href": "/"}
+                    ]
+                },
+                {
+                    "title": "Contact Us",
+                    "items": [
+                        {"text": "test@hrfh.com", "href": "mailto:test@hrfh.com"},
+                        {"text": "01000000000"}
+                    ]
+                },
+                {
+                    "title": "Legal Links",
+                    "items": [
+                        {"text": "Privacy Policy", "href": "privacy"},
+                        {"text": "Cookie Policy", "href": "cookies"}
+                    ]
+                }
+            ],
+            "copyrightText": "© 2024 Health Research from Home"
+
+        }
+    }
+}

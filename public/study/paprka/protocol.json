@@ -1,0 +1,47 @@
+{
+    "name": "PAPrKA",
+    "studyId": "paprka",
+    "healthIssues": [],
+    "onboarding": {
+        "metadata": {},
+        "steps": []
+    },
+    "protocols": [],
+    "studyUiConfig": {
+        "materialTheme": {},
+        "studyIconSrc": "/study/paprka/resources/hrfh_low.png",
+        "navbarLinks": [
+            {"text": "RADAR", "href": "/"},
+            {"text": "Home", "href": "/study/paprka"},
+            {"text": "Portal", "href": "/study/paprka/portal"},
+            {"text": "Enrol", "href": "/study/paprka/enrol"}
+          ],
+        "footer": {
+            "columns": [
+                {
+                    "title": "Study Links",
+                    "items": [
+                        {"text": "Home", "href": "#"},
+                        {"text": "RADAR", "href": "/"}
+                    ]
+                },
+                {
+                    "title": "Contact Us",
+                    "items": [
+                        {"text": "test@hrfh.com", "href": "mailto:test@hrfh.com"},
+                        {"text": "01000000000"}
+                    ]
+                },
+                {
+                    "title": "Legal Links",
+                    "items": [
+                        {"text": "Privacy Policy", "href": "privacy"},
+                        {"text": "Cookie Policy", "href": "cookies"}
+                    ]
+                }
+            ],
+            "copyrightText": "© 2024 Health Research from Home"
+
+        }
+    }
+}

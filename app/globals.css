@@ -1,0 +1,20 @@
+html,
+body {
+  max-width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background-attachment: fixed;
+  background-size: 100%;
+  background: rgb(255, 255, 255);
+  overflow-x: hidden;
+      /* radial-gradient(circle farthest-corner at top left, rgba(199, 255, 250, 0.54) 0%, rgba(225, 243, 97,0) 50%),
+      radial-gradient(circle farthest-side at top right, rgba(255, 255, 255, 0.4) 0%, rgba(181, 176, 177,0) 10%),
+      radial-gradient(circle farthest-corner at bottom right, rgba(255, 230, 234, 0.537) 0%, rgba(204, 104, 119, 0) 33%),
+      radial-gradient(circle farthest-corner at top right, rgba(155, 222, 240, 0.387) 0%, rgba(155, 221, 240,0) 50%),
+      radial-gradient(ellipse at bottom center, rgba(249, 209, 202, 0.256) 0%, rgba(254, 43, 0, 0) 80%);
+     */
+}
