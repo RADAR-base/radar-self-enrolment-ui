@@ -1,4 +1,4 @@
-const BASEURL = process.env.NEXT_PUBLIC_ORY_SDK_URL;
+const BASEURL = process.env.ORY_SDK_URL;
 
 export const createLoginFlow = async (): Promise<Response> => {
   const url = new URL("self-service/login/browser", BASEURL)
