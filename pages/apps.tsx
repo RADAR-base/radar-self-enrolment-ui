@@ -4,6 +4,7 @@ import {
   UiNodeInputAttributes,
   UpdateSettingsFlowBody,
 } from "@ory/client"
+import { H3 } from "@ory/themes"
 import { AxiosError } from "axios"
 import type { NextPage } from "next"
 import Head from "next/head"
@@ -24,7 +25,6 @@ import {
 } from "../pkg"
 import { handleFlowError } from "../pkg/errors"
 import ory from "../pkg/sdk"
-import { H3 } from "@ory/themes"
 
 interface Props {
   flow?: SettingsFlow
