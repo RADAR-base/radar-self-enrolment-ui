@@ -9,7 +9,5 @@ const localConfig = {
 }
 
 export default new FrontendApi(
-  new Configuration(
-    process.env.KRATOS_PUBLIC_URL ? localConfig : edgeConfig,
-  ),
+  new Configuration(process.env.KRATOS_PUBLIC_URL ? localConfig : edgeConfig),
 )
