@@ -1,5 +1,4 @@
 import { LoginFlow, UpdateLoginFlowBody } from "@ory/client"
-import { CardTitle } from "@ory/themes"
 import { AxiosError } from "axios"
 import type { NextPage } from "next"
 import Head from "next/head"
@@ -7,7 +6,14 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
-import { ActionCard, CenterLink, LogoutLink, Flow, MarginCard } from "../pkg"
+import {
+  ActionCard,
+  CenterLink,
+  LogoutLink,
+  Flow,
+  MarginCard,
+  CardTitle,
+} from "../pkg"
 import { handleGetFlowError, handleFlowError } from "../pkg/errors"
 import ory from "../pkg/sdk"
 
@@ -25,6 +31,7 @@ const Login: NextPage = () => {
     // AAL = Authorization Assurance Level. This implies that we want to upgrade the AAL, meaning that we want
     // to perform two-factor authentication/verification.
     aal,
+    login_challenge: loginChallenge,
   } = router.query
 
   // This might be confusing, but we want to show the user an option
@@ -51,15 +58,25 @@ const Login: NextPage = () => {
     // Otherwise we initialize it
     ory
       .createBrowserLoginFlow({
-        refresh: Boolean(refresh),
+        refresh: loginChallenge ? true : Boolean(refresh),
         aal: aal ? String(aal) : undefined,
         returnTo: returnTo ? String(returnTo) : undefined,
+        loginChallenge: loginChallenge ? String(loginChallenge) : undefined,
       })
       .then(({ data }) => {
         setFlow(data)
       })
       .catch(handleFlowError(router, "login", setFlow))
-  }, [flowId, router, router.isReady, aal, refresh, returnTo, flow])
+  }, [
+    flowId,
+    router,
+    router.isReady,
+    aal,
+    refresh,
+    returnTo,
+    loginChallenge,
+    flow,
+  ])
 
   const onSubmit = (values: UpdateLoginFlowBody) =>
     router
@@ -86,7 +103,7 @@ const Login: NextPage = () => {
             // If the previous handler did not catch the error it's most likely a form validation error
             if (err.response?.status === 400) {
               // Yup, it is!
-              setFlow(err.response?.data)
+              setFlow(err.response?.data as LoginFlow)
               return
             }
 

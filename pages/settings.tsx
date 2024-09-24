@@ -1,5 +1,10 @@
-import { SettingsFlow, UpdateSettingsFlowBody } from "@ory/client"
-import { CardTitle, H3, P } from "@ory/themes"
+import {
+  SettingsFlow,
+  UiNodeInputAttributes,
+  UpdateSettingsFlowBody,
+  UpdateSettingsFlowWithProfileMethod,
+} from "@ory/client"
+import { H3, P } from "@ory/themes"
 import { AxiosError } from "axios"
 import type { NextPage } from "next"
 import Head from "next/head"
@@ -7,7 +12,14 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { ReactNode, useEffect, useState } from "react"
 
-import { ActionCard, CenterLink, Flow, Messages, Methods } from "../pkg"
+import {
+  ActionCard,
+  CenterLink,
+  Flow,
+  Messages,
+  Methods,
+  CardTitle,
+} from "../pkg"
 import { handleFlowError } from "../pkg/errors"
 import ory from "../pkg/sdk"
 
@@ -42,6 +54,8 @@ const Settings: NextPage = () => {
   // Get ?flow=... from the URL
   const router = useRouter()
   const { flow: flowId, return_to: returnTo } = router.query
+  const [email, setEmail] = useState("")
+  const [csrfToken, setCsrfToken] = useState("")
 
   useEffect(() => {
     // If the router is not ready yet, or we already have a flow, do nothing.
@@ -66,6 +80,13 @@ const Settings: NextPage = () => {
         returnTo: String(returnTo || ""),
       })
       .then(({ data }) => {
+        const csrfTokenFromHeaders = (
+          data.ui.nodes.find(
+            (node: any) => node.attributes.name === "csrf_token",
+          )?.attributes as UiNodeInputAttributes
+        ).value
+        setCsrfToken(csrfTokenFromHeaders || "")
+        setEmail(data.identity.traits.email)
         setFlow(data)
       })
       .catch(handleFlowError(router, "settings", setFlow))
@@ -80,7 +101,10 @@ const Settings: NextPage = () => {
         ory
           .updateSettingsFlow({
             flow: String(flow?.id),
-            updateSettingsFlowBody: values,
+            updateSettingsFlowBody: {
+              ...values,
+              csrf_token: csrfToken,
+            } as any,
           })
           .then(({ data }) => {
             // The settings have been saved and the flow was updated. Let's show it to the user!
@@ -108,7 +132,7 @@ const Settings: NextPage = () => {
             // If the previous handler did not catch the error it's most likely a form validation error
             if (err.response?.status === 400) {
               // Yup, it is!
-              setFlow(err.response?.data)
+              setFlow(err.response?.data as SettingsFlow)
               return
             }
 
@@ -140,7 +164,6 @@ const Settings: NextPage = () => {
       </SettingsCard>
       <SettingsCard only="password" flow={flow}>
         <H3>Change Password</H3>
-
         <Messages messages={flow?.ui.messages} />
         <Flow
           hideGlobalMessages
@@ -151,7 +174,6 @@ const Settings: NextPage = () => {
       </SettingsCard>
       <SettingsCard only="oidc" flow={flow}>
         <H3>Manage Social Sign In</H3>
-
         <Messages messages={flow?.ui.messages} />
         <Flow hideGlobalMessages onSubmit={onSubmit} only="oidc" flow={flow} />
       </SettingsCard>
