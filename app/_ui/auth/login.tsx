@@ -46,7 +46,6 @@ export function LoginModal() {
   }
 
 export function LoginComponent(props: LoginProps) {
-// const Login: React.FC<{onLogin?: () => void}> = (params: {onLogin?: () => void}) => {
     const router = useRouter()
     const auth = new Auth();
     const onLogin = props.onLogin ? props.onLogin : () => router.push('/')

@@ -8,6 +8,25 @@ export type Onboarding = {
   steps: OnboardingStep[];
 };
 
+export type EligabilityItem = {
+  field_type: {}
+}
+export type Eligability = {
+  title?: string,
+  description?: string,
+  items: EligabilityItem[]
+}
+export type Consent = {};
+export type AdditionalRegistration = {};
+export type StudyInformation = {};
+
+export type Enrolment = {
+  studyInformation: StudyInformation,
+  eligability: Eligability,
+  consent: Consent,
+  additional: AdditionalRegistration
+}
+
 export type ArmtDefinition = {};
 export type ArmtSchedule = {};
 export type ArmtAppearance = {};

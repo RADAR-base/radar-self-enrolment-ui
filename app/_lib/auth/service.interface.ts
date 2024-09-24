@@ -5,7 +5,7 @@ export interface AuthResponse {
   errors?: any[];
 }
 
-export abstract class AuthService {
+export abstract class ClientAuthService {
   constructor() {}
 
   abstract isLoggedIn(): Promise<boolean>;
@@ -28,4 +28,8 @@ export abstract class AuthService {
 
   abstract logOut(): Promise<AuthResponse>;
 
+}
+
+export abstract class ServerAuthService {
+  
 }

@@ -1,9 +1,9 @@
-import { AuthResponse, AuthService } from '../service.interface';
+import { AuthResponse, ClientAuthService } from '../service.interface';
 import client from './api.client';
 import { OrySession } from './types'
 import { getCsrfToken } from './util';
 
-export class OryAuthClientService extends AuthService {
+export class OryAuthClientService extends ClientAuthService {
   private async getOrySession(refresh?: boolean): Promise<OrySession | null> {
     const resp = await client.whoAmI()
     var session: OrySession | null = null

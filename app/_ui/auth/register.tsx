@@ -1,12 +1,18 @@
 // "use client";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import * as Yup from 'yup';
 
-import { Box, Button, Card, Container, Link, Stack, TextField } from "@mui/material";
+import { Box, Button, Stack, styled, TextField } from "@mui/material";
 
 import { useFormik } from "formik";
 import Auth from '@/app/_lib/auth'
+
+const CustomTextField = styled(TextField)({
+  '& .MuiFormHelperText-root.Mui-error': {
+    position: 'absolute',
+    top: '100%'
+  }
+});
 
 const auth = new Auth();
 
@@ -20,6 +26,7 @@ const Register: React.FC<{onRegister?: () => void}> = (params: {onRegister?: () 
     const onRegister = params.onRegister ? params.onRegister : () => router.push('/')
          
     const formik = useFormik({
+        isInitialValid: false,
         initialValues: {
             email: '',
             password: '',
@@ -31,7 +38,8 @@ const Register: React.FC<{onRegister?: () => void}> = (params: {onRegister?: () 
               if (resp.ok) {
                 onRegister()
               } else {
-                console.log('something wrong')
+                console.log('')
+                formik.setFieldError('email', 'An error occured while trying to register')
               }
             }
           )
@@ -40,14 +48,12 @@ const Register: React.FC<{onRegister?: () => void}> = (params: {onRegister?: () 
 
     return (
       <Box 
-        display="flex"
-        alignItems="center"
-        alignContent="center"
+        justifyContent={"center"}
         p={4}>
         <form onSubmit={formik.handleSubmit}>
-          <Stack spacing={2} alignItems="center">
+          <Stack spacing={4} alignItems="center">
             <h1>Sign Up</h1>
-            <TextField
+            <CustomTextField
               id="email"
               name="email"
               label="Email"
@@ -59,7 +65,7 @@ const Register: React.FC<{onRegister?: () => void}> = (params: {onRegister?: () 
               hidden={true}
               fullWidth
               />
-            <TextField
+            <CustomTextField
                 id="password"
                 name="password"
                 label="Password"
@@ -71,7 +77,7 @@ const Register: React.FC<{onRegister?: () => void}> = (params: {onRegister?: () 
                 helperText={formik.touched.password && formik.errors.password}
                 fullWidth
                 />
-            <Button color="primary" variant="contained" type="submit">
+            <Button color="primary" variant="contained" type="submit" disabled={(formik.isValid == null) ? false : (!formik.isValid)}>
                 Sign Up
             </Button>
           </Stack>

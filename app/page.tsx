@@ -15,24 +15,7 @@ const auth = new Auth();
 const authServer = new AuthServer();
 
 export default async function Home() {
-  // const [session, setSession] = useState<string>(
-  //   "No valid Ory Session was found.\nPlease sign in to receive one.",
-  // )
-  // const [hasSession, setHasSession] = useState<boolean>(false)
-
-  // if (!hasSession) {
-  //   auth.getDisplayName().then(
-  //     (username) => {
-  //       if (username != null) {
-  //         setSession("Logged in as " + username)
-  //         setHasSession(true)
-  //       }
-  //     }
-  //   )
-  // }
-
   const session = await authServer.getEmail()
-
   return (
     <Box
     sx={{

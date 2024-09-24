@@ -5,7 +5,7 @@ import { StudyProtocolRepository, LocalProtocolRepository } from "@/app/_lib/stu
 import { StudyProtocol } from '@/app/_lib/study/protocol';
 import { isAbsolutePath } from "@/app/_lib/util/links";
 
-import { Box, CssBaseline, ThemeProvider } from "@mui/material";
+import { Box, CssBaseline, Divider, ThemeProvider } from "@mui/material";
 import NavBar from "@/app/_ui/components/navbar/navbar";
 import {Footer, FooterLink } from "@/app/_ui/components/footer";
 

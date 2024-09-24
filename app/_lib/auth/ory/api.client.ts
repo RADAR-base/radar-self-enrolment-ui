@@ -1,4 +1,4 @@
-const BASEURL = process.env.ORY_SDK_URL;
+const BASEURL = process.env.NEXT_PUBLIC_ORY_SDK_URL;
 
 export const createLoginFlow = async (): Promise<Response> => {
   const url = new URL("self-service/login/browser", BASEURL)
@@ -41,6 +41,7 @@ export const getLoginFlow = async (flowId: string): Promise<Response> => {
 
 
 export const createLogoutFlow = async (): Promise<Response> => {
+  console.log(BASEURL)
   var url = new URL('self-service/logout/browser', BASEURL)
   return await fetch(url, {
     method: 'GET',

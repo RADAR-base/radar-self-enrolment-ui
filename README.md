@@ -2,10 +2,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-The webportal requires an ORY_SDK_URL environmental variable to be set. This can be present in an .env or .env.local file.
+The webportal requires an NEXT_PUBLIC_ORY_SDK_URL environmental variable to be set. This can be present in an .env or .env.local file.
 
 ```bash
-echo "ORY_SDK_URL=http://localhost:4433" > .env.local
+echo "NEXT_PUBLIC_ORY_SDK_URL=http://localhost:4433" > .env.local
 ```
 
 Then run the development server

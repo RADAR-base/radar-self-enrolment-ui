@@ -25,6 +25,7 @@ export function Footer(props: FooterProps) {
         width: '100vw'
       }}
     >
+      <Divider style={{width: '100%'}}/>
       <Box sx={{
         bgcolor:' white',
         width: 1

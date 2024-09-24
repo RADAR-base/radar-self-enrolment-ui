@@ -1,10 +1,10 @@
 "use server"
-import { AuthResponse, AuthService } from '../service.interface'
+import { AuthResponse, ClientAuthService, ServerAuthService } from '../service.interface'
 import * as ory from './api.server'
 import { OrySession } from './types'
 import { getCsrfToken } from './util'
 
-class OryAuthServerService extends AuthService {
+class OryAuthServerService extends ClientAuthService { // TODO - create a server-side interface for authorization
   private async getSession(): Promise<OrySession | null> {
     const resp = await ory.whoAmI()
     var session: OrySession | null = null

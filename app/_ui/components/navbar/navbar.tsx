@@ -3,7 +3,7 @@ import React from 'react'
 import Image from 'next/image'
 import NextLink from 'next/link'
 
-import { AppBar, Box, Button, Container, IconButton, Link, Menu, MenuItem, Toolbar, Typography } from '@mui/material'
+import { AppBar, Box, Button, Container, Divider, IconButton, Link, Menu, MenuItem, Toolbar, Typography } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu';
 
 interface NavBarProps {
@@ -112,6 +112,7 @@ function NavBar(props: NavBarProps) {
         </Box>
       </Toolbar>
     </Container>
+    <Divider style={{width: '100%'}}/>
   </AppBar>
 )}
 
