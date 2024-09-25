@@ -49,7 +49,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const acceptResponse = await hydra.acceptOAuth2ConsentRequest({
           consentChallenge,
           acceptOAuth2ConsentRequest: {
-            grant_scope: grantScope,
+            grant_scope: session.access_token.scope,
             grant_access_token_audience: body.requested_access_token_audience,
             session,
             remember: Boolean(remember),
