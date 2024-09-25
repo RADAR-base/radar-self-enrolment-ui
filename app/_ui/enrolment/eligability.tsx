@@ -1,55 +1,58 @@
-import { Box, Button, Divider, Stack, Typography } from "@mui/material";
-import { getYesNoOnChangeHandler, YesNoButton, YesNoField } from "../components/fields/yesno";
-import { LoremIpsum } from "../debug/lorem";
-import { FormikValues, FormikProps } from "formik";
+import { Stack, Typography } from "@mui/material";
+import React from "react";
+
+import { getYesNoOnChangeHandler, YesNoField } from "../components/fields/yesno";
+import { ITextItem, IYesNoItem } from "./field.interfaces";
+
+
+type EligabilityItem = IYesNoItem | ITextItem
 
 interface EnrolmentEligabilityProps {
-  formik: FormikProps<any>
+
   title?: string
   description?: string
-  items?: any
+  items: EligabilityItem[]
+  setFieldValue: (id: string, value: boolean) => void
+  values: {[key: string]: boolean | undefined}
+  errors: {[key: string]: string}
 }
 
 export function EnrolmentEligability(props: EnrolmentEligabilityProps) {
-  const formik = props.formik
   const title = props.title ? props.title : 'Eligability'
-  const description = props.description ? props.description : 'Description'
+  const description = props.description
   const onChange = (event: any, value: boolean) => {
-    console.log(event.target.id)
-    formik.validateField(event.target.id).then(
-      (o) => console.log(o)
-    )
-    return getYesNoOnChangeHandler(formik)(event, value)
+    return getYesNoOnChangeHandler(props.setFieldValue)(event, value)
+  }
+  var items = [
+    <YesNoField
+      label={props.items[0].label}
+      description={props.items[0].description}
+      value={props.values[props.items[0].id]}
+      onChange={onChange}
+      id={'eligability.' + props.items[0].id}
+      helperText={(props.values[props.items[0].id] != null) ? props.errors[props.items[0].id] : ""}
+      key={'eligability.' + props.items[0].id}
+    />
+  ];
+  for (let i = 1; i < props.items.length; i++) {
+    if (props.values[props.items[i-1].id] != undefined) {
+      // items.push(<Divider key={'eligability.divider.' + props.items[i].id}/>)
+      items.push(
+        <YesNoField label={props.items[i].label}
+          description={props.items[i].description}
+          value={props.values[props.items[i].id]}
+          onChange={onChange}
+          id={'eligability.' + props.items[i].id}
+          helperText={(props.values[props.items[i].id] != null) ? props.errors[props.items[i].id] : ""}
+          key={'eligability.' + props.items[i].id}
+        />
+      )
+    }
   }
   return (
-    <Stack spacing={2} alignItems="inherit">
+    <Stack spacing={4} alignItems="inherit">
       <Typography variant="h2" align="left">{title}</Typography>
-      <h2> Hi </h2>
-      <Typography variant="subtitle1" align="left" paddingBottom={2}>{description}</Typography>
-        <YesNoField label={'Eligability criteria 1'}
-                    description="description"
-                    value={formik.values.eligability.criteria1}
-                    onChange={onChange}
-                    id='eligability.criteria1'/>
-      {((formik.values.eligability.criteria1 != undefined) && <Divider />)}
-      {((formik.values.eligability.criteria1 != undefined) && 
-        <YesNoField label={'Eligability criteria 2'}
-                    description={LoremIpsum.slice(0, 200)}
-                    value={formik.values.eligability.criteria2}
-                    onChange={getYesNoOnChangeHandler(formik)}
-                    id='eligability.criteria2'
-                    disabled={formik.values.eligability.criteria1 == undefined}
-                    helperText={""}
-                    />
-      )}
-      {((formik.values.eligability.criteria2 != undefined) && <Divider />)}
-      {((formik.values.eligability.criteria2 != undefined) && 
-        <YesNoField label={'Eligability criteria 2'}
-                    description="description"
-                    value={formik.values.eligability.criteria3} 
-                    onChange={getYesNoOnChangeHandler(formik)}
-                    id='eligability.criteria3'
-                    disabled={formik.values.eligability.criteria2 == undefined}/>
-      )}
+      {description && <Typography variant="subtitle1" align="left" paddingBottom={2}>{description}</Typography>}
+      {items}
     </Stack>
 )}

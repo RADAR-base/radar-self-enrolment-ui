@@ -1,7 +1,7 @@
 import { Box, FormControl, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 
-export const getYesNoOnChangeHandler = (formik: any): {(event: any, value: boolean): void} => {
-  return (event: any, value: boolean) => { if (value != null) formik.setFieldValue(event.target.id, value) }
+export const getYesNoOnChangeHandler = (setFieldValue: (id: string, value: boolean) => void): {(event: any, value: boolean): void} => {
+  return (event: any, value: boolean) => { if (value != null) setFieldValue(event.target.id, value) }
 }
 
 interface YesNoButtonProps {
@@ -16,7 +16,6 @@ interface YesNoButtonProps {
 export function YesNoButton(props: YesNoButtonProps) {
   var color = props.color ? props.color : 'primary'
   return (
-    <div onInput={console.log} onBlur={console.log}>
       <ToggleButtonGroup 
         id={props.id}
         key={props.key}
@@ -29,7 +28,6 @@ export function YesNoButton(props: YesNoButtonProps) {
         <ToggleButton id={props.id} key={props.key} value={false} aria-label='no'>No</ToggleButton>
         <ToggleButton id={props.id} key={props.key} value={true} aria-label='yes'>Yes</ToggleButton>
       </ToggleButtonGroup>
-      </div>
   )
 }
 

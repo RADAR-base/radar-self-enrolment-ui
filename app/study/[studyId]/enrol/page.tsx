@@ -18,10 +18,10 @@ export default async function Page({ params }: { params: { studyId: string } }) 
             justifyContent="center"
             alignItems="center">
         <Container maxWidth="lg" disableGutters>
-      <RadarCard>
-      <EnrolmentContent />
-      </RadarCard>
-      </Container>
+          <RadarCard>
+            <EnrolmentContent />
+          </RadarCard>
+        </Container>
       </Box>
     </main>
   )}
