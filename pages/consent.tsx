@@ -9,11 +9,13 @@ const Consent = () => {
   const [consent, setConsent] = useState<any>(null)
   const [identity, setIdentity] = useState<any>(null)
   const [csrfToken, setCsrfToken] = useState<string>("")
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {
     const { consent_challenge } = router.query
 
     const fetchSessionAndConsent = async () => {
+      setIsLoading(true)
       try {
         const sessionResponse = await ory.toSession()
         const sessionData = sessionResponse.data
@@ -56,12 +58,13 @@ const Consent = () => {
           if (skipData.error) {
             throw new Error(skipData.error)
           }
-
           router.push(skipData.redirect_to)
+          return
         }
       } catch (error) {
         console.error("Error fetching session or consent:", error)
       }
+      setIsLoading(false)
     }
 
     if (router.query.consent_challenge) {
@@ -113,7 +116,7 @@ const Consent = () => {
     }
   }
 
-  if (!consent) {
+  if (!consent || isLoading) {
     return <div>Loading...</div>
   }
 
