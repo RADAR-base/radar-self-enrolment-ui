@@ -8,6 +8,7 @@ import QRCode from "react-qr-code"
 
 import { ActionCard, CenterLink, Methods, CardTitle } from "../pkg"
 import ory from "../pkg/sdk"
+import restSourceClient from "../services/rest-source-client"
 
 interface Props {
   flow?: SettingsFlow
@@ -22,7 +23,7 @@ function AppLoginCard({ children }: Props & { children: ReactNode }) {
   )
 }
 
-const Apps: NextPage = () => {
+const Fitbit: NextPage = () => {
   const router = useRouter()
   const DefaultHydraUrl =
     process.env.HYDRA_PUBLIC_URL || "http://localhost:4444"
@@ -31,16 +32,25 @@ const Apps: NextPage = () => {
   const [projects, setProjects] = useState<any>([])
 
   const handleNavigation = () => {
-    router.replace("/fitbit")
+    return restSourceClient.redirectToAuthRequestLink()
   }
 
-  useEffect(() => {
-    // If the router is not ready yet, or we already have a flow, do nothing.
-    if (!router.isReady) {
-      return
-    }
 
-    // Otherwise we initialize it
+  useEffect(() => {
+    const handleToken = async () => {
+      if (!router.isReady) return;
+  
+      const token = await restSourceClient.getAccessTokenFromRedirect();
+      if (token) {
+        localStorage.setItem("access_token", token);
+        await restSourceClient.redirectToRestSourceAuthLink(token);
+      }
+    };
+  
+    handleToken();
+  }, [router.isReady]);
+
+  useEffect(() => {
     ory.toSession().then(({ data }) => {
       const traits = data?.identity?.traits
       setTraits(traits)
@@ -56,7 +66,11 @@ const Apps: NextPage = () => {
       </Head>
       <AppLoginCard>
         <CardTitle>App Login</CardTitle>
-        <QrForm projects={projects} baseUrl={DefaultHydraUrl} navigate={handleNavigation} />
+        <QrForm
+          projects={projects}
+          baseUrl={DefaultHydraUrl}
+          navigate={handleNavigation}
+        />
       </AppLoginCard>
       <ActionCard wide>
         <Link href="/" passHref>
@@ -69,7 +83,7 @@ const Apps: NextPage = () => {
 
 interface QrFormProps {
   projects: any[]
-  baseUrl: string,
+  baseUrl: string
   navigate: any
 }
 
@@ -80,19 +94,12 @@ const QrForm: React.FC<QrFormProps> = ({ projects, baseUrl, navigate }) => {
         {projects.map((project) => (
           <div key={project.id} className="project-form">
             <h3>{project.name}</h3>
-            <label className="inputLabel">Active App</label>
-            <p>Scan the QR code below with your app.</p>
-            <QRCode value={baseUrl + "?projectId=" + project.id} size={140} />
-            <br />
-            <br />
-            <button className="col-xs-4">Login with Active App</button>
-            <br />
-            <br />
-            <br />
             <div>
               <label className="inputLabel">Connect Your Fitbit</label>
               <p>Click the button below to redirect to Fitbit.</p>
-              <button className="col-xs-4" onClick={navigate}>Login with Fitbit</button>
+              <button className="col-xs-4" onClick={navigate}>
+                Login with Fitbit
+              </button>
             </div>
           </div>
         ))}
@@ -107,4 +114,4 @@ const QrForm: React.FC<QrFormProps> = ({ projects, baseUrl, navigate }) => {
   }
 }
 
-export default Apps
+export default Fitbit
