@@ -56,7 +56,11 @@ const Apps: NextPage = () => {
       </Head>
       <AppLoginCard>
         <CardTitle>App Login</CardTitle>
-        <QrForm projects={projects} baseUrl={DefaultHydraUrl} navigate={handleNavigation} />
+        <QrForm
+          projects={projects}
+          baseUrl={DefaultHydraUrl}
+          navigate={handleNavigation}
+        />
       </AppLoginCard>
       <ActionCard wide>
         <Link href="/" passHref>
@@ -69,7 +73,7 @@ const Apps: NextPage = () => {
 
 interface QrFormProps {
   projects: any[]
-  baseUrl: string,
+  baseUrl: string
   navigate: any
 }
 
@@ -92,7 +96,9 @@ const QrForm: React.FC<QrFormProps> = ({ projects, baseUrl, navigate }) => {
             <div>
               <label className="inputLabel">Connect Your Fitbit</label>
               <p>Click the button below to redirect to Fitbit.</p>
-              <button className="col-xs-4" onClick={navigate}>Login with Fitbit</button>
+              <button className="col-xs-4" onClick={navigate}>
+                Login with Fitbit
+              </button>
             </div>
           </div>
         ))}

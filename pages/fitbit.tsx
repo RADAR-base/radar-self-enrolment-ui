@@ -35,20 +35,19 @@ const Fitbit: NextPage = () => {
     return restSourceClient.redirectToAuthRequestLink()
   }
 
-
   useEffect(() => {
     const handleToken = async () => {
-      if (!router.isReady) return;
-  
-      const token = await restSourceClient.getAccessTokenFromRedirect();
+      if (!router.isReady) return
+
+      const token = await restSourceClient.getAccessTokenFromRedirect()
       if (token) {
-        localStorage.setItem("access_token", token);
-        await restSourceClient.redirectToRestSourceAuthLink(token);
+        localStorage.setItem("access_token", token)
+        await restSourceClient.redirectToRestSourceAuthLink(token)
       }
-    };
-  
-    handleToken();
-  }, [router.isReady]);
+    }
+
+    handleToken()
+  }, [router.isReady])
 
   useEffect(() => {
     ory.toSession().then(({ data }) => {

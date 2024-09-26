@@ -48,7 +48,11 @@ export class RestSourceClient {
       "SUBJECT.CREATE",
     ].join("%20")
 
-    const authUrl = `${this.AUTH_BASE_URL}/auth?client_id=${this.CLIENT_ID}&response_type=code&state=${Date.now()}&audience=res_restAuthorizer&scope=${scopes}&redirect_uri=${window.location.href.split("?")[0]}`
+    const authUrl = `${this.AUTH_BASE_URL}/auth?client_id=${
+      this.CLIENT_ID
+    }&response_type=code&state=${Date.now()}&audience=res_restAuthorizer&scope=${scopes}&redirect_uri=${
+      window.location.href.split("?")[0]
+    }`
 
     window.location.href = authUrl
   }
