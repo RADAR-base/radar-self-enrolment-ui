@@ -4,6 +4,7 @@ import type { NextPage } from "next"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
+import { v4 as uuid } from "uuid"
 
 // Import render helpers
 import { ActionCard, CenterLink, Flow, MarginCard, CardTitle } from "../pkg"
@@ -74,6 +75,7 @@ const Registration: NextPage = () => {
   const onSubmit = async (values: UpdateRegistrationFlowBody) => {
     const project = {
       id: projectId,
+      userId: uuid(),
       name: projectId,
       eligibility: JSON.parse(eligibility),
     }
