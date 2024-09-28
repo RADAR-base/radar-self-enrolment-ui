@@ -5,7 +5,11 @@ RUN mkdir -p /app
 
 WORKDIR /app
 
+ENV NPM_CONFIG_CACHE=/home/node/.npm
+
 COPY package*.json ./
+
+RUN mkdir -p $NPM_CONFIG_CACHE && chown -R node:node $NPM_CONFIG_CACHE
 
 RUN npm install
 
@@ -15,5 +19,4 @@ RUN npm run build
 
 EXPOSE 3000
 
-# Start the app on port 4455 as recommended by ory
 CMD ["npm", "start", "--", "-p", "3000"]
