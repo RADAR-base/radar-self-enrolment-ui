@@ -1,6 +1,7 @@
 import "../styles/globals.css"
 import { theme, globalStyles, ThemeProps } from "@ory/themes"
 import type { AppProps } from "next/app"
+import Head from "next/head"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { ThemeProvider } from "styled-components"
@@ -13,6 +14,9 @@ const GlobalStyle = createGlobalStyle((props: ThemeProps) =>
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div data-testid="app-react">
+      <Head>
+        <base href="/kratos-ui/" />
+      </Head>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Component {...pageProps} />
