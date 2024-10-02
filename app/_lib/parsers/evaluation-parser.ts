@@ -50,11 +50,11 @@ export function parseAndEvalLogic(logic: string, answers: Answers): boolean {
 
     console.log("Started evaluating 2: ", logic);
 
-    const caseReplacement = logic.replace(/lower\[['"]([^'"]+)['"]]/gi, (match, p1) => {
-        return `'${p1.toLowerCase()}'`;
+    const caseReplacement = logic.replace(/lower\[['"]([^'"]+)['"]]/gi, (_, s) => {
+        return `'${s.toLowerCase()}'`;
     })
-        .replace(/upper\[['"]([^'"]+)['"]]/gi, (match, p1) => {
-            return `'${p1.toUpperCase()}'`;
+        .replace(/upper\[['"]([^'"]+)['"]]/gi, (_, s) => {
+            return `'${s.toUpperCase()}'`;
         });
 
     return parser.parse(caseReplacement).eval();
