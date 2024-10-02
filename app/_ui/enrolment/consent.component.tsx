@@ -1,9 +1,7 @@
 import { Divider, Stack, Typography } from "@mui/material";
-import { getYesNoOnChangeHandler, YesNoField } from "../components/fields/yesno";
+import { getYesNoOnChangeHandler, YesNoField } from "@/app/_ui/components/fields/yesno";
 import React from "react";
-import { IYesNoItem } from "./field.interfaces";
-
-
+import { IYesNoItem } from "../../_lib/armt/definition/field.interfaces";
 
 type ConsentItem = IYesNoItem
 
@@ -14,7 +12,7 @@ interface EnrolmentConsentProps {
   optionalItems?: ConsentItem[]
   setFieldValue: (id: string, value: boolean) => void
   values: {[key: string]: boolean | undefined}
-  errors: {[key: string]: string}
+  errors: {[key: string]: string | undefined}
 }
 
 export function EnrolmentConsent(props: EnrolmentConsentProps) {
@@ -55,7 +53,7 @@ export function EnrolmentConsent(props: EnrolmentConsentProps) {
     <Stack spacing={4} alignItems="inherit">
       <Typography variant="h2" align="left">{title}</Typography>
       {description && <Typography variant="subtitle1" align="left" paddingBottom={2}>{description}</Typography>}
-      {/* (props.optionalItems) && <Typography variant="h3" align="left">Required Items</Typography> */}
+      {(props.optionalItems) && <Typography variant="h3" align="left">Required Items</Typography>}
       {requiredItems}
       {(props.optionalItems) && <Divider />}
       {(props.optionalItems) && <Typography variant="h3" align="left">Optional Items</Typography>}
