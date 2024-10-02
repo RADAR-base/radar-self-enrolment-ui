@@ -1,5 +1,8 @@
 import { FooterProps } from "@/app/_ui/components/footer";
+import { IRadioItem, ITextItem, IYesNoItem } from "@/app/_lib/armt/definition/field.interfaces"
 import { ThemeOptions } from "@mui/material";
+import { ArmtItem } from "../../armt/definition/definition.types";
+import { RadarRedcapDefinition } from "../../armt/definition/redcap.types";
 
 export type OnboardingStep = {};
 export type OnboardingMetadata = {};
@@ -8,31 +11,54 @@ export type Onboarding = {
   steps: OnboardingStep[];
 };
 
-export type EligabilityItem = {
-  field_type: {}
-}
-export type Eligability = {
+export type EligabilityItem = IYesNoItem
+export type ConsentItem = IYesNoItem
+
+export type EnrolmentStudyInformation = {
+  title?: string,
+  content?: string
+};
+
+export type EnrolmentEligability = {
   title?: string,
   description?: string,
   items: EligabilityItem[]
 }
-export type Consent = {};
-export type AdditionalRegistration = {};
-export type StudyInformation = {};
 
-export type Enrolment = {
-  studyInformation: StudyInformation,
-  eligability: Eligability,
-  consent: Consent,
-  additional: AdditionalRegistration
+
+export type EnrolmentConsent = {
+  title?: string,
+  description?: string,
+  requiredItems: ConsentItem[],
+  optionalItems?: ConsentItem[],
+};
+
+export type EnrolmentAdditional = {
+  title?: string,
+  description?: string,
+  items: RadarRedcapDefinition // ArmtItem[],
+};
+
+export type EnrolmentAccount = {
+  title?: string,
+  description?: string
 }
 
-export type ArmtDefinition = {};
+export type EnrolmentProtocol = {
+  studyInformation?: EnrolmentStudyInformation,
+  eligability: EnrolmentEligability,
+  consent: EnrolmentConsent,
+  additional?: EnrolmentAdditional
+  account?: EnrolmentAccount
+}
+
 export type ArmtSchedule = {};
 export type ArmtAppearance = {};
 export type ArmtMetadata = {};
 export type ArmtProtocol = {
   id: string;
+  name: string;
+  order: number;
   appearance: ArmtAppearance;
   schedule: ArmtSchedule;
   metadata: ArmtMetadata;
@@ -45,11 +71,14 @@ export type StudyUiConfig = {
   footer: FooterProps;
 };
 
+
+
 export type StudyProtocol = {
   name: string;
   studyId: string;
   healthIssues: string[];
   onboarding: Onboarding;
+  enrolment: EnrolmentProtocol;
   protocols: ArmtProtocol[];
   studyUiConfig: StudyUiConfig;
 }

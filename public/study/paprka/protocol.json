@@ -6,7 +6,394 @@
         "metadata": {},
         "steps": []
     },
-    "protocols": [],
+    "protocols": [
+        {
+            "id": "p1",
+            "name": "Protocol Item 1",
+            "order": 0,
+            "appearance": {},
+            "schedule": {},
+            "metadata": {}
+        },
+        {
+            "id": "p2",
+            "name": "Protocol Item 2",
+            "order": 0,
+            "appearance": {},
+            "schedule": {},
+            "metadata": {}
+        }
+    ],
+    "enrolment": {
+        "studyInformation": {
+            "title": "Study Info",
+            "content": "## Hello World\n### h3\n#### h4\n##### subtitle1\n###### subtitle2\n\n---\n\nAn example link [Duck Duck Go](https://duckduckgo.com).\n\n![A wiki image](https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png)\n\nA list:\n- One\n- Two\n- Three\n\n<br />\n<button name=\"button\" href=\"https://google.com\" variant=\"contained\" target=\"_blank\" fullWidth>Click me</button>\n\n<br /><br />\n<iframe width=\"100%\" height=\"500\" src=\"http://www.youtube.com/embed/N4xV2RIlMi4?rel=0&amp;controls=0&amp;showinfo=0\" frameborder=\"1\"></iframe>\n"
+        },
+        "eligability": {
+            "title": "Eligability Crit",
+            "items": [
+                {
+                    "fieldType": "yesno",
+                    "id": "criteria1",
+                    "label": "Eligability item 1",
+                    "description": "Eligability item description",
+                    "errorText": "This study requires such and such"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "criteria2",
+                    "label": "Eligability item 2",
+                    "description": "Eligability item description"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "criteria3",
+                    "label": "Eligability item 3",
+                    "description": "Eligability item description"
+                  }
+            ]
+        },
+        "consent": {
+            "title": "Consent Content",
+            "requiredItems": [
+                {
+                    "fieldType": "yesno",
+                    "id": "required1",
+                    "label": "Eligability item 1",
+                    "description": "Eligability item description"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "required2",
+                    "label": "Eligability item 1",
+                    "description": "Eligability item description"
+                  }
+            ],
+            "optionalItems": [
+                {
+                    "fieldType": "yesno",
+                    "id": "optional1",
+                    "label": "Optional  1",
+                    "description": "Eligability item description"
+                  }
+            ]
+        },
+        "additional": {
+            "title": "Additional...",
+            "items": [
+                {
+                    "field_name": "phq8_1",
+                    "form_name": "phq8",
+                    "section_header": "Over the past two weeks, how often have you been bothered by any of the following problems ",
+                    "field_type": "radio",
+                    "field_label": "1. Little interest or pleasure in doing things?",
+                    "select_choices_or_calculations": [
+                        {
+                            "code": "0",
+                            "label": "Not at all "
+                        },
+                        {
+                            "code": "1",
+                            "label": "Several days "
+                        },
+                        {
+                            "code": "2",
+                            "label": "More than half the days "
+                        },
+                        {
+                            "code": "3",
+                            "label": "Nearly every day"
+                        }
+                    ],
+                    "field_note": "",
+                    "text_validation_type_or_show_slider_number": "",
+                    "text_validation_min": "",
+                    "text_validation_max": "",
+                    "identifier": "",
+                    "branching_logic": "",
+                    "required_field": "",
+                    "custom_alignment": "",
+                    "question_number": "",
+                    "matrix_group_name": "phq8",
+                    "matrix_ranking": "",
+                    "field_annotation": "",
+                    "evaluated_logic": ""
+                },
+                {
+                    "field_name": "phq8_2",
+                    "form_name": "phq8",
+                    "section_header": "",
+                    "field_type": "radio",
+                    "field_label": "2. Feeling down, depressed, or hopeless?",
+                    "select_choices_or_calculations": [
+                        {
+                            "code": "0",
+                            "label": "Not at all "
+                        },
+                        {
+                            "code": "1",
+                            "label": "Several days "
+                        },
+                        {
+                            "code": "2",
+                            "label": "More than half the days "
+                        },
+                        {
+                            "code": "3",
+                            "label": "Nearly every day"
+                        }
+                    ],
+                    "field_note": "",
+                    "text_validation_type_or_show_slider_number": "",
+                    "text_validation_min": "",
+                    "text_validation_max": "",
+                    "identifier": "",
+                    "branching_logic": "",
+                    "required_field": "",
+                    "custom_alignment": "",
+                    "question_number": "",
+                    "matrix_group_name": "phq8",
+                    "matrix_ranking": "",
+                    "field_annotation": "",
+                    "evaluated_logic": ""
+                },
+                {
+                    "field_name": "phq8_3",
+                    "form_name": "phq8",
+                    "section_header": "",
+                    "field_type": "radio",
+                    "field_label": "3. Trouble falling asleep or staying asleep, or sleeping too much?",
+                    "select_choices_or_calculations": [
+                        {
+                            "code": "0",
+                            "label": "Not at all "
+                        },
+                        {
+                            "code": "1",
+                            "label": "Several days "
+                        },
+                        {
+                            "code": "2",
+                            "label": "More than half the days "
+                        },
+                        {
+                            "code": "3",
+                            "label": "Nearly every day"
+                        }
+                    ],
+                    "field_note": "",
+                    "text_validation_type_or_show_slider_number": "",
+                    "text_validation_min": "",
+                    "text_validation_max": "",
+                    "identifier": "",
+                    "branching_logic": "",
+                    "required_field": "",
+                    "custom_alignment": "",
+                    "question_number": "",
+                    "matrix_group_name": "phq8",
+                    "matrix_ranking": "",
+                    "field_annotation": "",
+                    "evaluated_logic": ""
+                },
+                {
+                    "field_name": "phq8_4",
+                    "form_name": "phq8",
+                    "section_header": "",
+                    "field_type": "radio",
+                    "field_label": "4. Feeling tired or having little energy?",
+                    "select_choices_or_calculations": [
+                        {
+                            "code": "0",
+                            "label": "Not at all "
+                        },
+                        {
+                            "code": "1",
+                            "label": "Several days "
+                        },
+                        {
+                            "code": "2",
+                            "label": "More than half the days "
+                        },
+                        {
+                            "code": "3",
+                            "label": "Nearly every day"
+                        }
+                    ],
+                    "field_note": "",
+                    "text_validation_type_or_show_slider_number": "",
+                    "text_validation_min": "",
+                    "text_validation_max": "",
+                    "identifier": "",
+                    "branching_logic": "",
+                    "required_field": "",
+                    "custom_alignment": "",
+                    "question_number": "",
+                    "matrix_group_name": "phq8",
+                    "matrix_ranking": "",
+                    "field_annotation": "",
+                    "evaluated_logic": ""
+                },
+                {
+                    "field_name": "phq8_5",
+                    "form_name": "phq8",
+                    "section_header": "",
+                    "field_type": "radio",
+                    "field_label": "5. Poor appetite or over eating",
+                    "select_choices_or_calculations": [
+                        {
+                            "code": "0",
+                            "label": "Not at all "
+                        },
+                        {
+                            "code": "1",
+                            "label": "Several days "
+                        },
+                        {
+                            "code": "2",
+                            "label": "More than half the days "
+                        },
+                        {
+                            "code": "3",
+                            "label": "Nearly every day"
+                        }
+                    ],
+                    "field_note": "",
+                    "text_validation_type_or_show_slider_number": "",
+                    "text_validation_min": "",
+                    "text_validation_max": "",
+                    "identifier": "",
+                    "branching_logic": "",
+                    "required_field": "",
+                    "custom_alignment": "",
+                    "question_number": "",
+                    "matrix_group_name": "phq8",
+                    "matrix_ranking": "",
+                    "field_annotation": "",
+                    "evaluated_logic": ""
+                },
+                {
+                    "field_name": "phq8_6",
+                    "form_name": "phq8",
+                    "section_header": "",
+                    "field_type": "radio",
+                    "field_label": "6. Feeling bad about yourself, or that you are a failure or have let yourself or your family down?",
+                    "select_choices_or_calculations": [
+                        {
+                            "code": "0",
+                            "label": "Not at all "
+                        },
+                        {
+                            "code": "1",
+                            "label": "Several days "
+                        },
+                        {
+                            "code": "2",
+                            "label": "More than half the days "
+                        },
+                        {
+                            "code": "3",
+                            "label": "Nearly every day"
+                        }
+                    ],
+                    "field_note": "",
+                    "text_validation_type_or_show_slider_number": "",
+                    "text_validation_min": "",
+                    "text_validation_max": "",
+                    "identifier": "",
+                    "branching_logic": "",
+                    "required_field": "",
+                    "custom_alignment": "",
+                    "question_number": "",
+                    "matrix_group_name": "phq8",
+                    "matrix_ranking": "",
+                    "field_annotation": "",
+                    "evaluated_logic": ""
+                },
+                {
+                    "field_name": "phq8_7",
+                    "form_name": "phq8",
+                    "section_header": "",
+                    "field_type": "radio",
+                    "field_label": "7. Trouble concentrating on things such as reading the newspaper or watching television?",
+                    "select_choices_or_calculations": [
+                        {
+                            "code": "0",
+                            "label": "Not at all "
+                        },
+                        {
+                            "code": "1",
+                            "label": "Several days "
+                        },
+                        {
+                            "code": "2",
+                            "label": "More than half the days "
+                        },
+                        {
+                            "code": "3",
+                            "label": "Nearly every day"
+                        }
+                    ],
+                    "field_note": "",
+                    "text_validation_type_or_show_slider_number": "",
+                    "text_validation_min": "",
+                    "text_validation_max": "",
+                    "identifier": "",
+                    "branching_logic": "",
+                    "required_field": "",
+                    "custom_alignment": "",
+                    "question_number": "",
+                    "matrix_group_name": "phq8",
+                    "matrix_ranking": "",
+                    "field_annotation": "",
+                    "evaluated_logic": ""
+                },
+                {
+                    "field_name": "phq8_8",
+                    "form_name": "phq8",
+                    "section_header": "",
+                    "field_type": "radio",
+                    "field_label": "8. Moving or speaking so slowly that other people have noticed. Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual?",
+                    "select_choices_or_calculations": [
+                        {
+                            "code": "0",
+                            "label": "Not at all "
+                        },
+                        {
+                            "code": "1",
+                            "label": "Several days "
+                        },
+                        {
+                            "code": "2",
+                            "label": "More than half the days "
+                        },
+                        {
+                            "code": "3",
+                            "label": "Nearly every day"
+                        }
+                    ],
+                    "field_note": "",
+                    "text_validation_type_or_show_slider_number": "",
+                    "text_validation_min": "",
+                    "text_validation_max": "",
+                    "identifier": "",
+                    "branching_logic": "",
+                    "required_field": "",
+                    "custom_alignment": "",
+                    "question_number": "",
+                    "matrix_group_name": "phq8",
+                    "matrix_ranking": "",
+                    "field_annotation": "",
+                    "evaluated_logic": ""
+                }
+
+
+
+            ]
+        },
+        "account": {
+            "title": "Create Account"
+        }
+    },
     "studyUiConfig": {
         "materialTheme": {},
         "studyIconSrc": "/study/paprka/resources/hrfh_low.png",
@@ -41,7 +428,6 @@
                 }
             ],
             "copyrightText": "© 2024 Health Research from Home"
-
         }
     }
 }

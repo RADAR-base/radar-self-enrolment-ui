@@ -1,13 +1,16 @@
 import { redirect } from 'next/navigation'
 
 import { getStudyTheme } from "@/app/_lib/theme/themeprovider";
-import { StudyProtocolRepository, LocalProtocolRepository } from "@/app/_lib/study/repository";
+import ProtocolRepository, { StudyProtocolRepository } from "@/app/_lib/study/repository";
 import { StudyProtocol } from '@/app/_lib/study/protocol';
 import { isAbsolutePath } from "@/app/_lib/util/links";
 
-import { Box, CssBaseline, Divider, ThemeProvider } from "@mui/material";
+import { Box, CssBaseline, Theme, ThemeProvider } from "@mui/material";
 import NavBar from "@/app/_ui/components/navbar/navbar";
 import {Footer, FooterLink } from "@/app/_ui/components/footer";
+import ProtocolProvider from '@/app/_lib/study/provider/provider.client';
+import themeFromProtocol from '@/app/_lib/theme/fromProtocol';
+
 
 
 const getStudyTitle = (studyId: string) => {
@@ -41,8 +44,10 @@ export async function generateMetadata({params}: {params: {studyId: string}}) {
 
 export default async function StudyLayout({children, params}: Readonly<{children: React.ReactNode, params: {studyId: string}}>) {
   const theme = getStudyTheme(params.studyId);
-  var registery: StudyProtocolRepository = new LocalProtocolRepository()
+
+  var registery: StudyProtocolRepository = new ProtocolRepository()
   var protocol: StudyProtocol;
+
   try {
     protocol = await registery.getStudyProtocol(params.studyId)
   } catch {
@@ -62,7 +67,9 @@ export default async function StudyLayout({children, params}: Readonly<{children
           logo_src={protocol.studyUiConfig.studyIconSrc}
           links={protocol.studyUiConfig.navbarLinks}
         />
-        {children}
+        <ProtocolProvider protocol={protocol}>
+          {children}
+        </ProtocolProvider>
         <Footer 
           columns={protocol.studyUiConfig.footer.columns.map(
             (col) => {

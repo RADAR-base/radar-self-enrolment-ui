@@ -13,5 +13,5 @@ export class LocalProtocolRepository implements StudyProtocolRepository {
       console.log(err)
     }
     throw new Error('Can not load study protocol for studyId: ' + studyId)
-  } 
+  }
 }

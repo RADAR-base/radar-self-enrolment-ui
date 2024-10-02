@@ -1,11 +1,72 @@
 {
-    "title": "Test study",
+    "name": "Test study",
     "studyId": "test",
     "onboarding": {
         "metadata": {},
         "steps": []
     },
-    "armtList": [],
+    "enrolment": {
+        "studyInformation": {
+            "title": "Study Info",
+            "content": "## Hello World\n### h3\n#### h4\n##### subtitle1\n###### subtitle2\n\n---\n\nAn example link [Duck Duck Go](https://duckduckgo.com).\n\n![A wiki image](https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png)\n\nA list:\n- One\n- Two\n- Three\n\n<br />\n<button name=\"button\" href=\"https://google.com\" variant=\"contained\" fullWidth>Click me</button>\n\n<br /><br />\n<iframe width=\"100%\" height=\"500\" src=\"http://www.youtube.com/embed/N4xV2RIlMi4?rel=0&amp;controls=0&amp;showinfo=0\" frameborder=\"1\"></iframe>\n"
+        },
+        "eligability": {
+            "title": "Eligability Crit",
+            "items": [
+                {
+                    "fieldType": "yesno",
+                    "id": "criteria1",
+                    "label": "Eligability item 1",
+                    "description": "Eligability item description",
+                    "errorText": "This study requires such and such"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "criteria2",
+                    "label": "Eligability item 2",
+                    "description": "Eligability item description"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "criteria3",
+                    "label": "Eligability item 3",
+                    "description": "Eligability item description"
+                  }
+            ]
+        },
+        "consent": {
+            "title": "Consent Content",
+            "requiredItems": [
+                {
+                    "fieldType": "yesno",
+                    "id": "required1",
+                    "label": "Eligability item 1",
+                    "description": "Eligability item description"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "required2",
+                    "label": "Eligability item 1",
+                    "description": "Eligability item description"
+                  }
+            ],
+            "optionalItems": [
+                {
+                    "fieldType": "yesno",
+                    "id": "optional1",
+                    "label": "Optional  1",
+                    "description": "Eligability item description"
+                  }
+            ]
+        },
+        "additional": {
+            "title": "Additional..."
+        },
+        "account": {
+            "title": "Create Account"
+        }
+    },
+    "protocols": [],
     "studyUiConfig": {
         "materialTheme": {},
         "studyIconSrc": "https://avatars.githubusercontent.com/u/22225205",

@@ -1,8 +1,8 @@
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import React from "react";
 
 import { getYesNoOnChangeHandler, YesNoField } from "../components/fields/yesno";
-import { ITextItem, IYesNoItem } from "./field.interfaces";
+import { ITextItem, IYesNoItem } from "../../_lib/armt/definition/field.interfaces";
 
 
 type EligabilityItem = IYesNoItem | ITextItem
@@ -14,7 +14,7 @@ interface EnrolmentEligabilityProps {
   items: EligabilityItem[]
   setFieldValue: (id: string, value: boolean) => void
   values: {[key: string]: boolean | undefined}
-  errors: {[key: string]: string}
+  errors: {[key: string]: string | undefined}
 }
 
 export function EnrolmentEligability(props: EnrolmentEligabilityProps) {
@@ -38,21 +38,26 @@ export function EnrolmentEligability(props: EnrolmentEligabilityProps) {
     if (props.values[props.items[i-1].id] != undefined) {
       // items.push(<Divider key={'eligability.divider.' + props.items[i].id}/>)
       items.push(
-        <YesNoField label={props.items[i].label}
-          description={props.items[i].description}
-          value={props.values[props.items[i].id]}
-          onChange={onChange}
-          id={'eligability.' + props.items[i].id}
-          helperText={(props.values[props.items[i].id] != null) ? props.errors[props.items[i].id] : ""}
-          key={'eligability.' + props.items[i].id}
-        />
+        // <Collapse in={(props.values[props.items[i-1].id] != null)} unmountOnExit>
+            <YesNoField 
+              label={props.items[i].label}
+              description={props.items[i].description}
+              value={props.values[props.items[i].id]}
+              onChange={onChange}
+              id={'eligability.' + props.items[i].id}
+              helperText={(props.values[props.items[i].id] != null) ? props.errors[props.items[i].id] : ""}
+              key={'eligability.' + props.items[i].id}/>
+        // </Collapse>
       )
     }
   }
   return (
     <Stack spacing={4} alignItems="inherit">
+      
       <Typography variant="h2" align="left">{title}</Typography>
       {description && <Typography variant="subtitle1" align="left" paddingBottom={2}>{description}</Typography>}
-      {items}
+      <Box display={"flex"} flexDirection={"column"} gap={2}>
+        {items}
+      </Box>
     </Stack>
 )}
