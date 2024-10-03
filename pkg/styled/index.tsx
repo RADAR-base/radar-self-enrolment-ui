@@ -8,8 +8,6 @@ import {
 import cn from "classnames"
 import styled from "styled-components"
 
-const BASE_URL = process.env.BASE_PATH || ""
-
 export const MarginCard = styled(Card)`
   margin-top: 70px;
   margin-bottom: 18px;
@@ -109,7 +107,6 @@ export const DocsButton = ({
   disabled,
   unresponsive,
 }: DocsButtonProps) => {
-  const url = BASE_URL + href
   return (
     <div className={cn("col-xs-4", { "col-md-12": !unresponsive })}>
       <div className="box">
@@ -117,7 +114,7 @@ export const DocsButton = ({
           onClick={onClick}
           disabled={disabled}
           data-testid={testid}
-          href={url}
+          href={href}
         >
           {title}
         </TextLeftButton>

@@ -15,6 +15,7 @@ const Home: NextPage = () => {
   const [hasSession, setHasSession] = useState<boolean>(false)
   const router = useRouter()
   const onLogout = LogoutLink()
+  const handleNavigation = (href: string) => () => router.push(href)
 
   useEffect(() => {
     ory
@@ -60,62 +61,62 @@ const Home: NextPage = () => {
               <div className="row">
                 <DocsButton
                   testid="study"
-                  href="/study?projectId=STAGING_PROJECT"
                   disabled={hasSession}
                   title={"Study"}
+                  onClick={handleNavigation("/study?projectId=STAGING_PROJECT")}
                 />
                 <DocsButton
                   testid="eligibility"
-                  href="/eligibility"
                   disabled={hasSession}
                   title={"Eligibility"}
+                  onClick={handleNavigation("/eligibility")}
                 />
                 <DocsButton
                   testid="login"
-                  href="/login"
                   disabled={hasSession}
                   title={"Login"}
+                  onClick={handleNavigation("/login")}
                 />
                 <DocsButton
                   testid="sign-up"
-                  href="/registration"
                   disabled={hasSession}
                   title={"Sign Up"}
+                  onClick={handleNavigation("/registration")}
                 />
                 <DocsButton
                   testid="recover-account"
-                  href="/recovery"
                   disabled={hasSession}
                   title="Recover Account"
+                  onClick={handleNavigation("/recovery")}
                 />
                 <DocsButton
                   testid="verify-account"
-                  href="/verification"
                   title="Verify Account"
+                  onClick={handleNavigation("/verification")}
                 />
                 <DocsButton
                   testid="consent"
-                  href="/study-consent"
                   title="Study Consent"
                   disabled={!hasSession}
+                  onClick={handleNavigation("/study-consent")}
                 />
                 <DocsButton
                   testid="apps"
-                  href="/apps"
                   title="Apps"
                   disabled={!hasSession}
+                  onClick={handleNavigation("/apps")}
                 />
                 <DocsButton
                   testid="profile"
-                  href="/profile"
                   title="Profile"
                   disabled={!hasSession}
+                  onClick={handleNavigation("/profile")}
                 />
                 <DocsButton
                   testid="account-settings"
-                  href="/settings"
                   disabled={!hasSession}
                   title={"Account Settings"}
+                  onClick={handleNavigation("/settings")}
                 />
                 <DocsButton
                   testid="logout"

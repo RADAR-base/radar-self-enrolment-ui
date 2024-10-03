@@ -14,9 +14,6 @@ const GlobalStyle = createGlobalStyle((props: ThemeProps) =>
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div data-testid="app-react">
-      <Head>
-        <base href="/kratos-ui/" />
-      </Head>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Component {...pageProps} />
