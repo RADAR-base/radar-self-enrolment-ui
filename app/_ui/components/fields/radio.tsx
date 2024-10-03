@@ -33,38 +33,29 @@ function RadioFieldChoice(props: RadioFieldChoiceProps, key?: string): React.Rea
   )
 }
 
-function handleChange(id: string, setFieldValue: (id: string, value: string) => void) {
-  return (event: React.ChangeEvent, checked: boolean) => {
-    if (checked) {
-      setFieldValue(id, event.target.id)
-    } else {
-      setFieldValue(id, "")
-    }
-    }
-  }
+function groupHandleChange(id: string, setFieldValue: (id: string, value: string) => void) {
+  return (event: React.ChangeEvent, value: string) => setFieldValue(id, value)
+}
 
-export function ArmtRadioField({label, choices, ...props}: ArmtRadioFieldProps, ref: ForwardedRef<HTMLDivElement>) {
+export function ArmtRadioField(props: ArmtRadioFieldProps, ref: ForwardedRef<HTMLDivElement>) {
   return (
-
-      <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={2} key={props.key}>
-        <Typography variant="h2">{props.title}</Typography>
-        <FormControl>
-        <FormLabel>
-          <Typography variant="h3">{label}</Typography>
-        </FormLabel>
-          <Box display={"flex"} flexDirection={"column"} textAlign={"left"} justifyItems={"left"}>
-            {choices.map((choice) => (
-              <RadioFieldChoice 
-                  id={choice.code} 
-                  code={choice.code}
-                  groupValue={props.value} 
-                  onChange={handleChange(props.id, props.setFieldValue)}
-                  label={choice.label}
-                  key={props.key + choice.code} 
-                  />)
-            )}
-          </Box>
-        </FormControl>
-    </Box>
+    <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={2} key={props.key}>
+      <Typography variant="h2">{props.title}</Typography>
+      <FormControl>
+      <FormLabel>
+        <Typography variant="h3">{props.label}</Typography>
+      </FormLabel>
+      <RadioGroup
+        value={props.value ??  ""}
+        name={props.id}
+        onChange={groupHandleChange(props.id, props.setFieldValue)}
+        >
+          {props.choices.map((choice) => (
+            <FormControlLabel value={choice.code} label={choice.label} control={<Radio />} key={props.id + choice.code + "_radio"} />
+            ))
+          }
+      </RadioGroup>
+      </FormControl>
+  </Box>
   )
 }

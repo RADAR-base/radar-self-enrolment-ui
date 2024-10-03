@@ -211,6 +211,7 @@ export function EnrolmentContent({protocol}: EnrolmentContentProps) {
   }, [formik.values, stepIdx])
 
   return (
+    
     <Container sx={{
       padding: 4,
       maxWidth: 'xs',
