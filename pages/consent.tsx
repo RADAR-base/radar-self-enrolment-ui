@@ -11,7 +11,7 @@ const Consent = () => {
   const [csrfToken, setCsrfToken] = useState<string>("")
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const basePath = process.env.BASE_PATH || ""
+  const basePath = process.env.BASE_PATH || "/kratos-ui"
 
   useEffect(() => {
     const { consent_challenge } = router.query
