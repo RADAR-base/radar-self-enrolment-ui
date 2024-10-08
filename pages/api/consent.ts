@@ -1,15 +1,7 @@
-import { Configuration, OAuth2Api } from "@ory/client"
 import { NextApiRequest, NextApiResponse } from "next"
+import axios from "axios" // Using axios for HTTP requests
 
-const hydra = new OAuth2Api(
-  new Configuration({
-    basePath: process.env.HYDRA_ADMIN_URL,
-    baseOptions: {
-      "X-Forwarded-Proto": "https",
-      withCredentials: true,
-    },
-  }),
-)
+const baseURL = process.env.HYDRA_ADMIN_URL 
 
 // Helper function to extract session data
 const extractSession = (identity: any, grantScope: string[]) => {
@@ -33,40 +25,49 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     if (req.method === "GET") {
       const { consent_challenge } = req.query
-      const response = await hydra.getOAuth2ConsentRequest({
-        consentChallenge: String(consent_challenge),
-      })
+      const response = await axios.get(
+        `${baseURL}/oauth2/auth/requests/consent`,
+        {
+          params: {
+            consent_challenge: String(consent_challenge),
+          },
+        },
+      )
       return res.status(200).json(response.data)
     } else {
       if (!consentChallenge || !consentAction) {
         return res.status(400).json({ error: "Missing required parameters" })
       }
       if (consentAction === "accept") {
-        const { data: body } = await hydra.getOAuth2ConsentRequest({
-          consentChallenge,
-        })
+        const { data: body } = await axios.get(
+          `${baseURL}/oauth2/auth/requests/consent`,
+          {
+            params: { consent_challenge: consentChallenge },
+          },
+        )
+
         const session = extractSession(identity, grantScope)
-        const acceptResponse = await hydra.acceptOAuth2ConsentRequest({
-          consentChallenge,
-          acceptOAuth2ConsentRequest: {
+        const acceptResponse = await axios.put(
+          `${baseURL}/oauth2/auth/requests/consent/accept?consent_challenge=${consentChallenge}`,
+          {
             grant_scope: session.access_token.scope,
             grant_access_token_audience: body.requested_access_token_audience,
             session,
             remember: Boolean(remember),
             remember_for: 3600,
           },
-        })
+        )
         return res
           .status(200)
           .json({ redirect_to: acceptResponse.data.redirect_to })
       } else {
-        const rejectResponse = await hydra.rejectOAuth2ConsentRequest({
-          consentChallenge,
-          rejectOAuth2Request: {
+        const rejectResponse = await axios.put(
+          `${baseURL}/oauth2/auth/requests/consent/${consentChallenge}/reject`,
+          {
             error: "access_denied",
             error_description: "The resource owner denied the request",
           },
-        })
+        )
 
         return res
           .status(200)

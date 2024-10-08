@@ -11,6 +11,8 @@ const Consent = () => {
   const [csrfToken, setCsrfToken] = useState<string>("")
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
+  const basePath = process.env.BASE_PATH || ""
+
   useEffect(() => {
     const { consent_challenge } = router.query
 
@@ -27,7 +29,7 @@ const Consent = () => {
         }
 
         const consentResponse = await fetch(
-          `/api/consent?consent_challenge=${consent_challenge}`,
+          `${basePath}/api/consent?consent_challenge=${consent_challenge}`,
         )
         const consentData = await consentResponse.json()
 
@@ -40,7 +42,7 @@ const Consent = () => {
         // Automatically handle skipping consent if enabled
         if (consentData.client?.skip_consent) {
           console.log("Skipping consent, automatically submitting.")
-          const skipResponse = await fetch("/api/consent", {
+          const skipResponse = await fetch(`${basePath}/api/consent`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -58,7 +60,7 @@ const Consent = () => {
           if (skipData.error) {
             throw new Error(skipData.error)
           }
-          router.push(skipData.redirect_to)
+          window.location.href = skipData.redirect_to
           return
         }
       } catch (error) {
@@ -90,7 +92,7 @@ const Consent = () => {
     }
 
     try {
-      const response = await fetch("/api/consent", {
+      const response = await fetch(`${basePath}/api/consent`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -109,8 +111,7 @@ const Consent = () => {
         console.error("Error submitting consent:", data.error)
         return
       }
-
-      router.push(data.redirect_to)
+      window.location.href = data.redirect_to
     } catch (error) {
       console.error("Error during consent submission:", error)
     }
