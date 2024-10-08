@@ -1,7 +1,7 @@
+import axios from "axios"
 import { NextApiRequest, NextApiResponse } from "next"
-import axios from "axios" // Using axios for HTTP requests
 
-const baseURL = process.env.HYDRA_ADMIN_URL 
+const baseURL = process.env.HYDRA_ADMIN_URL
 
 // Helper function to extract session data
 const extractSession = (identity: any, grantScope: string[]) => {

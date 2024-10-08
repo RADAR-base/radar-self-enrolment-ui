@@ -8,8 +8,4 @@ const localConfig = {
   },
 }
 
-export default new FrontendApi(
-  new Configuration(
-    localConfig,
-  ),
-)
+export default new FrontendApi(new Configuration(localConfig))
