@@ -36,7 +36,7 @@ const paprkaOptions = createTheme({
       textTransform: 'none'
     },
     body1: {
-      color: '#a0a0c8'
+      color: '#a0a0c8',
     }
   },
   palette: {
@@ -68,7 +68,7 @@ const paprkaOptions = createTheme({
         elevation: 0,
         position: 'static',
       }
-    }
+    },
   }
 })
 

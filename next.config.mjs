@@ -5,11 +5,18 @@ const nextConfig = {
         styledComponents: true,
       },
       images: {
+        domains: ["upload.wikimedia.org"],
         remotePatterns: [{
           protocol: 'https',
           hostname: 'avatars.githubusercontent.com',
           port: '',
           pathname: '/u/**'
+        },
+        {
+          protocol: 'https',
+          hostname: 'upload.wikimedia.org',
+          port: '',
+          pathname: 'wikipedia/commons/b/b6/**'
         }]
      
       }

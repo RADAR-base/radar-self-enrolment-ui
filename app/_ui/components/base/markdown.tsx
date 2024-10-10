@@ -1,17 +1,27 @@
 import { Button, Typography, Link } from '@mui/material'
 import { getOverrides, MuiMarkdown } from 'mui-markdown'
+import Image from 'next/image'
 
 interface MarkdownContainerProps {
   children?: string
 }
+
+
 
 export function MarkdownContainer({children, ...props }: MarkdownContainerProps) {
   return (
     <MuiMarkdown 
       overrides={{
         ...getOverrides({}),
+        Image: {
+          component: Image,
+          props: {
+            style: {
+              'maxWidth': '100%'
+            }
+          }
+        },
         img: {
-          component: 'img',
           props: {
             style: {
               'maxWidth': '100%'

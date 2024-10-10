@@ -10,12 +10,13 @@ import AuthServer from '@/app/_lib/auth/ory/service.server'
 import LoginComponent, { LoginModal } from "./_ui/auth/login";
 import { Footer } from "./_ui/components/footer";
 import { LogoutButton } from "./_ui/auth/logout";
+import * as ory from '@/app/_lib/auth/ory/api.server'
 
 const auth = new Auth(); 
 const authServer = new AuthServer();
 
 export default async function Home() {
-  const session = await authServer.getEmail()
+  const session = await (await ory.whoAmI()).json()
   return (
     <Box
     sx={{
@@ -32,7 +33,7 @@ export default async function Home() {
       ]} 
     />
     <main>
-      <Box sx={{ flexGrow: 1, margin: {xs: 0, sm: 2}}} 
+      <Box sx={{flexGrow: 1, margin: {xs: 0, sm: 2}}} 
             display="flex"
             justifyContent="center"
             alignItems="center">

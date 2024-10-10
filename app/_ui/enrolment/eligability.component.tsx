@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Fade, Collapse, Zoom, Stack, Typography } from "@mui/material";
 import React from "react";
 
 import { getYesNoOnChangeHandler, YesNoField } from "../components/fields/yesno";
@@ -35,10 +35,8 @@ export function EnrolmentEligability(props: EnrolmentEligabilityProps) {
     />
   ];
   for (let i = 1; i < props.items.length; i++) {
-    if (props.values[props.items[i-1].id] != undefined) {
-      // items.push(<Divider key={'eligability.divider.' + props.items[i].id}/>)
       items.push(
-        // <Collapse in={(props.values[props.items[i-1].id] != null)} unmountOnExit>
+        <Collapse key={'eligability.' + props.items[i].id + '.collapse'} in={(props.values[props.items[i-1].id] != null)} unmountOnExit>
             <YesNoField 
               label={props.items[i].label}
               description={props.items[i].description}
@@ -47,9 +45,10 @@ export function EnrolmentEligability(props: EnrolmentEligabilityProps) {
               id={'eligability.' + props.items[i].id}
               helperText={(props.values[props.items[i].id] != null) ? props.errors[props.items[i].id] : ""}
               key={'eligability.' + props.items[i].id}/>
-        // </Collapse>
+        </Collapse>
+        
       )
-    }
+    // }
   }
   return (
     <Stack spacing={4} alignItems="inherit">

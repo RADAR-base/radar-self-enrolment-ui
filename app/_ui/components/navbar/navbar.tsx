@@ -84,7 +84,7 @@ function NavBar(props: NavBarProps) {
                 key={i}>
                 <Typography sx={{ textAlign: 'center' }}>
                   <NextLink href={link.href} passHref legacyBehavior>
-                    <Link underline='none' variant='button' sx={{textTransform: 'none'}}>
+                    <Link underline='none' variant='button' sx={{textTransform: 'none'}}  onClick={handleCloseNavMenu}>
                       {link.text}
                     </Link>
                   </NextLink>

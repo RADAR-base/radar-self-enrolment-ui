@@ -18,7 +18,7 @@ export function ArmtField({ item, value, setFieldValue }: ArmtFieldProps): React
       return <ArmtDescriptiveField {...item.content} />
     }
     case "radio": {
-      return <ArmtRadioField {...item.content} value={value} setFieldValue={setFieldValue} />
+      return <ArmtRadioField  {...item.content} value={value} setFieldValue={setFieldValue} />
     }
     case "text": {
       return <ArmtTextField {...item.content} />

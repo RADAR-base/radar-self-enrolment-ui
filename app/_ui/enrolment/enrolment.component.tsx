@@ -108,8 +108,15 @@ function generateSteps(protocol: EnrolmentProtocol) {
 interface EnrolmentContentProps {
   protocol: EnrolmentProtocol
 }
+const isBrowser = () => typeof window !== 'undefined'; //The approach recommended by Next.js
+
+function scrollToTop() {
+    if (!isBrowser()) return;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 export function EnrolmentContent({protocol}: EnrolmentContentProps) {
+
   const router = useRouter();
   const [disabled, setDisabled] = React.useState(true)
   const [stepIdx, setStep] = React.useState(0)
@@ -195,12 +202,14 @@ export function EnrolmentContent({protocol}: EnrolmentContentProps) {
   function nextStep() {
     if ((stepIdx + 1) < steps.length) {
       setStep(stepIdx + 1)
+      scrollToTop()
     }
   }
   
   function previousStep() {
     if (stepIdx > 0) {
       setStep(stepIdx - 1)
+      scrollToTop()
     } else {
       router.back()
     }
