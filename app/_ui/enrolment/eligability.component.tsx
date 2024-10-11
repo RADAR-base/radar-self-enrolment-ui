@@ -4,6 +4,7 @@ import { CSSTransition } from 'react-transition-group';
 
 import { getYesNoOnChangeHandler, YesNoField } from "../components/fields/yesno";
 import { ITextItem, IYesNoItem } from "../../_lib/armt/definition/field.interfaces";
+import { MarkdownContainer } from "../components/base/markdown";
 
 
 
@@ -53,10 +54,9 @@ export function EnrolmentEligability(props: EnrolmentEligabilityProps) {
       )
   }
   return (
-    <Stack spacing={4} alignItems="inherit">
-      
+    <Stack spacing={4} alignItems="inherit" textAlign={"left"}>
       <Typography variant="h2" align="left">{title}</Typography>
-      {description && <Typography variant="subtitle1" align="left" paddingBottom={2}>{description}</Typography>}
+      {description && <MarkdownContainer>{description}</MarkdownContainer>}
       <Box display={"flex"} flexDirection={"column"} gap={2}>
         {items}
       </Box>

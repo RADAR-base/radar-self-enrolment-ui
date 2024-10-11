@@ -47,7 +47,6 @@ export function ArmtForm({ definition, values, setFieldValue, errors }: ArmtForm
       {definition.items.map(
         (item) => {
           let errorText = errors ? errors[item.content.id] : undefined
-          console.log(errorText)
           return (<ArmtField item={item} 
                               setFieldValue={setFieldValue}
                               value={values[item.content.id]}

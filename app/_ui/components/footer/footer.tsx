@@ -40,18 +40,17 @@ export function Footer(props: FooterProps) {
         margin: 'auto'
       }}>
         <Box sx={{
-          width: 1,
           gap: 2,
+          width: '100%',
           justifyContent: 'space-evenly',
-          margin: 'auto',
           display: 'flex',
           flexDirection: {'xs': 'column', 'sm': 'row'},
+          alignItems: 'center'
         }}>
           {props.columns.map(
             (col, i) => (
-              <Stack key={i} sx={{gap: 1}} flex={1} paddingLeft={2} paddingRight={2}>
+              <Stack key={i} sx={{gap: 1}} flex={1} paddingLeft={2} paddingRight={2} alignItems={{xs: "center", sm: "start"}}>
                 <Typography variant="h3">{col.title}</Typography>
-                <Stack>
                   {col.items?.map(
                     (item, j) => (
                       <Link
@@ -63,7 +62,6 @@ export function Footer(props: FooterProps) {
                       </Link>
                     )
                   )}
-                </Stack>
               </Stack>
             )
           )}

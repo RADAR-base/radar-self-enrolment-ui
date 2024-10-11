@@ -33,11 +33,9 @@ function BlockContainer({children, props}: {children: React.ReactNode, props: Bl
 function getBlockContent(props: IBlock) {
   switch (props.blockType) {
     case "markdown": {
-      console.log('md')
       return <MarkdownBlock {...props} />
     }
     case "text": {
-      console.log('text')
       return <TextBlock {...props} />
     }
     case "hero": {

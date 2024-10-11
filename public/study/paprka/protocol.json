@@ -26,43 +26,97 @@
     ],
     "enrolment": {
         "eligability": {
-            "title": "Eligability Crit",
+            "title": "Check Your Eligability",
+            "description": "We can only accept people onto our if they answer Yes to the following questions.",
             "items": [
                 {
                     "fieldType": "yesno",
                     "id": "criteria1",
-                    "label": "Eligability item 1",
-                    "description": "Eligability item description",
-                    "errorText": "This study requires such and such"
+                    "label": "Are you over 18 years of age?",
+                    "errorText": "You must be over 18 to take part in this study."
                   },
                   {
                     "fieldType": "yesno",
                     "id": "criteria2",
-                    "label": "Eligability item 2",
-                    "description": "Eligability item description"
+                    "label": "Have you had total, or partial, knee replacement surgery between January 2016 and December 2022?",
+                    "errorText": "Only those who have had recent knee replacement surgery can take part"
                   },
                   {
                     "fieldType": "yesno",
                     "id": "criteria3",
-                    "label": "Eligability item 3",
-                    "description": "Eligability item description"
-                  }
+                    "label": "Did you use a smartphone app or fitness tracker to track your activity in the year before your knee replacement and 2 years after surgery?",
+                    "errorText": "This studies needs smartphone or fitness tracker data from around the period of a knee replacement surgery"
+                }
             ]
         },
         "consent": {
-            "title": "Consent Content",
+            "title": "Consent",
+            "description": "Before you can take part in this study, we need your consent to access information from your fitness tracker or smartphone app, and your NHS records.\n\nYour data will be managed by the PAPRKA research team and will not be shared with any other parties. You can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)",
             "requiredItems": [
                 {
                     "fieldType": "yesno",
                     "id": "required1",
-                    "label": "Eligability item 1",
-                    "description": "Eligability item description"
+                    "description": "I confirm that I have read the attached information sheet **(Version 2.0, Date 10/04/2024)** for the above study and have had the opportunity to consider the information and ask questions and had these answered satisfactorily.\n"
                   },
                   {
                     "fieldType": "yesno",
                     "id": "required2",
-                    "label": "Eligability item 1",
-                    "description": "Eligability item description"
+                    "description": "I understand that my participation in the study is voluntary and that I am free to withdraw at any time without giving a reason and without detriment to myself.  I understand that it will not be possible to remove my data from the project once it has been anonymised and forms part of the data set.\n\nI agree to take part on this basis."
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "required3",
+                    "description": "I understand my involvement in this study involves:\n- Answering an online survey and\n- Allowing the PAPrKA team to:\n  - access physical activity data from my fitness tracker provider.\n  - access data about my knee replacement from the National Joint Registry.\n  - work with the National Joint Registry to link and analyse my physical activity data, knee replacement data, and survey data to answer the PAPrKA study questions.\n"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "required4",
+                    "description": "I give permission for the PAPrKA team to access my physical activity data stored with my fitness tracker provider to collect information for the study.\n"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "required5",
+                    "description": "I give permission for the PAPrKA team to access my knee replacement data stored with National Joint Registry to collect information for the study.\n"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "required6",
+                    "description": "I give permission for the PAPrKA team to share my identifying information (surname, date of birth, NHS number, gender and postcode) with the National Joint Registry, to allow for my knee replacement data, physical activity data and survey response to be linked.\n"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "required7",
+                    "description": "I understand that the data linkage involves two stages:\n- First, the National Joint Registry will filter out my knee replacement data and replace my identifying information with the study identification. \n- Second, the PAPrKA team will add my physical activity and survey data to the data in the first step to form the complete linked data.\n\nI give permission for my data to be linked.\n"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "required8",
+                    "description": "I give permission for the PAPrKA team to work with researchers at the National Joint Registry to analyse my linked data to answer the study’s research questions.\n"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "required9",
+                    "description": "I agree that any data collected may be included in anonymous form in **publications, academic theses, dissertations, or conference presentations.**\n"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "required10",
+                    "description": "I agree that any anonymised data collected may be made available to other researchers\n"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "required11",
+                    "description": "I understand that my full name and email address will be passed to the University's Finance team for the sole purpose of sending me the **Amazon voucher, if I agree to take part in the prize draw and win.**\n"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "required12",
+                    "description": "I understand that data collected during the study may be looked at by individuals from the University of Manchester or regulatory authorities, where it is relevant to my taking part in this research. I give permission for these individuals to have access to my data.\n"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "required13",
+                    "description": "I agree to take part in this study.\n"
                   }
             ],
             "optionalItems": [
@@ -146,7 +200,6 @@
         "materialTheme": {},
         "studyIconSrc": "/study/paprka/resources/hrfh_low.png",
         "navbarLinks": [
-            {"text": "RADAR", "href": "/"},
             {"text": "Home", "href": "/study/paprka"},
             {"text": "Portal", "href": "/study/paprka/portal"},
             {"text": "Enrol", "href": "/study/paprka/enrol"}

@@ -33,8 +33,10 @@ export default async function Page({ params }: { params: { studyId: string } }) 
                   cta2={{text: 'Action 2', 'href': ''}}
                 />
                 <Block 
-                  blockType="markdown" title="Markdown Block" subtitle="Subtitle"
-                  content={`#### hello worfdsfdsfdsffssfsfsfsdfdld\n- one\n- two\n\n\n <br /><button variant="contained" href="https://google.com">Google</button>`}
+                  blockType="markdown" 
+                  title="Markdown Block" 
+                  subtitle="Subtitle"
+                  content={`**hello** worfdsfdsfdsffssfsfsfsdfdld\n- one\n- two\n\n\n <br /><button variant="contained" href="https://google.com">Google</button>`}
                 />
                 <Block 
                   blockType="text"

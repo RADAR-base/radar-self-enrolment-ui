@@ -47,9 +47,10 @@ export function MarkdownContainer({children, ...props }: MarkdownContainerProps)
           component: Link,
           props: {
             underline: 'always',
-            rel: 'noreferrer'
+            rel: 'noreferrer',
+            target: '_blank'
           }
-        }
+        },
       }}
       {...props}>
       {children}
