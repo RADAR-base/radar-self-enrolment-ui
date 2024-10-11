@@ -1,8 +1,12 @@
 import { Configuration, FrontendApi } from "@ory/client"
 import { edgeConfig } from "@ory/integrations/next"
+import getConfig from "next/config"
+
+const { publicRuntimeConfig } = getConfig()
+const { basePath } = publicRuntimeConfig
 
 const localConfig = {
-  basePath: `${process.env.NEXT_PUBLIC_KRATOS_PUBLIC_URL}/api/.ory`,
+  basePath: `${basePath}/api/.ory`,
   baseOptions: {
     withCredentials: true,
   },

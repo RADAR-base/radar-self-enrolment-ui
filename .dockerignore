@@ -1,4 +1,33 @@
-node_modules/
-.github/
-.idea/
-.vscode/
+# Node modules
+node_modules
+npm-debug.log
+
+# Build artifacts
+.next
+out
+
+# Local environment files
+.env
+
+# Logs
+logs
+*.log
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Git files
+.git
+.gitignore
+
+# Other files you may want to ignore
+coverage
+test-results
+*.tgz
