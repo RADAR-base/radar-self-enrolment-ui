@@ -24,6 +24,14 @@ export default async function Page({ params }: { params: { studyId: string } }) 
                 paddingTop={{xs: 0, sm: 2}}
                 paddingBottom={{xs: 0, sm: 2}}
                 >
+               <Block
+                  blockType="hero"
+                  title="Hero Block"
+                  subtitle="Subtitle"
+                  heroImage={{src: "/study/paprka/resources/hero.png", altText: "PAPRkA hero image"}}
+                  cta={{text: 'Join Study', 'href': 'paprka/enrol'}}
+                  cta2={{text: 'Action 2', 'href': ''}}
+                />
                 <Block 
                   blockType="markdown" title="Markdown Block" subtitle="Subtitle"
                   content={`#### hello worfdsfdsfdsffssfsfsfsdfdld\n- one\n- two\n\n\n <br /><button variant="contained" href="https://google.com">Google</button>`}
@@ -34,6 +42,7 @@ export default async function Page({ params }: { params: { studyId: string } }) 
                   subtitle="Subtitle" 
                   content={LoremIpsum}
                 />
+
           </Box>
         </main>
   )}

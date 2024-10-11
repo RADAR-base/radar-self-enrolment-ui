@@ -3,6 +3,7 @@ import { RadarBlockCard } from "../base/blockCard";
 import { IMarkdownBlock, MarkdownBlock } from "./md";
 import React from "react";
 import { ITextBlock, TextBlock } from "./text";
+import { HeroBlock, IHeroBlock } from "./hero";
 
 
 interface BlockProps {
@@ -11,14 +12,7 @@ interface BlockProps {
   noCard?: boolean
 }
 
-export type IBlock = (BlockProps & IMarkdownBlock) | (BlockProps & ITextBlock)
-
-
-let b: IBlock = {
-  'blockType': 'text',
-  'title': 'hi',
-  'content': 'asd'
-}
+export type IBlock = (BlockProps & IMarkdownBlock) | (BlockProps & ITextBlock) | (BlockProps & IHeroBlock)
 
 function BlockContainer({children, props}: {children: React.ReactNode, props: BlockProps}): React.ReactNode {
   let padding = props.blockPadding ?? {xs: 0, sm: 2} 
@@ -44,7 +38,10 @@ function getBlockContent(props: IBlock) {
     }
     case "text": {
       console.log('text')
-      return <TextBlock title={props.title} subtitle={props.subtitle} content={props.content} blockType="text" />
+      return <TextBlock {...props} />
+    }
+    case "hero": {
+      return <HeroBlock {...props} />
     }
   }
 }
@@ -55,7 +52,7 @@ export function Block(props: IBlock): React.ReactNode {
     <BlockContainer props={props}>
         {
           props.noCard ? (
-            <Box sx={{width: "100%", maxWidth: "lg", textJustify: "right", textAlign: 'right'}} padding={2} paddingLeft={4} paddingRight={4}>
+            <Box sx={{width: "100%", maxWidth: "lg", textJustify: "right", textAlign: 'right'}}>
               {blockContent}
             </Box>
           ) : (
