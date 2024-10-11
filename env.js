@@ -1,3 +1,3 @@
 module.exports = {
-    basePath: "/kratos-ui"
+  basePath: "/kratos-ui",
 }
