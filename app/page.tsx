@@ -1,22 +1,20 @@
 "use server"
-import React, { useState } from "react";
+import React from "react";
 
-import { Card, Button, Box, styled, Paper, Typography, Container, Popover, TextField } from "@mui/material";
-import Grid from '@mui/material/Grid2'; // Grid version 2
-import { RadarCard } from "./_ui/components/base/card";
+import { Button, Box, Typography, Container, TextField } from "@mui/material";
+import Grid from '@mui/material/Grid2';
+
+import { RadarCard } from "@/app/_ui/components/base/card";
 import NavBar from "@/app/_ui/components/navbar/navbar";
-import Auth from '@/app/_lib/auth';
-import AuthServer from '@/app/_lib/auth/ory/service.server'
-import LoginComponent, { LoginModal } from "./_ui/auth/login";
-import { Footer } from "./_ui/components/footer";
-import { LogoutButton } from "./_ui/auth/logout";
-import * as ory from '@/app/_lib/auth/ory/api.server'
+import { Footer } from "@/app/_ui/components/footer";
+import { LogoutButton } from "@/app/_ui/auth/logout";
+import { LoginModal } from "@/app/_ui/auth/login";
+import  Auth  from '@/app/_lib/auth/ory/service.server';
 
-const auth = new Auth(); 
-const authServer = new AuthServer();
 
 export default async function Home() {
-  const session = await (await ory.whoAmI()).json()
+  const auth = new Auth()
+  const email = await auth.getEmail()
   return (
     <Box
     sx={{
@@ -75,7 +73,7 @@ export default async function Home() {
             </RadarCard>
           </Grid>
           <Grid size={12}>
-            <RadarCard>{JSON.stringify(session, null, 2)}</RadarCard>
+            <RadarCard>{email}</RadarCard>
           </Grid>
           <Grid size={12}>
             <RadarCard><TextField id='test' label='Test'></TextField></RadarCard>

@@ -1,10 +1,20 @@
+import { FrontendApiCreateBrowserLoginFlowRequest } from "@ory/client";
+
 const BASEURL = process.env.NEXT_PUBLIC_ORY_SDK_URL;
 
-export const createLoginFlow = async (): Promise<Response> => {
-  const url = new URL("self-service/login/browser", BASEURL)
+
+export const createLoginFlow = async (params: {login_challenge?: string, refresh?: boolean} | undefined): Promise<Response> => {
+  let url = new URL("self-service/login/browser", BASEURL)
+  if (params?.login_challenge) {
+    url.searchParams.set('login_challenge', params.login_challenge)
+  }
+  if (params?.refresh) {
+    url.searchParams.set('refresh', params.refresh.toString())
+  }
+
   return await fetch(url, {
     headers: { 'accept': 'application/json' },
-    credentials: 'include'
+    credentials: 'include',
   })
 }
 
