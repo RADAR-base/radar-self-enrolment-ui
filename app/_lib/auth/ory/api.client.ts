@@ -41,7 +41,6 @@ export const getLoginFlow = async (flowId: string): Promise<Response> => {
 
 
 export const createLogoutFlow = async (): Promise<Response> => {
-  console.log(BASEURL)
   var url = new URL('self-service/logout/browser', BASEURL)
   return await fetch(url, {
     method: 'GET',

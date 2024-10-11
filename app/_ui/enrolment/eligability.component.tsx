@@ -1,8 +1,10 @@
 import { Box, Fade, Collapse, Zoom, Stack, Typography } from "@mui/material";
 import React from "react";
+import { CSSTransition } from 'react-transition-group';
 
 import { getYesNoOnChangeHandler, YesNoField } from "../components/fields/yesno";
 import { ITextItem, IYesNoItem } from "../../_lib/armt/definition/field.interfaces";
+
 
 
 type EligabilityItem = IYesNoItem | ITextItem
@@ -37,6 +39,7 @@ export function EnrolmentEligability(props: EnrolmentEligabilityProps) {
   for (let i = 1; i < props.items.length; i++) {
       items.push(
         <Collapse key={'eligability.' + props.items[i].id + '.collapse'} in={(props.values[props.items[i-1].id] != null)} unmountOnExit>
+          <Box>
             <YesNoField 
               label={props.items[i].label}
               description={props.items[i].description}
@@ -45,10 +48,9 @@ export function EnrolmentEligability(props: EnrolmentEligabilityProps) {
               id={'eligability.' + props.items[i].id}
               helperText={(props.values[props.items[i].id] != null) ? props.errors[props.items[i].id] : ""}
               key={'eligability.' + props.items[i].id}/>
-        </Collapse>
-        
+              </Box>
+          </Collapse>
       )
-    // }
   }
   return (
     <Stack spacing={4} alignItems="inherit">

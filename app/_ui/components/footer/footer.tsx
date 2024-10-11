@@ -22,10 +22,10 @@ export function Footer(props: FooterProps) {
       disableGutters={true}
       sx={{        
         marginTop: 'auto',
-        width: '100vw'
+        width: '100%'
       }}
     >
-      <Divider style={{width: '100%'}}/>
+      <Divider style={{width: '100vw'}}/>
       <Box sx={{
         bgcolor:' white',
         width: 1

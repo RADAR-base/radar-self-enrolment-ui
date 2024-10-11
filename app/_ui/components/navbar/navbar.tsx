@@ -28,7 +28,7 @@ function NavBar(props: NavBarProps) {
   return (
   <AppBar 
           color='inherit'
-          sx={{width: '100vw'}}
+          sx={{width: '100%'}}
       >
     <Container maxWidth='lg' sx={{padding: 2}}> 
       <Toolbar variant='dense' disableGutters>
@@ -68,12 +68,12 @@ function NavBar(props: NavBarProps) {
             anchorEl={anchorElNav}
             anchorOrigin={{
               vertical: 'bottom',
-              horizontal: 'left',
+              horizontal: 'right',
             }}
             keepMounted
             transformOrigin={{
               vertical: 'top',
-              horizontal: 'left',
+              horizontal: 'right',
             }}
             open={Boolean(anchorElNav)}
             onClose={handleCloseNavMenu}

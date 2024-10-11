@@ -13,7 +13,7 @@ export function MarkdownBlock({title, subtitle, content, ...props}: IMarkdownBlo
   return (
       <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
         <Typography variant="h2">{title}</Typography>
-        <Typography variant="subtitle1">{subtitle}</Typography>
+        <Typography variant="subtitle1" sx={{whiteSpace: 'pre-wrap', wordBreak: 'break-word'}}>{subtitle}</Typography>
         <MarkdownContainer>{content}</MarkdownContainer>       
       </Box>
   )

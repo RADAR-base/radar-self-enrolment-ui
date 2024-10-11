@@ -40,7 +40,7 @@ interface YesNoFieldProps extends YesNoButtonProps {
 
 export function YesNoField({label, description, helperText, ...props}: YesNoFieldProps, ref: ForwardedRef<HTMLDivElement>) {
   return (
-    <FormControl>
+    <FormControl sx={{width: '100%'}}>
       <Box display={"flex"} flexDirection={"row"} justifyContent={"space-between"} alignItems={"center"} gap={4}>
         <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
           <Typography variant="h4">{label}</Typography>

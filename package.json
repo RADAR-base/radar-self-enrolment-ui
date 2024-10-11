@@ -16,8 +16,9 @@
     "@mui/icons-material": "^6.0.2",
     "@mui/material": "^6.0.2",
     "@mui/material-nextjs": "^6.0.2",
+    "@mui/x-date-pickers": "^7.19.0",
+    "dayjs": "^1.11.13",
     "formik": "^2.4.6",
-    "morph-expressions": "^1.1.1",
     "mui-markdown": "^1.2.2",
     "next": "^14.2.5",
     "react": "^18",
@@ -30,6 +31,7 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
+    "morph-expressions": "^1.1.1",
     "typescript": "^5"
   }
 }

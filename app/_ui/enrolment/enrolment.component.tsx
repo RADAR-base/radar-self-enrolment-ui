@@ -3,18 +3,18 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation'
 import Yup from '@/app/_lib/armt/validation/yup'
 import { useFormik } from 'formik';
-import { Box, Button, Container, Stack, Typography } from '@mui/material';
+import { Box, Button, Container, MobileStepper, Stack } from '@mui/material';
 
 import { EnrolmentStudyInformation } from './information.component';
 import { EnrolmentEligability } from './eligability.component';
 import { EnrolmentConsent } from './consent.component';
 import { EnrolmentProtocol } from '@/app/_lib/study/protocol';
-import { ArmtRadioField } from '../components/fields/radio';
 import fromRedcapDefinition from '@/app/_lib/armt/definition/fromRedcapDefinition';
 import { ArmtForm } from '../components/form/form';
 import { ArmtDefinition } from '@/app/_lib/armt/definition/definition.types';
-import LoginComponent from '../auth/login';
-import Register from '../auth/register';
+import { schemaFromDefinition } from '@/app/_lib/armt/validation/parser';
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
+
 
 function generateEligabilitySchema(protocol: EnrolmentProtocol): Yup.Schema {
   const schema: {[key: string]: Yup.Schema} = {};
@@ -22,10 +22,6 @@ function generateEligabilitySchema(protocol: EnrolmentProtocol): Yup.Schema {
     (item) => schema[item.id] = Yup.boolean().required().isTrue(item.errorText)
   )
   return Yup.object(schema)
-}
-
-function generateFormInitialValues(definition: ArmtDefinition): {[key: string]: any} {
-  return {}
 }
 
 function generateConsentSchema(protocol: EnrolmentProtocol): Yup.Schema {
@@ -62,7 +58,7 @@ interface NextButtonProps {
 }
 
 function NextButton(props: NextButtonProps) {
-  let text = "Continue"
+  let text = "Next"
   return  <Button color="primary" variant="contained" disabled={props.disabled} onClick={props.onClick}>
             {text}
           </Button>
@@ -87,7 +83,7 @@ interface SubmitButtonProps {
 
 function SubmitButton(props: SubmitButtonProps) {
   return  <Button color="primary" variant="contained" disabled={props.disabled} onClick={props.onClick} type={'submit'}>
-            Join Study
+            Join
           </Button>
 }
 
@@ -108,11 +104,13 @@ function generateSteps(protocol: EnrolmentProtocol) {
 interface EnrolmentContentProps {
   protocol: EnrolmentProtocol
 }
-const isBrowser = () => typeof window !== 'undefined'; //The approach recommended by Next.js
+const isBrowser = () => typeof window !== 'undefined';
 
 function scrollToTop() {
     if (!isBrowser()) return;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    },2);
 }
 
 export function EnrolmentContent({protocol}: EnrolmentContentProps) {
@@ -122,22 +120,29 @@ export function EnrolmentContent({protocol}: EnrolmentContentProps) {
   const [stepIdx, setStep] = React.useState(0)
 
   const steps = generateSteps(protocol)
+  let additionalDefinition: ArmtDefinition | undefined;
+  if (protocol.additional) {
+    additionalDefinition = fromRedcapDefinition(protocol.additional.items)
+  }
 
   const eligabilitySchema = generateEligabilitySchema(protocol)
   const consentSchema = generateConsentSchema(protocol)
-  const schemas: {[key: string]: Yup.Schema} = {
+  let schemas: {[key: string]: Yup.Schema} = {
     eligability: eligabilitySchema,
-    consent: consentSchema
+    consent: consentSchema,
+  }
+  if (additionalDefinition) {
+    schemas['additional'] = schemaFromDefinition(additionalDefinition)
   }
 
   const formik = useFormik({
     validateOnChange: true,
     validateOnMount: false,
-    validateOnBlur: true,
+    validateOnBlur: false,
     initialValues: {
       'eligability': generateEligabilityInitialValues(protocol),
       'consent': generateConsentInitialValues(protocol),
-      'additional': protocol.additional ? generateFormInitialValues(fromRedcapDefinition(protocol.additional.items)) : undefined,
+      'additional': {}
     },
     validationSchema: Yup.object(schemas),
     onSubmit: (values) => {
@@ -171,18 +176,19 @@ export function EnrolmentContent({protocol}: EnrolmentContentProps) {
     additional: (protocol.additional == undefined) ? undefined : 
         <ArmtForm 
             definition={fromRedcapDefinition(protocol.additional.items)}
-            values={formik.values.additional} 
+            values={formik.values.additional}
+            errors={formik.errors['additional']}
             setFieldValue={(id, value) => formik.setFieldValue('additional.' + id, value)} />,
     account: <Box>Register</Box>,
   }
 
   const _getKeyValue_ = (key: string) => (obj: Record<string, any>) => obj[key];
-
   function validateStep() {
     if (schemas[steps[stepIdx]]) {
       let vals = _getKeyValue_(steps[stepIdx])(formik.values)
       schemas[steps[stepIdx]].validate(vals, {abortEarly: false}).then(
-        (val) => setDisabled(false)
+        (val) => {
+          setDisabled(false)}
       ).catch(
         (err: Yup.ValidationError) => {
           setDisabled(true)
@@ -201,8 +207,8 @@ export function EnrolmentContent({protocol}: EnrolmentContentProps) {
 
   function nextStep() {
     if ((stepIdx + 1) < steps.length) {
-      setStep(stepIdx + 1)
       scrollToTop()
+      setStep(stepIdx + 1)
     }
   }
   
@@ -219,29 +225,60 @@ export function EnrolmentContent({protocol}: EnrolmentContentProps) {
     validateStep()
   }, [formik.values, stepIdx])
 
+
+  const shapeStyles = { width: '0.5rem', height: '0.5rem' };
+  const shapeCircleStyles = { borderRadius: '50%' };
+  const rectangle = <Box component="span" sx={shapeStyles} />;
+  const circle = (active: boolean, key?: string) => {
+    return <Box component="span"
+                key={key}
+                sx={{ 
+                  bgcolor: (active) ? 'primary.main' : 'lightgray',
+                  ...shapeStyles, 
+                  ...shapeCircleStyles,}} />
+  }
+  let stepperDots: JSX.Element[] = [];
+  for (let i=0; i < steps.length; i++) {
+    stepperDots.push(
+      circle(i <= stepIdx, 'stepdot' + i)
+    )
+  }
+  const ControlButtons = (
+    <Box
+      paddingTop={4}
+      paddingBottom={4}
+      display={"flex"}
+      width={"100%"}
+      position={'sticky'}
+      bottom={0}
+      alignItems={'center'}
+      sx={{ 
+        justifyContent: 'space-between', 
+        background: 'white'
+      }}
+      >
+      <BackButton exit={stepIdx == 0} onClick={previousStep}/>
+      <Box display={'flex'} flexDirection={'row'} gap={0.5}>
+        {stepperDots}
+      </Box>
+      {((stepIdx+1) == steps.length) ? 
+        <SubmitButton disabled={disabled || formik.isSubmitting} onClick={formik.submitForm}/> : 
+        <NextButton disabled={disabled} onClick={nextStep} />
+      }
+    </Box>
+  )
+
+
   return (
-    
-    <Container sx={{
-      padding: 4,
-      maxWidth: 'xs',
-    }}
-    maxWidth={'md'}
+    <Container 
+      sx={{
+        padding: 4,
+      }}
     >
       <form onSubmit={formik.handleSubmit}>
         <Stack gap={4} margin={"auto"}>
           {stepContent[steps[stepIdx]]}
-          <Box
-            paddingTop={4}
-            display={"flex"}
-            sx={{ justifyContent: 'space-between' }}
-            width={1}
-            >
-            <BackButton exit={stepIdx == 0} onClick={previousStep}/>
-            {((stepIdx+1) == steps.length) ? 
-              <SubmitButton disabled={disabled || formik.isSubmitting} onClick={formik.submitForm}/> : 
-              <NextButton disabled={disabled} onClick={nextStep} />
-            }
-          </Box>
+          {ControlButtons}
         </Stack>  
       </form>
     </Container>

@@ -5,40 +5,56 @@ import { ArmtDescriptiveField } from "../fields/descriptive";
 import { ArmtRadioField } from "../fields/radio";
 import { ArmtTextField } from "../fields/text";
 import { YesNoField } from "../fields/yesno";
+import { ArmtDateField } from "../fields/date";
 
 interface ArmtFieldProps {
   item: ArmtItem
   value: any
   setFieldValue: (id: string, value: any) => void
+  errorText?: string
 }
 
-export function ArmtField({ item, value, setFieldValue }: ArmtFieldProps): React.ReactNode {
+export function ArmtField({ item, value, setFieldValue, errorText }: ArmtFieldProps): React.ReactNode {
   switch(item.content.fieldType) {
     case "descriptive": {
       return <ArmtDescriptiveField {...item.content} />
     }
     case "radio": {
-      return <ArmtRadioField  {...item.content} value={value} setFieldValue={setFieldValue} />
+      return <ArmtRadioField  {...item.content} value={value} setFieldValue={setFieldValue} errorText={errorText} />
     }
     case "text": {
-      return <ArmtTextField {...item.content} />
+      return <ArmtTextField {...item.content} value={value} setFieldValue={setFieldValue}  errorText={errorText} />
     }
     case "yesno": {
-      return <YesNoField {...item.content} />
+      return <YesNoField {...item.content} value={value} />
+    }
+    case "date": {
+      return <ArmtDateField {...item.content} value={value} setFieldValue={setFieldValue}  errorText={errorText} />
     }
   }
 }
 
 interface ArmtFormProps {
   definition: ArmtDefinition
-  values: any
+  values:  {[key: string]: any}
+  errors?: {[key: string]: string}
   setFieldValue: (id: string, value: any) => void
 }
 
-export function ArmtForm({ definition, values, setFieldValue }: ArmtFormProps): React.ReactNode {
+export function ArmtForm({ definition, values, setFieldValue, errors }: ArmtFormProps): React.ReactNode {
   return  (
     <Box display={"flex"} flexDirection={"column"} gap={4} textAlign={"left"}>
-      {definition.items.map((item) => <ArmtField item={item} setFieldValue={setFieldValue} value={values[item.content.id]} key={item.content.id}/>)}
+      {definition.items.map(
+        (item) => {
+          let errorText = errors ? errors[item.content.id] : undefined
+          console.log(errorText)
+          return (<ArmtField item={item} 
+                              setFieldValue={setFieldValue}
+                              value={values[item.content.id]}
+                              key={item.content.id}
+                              errorText={errorText} />)
+        })
+      }
     </Box>
   )
 }

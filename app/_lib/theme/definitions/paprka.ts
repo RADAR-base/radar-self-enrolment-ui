@@ -12,11 +12,14 @@ const paprkaOptions = createTheme({
   typography: {
     allVariants: {
       fontFamily: msrt_font.style.fontFamily,
+      wordBreak: 'break-word',
     },
     h1: {
       fontSize: '2rem',
       fontWeight: '700',
       color: "#0297A7",
+      wordBreak: 'normal',
+      overflow: 'hidden'
     },
     h2: {
       fontSize: '1.5rem',
@@ -33,7 +36,8 @@ const paprkaOptions = createTheme({
       fontWeight: '700',
     },
     button: {
-      textTransform: 'none'
+      textTransform: 'none',
+      wordBreak: 'normal',
     },
     body1: {
       color: '#a0a0c8',
