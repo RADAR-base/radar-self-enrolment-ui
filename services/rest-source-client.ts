@@ -1,12 +1,15 @@
+import getConfig from "next/config"
+
+const { publicRuntimeConfig } = getConfig()
+
 export class RestSourceClient {
-  private readonly AUTH_BASE_URL = "http://localhost:4444/oauth2"
+  private readonly AUTH_BASE_URL = `${publicRuntimeConfig.hydraPublicUrl}/oauth2`
   private readonly GRANT_TYPE = "authorization_code"
-  private readonly CLIENT_ID = "SEP"
-  private readonly CLIENT_SECRET = "secret"
-  private readonly REGISTRATION_ENDPOINT =
-    "http://localhost:8085/rest-sources/backend/registrations"
-  private readonly FRONTEND_ENDPOINT =
-    "http://localhost:8081/rest-sources/authorizer"
+  private readonly CLIENT_ID = `${publicRuntimeConfig.frontEndClientId}`
+  private readonly CLIENT_SECRET = `${publicRuntimeConfig.frontEndClientSecret}`
+  private readonly REGISTRATION_ENDPOINT = `${publicRuntimeConfig.restSourceRegistrationEndpoint}/registrations`
+  private readonly USER_ENDPOINT = `${publicRuntimeConfig.restSourceRegistrationEndpoint}/users`
+  private readonly FRONTEND_ENDPOINT = `${publicRuntimeConfig.restSourceFrontendEndpoint}`
 
   async getAccessToken(
     code: string,
