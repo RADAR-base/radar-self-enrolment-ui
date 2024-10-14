@@ -1,39 +1,42 @@
-export interface IYesNoItem {
-  fieldType: "yesno",
+interface IItem { 
+  fieldType: string,
   id: string,
   title?: string,
   label?: string,
   description?: string,
-  errorText?: string
+  errorText?: string,
 }
 
-export interface ITextItem {
-  fieldType: "text",
-  id: string,
-  title?: string,
-  label?: string,
-  description?: string,
-  errorText?: string
+export interface IDateItem extends IItem {
+  fieldType: "date",
 }
+
+export interface IYesNoItem extends IItem {
+  fieldType: "yesno",
+}
+
+export interface ITextItem extends IItem {
+  fieldType: "text",
+  type?: string
+}
+
+export interface ITextItem extends IItem {
+  fieldType: "text",
+  type?: string
+}
+
 
 export interface IRadioChoice {
   code: string,
   label: string
 }
 
-export interface IRadioItem {
+export interface IRadioItem extends IItem {
   fieldType: "radio",
-  id: string,
-  title?: string,
-  label?: string,
-  description?: string,
-  errorText?: string,
   choices: IRadioChoice[]
 }
 
-export interface IDescriptiveItem {
+export interface IDescriptiveItem extends IItem {
   fieldType: "descriptive",
-  id: string,
-  label?: string,
   content: string
 }

@@ -48,7 +48,7 @@ export class OryAuthClientService extends ClientAuthService {
   }
 
   async signIn(email: string, password: string): Promise<AuthResponse> {
-    var createLoginResponse = await client.createLoginFlow()
+    var createLoginResponse = await client.createLoginFlow({})
     if (createLoginResponse.ok) {
       var flow = await createLoginResponse.json()
     } else {

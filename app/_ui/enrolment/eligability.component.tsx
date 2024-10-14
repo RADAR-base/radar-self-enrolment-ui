@@ -1,8 +1,11 @@
 import { Box, Fade, Collapse, Zoom, Stack, Typography } from "@mui/material";
 import React from "react";
+import { CSSTransition } from 'react-transition-group';
 
 import { getYesNoOnChangeHandler, YesNoField } from "../components/fields/yesno";
 import { ITextItem, IYesNoItem } from "../../_lib/armt/definition/field.interfaces";
+import { MarkdownContainer } from "../components/base/markdown";
+
 
 
 type EligabilityItem = IYesNoItem | ITextItem
@@ -37,6 +40,7 @@ export function EnrolmentEligability(props: EnrolmentEligabilityProps) {
   for (let i = 1; i < props.items.length; i++) {
       items.push(
         <Collapse key={'eligability.' + props.items[i].id + '.collapse'} in={(props.values[props.items[i-1].id] != null)} unmountOnExit>
+          <Box>
             <YesNoField 
               label={props.items[i].label}
               description={props.items[i].description}
@@ -45,16 +49,14 @@ export function EnrolmentEligability(props: EnrolmentEligabilityProps) {
               id={'eligability.' + props.items[i].id}
               helperText={(props.values[props.items[i].id] != null) ? props.errors[props.items[i].id] : ""}
               key={'eligability.' + props.items[i].id}/>
-        </Collapse>
-        
+              </Box>
+          </Collapse>
       )
-    // }
   }
   return (
-    <Stack spacing={4} alignItems="inherit">
-      
+    <Stack spacing={4} alignItems="inherit" textAlign={"left"}>
       <Typography variant="h2" align="left">{title}</Typography>
-      {description && <Typography variant="subtitle1" align="left" paddingBottom={2}>{description}</Typography>}
+      {description && <MarkdownContainer>{description}</MarkdownContainer>}
       <Box display={"flex"} flexDirection={"column"} gap={2}>
         {items}
       </Box>

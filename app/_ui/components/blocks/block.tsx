@@ -2,6 +2,9 @@ import { Box } from "@mui/material";
 import { RadarBlockCard } from "../base/blockCard";
 import { IMarkdownBlock, MarkdownBlock } from "./md";
 import React from "react";
+import { ITextBlock, TextBlock } from "./text";
+import { HeroBlock, IHeroBlock } from "./hero";
+import { IVideoBlock, VideoBlock } from "./video";
 
 
 interface BlockProps {
@@ -10,14 +13,18 @@ interface BlockProps {
   noCard?: boolean
 }
 
-export type IBlock = BlockProps & (IMarkdownBlock)
+export type IBlock = (BlockProps & IMarkdownBlock) |
+                     (BlockProps & ITextBlock) | 
+                     (BlockProps & IHeroBlock) |
+                     (BlockProps & IVideoBlock)
 
 function BlockContainer({children, props}: {children: React.ReactNode, props: BlockProps}): React.ReactNode {
   let padding = props.blockPadding ?? {xs: 0, sm: 2} 
   return (
     <Box 
-      padding={padding}
-      width="100vw"
+      paddingLeft={padding}
+      paddingRight={padding}
+      width="100%"
       maxWidth={"100%"}
       justifyContent="center" 
       alignItems="center"
@@ -27,24 +34,38 @@ function BlockContainer({children, props}: {children: React.ReactNode, props: Bl
       </Box>)
 }
 
-export function Block(props: IBlock): React.ReactNode {
+function getBlockContent(props: IBlock) {
   switch (props.blockType) {
     case "markdown": {
-      return (
-        <BlockContainer props={props}>
-            {
-              props.noCard ? (
-                <Box sx={{width: "100%", maxWidth: "lg", textJustify: "right", textAlign: 'right'}} padding={2} paddingLeft={4} paddingRight={4}>
-                  <MarkdownBlock {...props} />
-                </Box>
-              ) : (
-                <RadarBlockCard>
-                  <MarkdownBlock {...props} />
-                </RadarBlockCard>
-              )
-            }
+      return <MarkdownBlock {...props} />
+    }
+    case "text": {
+      return <TextBlock {...props} />
+    }
+    case "hero": {
+      return <HeroBlock {...props} />
+    }
+    case "video": {
+      return <VideoBlock {...props} />
 
-          </BlockContainer>)
     }
   }
+}
+
+export function Block(props: IBlock): React.ReactNode {
+  const blockContent = getBlockContent(props); 
+  return (
+    <BlockContainer props={props}>
+        {
+          props.noCard ? (
+            <Box sx={{width: "100%", maxWidth: "lg", textJustify: "right", textAlign: 'right'}}>
+              {blockContent}
+            </Box>
+          ) : (
+            <RadarBlockCard>
+               {blockContent}
+            </RadarBlockCard>
+          )
+        }
+      </BlockContainer>)
 }

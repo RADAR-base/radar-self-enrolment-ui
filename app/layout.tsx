@@ -10,7 +10,6 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 
 import defaultTheme from "@/app/_lib/theme/definitions/default";
 
-
 export const metadata: Metadata = {
   title: "RADAR WebPortal",
   description: "Webportal for RADAR-base remote monitoring research studies",
@@ -23,17 +22,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-      {/* <meta name="viewport" content="initial-scale=1, width=device-width" /> */}
+      {/* <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /> */}
+      <meta name="viewport" content="initial-scale=1, width=device-width" />
       <body>
-      {/* <StyledEngineProvider injectFirst> */}
         <AppRouterCacheProvider>
           <ThemeProvider theme={defaultTheme}>
           <CssBaseline />
             <div>{children}</div>
           </ThemeProvider>
         </AppRouterCacheProvider>
-      {/* </StyledEngineProvider> */}
       </body>
     </html>
   );

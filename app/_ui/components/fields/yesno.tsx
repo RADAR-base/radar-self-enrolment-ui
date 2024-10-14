@@ -1,5 +1,6 @@
 import { Box, FormControl, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { ForwardedRef } from "react";
+import { MarkdownContainer } from "../base/markdown";
 
 export const getYesNoOnChangeHandler = (setFieldValue: (id: string, value: boolean) => void): {(event: any, value: boolean): void} => {
   return (event: any, value: boolean) => { if (value != null) setFieldValue(event.target.id, value) }
@@ -40,14 +41,17 @@ interface YesNoFieldProps extends YesNoButtonProps {
 
 export function YesNoField({label, description, helperText, ...props}: YesNoFieldProps, ref: ForwardedRef<HTMLDivElement>) {
   return (
-    <FormControl>
+    <FormControl sx={{width: '100%'}}>
+              <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
+
       <Box display={"flex"} flexDirection={"row"} justifyContent={"space-between"} alignItems={"center"} gap={4}>
         <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
           <Typography variant="h4">{label}</Typography>
-          <Typography variant="body1" >{description ? description : <div>&nbsp;</div>}</Typography>
-          <Typography variant="overline"  color="error">{helperText ? helperText : <div>&nbsp;</div>}</Typography>
+          <MarkdownContainer>{description}</MarkdownContainer>
         </Box>
         <YesNoButton {...props}/>
+      </Box>
+      <Typography variant="overline"  color="error">{helperText ? helperText : <div>&nbsp;</div>}</Typography>
       </Box>
     </FormControl>
   )

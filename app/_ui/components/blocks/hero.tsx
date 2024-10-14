@@ -1,0 +1,71 @@
+"use client"
+import { Box, Button, Container, Typography, useTheme } from "@mui/material";
+import Image from "next/image";
+import { ForwardedRef } from "react";
+
+interface ICallToAction {
+  text: string
+  href?: string
+  onClick?: () => void
+}
+
+interface IHeroImage {
+  src: string,
+  altText: string
+}
+
+
+function CTAButton(cta: ICallToAction) {
+  return <Button variant="contained" 
+                 href={cta.href}
+                 onClick={cta.onClick}
+                 sx={{ width: { xs: "auto", sm: "auto" } }}>
+          {cta.text}
+        </Button>
+}
+
+function CTAButtons(cta?: ICallToAction, cta2?: ICallToAction) {
+
+  const cta1Button = cta ? CTAButton(cta) : undefined
+  const cta2Button = cta2 ? CTAButton(cta2) : undefined
+  return <Box display={"flex"}  flexShrink={0} gap={2} flexDirection={{xs: 'column', sm: 'row'}}>{cta1Button}{cta2Button}</Box>
+}
+
+
+
+export interface IHeroBlock {
+  blockType: 'hero'
+  title?: string
+  subtitle?: string
+  heroImage: IHeroImage
+  cta?: ICallToAction
+  cta2?: ICallToAction
+}
+
+export function HeroBlock(props: IHeroBlock, ref: ForwardedRef<HTMLDivElement>) {
+        const theme = useTheme();
+        const isSmallScreen = theme.breakpoints.down("sm");
+        return (
+          <Box 
+            display={"flex"} 
+            flexDirection={{xs: "column-reverse", sm: "row"}}
+          >
+            <Box display={"flex"} flexDirection={"column"} textAlign={{xs: "center", sm: "left"}} flexShrink={1} flex={0.3} padding={4} margin="auto">
+              <Typography variant="h1">{props.title}</Typography>
+              <Typography variant="subtitle1">{props.subtitle}</Typography>
+              {CTAButtons(props.cta, props.cta2)}
+            </Box>
+            <Box flex={1}>
+            <Container 
+              sx={{
+                position: 'relative', 
+                overflow: 'hidden',
+                minHeight: "max(20rem, min(50vw, 50vh))",
+                maxHeight: '50vh'
+            }}>
+            <Image src={props.heroImage.src} fill alt={props.heroImage.altText} style={{objectFit: 'cover'}} />
+            </Container>
+            </Box>
+          </Box>
+  )
+}

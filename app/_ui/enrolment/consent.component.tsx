@@ -2,6 +2,7 @@ import { Divider, Stack, Typography } from "@mui/material";
 import { getYesNoOnChangeHandler, YesNoField } from "@/app/_ui/components/fields/yesno";
 import React from "react";
 import { IYesNoItem } from "../../_lib/armt/definition/field.interfaces";
+import { MarkdownContainer } from "../components/base/markdown";
 
 type ConsentItem = IYesNoItem
 
@@ -50,9 +51,9 @@ export function EnrolmentConsent(props: EnrolmentConsentProps) {
     }
   }
   return (
-    <Stack spacing={4} alignItems="inherit">
+    <Stack spacing={4} alignItems="inherit" textAlign={"left"}>
       <Typography variant="h2" align="left">{title}</Typography>
-      {description && <Typography variant="subtitle1" align="left" paddingBottom={2}>{description}</Typography>}
+      {description && <MarkdownContainer>{description}</MarkdownContainer>}
       {(props.optionalItems) && <Typography variant="h3" align="left">Required Items</Typography>}
       {requiredItems}
       {(props.optionalItems) && <Divider />}

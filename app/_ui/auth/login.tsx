@@ -1,15 +1,21 @@
 "use client"
 import { useParams, useSearchParams, useRouter } from "next/navigation"
 import { Box, Button, Card, Container, Grid, Link, Popover, Stack, TextField } from "@mui/material"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { useFormik } from "formik"
 import Auth from '@/app/_lib/auth'
 import { RadarCard } from "../components/base/card"
 
+import ory from '@/app/_lib/auth/ory/api.client'
+import { kratos, hydra } from '@/app/_lib/auth/ory/ory';
+import { getCsrfToken } from "@/app/_lib/auth/ory/util"
+import { LoginFlow } from "@ory/client"
+
+
 interface LoginProps {
     onLogin?: () => void
+    loginChallenge?: string
 }
-
 
 export function LoginModal() {
     const [open, setOpen] = React.useState(false);
@@ -46,6 +52,30 @@ export function LoginModal() {
   }
 
 export function LoginComponent(props: LoginProps) {
+    let [flow, setFlow] = useState<any>();
+
+
+    useEffect(() => {
+      if (flow === undefined) {
+        // kratos.createBrowserLoginFlow({loginChallenge: props.loginChallenge}).then(
+        //   (({data: data}) => {
+        //     setFlow(data)
+        //   }))
+        console.log(props.loginChallenge)
+        ory.createLoginFlow({login_challenge: props.loginChallenge}).then(
+          (val) => {
+            val.json().then(
+              (data) => {
+                setFlow(data)
+              }
+            )
+            setFlow(val)
+          }
+        )
+        }
+      console.log(flow)
+    }, [])
+
     const router = useRouter()
     const auth = new Auth();
     const onLogin = props.onLogin ? props.onLogin : () => router.push('/')
@@ -56,13 +86,22 @@ export function LoginComponent(props: LoginProps) {
         },
         onSubmit: async (values: any) => 
         {
-            var errors = await auth.signIn(values?.email, values?.password)
-            console.log(errors)
-            if (errors.ok) {
-                onLogin()
-            } else {
-                console.log('error')
-            }
+          const body = {
+            method: 'password',
+            identifier: values.email,
+            password: values.password,
+            csrf_token: getCsrfToken(flow),      
+          }
+          console.log(body)
+          let b = await ory.submitLoginFlow(flow.id, body)
+          console.log(await b.json())
+            // var errors = await auth.signIn(values?.email, values?.password)
+            // console.log(errors)
+            // if (errors.ok) {
+            //     onLogin()
+            // } else {
+            //     console.log('error')
+            // }
         }
     });
 

@@ -1,8 +1,28 @@
 "use client"
 import Yup from "../validation/yup";
+import dayjs, { Dayjs } from 'dayjs';
 import { ArmtDefinition, ArmtItem, ArmtItemContent } from "./definition.types";
 import { RadarRedcapDefinition, RadarRedcapFieldDefinition } from "./redcap.types";
 
+function getTextSchema(field: RadarRedcapFieldDefinition) {
+  switch (field.text_validation_type_or_show_slider_number) {
+    case "datetime_dmy": {
+      let validation = Yup.date().typeError("")
+      if (field.text_validation_min) {
+        let minDate = dayjs(field.text_validation_min).toDate()
+        validation = validation.min(minDate, "This date must be later than " + field.text_validation_min)
+      }
+      if (field.text_validation_max) {
+        let maxDate = dayjs(field.text_validation_max).toDate()
+        validation = validation.max(maxDate, "This date must be before " + field.text_validation_max)
+      }
+      return validation
+    }
+    default: {      
+        return Yup.string()
+    }
+  }
+}
 
 function FieldFromRedcap(field: RadarRedcapFieldDefinition): ArmtItem {
   let content: ArmtItemContent
@@ -40,16 +60,24 @@ function FieldFromRedcap(field: RadarRedcapFieldDefinition): ArmtItem {
       validation = Yup.boolean()
     }
     if (field.field_type == "text") {
-      content = {
-        fieldType: "text",
-        id: field.field_name,
-        label: field.field_label,
-      }
-      validation = Yup.string()
-    }
-  
+      if (field.text_validation_type_or_show_slider_number == "datetime_dmy") {
+        content = {
+          fieldType: 'date',
+          id: field.field_name,
+          label: field.field_label
+        }
+        validation = getTextSchema(field)
+      } else {
+        content = {
+          fieldType: "text",
+          id: field.field_name,
+          label: field.field_label,
+          type: field.text_validation_type_or_show_slider_number,
+        }
+      validation = getTextSchema(field)
+    }}
   if (field.required_field) {
-    validation = validation?.required()
+    validation = validation?.required("")
   }
   return {
     content: content,

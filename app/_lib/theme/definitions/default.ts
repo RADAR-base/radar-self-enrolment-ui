@@ -29,12 +29,15 @@ export const defaultOptions = createTheme({
   },
   typography: {
     allVariants: {
-      fontFamily: font.style.fontFamily
+      fontFamily: font.style.fontFamily,
+      wordBreak: 'break-word',
     },
     h1: {
       fontSize: '1.8rem',
       fontWeight: 700,
-      color: '#23a2c9'
+      color: '#23a2c9',
+      wordBreak: 'normal',
+      overflow: 'hidden'
     },
     h2: {
       color: '#23a2c9',

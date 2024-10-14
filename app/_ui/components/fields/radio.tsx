@@ -42,9 +42,9 @@ export function ArmtRadioField(props: ArmtRadioFieldProps, ref: ForwardedRef<HTM
     <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={2} key={props.key}>
       <Typography variant="h2">{props.title}</Typography>
       <FormControl>
-      <FormLabel>
-        <Typography variant="h3">{props.label}</Typography>
-      </FormLabel>
+      {/*<FormLabel>*/}
+      <Typography variant="h4" component={'span'}>{props.label}</Typography>
+      {/*</FormLabel>*/}  
       <RadioGroup
         value={props.value ??  ""}
         name={props.id}
