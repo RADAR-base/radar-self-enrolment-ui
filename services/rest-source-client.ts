@@ -12,7 +12,10 @@ export class RestSourceClient {
   private readonly FRONTEND_ENDPOINT = `${publicRuntimeConfig.restSourceFrontendEndpoint}`
   private readonly SOURCE_TYPE = "Oura"
 
-  async getRestSourceUser(accessToken: string, project: any): Promise<string | null> {
+  async getRestSourceUser(
+    accessToken: string,
+    project: any,
+  ): Promise<string | null> {
     try {
       const response = await fetch(this.USER_ENDPOINT, {
         method: "POST",
@@ -34,13 +37,14 @@ export class RestSourceClient {
           console.warn("User already exists:", data.message)
           return data.user.id
         } else {
-          throw new Error(`Failed to create user: ${data.message || response.statusText}`)
+          throw new Error(
+            `Failed to create user: ${data.message || response.statusText}`,
+          )
         }
       }
 
       const userDto = await response.json()
       return userDto.id
-
     } catch (error) {
       console.error(error)
       return null
@@ -67,7 +71,9 @@ export class RestSourceClient {
       })
 
       if (!response.ok) {
-        throw new Error(`Failed to retrieve access token: ${response.statusText}`)
+        throw new Error(
+          `Failed to retrieve access token: ${response.statusText}`,
+        )
       }
 
       const data = await response.json()
@@ -105,7 +111,10 @@ export class RestSourceClient {
     window.location.href = authUrl
   }
 
-  async getRestSourceAuthLink(accessToken: string, project: any): Promise<string | null> {
+  async getRestSourceAuthLink(
+    accessToken: string,
+    project: any,
+  ): Promise<string | null> {
     try {
       const userId = await this.getRestSourceUser(accessToken, project)
       if (!userId) {
@@ -125,7 +134,9 @@ export class RestSourceClient {
       })
 
       if (!response.ok) {
-        throw new Error(`Failed to retrieve registration token: ${response.statusText}`)
+        throw new Error(
+          `Failed to retrieve registration token: ${response.statusText}`,
+        )
       }
 
       const data = await response.json()
@@ -134,14 +145,16 @@ export class RestSourceClient {
       }
 
       return `${this.FRONTEND_ENDPOINT}/users:auth?token=${data.token}&secret=${data.secret}`
-
     } catch (error) {
       console.error(error)
       return null
     }
   }
 
-  async redirectToRestSourceAuthLink(accessToken: string, project: any): Promise<void> {
+  async redirectToRestSourceAuthLink(
+    accessToken: string,
+    project: any,
+  ): Promise<void> {
     const url = await this.getRestSourceAuthLink(accessToken, project)
     if (url) {
       console.log("Redirecting to: ", url)

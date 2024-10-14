@@ -40,7 +40,6 @@ const Fitbit: NextPage = () => {
       const traits = data?.identity?.traits
       setTraits(traits)
       setProjects(traits.projects) //
-
     })
   }, [flowId, router, router.isReady, returnTo])
 
