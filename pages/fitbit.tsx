@@ -36,26 +36,27 @@ const Fitbit: NextPage = () => {
   }
 
   useEffect(() => {
+    ory.toSession().then(({ data }) => {
+      const traits = data?.identity?.traits
+      setTraits(traits)
+      setProjects(traits.projects) //
+
+    })
+  }, [flowId, router, router.isReady, returnTo])
+
+  useEffect(() => {
     const handleToken = async () => {
-      if (!router.isReady) return
+      if (!router.isReady || !projects.length) return
 
       const token = await restSourceClient.getAccessTokenFromRedirect()
       if (token) {
         localStorage.setItem("access_token", token)
-        await restSourceClient.redirectToRestSourceAuthLink(token)
+        await restSourceClient.redirectToRestSourceAuthLink(token, projects[0])
       }
     }
 
     handleToken()
-  }, [router.isReady])
-
-  useEffect(() => {
-    ory.toSession().then(({ data }) => {
-      const traits = data?.identity?.traits
-      setTraits(traits)
-      setProjects(traits.projects)
-    })
-  }, [flowId, router, router.isReady, returnTo])
+  }, [router.isReady, projects])
 
   return (
     <>

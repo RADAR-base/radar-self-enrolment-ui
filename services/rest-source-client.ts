@@ -7,9 +7,45 @@ export class RestSourceClient {
   private readonly GRANT_TYPE = "authorization_code"
   private readonly CLIENT_ID = `${publicRuntimeConfig.frontEndClientId}`
   private readonly CLIENT_SECRET = `${publicRuntimeConfig.frontEndClientSecret}`
-  private readonly REGISTRATION_ENDPOINT = `${publicRuntimeConfig.restSourceRegistrationEndpoint}/registrations`
-  private readonly USER_ENDPOINT = `${publicRuntimeConfig.restSourceRegistrationEndpoint}/users`
+  private readonly REGISTRATION_ENDPOINT = `${publicRuntimeConfig.restSourceBackendEndpoint}/registrations`
+  private readonly USER_ENDPOINT = `${publicRuntimeConfig.restSourceBackendEndpoint}/users`
   private readonly FRONTEND_ENDPOINT = `${publicRuntimeConfig.restSourceFrontendEndpoint}`
+  private readonly SOURCE_TYPE = "Oura"
+
+  async getRestSourceUser(accessToken: string, project: any): Promise<string | null> {
+    try {
+      const response = await fetch(this.USER_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+          userId: project.userId,
+          projectId: project.id,
+          sourceType: this.SOURCE_TYPE,
+          startDate: new Date().toISOString(),
+        }),
+      })
+
+      if (!response.ok) {
+        const data = await response.json()
+        if (response.status === 409 && data.user) {
+          console.warn("User already exists:", data.message)
+          return data.user.id
+        } else {
+          throw new Error(`Failed to create user: ${data.message || response.statusText}`)
+        }
+      }
+
+      const userDto = await response.json()
+      return userDto.id
+
+    } catch (error) {
+      console.error(error)
+      return null
+    }
+  }
 
   async getAccessToken(
     code: string,
@@ -23,14 +59,23 @@ export class RestSourceClient {
       client_secret: this.CLIENT_SECRET,
     })
 
-    const response = await fetch(`${this.AUTH_BASE_URL}/token`, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: bodyParams,
-    })
+    try {
+      const response = await fetch(`${this.AUTH_BASE_URL}/token`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: bodyParams,
+      })
 
-    const data = await response.json()
-    return data.access_token || null
+      if (!response.ok) {
+        throw new Error(`Failed to retrieve access token: ${response.statusText}`)
+      }
+
+      const data = await response.json()
+      return data.access_token || null
+    } catch (error) {
+      console.error(error)
+      return null
+    }
   }
 
   async getAccessTokenFromRedirect(): Promise<string | null> {
@@ -60,32 +105,44 @@ export class RestSourceClient {
     window.location.href = authUrl
   }
 
-  // Make a POST request to the registration endpoint to retrieve the authorization link
-  async getRestSourceAuthLink(accessToken: string): Promise<string | null> {
-    const response = await fetch(this.REGISTRATION_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({
-        userId: "4",
-        persistent: true,
-      }),
-    })
+  async getRestSourceAuthLink(accessToken: string, project: any): Promise<string | null> {
+    try {
+      const userId = await this.getRestSourceUser(accessToken, project)
+      if (!userId) {
+        throw new Error("Failed to retrieve or create user")
+      }
 
-    const data = await response.json()
-    if (!data.token || !data.secret) {
-      console.error("Failed to retrieve auth link")
+      const response = await fetch(this.REGISTRATION_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+          userId,
+          persistent: false,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error(`Failed to retrieve registration token: ${response.statusText}`)
+      }
+
+      const data = await response.json()
+      if (!data.token || !data.secret) {
+        throw new Error("Failed to retrieve auth link")
+      }
+
+      return `${this.FRONTEND_ENDPOINT}/users:auth?token=${data.token}&secret=${data.secret}`
+
+    } catch (error) {
+      console.error(error)
       return null
     }
-
-    return `${this.FRONTEND_ENDPOINT}/users:auth?token=${data.token}&secret=${data.secret}`
   }
 
-  // Redirect user to the authorization link for the rest source
-  async redirectToRestSourceAuthLink(accessToken: string): Promise<void> {
-    const url = await this.getRestSourceAuthLink(accessToken)
+  async redirectToRestSourceAuthLink(accessToken: string, project: any): Promise<void> {
+    const url = await this.getRestSourceAuthLink(accessToken, project)
     if (url) {
       console.log("Redirecting to: ", url)
       window.location.href = url
