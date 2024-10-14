@@ -4,8 +4,8 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
-import ory from "../pkg/sdk"
 import { MarginCard } from "../pkg"
+import ory from "../pkg/sdk"
 
 const OAuth2Login = () => {
   const router = useRouter()
@@ -13,22 +13,43 @@ const OAuth2Login = () => {
   const [error, setError] = useState<string | null>(null)
   const [traits, setTraits] = useState<any>()
   const [projects, setProjects] = useState<any>([])
+  const [redirect, setRedirect] = useState<any>(null)
 
   const basePath = process.env.BASE_PATH || "/kratos-ui"
 
   useEffect(() => {
-    ory.toSession().then(({ data }) => {
-      const traits = data?.identity?.traits
-      setTraits(traits)
-      setProjects(traits.projects) //
-    })
-  }, [router, router.isReady])
+    const checkSession = async () => {
+      try {
+        const { data } = await ory.toSession()
+        const traits = data?.identity?.traits
+        setTraits(traits)
+        setProjects(traits.projects)
+
+        if (!traits || !traits.projects || traits.projects.length === 0) {
+          console.log(redirect)
+          const currentUrl = window.location.href // Get the current page URL for return_to
+          router.push(`/login?return_to=${redirect}`)
+          return
+        }
+      } catch (error) {
+        console.error("Error fetching session:", error)
+        // Handle session fetch error, possibly redirect to login
+        router.push("/login")
+      }
+    }
+
+    checkSession()
+  }, [router])
 
   useEffect(() => {
     // Get the login challenge from the query parameters
-    const { login_challenge } = router.query
+    const { login_challenge, redirect_to } = router.query
     if (login_challenge) {
       setChallenge(String(login_challenge))
+    }
+    if (redirect_to) {
+      console.log(redirect_to)
+      setRedirect(redirect_to)
     }
   }, [router.query])
 
@@ -67,8 +88,8 @@ const OAuth2Login = () => {
           <title>OAuth2 Login</title>
         </Head>
         <MarginCard>
-        <h1>OAuth2 Login</h1>
-        <p>Waiting for login challenge...</p>
+          <h1>OAuth2 Login</h1>
+          <p>Waiting for login challenge...</p>
         </MarginCard>
       </div>
     )
@@ -80,12 +101,12 @@ const OAuth2Login = () => {
         <title>OAuth2 Login</title>
       </Head>
       <MarginCard>
-      <h1>OAuth2 Login</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <p>To continue, please log in.</p>
-      <button onClick={handleLogin}>Log In</button>
-      <br />
-      <Link href="/">Cancel</Link>
+        <h1>OAuth2 Login</h1>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <p>To continue, please log in.</p>
+        <button onClick={handleLogin}>Log In</button>
+        <br />
+        <Link href="/">Cancel</Link>
       </MarginCard>
     </div>
   )

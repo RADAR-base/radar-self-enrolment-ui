@@ -30,6 +30,7 @@ const Fitbit: NextPage = () => {
   const { flow: flowId, return_to: returnTo } = router.query
   const [traits, setTraits] = useState<any>()
   const [projects, setProjects] = useState<any>([])
+  const [tokenHandled, setTokenHandled] = useState(false) // Flag to ensure token is handled once
 
   const handleNavigation = () => {
     return restSourceClient.redirectToAuthRequestLink()
@@ -39,23 +40,35 @@ const Fitbit: NextPage = () => {
     ory.toSession().then(({ data }) => {
       const traits = data?.identity?.traits
       setTraits(traits)
-      setProjects(traits.projects) //
+      setProjects(traits.projects)
     })
   }, [flowId, router, router.isReady, returnTo])
 
   useEffect(() => {
     const handleToken = async () => {
-      if (!router.isReady || !projects.length) return
+      if (!router.isReady || !projects.length || tokenHandled) return
+
+      const existingToken = localStorage.getItem("access_token")
+
+      if (existingToken) {
+        await restSourceClient.redirectToRestSourceAuthLink(
+          existingToken,
+          projects[0],
+        )
+        setTokenHandled(true)
+        return
+      }
 
       const token = await restSourceClient.getAccessTokenFromRedirect()
       if (token) {
         localStorage.setItem("access_token", token)
         await restSourceClient.redirectToRestSourceAuthLink(token, projects[0])
+        setTokenHandled(true)
       }
     }
 
     handleToken()
-  }, [router.isReady, projects])
+  }, [router.isReady, projects, tokenHandled])
 
   return (
     <>
