@@ -4,6 +4,7 @@ import { IMarkdownBlock, MarkdownBlock } from "./md";
 import React from "react";
 import { ITextBlock, TextBlock } from "./text";
 import { HeroBlock, IHeroBlock } from "./hero";
+import { IVideoBlock, VideoBlock } from "./video";
 
 
 interface BlockProps {
@@ -12,7 +13,10 @@ interface BlockProps {
   noCard?: boolean
 }
 
-export type IBlock = (BlockProps & IMarkdownBlock) | (BlockProps & ITextBlock) | (BlockProps & IHeroBlock)
+export type IBlock = (BlockProps & IMarkdownBlock) |
+                     (BlockProps & ITextBlock) | 
+                     (BlockProps & IHeroBlock) |
+                     (BlockProps & IVideoBlock)
 
 function BlockContainer({children, props}: {children: React.ReactNode, props: BlockProps}): React.ReactNode {
   let padding = props.blockPadding ?? {xs: 0, sm: 2} 
@@ -40,6 +44,10 @@ function getBlockContent(props: IBlock) {
     }
     case "hero": {
       return <HeroBlock {...props} />
+    }
+    case "video": {
+      return <VideoBlock {...props} />
+
     }
   }
 }

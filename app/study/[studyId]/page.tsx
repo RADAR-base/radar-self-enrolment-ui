@@ -21,8 +21,7 @@ export default async function Page({ params }: { params: { studyId: string } }) 
                 flexDirection="column"
                 maxWidth={"100%"}
                 gap={{xs: 0, sm: 2}}
-                paddingTop={{xs: 0, sm: 2}}
-                paddingBottom={{xs: 0, sm: 2}}
+                padding={{xs: 0, sm: 2}}
                 >
                <Block
                   blockType="hero"
@@ -31,6 +30,17 @@ export default async function Page({ params }: { params: { studyId: string } }) 
                   heroImage={{src: "/study/paprka/resources/hero.png", altText: "PAPRkA hero image"}}
                   cta={{text: 'Join Study', 'href': 'paprka/enrol'}}
                   cta2={{text: 'Action 2', 'href': ''}}
+                />
+                <Block
+                  blockType="video"
+                  video={{
+                    src: '/file_example_MP4_480_1_5MG.mp4',
+                    type: 'video/mp4',
+                    width: '100%',
+                    params: {'controls': 'true', 'muted': 'true', 'autoPlay': 'true'}
+                  }}
+                  noCard
+                  blockPadding={0}
                 />
                 <Block 
                   blockType="markdown" 
@@ -44,7 +54,6 @@ export default async function Page({ params }: { params: { studyId: string } }) 
                   subtitle="Subtitle" 
                   content={LoremIpsum}
                 />
-
           </Box>
         </main>
   )}

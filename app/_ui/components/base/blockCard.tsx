@@ -7,7 +7,7 @@ export type RadarBlockCardClassKey = "root";
 
 export interface RadarBlockCardProps {
   maxWidth?: string | number,
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const RadarBlockCardRoot = styled(Paper, {name: 'RadarBlockCard', slot: 'root'})(({ theme }) => ({
@@ -15,7 +15,6 @@ const RadarBlockCardRoot = styled(Paper, {name: 'RadarBlockCard', slot: 'root'})
   ...theme.typography.body2,
   padding: theme.spacing(4),
   margin: 0,
-  textAlign: 'center',
   color: theme.palette.text.secondary,
   boxShadow: 'none',
 }));
