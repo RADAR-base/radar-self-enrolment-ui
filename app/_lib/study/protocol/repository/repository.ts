@@ -1,4 +1,4 @@
-import { StudyProtocol } from "../protocol";
+import { StudyProtocol } from "../../protocol";
 
 export abstract class StudyProtocolRepository {
   constructor() {}

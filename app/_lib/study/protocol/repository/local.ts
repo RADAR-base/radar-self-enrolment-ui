@@ -1,4 +1,4 @@
-import { StudyProtocol } from "../protocol";
+import { StudyProtocol } from "../index";
 import { StudyProtocolRepository } from "./repository";
 import { promises as fs } from 'fs';
 

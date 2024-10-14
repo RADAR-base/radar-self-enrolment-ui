@@ -1,13 +1,13 @@
 import { redirect } from 'next/navigation'
 import { getStudyTheme } from "@/app/_lib/theme/themeprovider";
-import ProtocolRepository, { StudyProtocolRepository } from "@/app/_lib/study/repository";
+import ProtocolRepository, { StudyProtocolRepository } from "@/app/_lib/study/protocol/repository";
 import { StudyProtocol } from '@/app/_lib/study/protocol';
 import { isAbsolutePath } from "@/app/_lib/util/links";
 
 import { Box, CssBaseline, Theme, ThemeProvider } from "@mui/material";
 import NavBar from "@/app/_ui/components/navbar/navbar";
 import {Footer, FooterLink } from "@/app/_ui/components/footer";
-import ProtocolProvider from '@/app/_lib/study/provider/provider.client';
+import ProtocolProvider from '@/app/_lib/study/protocol/provider.client';
 
 
 

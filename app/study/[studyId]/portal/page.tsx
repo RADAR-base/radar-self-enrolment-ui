@@ -1,9 +1,8 @@
 "use server"
 import Auth from '@/app/_lib/auth'
 import AuthServer from '@/app/_lib/auth/ory/service.server'
-import { LocalProtocolRepository, StudyProtocolRepository } from '@/app/_lib/study/repository';
+import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
 import { RadarCard } from '@/app/_ui/components/base/card';
-import { EnrolmentContent } from '@/app/_ui/enrolment/enrolment.component';
 import { Box, Container } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
@@ -11,9 +10,8 @@ const auth = new Auth();
 const authServer = new AuthServer();
 
 export default async function Page({ params }: { params: { studyId: string } }) {
-  var registery: StudyProtocolRepository = new LocalProtocolRepository()
+  var registery: StudyProtocolRepository = new StudyProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)
-
 
   const items = protocol.protocols.map((item) => <RadarCard>{item.name}</RadarCard>)
   return (

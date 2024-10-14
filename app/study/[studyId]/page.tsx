@@ -1,16 +1,13 @@
-import { Box, Container } from "@mui/material";
-import { StudyProtocolRepository } from "@/app/_lib/study/repository/repository";
-import { LocalProtocolRepository } from "@/app/_lib/study/repository/local";
-import { RadarCard } from "@/app/_ui/components/base/card";
+import { Box } from "@mui/material";
+import StudyProtocolRepository from "@/app/_lib/study/protocol/repository";
 import { Block } from "@/app/_ui/components/blocks/block";
-import Image from 'next/image'
 import { LoremIpsum } from "@/app/_ui/debug/lorem";
 
 
 
 
 export default async function Page({ params }: { params: { studyId: string } }) {
-  var registery: StudyProtocolRepository = new LocalProtocolRepository()
+  var registery: StudyProtocolRepository = new StudyProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)
     return (
         <main>
