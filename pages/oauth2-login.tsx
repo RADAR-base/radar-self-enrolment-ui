@@ -83,9 +83,7 @@ const OAuth2Login = () => {
         <h1>OAuth2 Login</h1>
         {error && <p style={{ color: "red" }}>{error}</p>}
         <p>To continue, please log in.</p>
-        <button disabled={!isLoginReady}>
-          Loading...
-        </button>
+        <button disabled={!isLoginReady}>Loading...</button>
         <br />
       </MarginCard>
     </div>
