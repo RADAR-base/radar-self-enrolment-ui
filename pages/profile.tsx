@@ -148,7 +148,7 @@ const Profile: NextPage = () => {
     <>
       <Head>
         <title>Profile Page</title>
-        <meta name="description" content="NextJS + React + Vercel + Ory" />
+        <meta name="description" content="RADAR-base SEP" />
       </Head>
       <ProfileCard>
         <CardTitle>User Information</CardTitle>

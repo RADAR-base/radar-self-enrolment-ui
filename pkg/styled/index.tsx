@@ -106,17 +106,19 @@ export const DocsButton = ({
   testid,
   disabled,
   unresponsive,
-}: DocsButtonProps) => (
-  <div className={cn("col-xs-4", { "col-md-12": !unresponsive })}>
-    <div className="box">
-      <TextLeftButton
-        onClick={onClick}
-        disabled={disabled}
-        data-testid={testid}
-        href={href}
-      >
-        {title}
-      </TextLeftButton>
+}: DocsButtonProps) => {
+  return (
+    <div className={cn("col-xs-4", { "col-md-12": !unresponsive })}>
+      <div className="box">
+        <TextLeftButton
+          onClick={onClick}
+          disabled={disabled}
+          data-testid={testid}
+          href={href}
+        >
+          {title}
+        </TextLeftButton>
+      </div>
     </div>
-  </div>
-)
+  )
+}
