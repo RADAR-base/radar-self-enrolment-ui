@@ -80,8 +80,6 @@ const Login: NextPage = () => {
 
   const onSubmit = (values: UpdateLoginFlowBody) =>
     router
-      // On submission, add the flow ID to the URL but do not navigate. This prevents the user loosing
-      // his data when she/he reloads the page.
       .push(`/login?flow=${flow?.id}`, undefined, { shallow: true })
       .then(() =>
         ory
@@ -89,20 +87,19 @@ const Login: NextPage = () => {
             flow: String(flow?.id),
             updateLoginFlowBody: values,
           })
-          // We logged in successfully! Let's bring the user home.
           .then(() => {
             if (flow?.return_to) {
-              window.location.href = flow?.return_to
-              return
+              window.location.href = flow.return_to
+            } else if (loginChallenge) {
+              window.location.href = `/oauth2/auth/requests/login?login_challenge=${loginChallenge}`
+            } else {
+              router.push("/")
             }
-            router.push("/")
           })
           .then(() => {})
           .catch(handleFlowError(router, "login", setFlow))
           .catch((err: AxiosError) => {
-            // If the previous handler did not catch the error it's most likely a form validation error
             if (err.response?.status === 400) {
-              // Yup, it is!
               setFlow(err.response?.data as LoginFlow)
               return
             }

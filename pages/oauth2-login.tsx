@@ -11,56 +11,47 @@ const OAuth2Login = () => {
   const router = useRouter()
   const [challenge, setChallenge] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [traits, setTraits] = useState<any>()
+  const [traits, setTraits] = useState<any>(null)
   const [projects, setProjects] = useState<any>([])
-  const [redirect, setRedirect] = useState<any>(null)
+  const [id, setId] = useState<any>(null)
 
   const basePath = process.env.BASE_PATH || "/kratos-ui"
 
   useEffect(() => {
     const checkSession = async () => {
       try {
+        // Check if a valid Ory Kratos session exists
+        const { login_challenge } = router.query
         const { data } = await ory.toSession()
         const traits = data?.identity?.traits
+        const projects = traits?.projects
+        const id = data?.identity?.id
+        setId(data?.identity?.id)
         setTraits(traits)
-        setProjects(traits.projects)
+        setProjects(traits?.projects)
+        setChallenge(String(login_challenge))
 
-        if (!traits || !traits.projects || traits.projects.length === 0) {
-          console.log(redirect)
-          const currentUrl = window.location.href // Get the current page URL for return_to
-          router.push(`/login?return_to=${redirect}`)
-          return
+        if (traits && login_challenge) {
+          const subject = projects && projects[0] ? projects[0].userId : id
+          handleLogin(subject, login_challenge)
         }
       } catch (error) {
         console.error("Error fetching session:", error)
-        // Handle session fetch error, possibly redirect to login
-        router.push("/login")
+        const { login_challenge } = router.query
+        if (login_challenge) {
+          router.push(`/login?login_challenge=${login_challenge}`)
+        }
       }
     }
 
-    checkSession()
+    if (!challenge) {
+      checkSession()
+    }
   }, [router])
 
-  useEffect(() => {
-    // Get the login challenge from the query parameters
-    const { login_challenge, redirect_to } = router.query
-    if (login_challenge) {
-      setChallenge(String(login_challenge))
-    }
-    if (redirect_to) {
-      console.log(redirect_to)
-      setRedirect(redirect_to)
-    }
-  }, [router.query])
-
-  const handleLogin = async () => {
-    if (!challenge) {
-      setError("No login challenge found.")
-      return
-    }
-
+  const handleLogin = async (subject: any, challenge: any) => {
     try {
-      const id = projects[0].userId
+      if (!subject || !challenge) throw Error("Subject cannot be null")
       const response = await fetch(`${basePath}/api/login`, {
         method: "POST",
         headers: {
@@ -68,7 +59,7 @@ const OAuth2Login = () => {
         },
         body: JSON.stringify({
           loginChallenge: challenge,
-          subject: id,
+          subject: subject,
           remember: true,
         }),
       })
@@ -81,19 +72,7 @@ const OAuth2Login = () => {
     }
   }
 
-  if (!challenge) {
-    return (
-      <div>
-        <Head>
-          <title>OAuth2 Login</title>
-        </Head>
-        <MarginCard>
-          <h1>OAuth2 Login</h1>
-          <p>Waiting for login challenge...</p>
-        </MarginCard>
-      </div>
-    )
-  }
+  const isLoginReady = traits
 
   return (
     <div>
@@ -104,9 +83,10 @@ const OAuth2Login = () => {
         <h1>OAuth2 Login</h1>
         {error && <p style={{ color: "red" }}>{error}</p>}
         <p>To continue, please log in.</p>
-        <button onClick={handleLogin}>Log In</button>
+        <button disabled={!isLoginReady}>
+          Loading...
+        </button>
         <br />
-        <Link href="/">Cancel</Link>
       </MarginCard>
     </div>
   )
