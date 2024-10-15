@@ -47,12 +47,12 @@ const Home: NextPage = () => {
   return (
     <div className={"container-fluid"}>
       <Head>
-        <title>Ory NextJS Integration Example</title>
-        <meta name="description" content="NextJS + React + Vercel + Ory" />
+        <title>RADAR Base</title>
+        <meta name="description" content="RADAR-base SEP" />
       </Head>
 
       <MarginCard wide>
-        <CardTitle>RADAR Base Ory!</CardTitle>
+        <CardTitle>RADAR Base Self-Enrolment Portal</CardTitle>
         <P>Welcome to the RADAR Base self-enrolment portal.</P>
         <div className="row">
           <div className="col-md-4 col-xs-12">

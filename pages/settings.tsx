@@ -147,7 +147,7 @@ const Settings: NextPage = () => {
           Profile Management and Security Settings - Ory NextJS Integration
           Example
         </title>
-        <meta name="description" content="NextJS + React + Vercel + Ory" />
+        <meta name="description" content="RADAR-base SEP" />
       </Head>
       <CardTitle style={{ marginTop: 80 }}>
         Profile Management and Security Settings

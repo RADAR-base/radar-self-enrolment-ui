@@ -86,8 +86,8 @@ const Recovery: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Recover your account - Ory NextJS Integration Example</title>
-        <meta name="description" content="NextJS + React + Vercel + Ory" />
+        <title>Recover your account - RADAR Base</title>
+        <meta name="description" content="RADAR-base SEP" />
       </Head>
       <MarginCard>
         <CardTitle>Recover your account</CardTitle>

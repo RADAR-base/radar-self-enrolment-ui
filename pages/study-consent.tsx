@@ -159,7 +159,7 @@ const StudyConsent: NextPage = () => {
     <>
       <Head>
         <title>Study Consent</title>
-        <meta name="description" content="NextJS + React + Vercel + Ory" />
+        <meta name="description" content="RADAR-base SEP" />
       </Head>
       <StudyConsentCard>
         <CardTitle>Study Consent</CardTitle>

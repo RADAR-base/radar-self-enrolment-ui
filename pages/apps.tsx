@@ -52,7 +52,7 @@ const Apps: NextPage = () => {
     <>
       <Head>
         <title>App Login</title>
-        <meta name="description" content="NextJS + React + Vercel + Ory" />
+        <meta name="description" content="RADAR-base SEP" />
       </Head>
       <AppLoginCard>
         <CardTitle>App Login</CardTitle>

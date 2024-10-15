@@ -111,8 +111,8 @@ const Login: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Sign in - Ory NextJS Integration Example</title>
-        <meta name="description" content="NextJS + React + Vercel + Ory" />
+        <title>Sign in - RADAR Base</title>
+        <meta name="description" content="RADAR-base SEP" />
       </Head>
       <MarginCard>
         <CardTitle>

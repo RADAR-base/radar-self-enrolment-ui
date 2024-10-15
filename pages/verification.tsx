@@ -104,8 +104,8 @@ const Verification: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Verify your account - Ory NextJS Integration Example</title>
-        <meta name="description" content="NextJS + React + Vercel + Ory" />
+        <title>Verify your account - RADAR Base</title>
+        <meta name="description" content="RADAR-base SEP" />
       </Head>
       <MarginCard>
         <CardTitle>Verify your account</CardTitle>
