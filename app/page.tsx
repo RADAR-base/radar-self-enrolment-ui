@@ -11,10 +11,14 @@ import { LogoutButton } from "@/app/_ui/auth/logout";
 import { LoginModal } from "@/app/_ui/auth/login";
 import  Auth  from '@/app/_lib/auth/ory/service.server';
 
+import * as ory from '@/app/_lib/auth/ory/api.server'
 
 export default async function Home() {
   const auth = new Auth()
   const email = await auth.getEmail()
+  const session = await ory.whoAmI()
+  console.log(session)
+  
   return (
     <Box
     sx={{

@@ -1,15 +1,13 @@
 "use client"
-import { useParams, useSearchParams, useRouter } from "next/navigation"
-import { Box, Button, Card, Container, Grid, Link, Popover, Stack, TextField } from "@mui/material"
+import { useRouter } from "next/navigation"
+import { Box, Button, Popover, Stack, TextField } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { useFormik } from "formik"
 import Auth from '@/app/_lib/auth'
 import { RadarCard } from "../components/base/card"
 
 import ory from '@/app/_lib/auth/ory/api.client'
-import { kratos, hydra } from '@/app/_lib/auth/ory/ory';
 import { getCsrfToken } from "@/app/_lib/auth/ory/util"
-import { LoginFlow } from "@ory/client"
 
 
 interface LoginProps {

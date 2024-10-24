@@ -2,10 +2,11 @@
 import { useRouter } from "next/navigation";
 import * as Yup from 'yup';
 
-import { Box, Button, Stack, styled, TextField } from "@mui/material";
+import { Box, Button, Stack, styled, TextField, Typography } from "@mui/material";
 
 import { useFormik } from "formik";
 import Auth from '@/app/_lib/auth'
+import { useState } from "react";
 
 const CustomTextField = styled(TextField)({
   '& .MuiFormHelperText-root.Mui-error': {
@@ -24,9 +25,11 @@ const RegisterSchema = Yup.object().shape({
 const Register: React.FC<{onRegister?: () => void}> = (params: {onRegister?: () => void}) => {
     const router = useRouter()   
     const onRegister = params.onRegister ? params.onRegister : () => router.push('/')
-         
+    
+    let [errorText, setErrorText] = useState<string>("")
+
     const formik = useFormik({
-        isInitialValid: false,
+        validateOnMount: false,
         initialValues: {
             email: '',
             password: '',
@@ -38,8 +41,7 @@ const Register: React.FC<{onRegister?: () => void}> = (params: {onRegister?: () 
               if (resp.ok) {
                 onRegister()
               } else {
-                console.log('')
-                formik.setFieldError('email', 'An error occured while trying to register')
+                setErrorText(resp.errors?.pop().text)
               }
             }
           )
@@ -53,6 +55,7 @@ const Register: React.FC<{onRegister?: () => void}> = (params: {onRegister?: () 
         <form onSubmit={formik.handleSubmit}>
           <Stack spacing={4} alignItems="center">
             <h1>Sign Up</h1>
+            {(!!errorText) ? <Typography variant="caption" color="error">{errorText}</Typography> : null}
             <CustomTextField
               id="email"
               name="email"

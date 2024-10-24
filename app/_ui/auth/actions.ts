@@ -6,3 +6,9 @@ async function logout(): Promise<boolean> {
   const auth = new AuthServer();
   return (await auth.logOut()).ok
 }
+
+async function login(email: string, password: string): Promise<boolean> {
+  const auth = new AuthServer();
+  auth.signIn(email, password)
+  return true
+}

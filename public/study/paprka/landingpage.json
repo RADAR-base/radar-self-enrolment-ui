@@ -1,3 +1,24 @@
 {
-    "blocks": []
+    "blocks": [
+        {
+            "blockType": "hero",
+            "title": "Hello",
+            "heroImage": {"src": "/study/paprka/resources/hero.png", "altText": "PAPRkA hero image"}
+          },
+          {
+            "blockType": "text",
+            "title": "Text Block", 
+            "subtitle": "Subtitle",
+            "content": "LoremIpsum"
+          },
+          {
+            "blockType": "video",
+            "video": {
+              "src": "/file_example_MP4_480_1_5MG.mp4",
+              "type": "video/mp4",
+              "width": "100%",
+              "params": {"controls": true, "muted": true, "autoPlay": true}
+            }
+        }
+    ]
 }

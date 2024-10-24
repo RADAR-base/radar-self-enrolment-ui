@@ -1,3 +1,4 @@
+import { RegistrationFlow } from '@ory/client';
 import { AuthResponse, ClientAuthService } from '../service.interface';
 import client from './api.client';
 import { OrySession } from './types'
@@ -98,7 +99,9 @@ export class OryAuthClientService extends ClientAuthService {
     if (resp.ok) {
       return {ok: true, errors: []}
     }
-    return {ok: false, errors: []}
+    const data = (await resp.json()) as RegistrationFlow
+    console.log(data)
+    return {ok: false, errors: data.ui.messages}
 
   }
 }
