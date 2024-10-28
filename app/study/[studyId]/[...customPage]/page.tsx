@@ -2,29 +2,22 @@ import PageRepository from '@/app/_lib/study/siteContent/repository';
 import { RadarCard } from '@/app/_ui/components/base/card';
 import { Box, Container } from '@mui/material';
 
-// export const dynamicParams = false
+export const dynamicParams = false
 
-
-
-// export async function generateStaticParams() {
-//   // study repo
-//   const pageRepo: PageRepository = new PageRepository()
-//   const studyIds = ['paprka']
-//   var params: {studyId: string, customPage: string[]}[] = []
-//   // for (let i = 0; i < studyIds.length; i++) {
-//   //   let pageRoutes = await pageRepo.getAllPageRoutes(studyIds[i])
-//   //   for (let j = 0; i < pageRoutes.length; j++) {
-//   //     params.push({studyId: studyIds[i], customPage: pageRoutes[j]})
-//   //   }
-//   // }
-
-//   return [
-//     {'studyId': 'paprka', 'customPage': ['hello']},
-//     {'studyId': 'paprka', 'customPage': ['asd']},
-//     {'studyId': 'paprka', 'customPage': ['asd2']},
-
-//   ]
-// }
+export async function generateStaticParams() {
+  // study repo
+  const pageRepo: PageRepository = new PageRepository()
+  const studyIds = ['paprka']
+  var params: {studyId: string, customPage: string[]}[] = []
+  for (let i = 0; i < studyIds.length; i++) {
+    let pageRoutes = await pageRepo.getAllPageRoutes(studyIds[i])
+    console.log(pageRoutes.length)
+    for (let j = 0; j < pageRoutes.length; j++) {
+      params.push({studyId: studyIds[i], customPage: pageRoutes[j]})
+    }
+  }
+  return params
+}
 
 export default async function Page({ params }: { params: { studyId: string, customPage: string[]} }) {
   const pageContent = null;
