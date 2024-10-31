@@ -9,6 +9,8 @@ ENV NPM_CONFIG_CACHE=/home/node/.npm
 
 COPY package*.json ./
 
+RUN mkdir -p $NPM_CONFIG_CACHE && chown -R node:node $NPM_CONFIG_CACHE
+
 RUN npm install
 
 COPY . .
