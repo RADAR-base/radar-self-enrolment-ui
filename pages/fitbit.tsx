@@ -25,8 +25,6 @@ function AppLoginCard({ children }: Props & { children: ReactNode }) {
 
 const Fitbit: NextPage = () => {
   const router = useRouter()
-  const DefaultHydraUrl =
-    process.env.HYDRA_PUBLIC_URL || "http://localhost:4444"
   const { flow: flowId, return_to: returnTo } = router.query
   const [traits, setTraits] = useState<any>()
   const [projects, setProjects] = useState<any>([])
@@ -80,7 +78,6 @@ const Fitbit: NextPage = () => {
         <CardTitle>App Login</CardTitle>
         <QrForm
           projects={projects}
-          baseUrl={DefaultHydraUrl}
           navigate={handleNavigation}
         />
       </AppLoginCard>
@@ -95,11 +92,10 @@ const Fitbit: NextPage = () => {
 
 interface QrFormProps {
   projects: any[]
-  baseUrl: string
   navigate: any
 }
 
-const QrForm: React.FC<QrFormProps> = ({ projects, baseUrl, navigate }) => {
+const QrForm: React.FC<QrFormProps> = ({ projects, navigate }) => {
   if (projects) {
     return (
       <div className="center">

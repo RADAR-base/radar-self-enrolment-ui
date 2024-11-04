@@ -5,9 +5,12 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { ReactNode, useEffect, useState } from "react"
 import QRCode from "react-qr-code"
+import getConfig from "next/config"
 
 import { ActionCard, CenterLink, Methods, CardTitle } from "../pkg"
 import ory from "../pkg/sdk"
+
+const { publicRuntimeConfig } = getConfig()
 
 interface Props {
   flow?: SettingsFlow
@@ -24,8 +27,7 @@ function AppLoginCard({ children }: Props & { children: ReactNode }) {
 
 const Apps: NextPage = () => {
   const router = useRouter()
-  const DefaultHydraUrl =
-    process.env.HYDRA_PUBLIC_URL || "http://localhost:4444"
+  const DefaultHydraUrl = publicRuntimeConfig.hydraPublicUrl
   const { flow: flowId, return_to: returnTo } = router.query
   const [traits, setTraits] = useState<any>()
   const [projects, setProjects] = useState<any>([])
