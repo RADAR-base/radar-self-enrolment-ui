@@ -71,7 +71,7 @@ export default function Page() {
   const [userSession, setUserSession] = useState<any>(undefined)
   const [consent, setConsent] = useState<OAuth2ConsentRequest | null | undefined>(undefined)
 
-  const consentChallenge = searchParams.get('consent_challenge') ?? ""
+  const consentChallenge = searchParams ? searchParams.get('consent_challenge') ?? "" : ""
 
   useEffect(() => {
     if (consentChallenge == "") {

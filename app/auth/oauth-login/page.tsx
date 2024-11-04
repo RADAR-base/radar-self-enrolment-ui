@@ -110,13 +110,13 @@ export default function Page() {
   
   const [content, setContent] = useState<JSX.Element>(<div>hi</div>)
 
-  const loginChallenge = searchParams.get('login_challenge') ?? undefined
+  const loginChallenge = searchParams ? searchParams.get('login_challenge') ?? undefined : undefined
 
-  let flowId = searchParams.get('flowId')
+  let flowId = searchParams ? searchParams.get('flowId') : ''
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString())
+      const params = new URLSearchParams(searchParams ? searchParams.toString(): '')
       params.set(name, value)
       return params.toString()
     },
