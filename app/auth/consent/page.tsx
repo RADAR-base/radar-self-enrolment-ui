@@ -14,19 +14,21 @@ async function acceptSkipConsent(consent: OAuth2ConsentRequest, userSession: Ory
   var url = new URL("admin/oauth2/auth/requests/consent/accept", "http://localhost:4455/")
   var params = new URLSearchParams([["consent_challenege", consent.challenge]])
   url.search = params.toString();
-  let body = {
-    context: {test: "hi"},
-    grant_scope: consent.requested_scope,
-    remember: true,
-    remember_for: 3600,
-    session: {
-      access_token: userSession.identity
-    }
+
+  let r = await hydra.acceptOAuth2ConsentRequest({consentChallenge: consent.challenge})
+  if (r.status == 200) {
+    // router.push(r.data.redirect_to)
   }
-  let d = await hydra.acceptOAuth2ConsentRequest({consentChallenge: consent.challenge})
-  if (d.status == 200) {
-    router.push(d.data.redirect_to)
-  }
+
+  // let body = {
+  //   context: {test: "hi"},
+  //   grant_scope: consent.requested_scope,
+  //   remember: true,
+  //   remember_for: 3600,
+  //   session: {
+  //     access_token: userSession.identity
+  //   }
+  // }
   // return await fetch(url, {
   //   method: 'PUT',
   //   headers: {
@@ -61,8 +63,6 @@ function getConsentRequest(consentChallenge: string, setConsent: (value: any) =>
   )
 }
 
-
-
 export default function Page() {
   const router = useRouter()
   const pathname = usePathname()
@@ -73,11 +73,11 @@ export default function Page() {
 
   const consentChallenge = searchParams.get('consent_challenge') ?? ""
 
-  if (consentChallenge == "") {
-    router.push('/')
-  }
-
   useEffect(() => {
+    if (consentChallenge == "") {
+      router.push('/')
+      return
+    }
     if (userSession == undefined) {
       getUserSession(setUserSession)
     }
@@ -86,12 +86,13 @@ export default function Page() {
     }
   }, [consent])
 
+
+  console.log('skip')
+  console.log(consent)
+  console.log(userSession)
+
   if ((!!consent?.client?.skip_consent) && (!!userSession)) {
     acceptSkipConsent(consent, userSession)
   }
-
-  // if 
-  
-  console.log(userSession)
-  return <Card>{userSession?userSession.toString():""}</Card>
+  return <Card>{userSession?JSON.stringify(userSession, null, 2):""}</Card>
 }

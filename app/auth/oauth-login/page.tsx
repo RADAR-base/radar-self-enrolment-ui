@@ -83,14 +83,36 @@ function LoginWithCurrentAccountButton() {
 }
 
 
+
+function getUserSession(setSession: (value: any) => void) {
+  ory.whoAmI().then(
+    (r) => {
+      console.log(r)
+      if (r.ok) {
+        r.json().then(
+          (session) => setSession(session)
+        )
+      }
+      else if (r.status == 401) {
+        setSession(null)
+      }
+    }
+  )
+}
+
 export default function Page() {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   
+  const [userSession, setUserSession] = useState<any>(undefined)
+  const [flow, setFlow] = useState<LoginFlow>();  
+  
+  const [content, setContent] = useState<JSX.Element>(<div>hi</div>)
+
   const loginChallenge = searchParams.get('login_challenge') ?? undefined
 
-  let [flow, setFlow] = useState<LoginFlow>();  
+  let flowId = searchParams.get('flowId')
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -103,45 +125,53 @@ export default function Page() {
   )
 
   useEffect(() => {
-    let flowId = searchParams.get('flowId')
-    if (flow == undefined) {
-      if (flowId != null) {
-        ory.getLoginFlow(flowId).then(
-          (response) => {
-            if (response.ok) {
-              response.json().then(
-                (data) => {
-                  router.push(pathname + '?' + createQueryString('flowId', data.id ))
-                  setFlow(data)
-                }
-              )
-            } else {
-              ory.createLoginFlow({'login_challenge': loginChallenge}).then(
-                (value) => value.json().then(
+    console.log('userSession: ', userSession)
+    if (userSession === undefined) {
+      getUserSession(setUserSession)
+    }
+    if (userSession === null) {
+      console.log('null')
+      console.log('flow', flow)
+      if (flow == undefined) {
+        console.log('flow undefined')
+        if (flowId != null) {
+          console.log('flowId OK')
+          ory.getLoginFlow(flowId).then(
+            (response) => {
+              if (response.ok) {
+                console.log('get flow ok')
+                response.json().then(
                   (data) => {
                     router.push(pathname + '?' + createQueryString('flowId', data.id ))
+
                     setFlow(data)
+                    setContent(<LoginForm flow={flow} />)
                   }
                 )
-              )
-            }
-        })
-      } else {
-        ory.createLoginFlow({'login_challenge': loginChallenge}).then(
-          (value) => {
-            console.log(value)
-            value.json().then(
-            (data) => {
-              router.push(pathname + '?' + createQueryString('flowId', data.id ))
-              setFlow(data)
+              } else {
+                console.log('cant get flow')
+              }
             }
           )
-      })
+        }
+        else {
+          console.log('flowID is null')
+          ory.createLoginFlow({'login_challenge': loginChallenge}).then(
+            (value) => value.json().then(
+              (data) => {
+                router.push(pathname + '?' + createQueryString('flowId', data.id ))
+                setFlow(data)
+                setContent(<LoginForm flow={flow} />)
+              }
+            )
+          )
+        } 
       }
+    } else {
+      setContent(<div>{JSON.stringify(userSession)}</div>)
     }
-  }, [flow])
-
-  return <Card>
-    <LoginForm flow={flow} />
-  </Card>
+    
+  }, [flow, userSession])
+  console.log('final flow', flow)
+  return <Card>{content}</Card>
 }
