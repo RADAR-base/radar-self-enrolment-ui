@@ -2,7 +2,7 @@
 import { cookies } from 'next/headers'
 import { OrySession } from './types';
 
-const BASEURL = process.env.NEXT_PUBLIC_ORY_SDK_URL;
+const BASEURL = process.env.NEXT_PUBLIC_ORY_SDK_URL ?? 'http://localhost:4433';
 
 function parseSetCookie(c: string): [string, string, {[key: string]: string | boolean}] {
   var split = c.split(';')

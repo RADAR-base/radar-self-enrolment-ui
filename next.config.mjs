@@ -20,7 +20,8 @@ const nextConfig = {
         }]
      
       },
-      experimental: { missingSuspenseWithCSRBailout: false, }
+      experimental: { missingSuspenseWithCSRBailout: false, },
+      output: "standalone"
 };
 
 export default nextConfig;
