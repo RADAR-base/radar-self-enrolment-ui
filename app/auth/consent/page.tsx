@@ -17,7 +17,7 @@ async function acceptSkipConsent(consent: OAuth2ConsentRequest, userSession: Ory
 
   let r = await hydra.acceptOAuth2ConsentRequest({consentChallenge: consent.challenge})
   if (r.status == 200) {
-    // router.push(r.data.redirect_to)
+    router.push(r.data.redirect_to)
   }
 
   // let body = {

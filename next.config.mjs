@@ -19,7 +19,8 @@ const nextConfig = {
           pathname: 'wikipedia/commons/b/b6/**'
         }]
      
-      }
+      },
+      experimental: { missingSuspenseWithCSRBailout: false, }
 };
 
 export default nextConfig;

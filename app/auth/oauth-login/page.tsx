@@ -118,7 +118,6 @@ export default function Page() {
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString())
       params.set(name, value)
-  
       return params.toString()
     },
     [searchParams]
@@ -145,7 +144,7 @@ export default function Page() {
                     router.push(pathname + '?' + createQueryString('flowId', data.id ))
 
                     setFlow(data)
-                    setContent(<LoginForm flow={flow} />)
+                    setContent(<LoginForm flow={data} />)
                   }
                 )
               } else {
@@ -161,7 +160,7 @@ export default function Page() {
               (data) => {
                 router.push(pathname + '?' + createQueryString('flowId', data.id ))
                 setFlow(data)
-                setContent(<LoginForm flow={flow} />)
+                setContent(<LoginForm flow={data} />)
               }
             )
           )
@@ -170,7 +169,6 @@ export default function Page() {
     } else {
       setContent(<div>{JSON.stringify(userSession)}</div>)
     }
-    
   }, [flow, userSession])
   console.log('final flow', flow)
   return <Card>{content}</Card>
