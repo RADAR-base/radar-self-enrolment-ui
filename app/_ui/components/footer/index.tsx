@@ -1,2 +1,2 @@
 export { Footer } from './footer'
-export type { FooterLink, FooterColumn, FooterProps } from './footer'
+export type { FooterItem, FooterColumn, FooterProps } from './footer'
