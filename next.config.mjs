@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: false,
+    basePath: "/kratos-ui",
+    assetPrefix: "/kratos-ui",
     compiler: {
         styledComponents: true,
       },
