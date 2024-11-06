@@ -9,16 +9,12 @@ import NavBar from "@/app/_ui/components/navbar/navbar";
 import { Footer } from "@/app/_ui/components/footer";
 import { LogoutButton } from "@/app/_ui/auth/logout";
 import { LoginModal } from "@/app/_ui/auth/login";
-import  Auth  from '@/app/_lib/auth/ory/service.server';
-
-import * as ory from '@/app/_lib/auth/ory/api.server'
+import Link from "next/link";
+import { withBasePath } from "./_lib/util/links";
 
 export default async function Home() {
-  const auth = new Auth()
-  const email = await auth.getEmail()
-  const session = await ory.whoAmI()
-  console.log(session)
-  
+  // const auth = new Auth()
+  const email = "hi" // await auth.getEmail()
   return (
     <Box
     sx={{
@@ -46,10 +42,11 @@ export default async function Home() {
               <Typography variant="h2" margin={2}>Account routes</Typography>
               <Grid container spacing={2} margin={2}>
                 <Grid size={{xs: 12, md: 6}}>
-                  <Button href="auth/signup" fullWidth variant="contained">Sign Up</Button>
+                  <Button href="/auth/signup" fullWidth variant="contained" LinkComponent={Link}>Sign Up</Button>
                 </Grid>
                 <Grid size={{xs: 12, md: 6}}>
-                  <Button href="auth/login" fullWidth variant="contained">Login</Button>
+                  <Button href="/auth/login" fullWidth variant="contained" LinkComponent={Link}>Login</Button>
+
                 </Grid>
                 <Grid size={{xs: 12, md: 6}}>
                   <LoginModal></LoginModal>
@@ -65,22 +62,17 @@ export default async function Home() {
               <Typography variant="h2" margin={2}>Study routes</Typography>
               <Grid container spacing={2} margin={2}>
                 <Grid size={{xs: 12, md: 6}}>
-                  <Button href="study/asdfg" fullWidth variant="contained">Random string</Button>
-                </Grid>
-                <Grid size={{xs: 12, md: 6}}>
-                  <Button href="study/paprka" fullWidth variant="contained">PAPrKA</Button>
-                </Grid>
-                <Grid size={{xs: 12, md: 6}}>
-                  <Button href="study/test" fullWidth variant="contained">Test</Button>
+                  <Button href="/study/paprka" fullWidth variant="contained" LinkComponent={Link}>PAPrKA</Button>
                 </Grid>
               </Grid>
             </RadarCard>
           </Grid>
           <Grid size={12}>
-            <RadarCard>{email}</RadarCard>
+            <RadarCard>{process.env.KRATOS_INTERNAL_URL ?? 'No env'}</RadarCard>
+            {JSON.stringify(process.env)}
           </Grid>
           <Grid size={12}>
-            <RadarCard><TextField id='test' label='Test'></TextField></RadarCard>
+            <RadarCard>{email}</RadarCard>
           </Grid>
         </Grid>
         </Container>

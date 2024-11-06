@@ -5,6 +5,7 @@ import NextLink from 'next/link'
 
 import { AppBar, Box, Button, Container, Divider, IconButton, Link, Menu, MenuItem, Toolbar, Typography } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu';
+import { withBasePath } from '@/app/_lib/util/links'
 
 interface NavBarProps {
   title?: string;
@@ -41,7 +42,7 @@ function NavBar(props: NavBarProps) {
               paddingRight={4}
         >
             {props.logo_src && 
-            <Image src={props.logo_src} alt='Study logo' width={32} height={32}/>
+            <Image src={withBasePath(props.logo_src)} alt='Study logo' width={32} height={32}/>
             }
             <Typography variant="h1" align="center">
               {props.title}

@@ -51,14 +51,8 @@ export function LoginModal() {
 
 export function LoginComponent(props: LoginProps) {
     let [flow, setFlow] = useState<any>();
-
-
     useEffect(() => {
       if (flow === undefined) {
-        // kratos.createBrowserLoginFlow({loginChallenge: props.loginChallenge}).then(
-        //   (({data: data}) => {
-        //     setFlow(data)
-        //   }))
         console.log(props.loginChallenge)
         ory.createLoginFlow({login_challenge: props.loginChallenge}).then(
           (val) => {
@@ -73,9 +67,7 @@ export function LoginComponent(props: LoginProps) {
         }
       console.log(flow)
     }, [])
-
     const router = useRouter()
-    const auth = new Auth();
     const onLogin = props.onLogin ? props.onLogin : () => router.push('/')
     const formik = useFormik({
         initialValues: {
@@ -92,14 +84,9 @@ export function LoginComponent(props: LoginProps) {
           }
           console.log(body)
           let b = await ory.submitLoginFlow(flow.id, body)
-          console.log(await b.json())
-            // var errors = await auth.signIn(values?.email, values?.password)
-            // console.log(errors)
-            // if (errors.ok) {
-            //     onLogin()
-            // } else {
-            //     console.log('error')
-            // }
+          if (b.ok) {
+            onLogin()
+          }
         }
     });
 

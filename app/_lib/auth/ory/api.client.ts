@@ -1,7 +1,5 @@
-import { FrontendApiCreateBrowserLoginFlowRequest } from "@ory/client";
-
-const BASEURL = process.env.NEXT_PUBLIC_ORY_SDK_URL;
-
+"use client"
+const BASEURL = process.env.KRATOS_EXTERNAL_URL;
 
 export const createLoginFlow = async (params: {login_challenge?: string, refresh?: boolean} | undefined): Promise<Response> => {
   let url = new URL("self-service/login/browser", BASEURL)

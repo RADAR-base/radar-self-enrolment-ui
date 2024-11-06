@@ -11,7 +11,6 @@ import { LoginFlow, UpdateLoginFlowBody, UpdateLoginFlowWithPasswordMethod } fro
 
 import * as ory from '@/app/_lib/auth/ory/api.client'
 
-
 interface LoginFormProps {
   flow?: LoginFlow
 }
@@ -81,8 +80,6 @@ function LoginForm({flow: flow}: LoginFormProps) {
 function LoginWithCurrentAccountButton() {
 
 }
-
-
 
 function getUserSession(setSession: (value: any) => void) {
   ory.whoAmI().then(

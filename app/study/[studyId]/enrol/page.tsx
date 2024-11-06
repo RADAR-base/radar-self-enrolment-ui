@@ -6,11 +6,16 @@ import { RadarCard } from '@/app/_ui/components/base/card';
 import { EnrolmentContent } from '@/app/_ui/enrolment/enrolment.component';
 import { Box, Container } from '@mui/material';
 
-const auth = new Auth();
 const authServer = new AuthServer();
 
 export default async function Page({ params }: { params: { studyId: string } }) {
-  const content = await authServer.getDisplayName()
+  var content = ""
+  try {
+  content = await authServer.getDisplayName() ?? ''
+  }
+  catch {
+    content = JSON.stringify(process.env)
+  }
   var registery: StudyProtocolRepository = new StudyProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)
   return (
@@ -24,6 +29,7 @@ export default async function Page({ params }: { params: { studyId: string } }) 
             <EnrolmentContent protocol={protocol.enrolment}/>
           </RadarCard>
         </Container>
+        {content}
       </Box>
     </main>
   )}

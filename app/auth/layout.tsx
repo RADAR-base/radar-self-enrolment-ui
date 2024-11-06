@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
-import { Button, Container, Link, Stack } from "@mui/material";
+import { Button, Container, Link as MuiLink, Stack } from "@mui/material";
+import Link from "next/link";
 
 
 export const metadata: Metadata = {
@@ -18,9 +19,7 @@ export default function StudyLayout({
     <Container maxWidth="md">
       <Stack m={4} spacing={4} alignItems="center"> 
         <div>{children}</div>
-        <Link href="/">
-          <Button>Home</Button>
-        </Link>
+        <Button href="/" fullWidth variant="contained" LinkComponent={Link}>Home</Button>
       </Stack>
     </Container>
   );

@@ -1,8 +1,7 @@
 "use server"
 import { cookies } from 'next/headers'
-import { OrySession } from './types';
 
-const BASEURL = process.env.NEXT_PUBLIC_ORY_SDK_URL ?? 'http://localhost:4433';
+const BASEURL = process.env.KRATOS_INTERNAL_URL;
 
 function parseSetCookie(c: string): [string, string, {[key: string]: string | boolean}] {
   var split = c.split(';')
@@ -139,6 +138,7 @@ export async function updateRegistrationFlow(flowId: string, data: any): Promise
 
 
 export async function whoAmI(): Promise<Response> {
+
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   const url = new URL("sessions/whoami", BASEURL)
   const res = await fetch(url,

@@ -1,4 +1,5 @@
 "use client"
+import { withBasePath } from "@/app/_lib/util/links";
 import { Box, Button, Container, Typography, useTheme } from "@mui/material";
 import Image from "next/image";
 import { ForwardedRef } from "react";
@@ -63,7 +64,7 @@ export function HeroBlock(props: IHeroBlock, ref: ForwardedRef<HTMLDivElement>) 
                 minHeight: "max(20rem, min(50vw, 50vh))",
                 maxHeight: '50vh'
             }}>
-            <Image src={props.heroImage.src} fill alt={props.heroImage.altText} style={{objectFit: 'cover'}} />
+            <Image src={withBasePath(props.heroImage.src)} fill alt={props.heroImage.altText} style={{objectFit: 'cover'}} />
             </Container>
             </Box>
           </Box>

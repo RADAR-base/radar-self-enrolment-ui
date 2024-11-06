@@ -1,11 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: false,
+    basePath: process.env.BASEPATH,
+    env: {
+      NEXT_PUBLIC_BASEPATH: process.env.BASEPATH,
+    },
     compiler: {
         styledComponents: true,
       },
       images: {
-        domains: ["upload.wikimedia.org"],
         remotePatterns: [{
           protocol: 'https',
           hostname: 'avatars.githubusercontent.com',
@@ -15,8 +18,7 @@ const nextConfig = {
         {
           protocol: 'https',
           hostname: 'upload.wikimedia.org',
-          port: '',
-          pathname: 'wikipedia/commons/b/b6/**'
+          pathname: '**',
         }]
      
       },
