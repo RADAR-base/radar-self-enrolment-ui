@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import { Box, Button, Stack, styled, TextField, Typography } from "@mui/material";
 
 import { useFormik } from "formik";
-import Auth from '@/app/_lib/auth'
 import { useState } from "react";
 
 const CustomTextField = styled(TextField)({
@@ -14,8 +13,6 @@ const CustomTextField = styled(TextField)({
     top: '100%'
   }
 });
-
-const auth = new Auth();
 
 const RegisterSchema = Yup.object().shape({
   email: Yup.string().email("Invalid Email").required("Required"),
@@ -36,15 +33,7 @@ const Register: React.FC<{onRegister?: () => void}> = (params: {onRegister?: () 
         },
         validationSchema: RegisterSchema,
         onSubmit: (values: {email: string, password: string}) => {
-          auth.register(values.email, values.password).then(
-            (resp) => {
-              if (resp.ok) {
-                onRegister()
-              } else {
-                setErrorText(resp.errors?.pop().text)
-              }
-            }
-          )
+          console.log('Register...', values)
         }
     });
 

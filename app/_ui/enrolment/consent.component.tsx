@@ -1,8 +1,9 @@
-import { Divider, Stack, Typography } from "@mui/material";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 import { getYesNoOnChangeHandler, YesNoField } from "@/app/_ui/components/fields/yesno";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IYesNoItem } from "../../_lib/armt/definition/field.interfaces";
 import { MarkdownContainer } from "../components/base/markdown";
+import SignaturePad from 'react-signature-pad-wrapper';
 
 type ConsentItem = IYesNoItem
 
@@ -17,8 +18,24 @@ interface EnrolmentConsentProps {
 }
 
 export function EnrolmentConsent(props: EnrolmentConsentProps) {
+  const [width, setWidth] = useState(100);
+  const [height, setHeight] = useState(100);
+
+  useEffect(() => {
+      const resizeObserver = new ResizeObserver((event) => {
+          // Depending on the layout, you may need to swap inlineSize with blockSize
+          // https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry/contentBoxSize
+          setWidth(event[0].contentBoxSize[0].inlineSize);
+          setHeight(event[0].contentBoxSize[0].blockSize);
+      });
+      const column = document.getElementsByClassName("sigpadBox").item(0)
+      if (column) {resizeObserver.observe(column)}
+  });
+
+
   const title = props.title ? props.title : 'Consent'
   const description = props.description
+
   const onChange = (event: any, value: boolean) => {
     return getYesNoOnChangeHandler(props.setFieldValue)(event, value)
   }
@@ -51,7 +68,7 @@ export function EnrolmentConsent(props: EnrolmentConsentProps) {
     }
   }
   return (
-    <Stack spacing={4} alignItems="inherit" textAlign={"left"}>
+    <Stack spacing={4} alignItems="inherit" textAlign={"left"} className="consentContent">
       <Typography variant="h2" align="left">{title}</Typography>
       {description && <MarkdownContainer>{description}</MarkdownContainer>}
       {(props.optionalItems) && <Typography variant="h3" align="left">Required Items</Typography>}

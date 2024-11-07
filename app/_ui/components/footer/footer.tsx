@@ -1,3 +1,4 @@
+import { withBasePath } from "@/app/_lib/util/links";
 import { Container, Paper, Stack, Button, Typography, Box, Link, Divider } from "@mui/material";
 
 export type FooterItem = {
@@ -54,7 +55,7 @@ export function Footer(props: FooterProps) {
                   {col.items?.map(
                     (item, j) => (
                       <Link
-                        href={item.href}
+                        href={item.href && withBasePath(item.href)}
                         underline='none'
                         key={j}
                       >

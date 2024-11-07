@@ -8,13 +8,9 @@ import { RadarCard } from "@/app/_ui/components/base/card";
 import NavBar from "@/app/_ui/components/navbar/navbar";
 import { Footer } from "@/app/_ui/components/footer";
 import { LogoutButton } from "@/app/_ui/auth/logout";
-import { LoginModal } from "@/app/_ui/auth/login";
 import Link from "next/link";
-import { withBasePath } from "./_lib/util/links";
 
 export default async function Home() {
-  // const auth = new Auth()
-  const email = "hi" // await auth.getEmail()
   return (
     <Box
     sx={{
@@ -49,9 +45,6 @@ export default async function Home() {
 
                 </Grid>
                 <Grid size={{xs: 12, md: 6}}>
-                  <LoginModal></LoginModal>
-                </Grid>
-                <Grid size={{xs: 12, md: 6}}>
                   <LogoutButton />
                 </Grid>
               </Grid>
@@ -62,7 +55,7 @@ export default async function Home() {
               <Typography variant="h2" margin={2}>Study routes</Typography>
               <Grid container spacing={2} margin={2}>
                 <Grid size={{xs: 12, md: 6}}>
-                  <Button href="/study/paprka" fullWidth variant="contained" LinkComponent={Link}>PAPrKA</Button>
+                  <Button href="/paprka" fullWidth variant="contained" LinkComponent={Link}>PAPrKA</Button>
                 </Grid>
               </Grid>
             </RadarCard>
@@ -72,7 +65,7 @@ export default async function Home() {
             {JSON.stringify(process.env)}
           </Grid>
           <Grid size={12}>
-            <RadarCard>{email}</RadarCard>
+            <RadarCard>{"email"}</RadarCard>
           </Grid>
         </Grid>
         </Container>

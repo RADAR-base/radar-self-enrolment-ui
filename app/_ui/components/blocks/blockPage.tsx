@@ -15,7 +15,7 @@ export function BlockPage({ blockParams: items }: BlockPageProps): React.ReactNo
           maxWidth={"100%"}
           gap={{xs: 0, sm: 2}}
           padding={{xs: 0, sm: 2}}>
-      {items.map((item) => <Block {...item} />)}
+      {items.map((item, i) => <Block {...item} key={i}/>)}
     </Box>
   )
 }
