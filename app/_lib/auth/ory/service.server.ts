@@ -35,15 +35,11 @@ class OryAuthServerService extends ClientAuthService { // TODO - create a server
     if (createLoginResponse.ok) {
       var flow = await createLoginResponse.json()
     } else {
+      console.log('no flow')
       return {ok: false, errors: [2]}
     }
-    const body = {
-      method: 'password',
-      identifier: email,
-      password: password,
-      csrf_token: getCsrfToken(flow),      
-    }
-    var loginResponse = await ory.submitLoginFlow(flow.id, body)
+    var loginResponse = await ory.submitLoginFlow(email, password, getCsrfToken(flow), flow.id)
+    console.log(loginResponse)
     return {ok: loginResponse.ok, errors: []}
   }
   async logOut(): Promise<AuthResponse> {

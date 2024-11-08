@@ -1,8 +1,8 @@
 "use server"
 import { cookies } from 'next/headers'
-import { OrySession } from './types';
+import { NextResponse } from 'next/server';
 
-const BASEURL = process.env.NEXT_PUBLIC_ORY_SDK_URL;
+const BASEURL = process.env.KRATOS_INTERNAL_URL;
 
 function parseSetCookie(c: string): [string, string, {[key: string]: string | boolean}] {
   var split = c.split(';')
@@ -27,7 +27,7 @@ function setCookies(res: Response) {
   )
 }
 
-export async function createLoginFlow(): Promise<Response> {
+export async function createLoginFlow(params?: {login_challenge?: string, refresh?: boolean}): Promise<NextResponse> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   const url = new URL("self-service/login/browser", BASEURL)
   const res = await fetch(url, {
@@ -35,26 +35,32 @@ export async function createLoginFlow(): Promise<Response> {
       'accept': 'application/json',
       Cookie: cookieString,
     },
-  })
+  }) as NextResponse
   setCookies(res)
   return res
 }
 
 
-export async function submitLoginFlow(flowId: string, data: any): Promise<Response> {
+export async function submitLoginFlow(email: string, password: string, csrf_token: string, flow_id: string): Promise<NextResponse> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
-  var url = new URL("self-service/login", BASEURL)
-  var params = new URLSearchParams([["flow", flowId]])
+  var url = new URL("self-service/login", process.env.KRATOS_INTERNAL_URL)
+  var params = new URLSearchParams([["flow", flow_id]])
   url.search = params.toString();
   const res = await fetch(url, {
+    cache: 'no-cache',
     method: 'POST',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
-      Cookie: cookieString,
+      'Cookie': cookieString,
     },
-    body: JSON.stringify(data)
-  })
+    body: JSON.stringify({
+      method: 'password',
+      identifier: email,
+      password: password,
+      csrf_token: csrf_token,   
+    })
+  }) as NextResponse
   setCookies(res)
   return res
 }

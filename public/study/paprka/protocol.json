@@ -200,9 +200,9 @@
         "materialTheme": {},
         "studyIconSrc": "/study/paprka/resources/hrfh_low.png",
         "navbarLinks": [
-            {"text": "Home", "href": "/study/paprka"},
-            {"text": "Portal", "href": "/study/paprka/portal"},
-            {"text": "Enrol", "href": "/study/paprka/enrol"}
+            {"text": "Home", "href": "/paprka"},
+            {"text": "Portal", "href": "/paprka/portal"},
+            {"text": "Enrol", "href": "/paprka/enrol"}
           ],
         "footer": {
             "columns": [

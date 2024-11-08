@@ -2,14 +2,13 @@ import { redirect } from 'next/navigation'
 import { getStudyTheme } from "@/app/_lib/theme/themeprovider";
 import ProtocolRepository, { StudyProtocolRepository } from "@/app/_lib/study/protocol/repository";
 import { StudyProtocol } from '@/app/_lib/study/protocol';
-import { isAbsolutePath } from "@/app/_lib/util/links";
+import { isAbsolutePath, withBasePath } from "@/app/_lib/util/links";
 
 import { Box, CssBaseline, Theme, ThemeProvider } from "@mui/material";
 import NavBar from "@/app/_ui/components/navbar/navbar";
 import {Footer, FooterItem } from "@/app/_ui/components/footer";
 import ProtocolProvider from '@/app/_lib/study/protocol/provider.client';
-
-
+import React from 'react';
 
 const getStudyTitle = (studyId: string) => {
   return studyId ? studyId + " Study" : 'Unknown RADAR Study'
@@ -25,7 +24,7 @@ function makeRelativePaths(links: FooterItem[], studyId: string): FooterItem[] {
     (link) => {
       if (link.href != undefined) {
         if  (!isAbsolutePath(link.href)) {
-        link.href = '/study/' + studyId + '/' + link.href
+        link.href = '/' + studyId + '/' + link.href
         }
       }
       return link
@@ -34,9 +33,19 @@ function makeRelativePaths(links: FooterItem[], studyId: string): FooterItem[] {
 }
 
 export async function generateMetadata({params}: {params: {studyId: string}}) {
+  var registery: StudyProtocolRepository = new ProtocolRepository()
+  var protocol: StudyProtocol;
+  protocol = await registery.getStudyProtocol(params.studyId)
+  if (protocol == undefined){ return }
   return {
-    title: getStudyTitle(params.studyId),
-    description: getStudyDescription(params.studyId)
+    title: getStudyTitle(protocol.studyId),
+    description: getStudyDescription(protocol.studyId),
+    icons: [
+      {
+        href: withBasePath(protocol.studyUiConfig.studyIconSrc),
+        url: withBasePath(protocol.studyUiConfig.studyIconSrc)
+      }
+    ]
   }
 }
 
@@ -52,6 +61,7 @@ export default async function StudyLayout({children, params}: Readonly<{children
     redirect('/')
   }
   return (
+    <React.Fragment>
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box
@@ -78,5 +88,6 @@ export default async function StudyLayout({children, params}: Readonly<{children
         />
       </Box>
     </ThemeProvider>
+    </React.Fragment>
   )
 }

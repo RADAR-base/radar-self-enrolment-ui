@@ -1,3 +1,4 @@
+import { withBasePath } from "@/app/_lib/util/links";
 import { Box, Container, Typography } from "@mui/material";
 import { ForwardedRef } from "react";
 
@@ -27,7 +28,7 @@ export function VideoBlock(props: IVideoBlock, ref: ForwardedRef<HTMLDivElement>
         <Typography variant="subtitle1">{props.subtitle}</Typography>
         <Container>
           <video width={props.video.width} height={props.video.height} {...props.video.params} autoPlay>
-            <source src={props.video.src} type={props.video.type}></source>
+            <source src={withBasePath(props.video.src)} type={props.video.type}></source>
           </video>
         </Container>
       </Box>

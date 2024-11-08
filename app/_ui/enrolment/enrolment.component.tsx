@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation'
 import Yup from '@/app/_lib/armt/validation/yup'
 import { useFormik } from 'formik';
-import { Box, Button, Container, MobileStepper, Stack } from '@mui/material';
+import { Box, Button, Container, Divider, MobileStepper, Stack } from '@mui/material';
 
 import { EnrolmentStudyInformation } from './information.component';
 import { EnrolmentEligability } from './eligability.component';
@@ -244,27 +244,30 @@ export function EnrolmentContent({protocol}: EnrolmentContentProps) {
     )
   }
   const ControlButtons = (
-    <Box
-      paddingTop={4}
-      paddingBottom={4}
-      display={"flex"}
+    <Box 
       width={"100%"}
       position={'sticky'}
-      bottom={0}
-      alignItems={'center'}
-      sx={{ 
-        justifyContent: 'space-between', 
-        background: 'white'
-      }}
-      >
-      <BackButton exit={stepIdx == 0} onClick={previousStep}/>
-      <Box display={'flex'} flexDirection={'row'} gap={0.5}>
-        {stepperDots}
+      bottom={0}>
+      <Divider />
+      <Box
+        paddingTop={4}
+        paddingBottom={4}
+        display={"flex"}
+        alignItems={'center'}
+        sx={{ 
+          justifyContent: 'space-between', 
+          background: 'white'
+        }}
+        >
+        <BackButton exit={stepIdx == 0} onClick={previousStep}/>
+        <Box display={'flex'} flexDirection={'row'} gap={0.5}>
+          {stepperDots}
+        </Box>
+        {((stepIdx+1) == steps.length) ? 
+          <SubmitButton disabled={disabled || formik.isSubmitting} onClick={formik.submitForm}/> : 
+          <NextButton disabled={disabled} onClick={nextStep} />
+        }
       </Box>
-      {((stepIdx+1) == steps.length) ? 
-        <SubmitButton disabled={disabled || formik.isSubmitting} onClick={formik.submitForm}/> : 
-        <NextButton disabled={disabled} onClick={nextStep} />
-      }
     </Box>
   )
 
@@ -272,7 +275,9 @@ export function EnrolmentContent({protocol}: EnrolmentContentProps) {
   return (
     <Container 
       sx={{
-        padding: 4,
+        paddingRight: 4,
+        paddingLeft: 4,
+        paddingTop: 4
       }}
     >
       <form onSubmit={formik.handleSubmit}>

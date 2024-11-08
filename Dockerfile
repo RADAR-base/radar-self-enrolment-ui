@@ -18,10 +18,6 @@ COPY . .
 RUN npm run build
 
 # Copy the env substitution script and ensure it is executable
-COPY docker/30-env-subst.sh /docker-entrypoint.d/30-env-subst.sh
-RUN chmod +x /docker-entrypoint.d/30-env-subst.sh
-
-ENTRYPOINT ["/bin/sh", "-c", "/docker-entrypoint.d/30-env-subst.sh && exec \"$@\"", "--"]
 
 EXPOSE 3000
 

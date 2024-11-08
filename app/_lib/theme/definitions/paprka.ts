@@ -65,7 +65,7 @@ const paprkaOptions = createTheme({
     MuiButton: {
       defaultProps: {
         disableElevation: true,
-        sx: {borderRadius: 2}
+        sx: {borderRadius: 4}
       }
     },
     MuiAppBar: {

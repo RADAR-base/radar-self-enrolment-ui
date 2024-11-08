@@ -7,10 +7,7 @@ import { kratos, hydra } from '@/app/_lib/auth/ory/ory';
 import { useFormik } from "formik"
 import { getCsrfToken } from '@/app/_lib/auth/ory/util';
 import { useState, useEffect, useCallback } from 'react';
-import { LoginFlow, UpdateLoginFlowBody, UpdateLoginFlowWithPasswordMethod } from '@ory/client';
-
-import * as ory from '@/app/_lib/auth/ory/api.client'
-
+import { FrontendApiGetLoginFlowRequest, LoginFlow, UpdateLoginFlowBody, UpdateLoginFlowWithPasswordMethod } from '@ory/client';
 
 interface LoginFormProps {
   flow?: LoginFlow
@@ -25,20 +22,20 @@ function LoginForm({flow: flow}: LoginFormProps) {
     },
     onSubmit: async (values: {email: string, password: string}) => 
     {
-      const body = {
-        method: "password",
-        identifier: values.email,
-        password: values.password,
-        csrf_token: getCsrfToken(flow),      
-      } 
-      if (flow == undefined) { return }
-      let resp = await ory.submitLoginFlow(flow.id, body)
-      if (resp.status == 422) {
-        let {redirect_browser_to: url} = await resp.json()
-        router.push(url)
-      } else {
-        console.log('Other error')
-      }
+      // const body = {
+      //   method: "password",
+      //   identifier: values.email,
+      //   password: values.password,
+      //   csrf_token: getCsrfToken(flow),      
+      // } 
+      // if (flow == undefined) { return }
+      // let resp = await ory.submitLoginFlow(flow.id, body)
+      // if (resp.status == 422) {
+      //   let {redirect_browser_to: url} = await resp.json()
+      //   router.push(url)
+      // } else {
+      //   console.log('Other error')
+      // }
     }
   });
   return (      
@@ -82,19 +79,11 @@ function LoginWithCurrentAccountButton() {
 
 }
 
-
-
 function getUserSession(setSession: (value: any) => void) {
-  ory.whoAmI().then(
-    (r) => {
-      console.log(r)
-      if (r.ok) {
-        r.json().then(
-          (session) => setSession(session)
-        )
-      }
-      else if (r.status == 401) {
-        setSession(null)
+  kratos.toSession().then(
+    (response) => {
+      if (response.status == 200) {
+        setSession(response.data)
       }
     }
   )
@@ -123,53 +112,54 @@ export default function Page() {
     [searchParams]
   )
 
-  useEffect(() => {
-    console.log('userSession: ', userSession)
-    if (userSession === undefined) {
-      getUserSession(setUserSession)
-    }
-    if (userSession === null) {
-      console.log('null')
-      console.log('flow', flow)
-      if (flow == undefined) {
-        console.log('flow undefined')
-        if (flowId != null) {
-          console.log('flowId OK')
-          ory.getLoginFlow(flowId).then(
-            (response) => {
-              if (response.ok) {
-                console.log('get flow ok')
-                response.json().then(
-                  (data) => {
-                    router.push(pathname + '?' + createQueryString('flowId', data.id ))
+  // useEffect(() => {
+  //   console.log('userSession: ', userSession)
+  //   if (userSession === undefined) {
+  //     getUserSession(setUserSession)
+  //   }
+  //   if (userSession === null) {
+  //     console.log('null')
+  //     console.log('flow', flow)
+  //     if (flow == undefined) {
+  //       console.log('flow undefined')
+  //       if (flowId != null) {
+  //         console.log('flowId OK')
+  //         let v = {} as FrontendApiGetLoginFlowRequest
+  //         kratos.getLoginFlow({flowId: flowId}).then(
+  //           (response) => {
+  //             if (response.ok) {
+  //               console.log('get flow ok')
+  //               response.json().then(
+  //                 (data) => {
+  //                   router.push(pathname + '?' + createQueryString('flowId', data.id ))
 
-                    setFlow(data)
-                    setContent(<LoginForm flow={data} />)
-                  }
-                )
-              } else {
-                console.log('cant get flow')
-              }
-            }
-          )
-        }
-        else {
-          console.log('flowID is null')
-          ory.createLoginFlow({'login_challenge': loginChallenge}).then(
-            (value) => value.json().then(
-              (data) => {
-                router.push(pathname + '?' + createQueryString('flowId', data.id ))
-                setFlow(data)
-                setContent(<LoginForm flow={data} />)
-              }
-            )
-          )
-        } 
-      }
-    } else {
-      setContent(<div>{JSON.stringify(userSession)}</div>)
-    }
-  }, [flow, userSession])
-  console.log('final flow', flow)
+  //                   setFlow(data)
+  //                   setContent(<LoginForm flow={data} />)
+  //                 }
+  //               )
+  //             } else {
+  //               console.log('cant get flow')
+  //             }
+  //           }
+  //         )
+  //       }
+  //       else {
+  //         console.log('flowID is null')
+  //         ory.createLoginFlow({'login_challenge': loginChallenge}).then(
+  //           (value) => value.json().then(
+  //             (data) => {
+  //               router.push(pathname + '?' + createQueryString('flowId', data.id ))
+  //               setFlow(data)
+  //               setContent(<LoginForm flow={data} />)
+  //             }
+  //           )
+  //         )
+  //       } 
+  //     }
+  //   } else {
+  //     setContent(<div>{JSON.stringify(userSession)}</div>)
+  //   }
+  // }, [flow, userSession])
+  // console.log('final flow', flow)
   return <Card>{content}</Card>
 }
