@@ -4,9 +4,19 @@ import { RadarCard } from '@/app/_ui/components/base/card';
 import { EnrolmentContent } from '@/app/_ui/enrolment/enrolment.component';
 import { Box, Container } from '@mui/material';
 
+import Auth from '@/app/_lib/auth'
+import { redirect, usePathname } from 'next/navigation'
+import { withBasePath } from '@/app/_lib/util/links';
+
 export default async function Page({ params }: { params: { studyId: string } }) {
   var registery: StudyProtocolRepository = new StudyProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)
+  const auth = new Auth()
+  const loggedIn = await auth.isLoggedIn()
+  if (loggedIn) { // and in study
+    redirect(withBasePath('portal'))
+  }
+
   return (
     <main>
       <Box sx={{ flexGrow: 1, margin: {xs: 0, sm: 2}}} 
@@ -15,7 +25,7 @@ export default async function Page({ params }: { params: { studyId: string } }) 
             alignItems="center">
         <Container maxWidth="lg" disableGutters>
           <RadarCard>
-            <EnrolmentContent protocol={protocol.enrolment}/>
+            <EnrolmentContent studyProtocol={protocol}/>
           </RadarCard>
         </Container>
       </Box>

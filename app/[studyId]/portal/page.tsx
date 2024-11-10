@@ -1,13 +1,8 @@
 "use server"
-import Auth from '@/app/_lib/auth'
-import AuthServer from '@/app/_lib/auth/ory/service.server'
 import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
 import { RadarCard } from '@/app/_ui/components/base/card';
 import { Box, Container } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-
-const auth = new Auth();
-const authServer = new AuthServer();
 
 export default async function Page({ params }: { params: { studyId: string } }) {
   var registery: StudyProtocolRepository = new StudyProtocolRepository()
@@ -27,6 +22,9 @@ export default async function Page({ params }: { params: { studyId: string } }) 
                 {card}
               </Grid>
             ))}
+            <Grid size={{xs: 12, sm: 6, md: 4}}>
+              {await registery.getStudies()}
+            </Grid>
           </Grid>
         </Container>
       </Box>

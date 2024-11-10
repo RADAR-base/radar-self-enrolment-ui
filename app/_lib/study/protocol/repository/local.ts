@@ -1,8 +1,9 @@
 import { StudyProtocol } from "../index";
-import { StudyProtocolRepository } from "./repository";
+import { StudyProtocolRepository } from "./interface";
 import { promises as fs } from 'fs';
 
 export class LocalProtocolRepository implements StudyProtocolRepository {
+
   async getStudyProtocol(studyId: string): Promise<StudyProtocol> {
     var protocol: StudyProtocol
     try {
@@ -13,5 +14,8 @@ export class LocalProtocolRepository implements StudyProtocolRepository {
       console.log(err)
     }
     throw new Error('Can not load study protocol for studyId: ' + studyId)
+  }
+  async getStudies(): Promise<string[]> {
+    return await (fs.readdir(process.cwd() + '/public/study/').then(l => l.filter(item => !/(^|\/)\.[^/.]/g.test(item))))
   }
 }

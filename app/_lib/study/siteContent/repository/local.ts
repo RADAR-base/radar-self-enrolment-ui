@@ -1,5 +1,5 @@
 import { WebsitePageContent } from "../index";
-import { PageRepository } from "./repository";
+import { PageRepository } from "./interface";
 import { promises as fs } from 'fs';
 import path from "path";
 

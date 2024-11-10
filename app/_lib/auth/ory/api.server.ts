@@ -126,6 +126,22 @@ export async function createRegistrationFlow(): Promise<Response> {
   })
 }
 
+export async function getRegistrationFlow(flowId: string): Promise<Response> {
+  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  var url = new URL('self-service/registration/flows', BASEURL)
+  var params = new URLSearchParams([
+    ['flow', flowId]
+  ])
+  url.search = params.toString()
+  return await fetch(url, {
+    method: 'GET',
+    headers: {
+      'accept': 'application/json',
+      'Content-Type': 'application/json',
+      Cookie: cookieString,
+    },
+  })
+}
 
 export async function updateRegistrationFlow(flowId: string, data: any): Promise<Response> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')

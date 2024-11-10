@@ -28,7 +28,7 @@ export function LoginComponent(props: LoginProps) {
   )
 
   const getFlow = async (setFlow: (v: any) => void) => {
-    const response = await fetch(withBasePath('/api/ory/login/createFlow'))
+    const response = await fetch(withBasePath('/api/ory/login/browser'))
     if (response.ok) {
       const data = await response.json()
       router.push(pathname + '?' + createQueryString('flowId', data.id ))
@@ -41,10 +41,11 @@ export function LoginComponent(props: LoginProps) {
     const body = {
       email: email,
       password: password,
-      flow_id: flow.id,
       csrf_token: getCsrfToken(flow)
     }
-    const res = await fetch(withBasePath('/api/ory/login'), {
+    const res = await fetch(withBasePath('/api/ory/login?' + new URLSearchParams({
+      flow: flow.id
+    })), {
       method: 'POST',
       body: JSON.stringify(body)
     })

@@ -1,10 +1,9 @@
-"use server"
 import { AuthResponse, ClientAuthService, ServerAuthService } from '../service.interface'
 import * as ory from './api.server'
 import { OrySession } from './types'
 import { getCsrfToken } from './util'
 
-class OryAuthServerService extends ClientAuthService { // TODO - create a server-side interface for authorization
+class OryAuthServerService extends ClientAuthService {
   private async getSession(): Promise<OrySession | null> {
     const resp = await ory.whoAmI()
     var session: OrySession | null = null
@@ -38,6 +37,7 @@ class OryAuthServerService extends ClientAuthService { // TODO - create a server
       console.log('no flow')
       return {ok: false, errors: [2]}
     }
+
     var loginResponse = await ory.submitLoginFlow(email, password, getCsrfToken(flow), flow.id)
     console.log(loginResponse)
     return {ok: loginResponse.ok, errors: []}

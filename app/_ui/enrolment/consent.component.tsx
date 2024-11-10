@@ -75,7 +75,7 @@ export function EnrolmentConsent(props: EnrolmentConsentProps) {
       {requiredItems}
       {(props.optionalItems) && <Divider />}
       {(props.optionalItems) && <Typography variant="h3" align="left">Optional Items</Typography>}
-      {(props.optionalItems) && <Typography variant="subtitle2" align="left">The following activities are optional, you may participate in the research without agreeing to the following:</Typography>}
+      {(props.optionalItems) && <Typography variant="subtitle1" align="left">The following activities are optional, you may participate in the research without agreeing to the following:</Typography>}
       {props.optionalItems && optionalItems}
     </Stack>
 )}

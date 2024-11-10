@@ -1,4 +1,4 @@
-import { getLoginFlow } from "@/app/_lib/auth/ory/api.server"
+import { getRegistrationFlow } from "@/app/_lib/auth/ory/api.server"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(request: NextRequest) {
@@ -6,5 +6,5 @@ export async function GET(request: NextRequest) {
   if (flowId == null) {
     return NextResponse.json({error: 'No flow (flow id) param provided'}, {status: 400})
   }
-  return await getLoginFlow(flowId)
+  return await getRegistrationFlow(flowId)
 }

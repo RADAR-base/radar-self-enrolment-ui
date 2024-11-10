@@ -54,7 +54,6 @@ export default async function StudyLayout({children, params}: Readonly<{children
 
   var registery: StudyProtocolRepository = new ProtocolRepository()
   var protocol: StudyProtocol;
-
   try {
     protocol = await registery.getStudyProtocol(params.studyId)
   } catch {

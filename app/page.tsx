@@ -60,13 +60,6 @@ export default async function Home() {
               </Grid>
             </RadarCard>
           </Grid>
-          <Grid size={12}>
-            <RadarCard>{process.env.KRATOS_INTERNAL_URL ?? 'No env'}</RadarCard>
-            {JSON.stringify(process.env)}
-          </Grid>
-          <Grid size={12}>
-            <RadarCard>{"email"}</RadarCard>
-          </Grid>
         </Grid>
         </Container>
       </Box>

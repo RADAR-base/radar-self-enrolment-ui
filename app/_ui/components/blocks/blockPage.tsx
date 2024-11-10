@@ -7,7 +7,7 @@ interface BlockPageProps {
 
 export function BlockPage({ blockParams: items }: BlockPageProps): React.ReactNode {
   return  (
-    <Box sx={{ flexGrow: 1}} 
+    <Box sx={{ flexGrow: 1}}
           display="flex"
           justifyContent={{"sm": "left", "md": "center"}}
           alignItems={{"sm": "left", "md": "center"}}

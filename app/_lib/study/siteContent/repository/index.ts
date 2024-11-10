@@ -1,6 +1,6 @@
 import { LocalPageRepository } from './local'
 
 export { LocalPageRepository }
-export { PageRepository } from './repository'
+export { PageRepository } from './interface'
 
 export default LocalPageRepository
