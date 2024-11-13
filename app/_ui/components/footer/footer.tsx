@@ -46,7 +46,7 @@ export function Footer(props: FooterProps) {
           justifyContent: 'space-evenly',
           display: 'flex',
           flexDirection: {'xs': 'column', 'sm': 'row'},
-          alignItems: 'center'
+          alignItems: 'flex-start'
         }}>
           {props.columns.map(
             (col, i) => (
@@ -58,6 +58,7 @@ export function Footer(props: FooterProps) {
                         href={item.href && withBasePath(item.href)}
                         underline='none'
                         key={j}
+                        color='textPrimary'
                       >
                         <Typography variant='body1'>{item.text}</Typography>
                       </Link>
