@@ -9,20 +9,40 @@
     "protocols": [
         {
             "id": "p1",
-            "name": "Protocol Item 1",
-            "order": 0,
             "appearance": {},
             "schedule": {},
-            "metadata": {}
+            "metadata": {
+              "title": "Protocol Item 1",
+              "order": 0,
+              "description": "Description",
+              "optional": false,
+              "type": "redcap",
+              "definitionLink": {
+                "org": "string",
+                "project": "string",
+                "avsc": "string",
+                "name": "string"
+              }
+            }
         },
         {
-            "id": "p2",
-            "name": "Protocol Item 2",
-            "order": 0,
-            "appearance": {},
-            "schedule": {},
-            "metadata": {}
-        }
+          "id": "p2",
+          "appearance": {},
+          "schedule": {},
+          "metadata": {
+            "title": "Protocol Item 2",
+            "order": 1,
+            "description": "Description 2",
+            "optional": true,
+            "type": "redcap",
+            "definitionLink": {
+              "org": "string",
+              "project": "string",
+              "avsc": "string",
+              "name": "string"
+            }
+          }
+      }
     ],
     "enrolment": {
         "eligability": {
@@ -209,15 +229,17 @@
                 {
                     "title": "Study Links",
                     "items": [
-                        {"text": "Home", "href": "#"},
-                        {"text": "RADAR", "href": "/"}
+                      {"text": "Home", "href": "#"},
+                      {"text": "About the study", "href": "#"},
+                      {"text": "Subscribe", "href": "#"},
+                      {"text": "LinkedIn", "href": "https://www.linkedin.com/company/health-research-from-home"},
+                      {"text": "RADAR", "href": "/"}
                     ]
                 },
                 {
                     "title": "Contact Us",
                     "items": [
-                        {"text": "test@hrfh.com", "href": "mailto:test@hrfh.com"},
-                        {"text": "01000000000"}
+                        {"text": "hrfh@manchester.ac.uk", "href": "mailto:hrfh@manchester.ac.uk"}
                     ]
                 },
                 {

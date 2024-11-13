@@ -27,8 +27,8 @@ export function YesNoButton(props: YesNoButtonProps) {
         disabled={props.disabled}
         color={color}
       >
-        <ToggleButton id={props.id} key={props.key} value={false} aria-label='no'>No</ToggleButton>
-        <ToggleButton id={props.id} key={props.key} value={true} aria-label='yes'>Yes</ToggleButton>
+        <ToggleButton sx={{borderRadius: 4}} id={props.id} key={props.key} value={false} aria-label='no'>&nbsp;No</ToggleButton>
+        <ToggleButton sx={{borderRadius: 4}} id={props.id} key={props.key} value={true} aria-label='yes'>Yes</ToggleButton>
       </ToggleButtonGroup>
   )
 }

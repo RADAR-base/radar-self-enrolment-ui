@@ -19,17 +19,18 @@ export type IBlock = (BlockProps & IMarkdownBlock) |
                      (BlockProps & IVideoBlock)
 
 function BlockContainer({children, props}: {children: React.ReactNode, props: BlockProps}): React.ReactNode {
-  let padding = props.blockPadding ?? {xs: 0, sm: 2} 
+  let padding = props.blockPadding ?? 2
   return (
     <Box 
-      paddingLeft={padding}
-      paddingRight={padding}
+      padding={padding}
       width="100%"
       maxWidth={"100%"}
       justifyContent="center" 
       alignItems="center"
       display="flex"
-      sx={{background: props.blockBackground}}>
+      style={{background: props.blockBackground}}
+      //sx={{}}
+      >
         {children}
       </Box>)
 }
@@ -58,7 +59,7 @@ export function Block(props: IBlock): React.ReactNode {
     <BlockContainer props={props}>
         {
           props.noCard ? (
-            <Box sx={{width: "100%", maxWidth: "lg", textJustify: "right", textAlign: 'right'}}>
+            <Box sx={{width: "100%", maxWidth: "lg", textJustify: "right", textAlign: 'right',   padding: 4}} >
               {blockContent}
             </Box>
           ) : (

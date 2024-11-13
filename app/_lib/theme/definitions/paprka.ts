@@ -29,7 +29,7 @@ const paprkaOptions = createTheme({
     h3: {
       fontSize: '1rem',
       fontWeight: '700',
-      color: "#0297A7",
+      color: "#444",
     },
     h4: {
       fontSize: '1rem',
@@ -55,17 +55,26 @@ const paprkaOptions = createTheme({
       contrastText: '#fff',
     },
     secondary: {
-      light: '#e8e675',
-      main: '#adb53f',
-      dark: '#808400',
+      light: '#e14b3b',
+      main: '#c32718',
+      dark: '#a71202',
       contrastText: '#fff',
     },
+    success: {
+      main: '#02a765'
+    },
+    warning: {
+      main: '#e4700c'
+    },
+    error: {
+      main: '#d4311d'
+    }
   },
   components: {
     MuiButton: {
       defaultProps: {
         disableElevation: true,
-        sx: {borderRadius: 4}
+        sx: {borderRadius: 3}
       }
     },
     MuiAppBar: {
@@ -73,7 +82,7 @@ const paprkaOptions = createTheme({
         elevation: 0,
         position: 'static',
       }
-    },
+    }
   }
 })
 

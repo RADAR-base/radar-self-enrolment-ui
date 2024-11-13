@@ -35,7 +35,8 @@ export function ArmtDateField({label, description, errorText, ...props}: ArmtDat
           disabled={props.disabled}
           openTo="year"
           views={['year','month','day']}
-          format='DD/MM/YYYY' 
+          format='DD/MM/YYYY'
+          formatDensity='spacious'
           onChange={(value, context) => {
             if (value) {
               try {

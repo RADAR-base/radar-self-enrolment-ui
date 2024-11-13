@@ -16,7 +16,9 @@ const RadarBlockCardRoot = styled(Paper, {name: 'RadarBlockCard', slot: 'root'})
   padding: theme.spacing(4),
   margin: 0,
   color: theme.palette.text.secondary,
-  boxShadow: 'none',
+  // boxShadow: 'none',
+  width: "100%",
+  maxWidth: "lg"
 }));
 
 

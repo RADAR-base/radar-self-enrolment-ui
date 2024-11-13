@@ -7,14 +7,15 @@ interface BlockPageProps {
 
 export function BlockPage({ blockParams: items }: BlockPageProps): React.ReactNode {
   return  (
-    <Box sx={{ flexGrow: 1}}
+    <Box 
           display="flex"
           justifyContent={{"sm": "left", "md": "center"}}
           alignItems={{"sm": "left", "md": "center"}}
           flexDirection="column"
           maxWidth={"100%"}
-          gap={{xs: 0, sm: 2}}
-          padding={{xs: 0, sm: 2}}>
+          gap={0} // {{xs: 0, sm: 0}}
+          padding={0} // {{xs: 0, sm: 0}}
+          >
       {items.map((item, i) => <Block {...item} key={i}/>)}
     </Box>
   )

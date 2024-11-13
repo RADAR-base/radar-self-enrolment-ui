@@ -15,7 +15,7 @@ const RadarCardRoot = styled(Paper, {name: 'RadarCard', slot: 'root'})(({ theme 
   padding: theme.spacing(1),
   textAlign: 'center',
   color: theme.palette.text.secondary,
-  boxShadow: 'none'
+  // boxShadow: 'none'
 }));
 
 

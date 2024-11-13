@@ -54,11 +54,35 @@ export type EnrolmentProtocol = {
 
 export type ArmtSchedule = {};
 export type ArmtAppearance = {};
-export type ArmtMetadata = {};
+export type ArmtGithubRedcapDefinitionLink = {
+  org: string,
+  project: string,
+  avsc: string,
+  name: string
+}
+
+type ArmtMetadataBase = {
+  title: string,
+  description?: string,
+  order?: number,
+  showInPortal?: boolean
+  optional?: boolean
+  type: "redcap" | "inbuilt"
+}
+
+interface ArmtMetadataGithub extends ArmtMetadataBase {
+  type: "redcap"
+  definitionLink: ArmtGithubRedcapDefinitionLink
+}
+
+interface ArmtMetadataInbuilt extends ArmtMetadataBase {
+  type: "inbuilt"
+}
+
+export type ArmtMetadata = ArmtMetadataGithub | ArmtMetadataInbuilt
+
 export type ArmtProtocol = {
   id: string;
-  name: string;
-  order: number;
   appearance: ArmtAppearance;
   schedule: ArmtSchedule;
   metadata: ArmtMetadata;
