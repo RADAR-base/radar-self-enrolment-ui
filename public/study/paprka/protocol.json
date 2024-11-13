@@ -8,13 +8,13 @@
     },
     "protocols": [
         {
-            "id": "p1",
+            "id": "paprka_surgery",
             "appearance": {},
             "schedule": {},
             "metadata": {
-              "title": "Protocol Item 1",
+              "title": "Surgery Information",
               "order": 0,
-              "description": "Description",
+              "description": "Tell us when you had your knee replacement surgery.",
               "optional": false,
               "type": "redcap",
               "definitionLink": {
@@ -26,14 +26,14 @@
             }
         },
         {
-          "id": "p2",
+          "id": "paprka_nhs",
           "appearance": {},
           "schedule": {},
           "metadata": {
-            "title": "Protocol Item 2",
+            "title": "NHS Number",
             "order": 1,
-            "description": "Description 2",
-            "optional": true,
+            "description": "Your unique, 10 digit, NHS identifier.",
+            "optional": false,
             "type": "redcap",
             "definitionLink": {
               "org": "string",
@@ -42,6 +42,60 @@
               "name": "string"
             }
           }
+      }, 
+      {
+        "id": "device_connect",
+        "appearance": {},
+        "schedule": {},
+        "metadata": {
+          "title": "Connect Devices",
+          "order": 2,
+          "description": "Share your fitness tracker or smartphone app with us.",
+          "optional": false,
+          "type": "redcap",
+          "definitionLink": {
+            "org": "string",
+            "project": "string",
+            "avsc": "string",
+            "name": "string"
+          }
+        }
+      },
+      {
+        "id": "paprka_prizedraw",
+        "appearance": {},
+        "schedule": {},
+        "metadata": {
+          "title": "Prize Draw",
+          "order": 3,
+          "description": "Win a £25 Amazon voucher.",
+          "optional": true,
+          "type": "redcap",
+          "definitionLink": {
+            "org": "string",
+            "project": "string",
+            "avsc": "string",
+            "name": "string"
+          }
+        }
+      },
+      {
+        "id": "paprka_feedback",
+        "appearance": {},
+        "schedule": {},
+        "metadata": {
+          "title": "Feedback",
+          "order": 4,
+          "description": "Help us make this process easier for others.",
+          "optional": true,
+          "type": "redcap",
+          "definitionLink": {
+            "org": "string",
+            "project": "string",
+            "avsc": "string",
+            "name": "string"
+          }
+        }
       }
     ],
     "enrolment": {

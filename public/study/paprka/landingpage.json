@@ -3,13 +3,12 @@
           {
             "blockType": "hero",
             "title": "Hello",
-            "blockBackground": "linear-gradient(#e66465, #9198e5);",
+            "blockBackground": "linear-gradient(#e66465, #9198e5)",
             "heroImage": {"src": "/study/paprka/resources/hero.png", "altText": "PAPRkA hero image"}
           },
           {
             "blockType": "text",
             "noCard": true,
-            "blockBackground": "background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(242,242,247,1) 100%);",
             "title": "Text Block", 
             "subtitle": "Subtitle",
             "content": "LoremIpsum"

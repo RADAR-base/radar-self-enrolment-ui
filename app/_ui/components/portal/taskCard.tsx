@@ -11,10 +11,9 @@ export interface RadarTaskCardProps {
 }
 
 const RadarTaskCardRoot = styled(Paper, {name: 'RadarTaskCard', slot: 'root'})(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  backgroundColor: '#fff',
   ...theme.typography.body2,
   padding: theme.spacing(4),
-  margin: 0,
   color: theme.palette.text.secondary,
   // boxShadow: 'none',
   width: "100%",
@@ -26,20 +25,21 @@ const RadarTaskCardRoot = styled(Paper, {name: 'RadarTaskCard', slot: 'root'})((
 
 export const RadarTaskCard = React.forwardRef(function RadarBlockCard({metadata: {title, description, optional}, status}: RadarTaskCardProps, ref) {
   return <RadarTaskCardRoot>
-    <Stack gap={2}>
-      <Typography variant="h3">{title}</Typography>
-      <Typography variant="body1">{description}</Typography>
+    <Box display='flex' flexDirection={'column'} justifyContent={'space-between'} height={"100%"} gap={4}>
+      <Box display='block'>
+        <Typography variant="h3">{title}</Typography>
+        <Typography variant="body1">{description}</Typography>
+      </Box>
       <Box display='flex' alignItems={"center"} justifyContent={"space-between"}>
         <Typography variant="subtitle1">{optional ? "Optional" : ""}</Typography>
         <Button 
           variant="contained"
           color={(status == "complete") ? "success" : "warning"}
-          disabled={status == "disabled"}
-          >
+          disabled={status == "disabled"}>
             {(status == "complete") ? "Done" : "Todo"}
         </Button>
       </Box>
-    </Stack>
+    </Box>
   </RadarTaskCardRoot>
 })
 

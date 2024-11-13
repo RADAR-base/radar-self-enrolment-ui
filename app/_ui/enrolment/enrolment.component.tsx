@@ -335,7 +335,6 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
     </Box>
   )
 
-
   return (
     <Container 
       sx={{
