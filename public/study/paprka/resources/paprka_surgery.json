@@ -56,19 +56,7 @@
                 "label": "Very dissatisfied"
             }
         ],
-        "field_note": "",
-        "text_validation_type_or_show_slider_number": "",
-        "text_validation_min": "",
-        "text_validation_max": "",
-        "identifier": "",
-        "branching_logic": "",
-        "required_field": "true",
-        "custom_alignment": "",
-        "question_number": "",
-        "matrix_group_name": "",
-        "matrix_ranking": "",
-        "field_annotation": "",
-        "evaluated_logic": ""
+        "required_field": "true"
     },
     {
         "field_name": "paprka_surgery_text2",

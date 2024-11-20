@@ -38,10 +38,10 @@ export function YesNoButton(props: YesNoButtonProps) {
 interface YesNoFieldProps extends YesNoButtonProps {
   label?: string,
   description?: string
-  helperText?: string
+  errorText?: string
 }
 
-export function YesNoField({label, description, helperText, ...props}: YesNoFieldProps, ref: ForwardedRef<HTMLDivElement>) {
+export function YesNoField({label, description, errorText, ...props}: YesNoFieldProps, ref: ForwardedRef<HTMLDivElement>) {
   return (
     <FormControl sx={{width: '100%'}}>
       <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
@@ -52,7 +52,7 @@ export function YesNoField({label, description, helperText, ...props}: YesNoFiel
           </Box>
           <YesNoButton {...props}/>
         </Box>
-        <Typography variant="overline"  color="error">{helperText}</Typography>
+        <Typography variant="overline"  color="error">{errorText}</Typography>
       </Box>
     </FormControl>
   )

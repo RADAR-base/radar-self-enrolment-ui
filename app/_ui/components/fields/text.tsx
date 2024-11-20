@@ -20,7 +20,6 @@ export function ArmtTextField({label, description, errorText, type, ...props}: A
       <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
         <Typography variant="h4" component={'span'}>{props.title}</Typography>
         <Typography variant="body1" component={'span'} >{description}</Typography>
-        <Typography variant="overline" component={'span'} color="error">{errorText}</Typography>
         <TextField 
           type={type}
           id={props.id}
@@ -30,6 +29,7 @@ export function ArmtTextField({label, description, errorText, type, ...props}: A
           disabled={props.disabled}
           onChange={handleChange(props.setFieldValue)}
         />
+        <Typography variant="overline" component={'span'} color="error">{errorText}</Typography>
       </Box>
     </FormControl>
   )

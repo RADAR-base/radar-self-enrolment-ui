@@ -1,13 +1,12 @@
 "use client"
-import fromRedcapDefinition from "@/app/_lib/armt/definition/fromRedcapDefinition";
-import { RadarRedcapDefinition } from "@/app/_lib/armt/definition/redcap.types";
 import { Box, Button, Container, Divider, Stack } from "@mui/material";
-import { ArmtForm } from "./form";
-import { ArmtDefinition } from "@/app/_lib/armt/definition/definition.types";
 import { useFormik } from "formik";
-import { schemaFromDefinition } from "@/app/_lib/armt/validation/parser";
-import NextLink from 'next/link'
 import { useRouter } from 'next/navigation'
+import { ArmtForm } from "@/app/_ui/components/form/form";
+import { ArmtDefinition } from "@/app/_lib/armt/definition/definition.types";
+import { schemaFromDefinition } from "@/app/_lib/armt/validation/parser";
+import { RadarRedcapDefinition } from "@/app/_lib/armt/definition/redcap.types";
+import fromRedcapDefinition from "@/app/_lib/armt/definition/fromRedcapDefinition";
 
 interface ArmtContentProps {
   redcapDef: RadarRedcapDefinition
@@ -27,6 +26,7 @@ export function ArmtContent({redcapDef}: ArmtContentProps) {
       console.log(values)
     },
   })
+
   const ControlButtons = (
     <Box 
       width={"100%"}

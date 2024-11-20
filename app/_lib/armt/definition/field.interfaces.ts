@@ -36,6 +36,11 @@ export interface IRadioItem extends IItem {
   choices: IRadioChoice[]
 }
 
+export interface IDropdownItem extends IItem {
+  fieldType: "dropdown",
+  choices: IRadioChoice[]
+}
+
 export interface IDescriptiveItem extends IItem {
   fieldType: "descriptive",
   content: string

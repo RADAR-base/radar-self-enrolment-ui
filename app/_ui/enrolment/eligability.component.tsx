@@ -33,7 +33,7 @@ export function EnrolmentEligability(props: EnrolmentEligabilityProps) {
       value={props.values[props.items[0].id]}
       onChange={onChange}
       id={'eligability.' + props.items[0].id}
-      helperText={(props.values[props.items[0].id] != null) ? props.errors[props.items[0].id] : ""}
+      errorText={(props.values[props.items[0].id] != null) ? props.errors[props.items[0].id] : ""}
       key={'eligability.' + props.items[0].id}
     />
   ];
@@ -48,7 +48,7 @@ export function EnrolmentEligability(props: EnrolmentEligabilityProps) {
               value={props.values[props.items[i].id]}
               onChange={onChange}
               id={'eligability.' + props.items[i].id}
-              helperText={(props.values[props.items[i].id] != null) ? props.errors[props.items[i].id] : ""}
+              errorText={(props.values[props.items[i].id] != null) ? props.errors[props.items[i].id] : ""}
               key={'eligability.' + props.items[i].id}/>
               </Box>
           </Collapse>

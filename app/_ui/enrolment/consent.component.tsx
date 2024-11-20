@@ -48,7 +48,7 @@ export function EnrolmentConsent(props: EnrolmentConsentProps) {
         value={props.values[props.requiredItems[i].id]}
         onChange={onChange}
         id={'consent.' + props.requiredItems[i].id}
-        helperText={(props.values[props.requiredItems[i].id] != null) ? props.errors[props.requiredItems[i].id] : ""}
+        errorText={(props.values[props.requiredItems[i].id] != null) ? props.errors[props.requiredItems[i].id] : ""}
         key={'consent.' + props.requiredItems[i].id}
       />
     )
@@ -63,7 +63,7 @@ export function EnrolmentConsent(props: EnrolmentConsentProps) {
           value={props.values[props.optionalItems[i].id]}
           onChange={onChange}
           id={'consent.' + props.optionalItems[i].id}
-          helperText={(props.values[props.optionalItems[i].id] != null) ? props.errors[props.optionalItems[i].id] : ""}
+          errorText={(props.values[props.optionalItems[i].id] != null) ? props.errors[props.optionalItems[i].id] : ""}
           key={'consent.' + props.optionalItems[i].id}
         />
       )

@@ -1,7 +1,7 @@
 import Yup from "../validation/yup"
-import { IYesNoItem, ITextItem, IRadioItem, IDescriptiveItem, IDateItem } from "./field.interfaces"
+import { IYesNoItem, ITextItem, IRadioItem, IDescriptiveItem, IDateItem, IDropdownItem } from "./field.interfaces"
 
-export type ArmtItemContent = IYesNoItem | ITextItem | IRadioItem | IDescriptiveItem | IDateItem
+export type ArmtItemContent = IYesNoItem | ITextItem | IRadioItem | IDescriptiveItem | IDateItem | IDropdownItem
 
 export type ArmtItem = {
   content: ArmtItemContent

@@ -216,12 +216,31 @@
                   "required_field": "true"
                 },
                 {
-                  "field_name": "paprka_additional_gender",
-                  "form_name": "paprka_additional",
-                  "field_type": "text",
+                  "field_name": "paprka_surgery_satisfaction",
+                  "form_name": "paprka_surgery",
+                  "section_header": "",
+                  "field_type": "dropdown",
                   "field_label": "Gender",
+                  "select_choices_or_calculations": [
+                      {
+                          "code": "0",
+                          "label": "Male"
+                      },
+                      {
+                          "code": "1",
+                          "label": "Female"
+                      },
+                      {
+                          "code": "2",
+                          "label": "Non-binary / Trans / Other"
+                      },
+                      {
+                          "code": "3",
+                          "label": "Prefer not to say"
+                      }
+                  ],
                   "required_field": "true"
-                },
+              },
                 {
                     "field_name": "paprka_additional_dob",
                     "form_name": "paprka_additional",

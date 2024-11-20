@@ -51,6 +51,16 @@ function FieldFromRedcap(field: RadarRedcapFieldDefinition): ArmtItem {
       }
       validation = Yup.string().oneOf(field.select_choices_or_calculations.map((choice) => choice.code))
   }
+  if (field.field_type == "dropdown") {
+    content = {
+      fieldType: "dropdown",
+      id: field.field_name,
+      label: field.field_label,
+      title: field.section_header,
+      choices: field.select_choices_or_calculations,
+    }
+    validation = Yup.string().oneOf(field.select_choices_or_calculations.map((choice) => choice.code))
+  }
   if (field.field_type == "descriptive") {
       content = {
         fieldType: "descriptive",
