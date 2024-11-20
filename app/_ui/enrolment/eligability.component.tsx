@@ -1,4 +1,4 @@
-import { Box, Fade, Collapse, Zoom, Stack, Typography } from "@mui/material";
+import { Box, Fade, Collapse, Zoom, Stack, Typography, Divider } from "@mui/material";
 import React from "react";
 import { CSSTransition } from 'react-transition-group';
 
@@ -40,7 +40,8 @@ export function EnrolmentEligability(props: EnrolmentEligabilityProps) {
   for (let i = 1; i < props.items.length; i++) {
       items.push(
         <Collapse key={'eligability.' + props.items[i].id + '.collapse'} in={(props.values[props.items[i-1].id] != null)} unmountOnExit>
-          <Box>
+          <Box display={"flex"} gap={2} flexDirection={"column"}>
+            <Divider />
             <YesNoField 
               label={props.items[i].label}
               description={props.items[i].description}

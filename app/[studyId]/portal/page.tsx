@@ -8,8 +8,7 @@ import Grid from '@mui/material/Grid2';
 export default async function Page({ params }: { params: { studyId: string } }) {
   var registery: StudyProtocolRepository = new StudyProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)
-
-  const items = protocol.protocols.map((item) => <RadarTaskCard metadata={item.metadata} />)
+  const items = protocol.protocols.map((item) => <RadarTaskCard armtProtocol={item} />)
   return (
     <main>
       <Box sx={{ flexGrow: 1, margin: 2}} 

@@ -24,8 +24,8 @@ export function ArmtDateField({label, description, errorText, ...props}: ArmtDat
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
-        <Typography variant="h4" component={'span'}>{label}</Typography>
-        <Typography variant="body1" component={'span'} >{description}</Typography>
+        <Typography variant="h4" component={'span'}>{props.title}</Typography>
+        <Typography variant="body1" component={'span'}>{description}</Typography>
         <DatePicker 
           sx={{
             maxWidth: '16em'
@@ -37,6 +37,7 @@ export function ArmtDateField({label, description, errorText, ...props}: ArmtDat
           views={['year','month','day']}
           format='DD/MM/YYYY'
           formatDensity='spacious'
+          label={label}
           onChange={(value, context) => {
             if (value) {
               try {

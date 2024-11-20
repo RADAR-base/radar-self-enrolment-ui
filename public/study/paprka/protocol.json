@@ -16,13 +16,8 @@
               "order": 0,
               "description": "Tell us when you had your knee replacement surgery.",
               "optional": false,
-              "type": "redcap",
-              "definitionLink": {
-                "org": "string",
-                "project": "string",
-                "avsc": "string",
-                "name": "string"
-              }
+              "type": "redcap_local",
+              "path": "/public/study/paprka/resources/paprka_surgery.json"
             }
         },
         {
@@ -34,13 +29,8 @@
             "order": 1,
             "description": "Your unique, 10 digit, NHS identifier.",
             "optional": false,
-            "type": "redcap",
-            "definitionLink": {
-              "org": "string",
-              "project": "string",
-              "avsc": "string",
-              "name": "string"
-            }
+            "type": "redcap_local",
+            "path": "/public/study/paprka/resources/paprka_nhs.json"
           }
       }, 
       {
@@ -52,7 +42,7 @@
           "order": 2,
           "description": "Share your fitness tracker or smartphone app with us.",
           "optional": false,
-          "type": "redcap",
+          "type": "redcap_github",
           "definitionLink": {
             "org": "string",
             "project": "string",
@@ -70,7 +60,7 @@
           "order": 3,
           "description": "Win a £25 Amazon voucher.",
           "optional": true,
-          "type": "redcap",
+          "type": "redcap_github",
           "definitionLink": {
             "org": "string",
             "project": "string",
@@ -88,7 +78,7 @@
           "order": 4,
           "description": "Help us make this process easier for others.",
           "optional": true,
-          "type": "redcap",
+          "type": "redcap_github",
           "definitionLink": {
             "org": "string",
             "project": "string",
@@ -101,24 +91,24 @@
     "enrolment": {
         "eligability": {
             "title": "Check Your Eligability",
-            "description": "We can only accept people onto our if they answer Yes to the following questions.",
+            "description": "We can only accept people onto our study if they answer Yes to the following questions.",
             "items": [
                 {
                     "fieldType": "yesno",
                     "id": "criteria1",
-                    "label": "Are you over 18 years of age?",
+                    "description": "Are you over 18 years of age?",
                     "errorText": "You must be over 18 to take part in this study."
                   },
                   {
                     "fieldType": "yesno",
                     "id": "criteria2",
-                    "label": "Have you had total, or partial, knee replacement surgery between January 2016 and December 2022?",
+                    "description": "Have you had total, or partial, knee replacement surgery between January 2016 and December 2022?",
                     "errorText": "Only those who have had recent knee replacement surgery can take part"
                   },
                   {
                     "fieldType": "yesno",
                     "id": "criteria3",
-                    "label": "Did you use a smartphone app or fitness tracker to track your activity in the year before your knee replacement and 2 years after surgery?",
+                    "description": "Did you use a smartphone app or fitness tracker to track your activity in the year before your knee replacement and 2 years after surgery?",
                     "errorText": "This studies needs smartphone or fitness tracker data from around the period of a knee replacement surgery"
                 }
             ]
@@ -203,71 +193,58 @@
             ]
         },
         "additional": {
-            "title": "Additional...",
+            "title": "Register Account",
             "items": [
                 {
-                    "field_name": "phq8_1",
-                    "form_name": "phq8",
-                    "section_header": "Over the past two weeks, how often have you been bothered by any of the following problems ",
-                    "field_type": "radio",
-                    "field_label": "1. Little interest or pleasure in doing things?",
-                    "select_choices_or_calculations": [
-                        {
-                            "code": "0",
-                            "label": "Not at all "
-                        },
-                        {
-                            "code": "1",
-                            "label": "Several days "
-                        },
-                        {
-                            "code": "2",
-                            "label": "More than half the days "
-                        },
-                        {
-                            "code": "3",
-                            "label": "Nearly every day"
-                        }
-                    ],
-                    "field_note": "",
-                    "text_validation_type_or_show_slider_number": "",
-                    "text_validation_min": "",
-                    "text_validation_max": "",
-                    "identifier": "",
-                    "branching_logic": "",
-                    "required_field": "true",
-                    "custom_alignment": "",
-                    "question_number": "",
-                    "matrix_group_name": "phq8",
-                    "matrix_ranking": "",
-                    "field_annotation": "",
-                    "evaluated_logic": ""
+                  "field_name": "paprka_additional_heading",
+                  "form_name": "paprka_additional",
+                  "field_type": "descriptive",
+                  "field_label": "You need an account to give us your information and connect your fitness tracker or smartphone app.\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
                 },
                 {
-                    "field_name": "smwt_start_date",
-                    "form_name": "smwt",
-                    "section_header": "",
+                    "field_name": "paprka_additional_first_name",
+                    "form_name": "paprka_additional",
                     "field_type": "text",
-                    "field_label": "Please enter the date and time that you started the six minute walk test.",
-                    "select_choices_or_calculations": "",
-                    "field_note": "",
+                    "field_label": "First name",
+                    "required_field": "true"
+                },
+                {
+                  "field_name": "paprka_additional_last_name",
+                  "form_name": "paprka_additional",
+                  "field_type": "text",
+                  "field_label": "Last name",
+                  "required_field": "true"
+                },
+                {
+                  "field_name": "paprka_additional_gender",
+                  "form_name": "paprka_additional",
+                  "field_type": "text",
+                  "field_label": "Gender",
+                  "required_field": "true"
+                },
+                {
+                    "field_name": "paprka_additional_dob",
+                    "form_name": "paprka_additional",
+                    "field_type": "text",
+                    "field_label": "Date of Birth",
                     "text_validation_type_or_show_slider_number": "datetime_dmy",
-                    "text_validation_min": "02/02/2020",
-                    "text_validation_max": "01/01/2030",
-                    "identifier": "",
-                    "branching_logic": "",
+                    "text_validation_min": "01/01/1900",
+                    "text_validation_max": "01/01/2006",
+                    "required_field": "true"
+                  },
+                  {
+                    "field_name": "paprka_additional_postcode",
+                    "form_name": "paprka_additional",
+                    "field_type": "text",
+                    "field_label": "Postcode",
                     "required_field": "true",
-                    "custom_alignment": "",
-                    "question_number": "",
-                    "matrix_group_name": "",
-                    "matrix_ranking": "",
-                    "field_annotation": "",
-                    "evaluated_logic": ""
-                  }
+                    "text_validation_type_or_show_slider_number": "postcode"
+                }
             ]
         },
         "account": {
-            "title": "Create Account"
+            "title": "Register Account",
+            "description": "You need an account to give us your information and connect your fitness tracker or smartphone app.\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
         }
     },
     "studyUiConfig": {

@@ -1,3 +1,4 @@
+"use client"
 import { ArmtDefinition, ArmtItem } from "@/app/_lib/armt/definition/definition.types";
 import { Box, Typography } from "@mui/material";
 import React from "react";
@@ -35,15 +36,17 @@ export function ArmtField({ item, value, setFieldValue, errorText }: ArmtFieldPr
 }
 
 interface ArmtFormProps {
+  title?: string
   definition: ArmtDefinition
   values:  {[key: string]: any}
   errors?: {[key: string]: string}
   setFieldValue: (id: string, value: any) => void
 }
 
-export function ArmtForm({ definition, values, setFieldValue, errors }: ArmtFormProps): React.ReactNode {
+export function ArmtForm({ title, definition, values, setFieldValue, errors }: ArmtFormProps): React.ReactNode {
   return  (
     <Box display={"flex"} flexDirection={"column"} gap={4} textAlign={"left"}>
+      {title ? <Typography variant="h2">{title}</Typography> : null}
       {definition.items.map(
         (item) => {
           let errorText = errors ? errors[item.content.id] : undefined

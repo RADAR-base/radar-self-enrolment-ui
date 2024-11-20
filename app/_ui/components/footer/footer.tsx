@@ -46,7 +46,7 @@ export function Footer(props: FooterProps) {
           justifyContent: 'space-evenly',
           display: 'flex',
           flexDirection: {'xs': 'column', 'sm': 'row'},
-          alignItems: 'flex-start'
+          alignItems: {xs: 'center', sm: 'flex-start'}
         }}>
           {props.columns.map(
             (col, i) => (

@@ -21,7 +21,7 @@ import { getCsrfToken } from '@/app/_lib/auth/ory/util';
 function generateEligabilitySchema(protocol: EnrolmentProtocol): Yup.Schema {
   const schema: {[key: string]: Yup.Schema} = {};
   protocol.eligability.items.forEach(
-    (item) => schema[item.id] = Yup.boolean().required().isTrue(item.errorText)
+    (item) => schema[item.id] = Yup.boolean().required().isTrue(item.errorText ?? "This must be true to take part in the study")
   )
   return Yup.object(schema)
 }
@@ -29,7 +29,7 @@ function generateEligabilitySchema(protocol: EnrolmentProtocol): Yup.Schema {
 function generateConsentSchema(protocol: EnrolmentProtocol): Yup.Schema {
   const schema: {[key: string]: Yup.Schema} = {};
   protocol.consent.requiredItems.forEach(
-    (item) => schema[item.id] = Yup.boolean().required().isTrue(item.errorText)
+    (item) => schema[item.id] = Yup.boolean().required().isTrue(item.errorText ?? "You must agree to this item to take part in the study")
   )
   return Yup.object(schema)
 }
@@ -54,8 +54,8 @@ function generateConsentInitialValues(protocol: EnrolmentProtocol): {[key: strin
 }
 
 const registerSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid Email").required("Required"),
-  password: Yup.string().min(8, "Password must be at least 8 characters").required("Required")
+  email: Yup.string().email("Invalid Email").required(""),
+  password: Yup.string().min(8, "Password must be at least 8 characters").required("")
 })
 
 
@@ -198,6 +198,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
                 if (data?.ui?.messages !== undefined) {
                   setErrorText(data.ui.messages[0]['text'])
                   formik.setSubmitting(false)
+                  scrollToTop()
                 }              
               }
             )
@@ -231,12 +232,15 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
     />,
     additional: (protocol.additional == undefined) ? undefined : 
         <ArmtForm 
+            title={protocol.additional.title}
             definition={fromRedcapDefinition(protocol.additional.items)}
             values={formik.values.additional}
             errors={formik.errors['additional']}
             setFieldValue={(id, value) => formik.setFieldValue('additional.' + id, value)} />,
     register: <EnrolmentRegister
       setFieldValue={formik.setFieldValue}
+      title={protocol.account?.title}
+      description={protocol.account?.description}
       errors={(formik.errors['register']) ? formik.errors['register'] : {}}
       values={formik.values['register']}
     />,
@@ -246,21 +250,9 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   function validateStep() {
     if (schemas[steps[stepIdx]]) {
       let vals = _getKeyValue_(steps[stepIdx])(formik.values)
-      schemas[steps[stepIdx]].validate(vals, {abortEarly: false}).then(
-        (val) => {
-          setDisabled(false)}
-      ).catch(
-        (err: Yup.ValidationError) => {
-          setDisabled(true)
-          err.inner.map(
-            (o) => {
-              if (o.path) {
-                formik.setFieldError(o.path, o.message)
-              }
-            }
-          )
-        }
-      )
+      schemas[steps[stepIdx]].validate(vals, {abortEarly: false})
+        .then(() => setDisabled(false))
+        .catch(() =>setDisabled(true))
     } else {
       setDisabled(false)
     }}
@@ -311,7 +303,8 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
     <Box 
       width={"100%"}
       position={'sticky'}
-      bottom={0}>
+      bottom={0}
+      zIndex={1000}>
       <Divider />
       <Box
         paddingTop={4}

@@ -9,11 +9,11 @@ interface ArmtDescriptiveFieldProps extends IDescriptiveItem {
   color? : 'primary' | 'secondary' | 'standard' | 'error' | 'info' | 'success' | 'warning'
 }
 
-export function ArmtDescriptiveField({label, content, ...props}: ArmtDescriptiveFieldProps, ref: ForwardedRef<HTMLDivElement>) {
+export function ArmtDescriptiveField({title, content, ...props}: ArmtDescriptiveFieldProps, ref: ForwardedRef<HTMLDivElement>) {
   return (
     <FormControl>
-      <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
-        <Typography variant="h4">{label}</Typography>
+      <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1}>
+        <Typography variant="h4">{title}</Typography>
         <MarkdownContainer>{content}</MarkdownContainer>       
       </Box>
     </FormControl>

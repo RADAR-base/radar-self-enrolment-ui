@@ -29,7 +29,6 @@ function NavBar(props: NavBarProps) {
   return (
   <AppBar 
           color='inherit'
-          sx={{width: '100%'}}
       >
     <Container maxWidth='lg' sx={{padding: 2}}> 
       <Toolbar variant='dense' disableGutters>
@@ -113,7 +112,7 @@ function NavBar(props: NavBarProps) {
         </Box>
       </Toolbar>
     </Container>
-    <Divider style={{width: '100%'}}/>
+    <Divider style={{width: '100%', paddingLeft: 0}}/>
   </AppBar>
 )}
 

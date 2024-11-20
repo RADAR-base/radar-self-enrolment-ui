@@ -67,19 +67,24 @@ type ArmtMetadataBase = {
   order?: number,
   showInPortal?: boolean
   optional?: boolean
-  type: "redcap" | "inbuilt"
+  type: "redcap_github" | "redcap_local" | "inbuilt"
 }
 
 interface ArmtMetadataGithub extends ArmtMetadataBase {
-  type: "redcap"
+  type: "redcap_github"
   definitionLink: ArmtGithubRedcapDefinitionLink
+}
+
+interface ArmtMetadataLocal extends ArmtMetadataBase {
+  type: "redcap_local"
+  path: string
 }
 
 interface ArmtMetadataInbuilt extends ArmtMetadataBase {
   type: "inbuilt"
 }
 
-export type ArmtMetadata = ArmtMetadataGithub | ArmtMetadataInbuilt
+export type ArmtMetadata = ArmtMetadataGithub | ArmtMetadataInbuilt | ArmtMetadataLocal
 
 export type ArmtProtocol = {
   id: string;

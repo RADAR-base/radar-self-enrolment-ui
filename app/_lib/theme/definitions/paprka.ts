@@ -82,6 +82,19 @@ const paprkaOptions = createTheme({
         elevation: 0,
         position: 'static',
       }
+    },
+    MuiToggleButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 32,
+          fontSize: "1em"
+        }
+      }
+    },
+    MuiTextField: {
+      defaultProps: {
+        variant: "standard"
+      }
     }
   }
 })

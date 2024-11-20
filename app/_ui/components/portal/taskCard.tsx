@@ -1,12 +1,14 @@
 "use client"
-import { ArmtMetadata } from "@/app/_lib/study/protocol";
+import { ArmtMetadata, ArmtProtocol } from "@/app/_lib/study/protocol";
 import { Box, Button, Paper, Stack, styled, Typography } from "@mui/material";
 import React from "react";
+import NextLink from 'next/link'
+import { metadata } from "@/app/layout";
 
 export type RadarBlockCardClassKey = "root";
 
 export interface RadarTaskCardProps {
-  metadata: ArmtMetadata
+  armtProtocol: ArmtProtocol
   status?: "pending" | "complete" | "disabled"
 }
 
@@ -22,8 +24,12 @@ const RadarTaskCardRoot = styled(Paper, {name: 'RadarTaskCard', slot: 'root'})((
 }));
 
 
+export const RadarTaskCard = React.forwardRef(function RadarBlockCard({armtProtocol, status}: RadarTaskCardProps, ref) {
+  const title = armtProtocol.metadata.title
+  const description = armtProtocol.metadata.description
+  const optional = armtProtocol.metadata.optional
+  const id = armtProtocol.id
 
-export const RadarTaskCard = React.forwardRef(function RadarBlockCard({metadata: {title, description, optional}, status}: RadarTaskCardProps, ref) {
   return <RadarTaskCardRoot>
     <Box display='flex' flexDirection={'column'} justifyContent={'space-between'} height={"100%"} gap={4}>
       <Box display='block'>
@@ -32,12 +38,15 @@ export const RadarTaskCard = React.forwardRef(function RadarBlockCard({metadata:
       </Box>
       <Box display='flex' alignItems={"center"} justifyContent={"space-between"}>
         <Typography variant="subtitle1">{optional ? "Optional" : ""}</Typography>
-        <Button 
-          variant="contained"
-          color={(status == "complete") ? "success" : "warning"}
-          disabled={status == "disabled"}>
-            {(status == "complete") ? "Done" : "Todo"}
-        </Button>
+        <NextLink href={'portal/' + id} passHref legacyBehavior>
+          <Button 
+            variant="contained"
+            color={(status == "complete") ? "success" : "warning"}
+            disabled={status == "disabled"}
+            >
+              {(status == "complete") ? "Done" : "Todo"}
+          </Button>
+        </NextLink>
       </Box>
     </Box>
   </RadarTaskCardRoot>

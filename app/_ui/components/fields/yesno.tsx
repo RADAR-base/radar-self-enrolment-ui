@@ -1,4 +1,4 @@
-import { Box, FormControl, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { Box, Divider, FormControl, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { ForwardedRef } from "react";
 import { MarkdownContainer } from "../base/markdown";
 
@@ -19,6 +19,7 @@ export function YesNoButton(props: YesNoButtonProps) {
   var color = props.color ? props.color : 'primary'
   return (
       <ToggleButtonGroup 
+        
         id={props.id}
         key={props.key}
         value={props.value}
@@ -26,9 +27,10 @@ export function YesNoButton(props: YesNoButtonProps) {
         exclusive={true}
         disabled={props.disabled}
         color={color}
+        size="small"
       >
-        <ToggleButton sx={{borderRadius: 4}} id={props.id} key={props.key} value={false} aria-label='no'>&nbsp;No</ToggleButton>
-        <ToggleButton sx={{borderRadius: 4}} id={props.id} key={props.key} value={true} aria-label='yes'>Yes</ToggleButton>
+        <ToggleButton sx={{minWidth: "6em", width: { xs: "100%", sm: "auto" }}} id={props.id} key={props.key} value={false} aria-label='no'>No</ToggleButton>
+        <ToggleButton sx={{minWidth: "6em", width: { xs: "100%", sm: "auto" }}} id={props.id} key={props.key} value={true} aria-label='yes'>Yes</ToggleButton>
       </ToggleButtonGroup>
   )
 }
@@ -42,16 +44,15 @@ interface YesNoFieldProps extends YesNoButtonProps {
 export function YesNoField({label, description, helperText, ...props}: YesNoFieldProps, ref: ForwardedRef<HTMLDivElement>) {
   return (
     <FormControl sx={{width: '100%'}}>
-              <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
-
-      <Box display={"flex"} flexDirection={"row"} justifyContent={"space-between"} alignItems={"center"} gap={4}>
-        <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
-          <Typography variant="h4">{label}</Typography>
-          <MarkdownContainer>{description}</MarkdownContainer>
+      <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
+        <Box display={"flex"} flexDirection={{xs: "column", sm: "row"}} justifyContent={"space-between"} alignItems={{xs: "normal", sm: "center"}} gap={{xs: 1, sm: 4}}>
+          <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
+            <Typography variant="h4">{label}</Typography>
+            <MarkdownContainer>{description}</MarkdownContainer>
+          </Box>
+          <YesNoButton {...props}/>
         </Box>
-        <YesNoButton {...props}/>
-      </Box>
-      <Typography variant="overline"  color="error">{helperText ? helperText : <div>&nbsp;</div>}</Typography>
+        <Typography variant="overline"  color="error">{helperText}</Typography>
       </Box>
     </FormControl>
   )

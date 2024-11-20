@@ -18,14 +18,15 @@ export function ArmtTextField({label, description, errorText, type, ...props}: A
   return (
     <FormControl>
       <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
-        <Typography variant="h4" component={'span'}>{label}</Typography>
-        <Typography variant="body1" component={'span'} >{description ? description : <div>&nbsp;</div>}</Typography>
-        <Typography variant="overline" component={'span'} color="error">{errorText ? errorText : <div>&nbsp;</div>}</Typography>
+        <Typography variant="h4" component={'span'}>{props.title}</Typography>
+        <Typography variant="body1" component={'span'} >{description}</Typography>
+        <Typography variant="overline" component={'span'} color="error">{errorText}</Typography>
         <TextField 
           type={type}
           id={props.id}
+          label={label}
           key={props.key}
-          value={props.value}
+          value={props.value ?? ""}
           disabled={props.disabled}
           onChange={handleChange(props.setFieldValue)}
         />

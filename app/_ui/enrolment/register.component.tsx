@@ -1,6 +1,7 @@
-import { Stack, TextField, Typography } from "@mui/material";
+import { Box, Stack, TextField, Typography } from "@mui/material";
 import React, { ChangeEvent } from "react";
 import { MarkdownContainer } from "../components/base/markdown";
+import { ArmtDescriptiveField } from "../components/fields/descriptive";
 
 interface EnrolmentRegisterProps {
   title?: string
@@ -13,11 +14,10 @@ interface EnrolmentRegisterProps {
 export function EnrolmentRegister({setFieldValue, values, errors, ...props}: EnrolmentRegisterProps) {
   const title = props.title ? props.title : 'Sign up'
   return (
-    <Stack spacing={4} alignItems="center" textAlign={"left"}>
-      <Typography variant="h2">{title}</Typography>
-      {props.description && <MarkdownContainer>{props.description}</MarkdownContainer>}
+    <Box display={"flex"} flexDirection={"column"} gap={4} textAlign={"left"}>
+      {title ? <Typography variant="h2">{title}</Typography>: null}
+      {props.description && <ArmtDescriptiveField title={undefined} fieldType={"descriptive"} content={props.description} id={"heading"} />}
         <TextField
-          sx={{maxWidth: 400}}
           id="email"
           name="email"
           label="Email"
@@ -28,7 +28,6 @@ export function EnrolmentRegister({setFieldValue, values, errors, ...props}: Enr
           fullWidth
           />
         <TextField
-          sx={{maxWidth: 400}}
           id="password"
           name="password"
           label="Password"
@@ -39,5 +38,5 @@ export function EnrolmentRegister({setFieldValue, values, errors, ...props}: Enr
           helperText={errors.password}
           fullWidth
           />
-    </Stack>
+    </Box>
 )}

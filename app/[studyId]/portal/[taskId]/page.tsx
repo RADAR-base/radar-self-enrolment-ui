@@ -1,5 +1,9 @@
-import { RadarCard } from '@/app/_ui/components/base/card';
+"use server"
 import { Box, Container } from '@mui/material';
+import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
+import { ArmtDefinitionRepository, getDefinition } from '@/app/_lib/armt/repository/repository';
+import { ArmtContent } from '@/app/_ui/components/form/pageContent';
+import { RadarCard } from '@/app/_ui/components/base/card';
 
 // export const dynamicParams = false
 
@@ -18,17 +22,25 @@ import { Box, Container } from '@mui/material';
 //   return params
 // }
 
-export default async function Page({ params }: { params: { studyId: string, taskId: string[]} }) {
-  const pageContent = null;
+export default async function Page({ params }: { params: { studyId: string, taskId: string} }) {
+  const registery: StudyProtocolRepository = new StudyProtocolRepository()
+  const protocol = await registery.getStudyProtocol(params.studyId)
+  const armtRepo = new ArmtDefinitionRepository(protocol)
+  const armtDef = await armtRepo.getDefinition(params.taskId)
+  if (armtDef == undefined) {
+    return <main></main>
+  }
   return (
     <main>
       <Box sx={{ flexGrow: 1, margin: {xs: 0, sm: 2}}} 
+            style={{marginLeft: "min(4, calc(100vw - 100%))"}}
+
             display="flex"
             justifyContent="center"
             alignItems="center">
         <Container maxWidth="lg" disableGutters>
           <RadarCard>
-            {params.taskId}
+            <ArmtContent redcapDef={armtDef}></ArmtContent>
           </RadarCard>
         </Container>
       </Box>

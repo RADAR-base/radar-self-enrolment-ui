@@ -1,4 +1,4 @@
-"use client"
+// "use client"
 import Yup from "../validation/yup";
 import dayjs, { Dayjs } from 'dayjs';
 import { ArmtDefinition, ArmtItem, ArmtItemContent } from "./definition.types";
@@ -16,6 +16,14 @@ function getTextSchema(field: RadarRedcapFieldDefinition) {
         let maxDate = dayjs(field.text_validation_max).toDate()
         validation = validation.max(maxDate, "This date must be before " + field.text_validation_max)
       }
+      return validation
+    }
+    case "postcode": {
+      let validation = Yup.string().uppercase().ukPostcode("The postcode you entered does not appear to be valid.")
+      return validation
+    }
+    case "nhs_number": {
+      let validation = Yup.string().nhsNumber("The number you entered is not a valid NHS number.")
       return validation
     }
     default: {      
@@ -47,7 +55,7 @@ function FieldFromRedcap(field: RadarRedcapFieldDefinition): ArmtItem {
       content = {
         fieldType: "descriptive",
         id: field.field_name,
-        label: undefined,
+        title: field.section_header,
         content: field.field_label,
       }
     }
@@ -55,6 +63,7 @@ function FieldFromRedcap(field: RadarRedcapFieldDefinition): ArmtItem {
       content = {
         fieldType: "yesno",
         id: field.field_name,
+        title: field.section_header,
         label: field.field_label,
       }
       validation = Yup.boolean()
@@ -64,6 +73,7 @@ function FieldFromRedcap(field: RadarRedcapFieldDefinition): ArmtItem {
         content = {
           fieldType: 'date',
           id: field.field_name,
+          title: field.section_header,
           label: field.field_label
         }
         validation = getTextSchema(field)
@@ -71,6 +81,7 @@ function FieldFromRedcap(field: RadarRedcapFieldDefinition): ArmtItem {
         content = {
           fieldType: "text",
           id: field.field_name,
+          title: field.section_header,
           label: field.field_label,
           type: field.text_validation_type_or_show_slider_number,
         }
@@ -85,8 +96,6 @@ function FieldFromRedcap(field: RadarRedcapFieldDefinition): ArmtItem {
     branchingLogic: undefined
   }
 }
-
-
 
 export default function fromRedcapDefinition(redcap: RadarRedcapDefinition): ArmtDefinition {
   const first = redcap.at(0)

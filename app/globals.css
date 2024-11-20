@@ -17,4 +17,14 @@ body {
       radial-gradient(circle farthest-corner at top right, rgba(155, 222, 240, 0.387) 0%, rgba(155, 221, 240,0) 50%),
       radial-gradient(ellipse at bottom center, rgba(249, 209, 202, 0.256) 0%, rgba(254, 43, 0, 0) 80%);
      */
+     /* ::-webkit-scrollbar {
+      -webkit-appearance: none;
+      width: 7px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: rgba(0, 0, 0, .5);
+      box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+    } */
 }
