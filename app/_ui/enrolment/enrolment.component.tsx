@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'
 import Yup from '@/app/_lib/armt/validation/yup'
 import { useFormik } from 'formik';
-import { Box, Button, Container, Divider, MobileStepper, Stack, Typography } from '@mui/material';
+import { Box, Button, Container, Divider, Stack, Typography } from '@mui/material';
 
 import { EnrolmentStudyInformation } from './information.component';
 import { EnrolmentEligability } from './eligability.component';

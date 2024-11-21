@@ -41,7 +41,7 @@ export function EnrolmentConsent(props: EnrolmentConsentProps) {
   }
   var requiredItems: React.ReactElement[] = [];
   for (let i = 0; i < props.requiredItems.length; i++) {
-    requiredItems.push(<Divider />)
+    requiredItems.push(<Divider key={"divider." + i} />)
     requiredItems.push(
       <YesNoField label={props.requiredItems[i].label}
         description={props.requiredItems[i].description}
@@ -56,7 +56,7 @@ export function EnrolmentConsent(props: EnrolmentConsentProps) {
   var optionalItems: React.ReactElement[] = [];
   if (props.optionalItems) {
     for (let i = 0; i < props.optionalItems.length; i++) {
-      optionalItems.push(<Divider />)
+      optionalItems.push(<Divider key={"divider." + i} />)
       optionalItems.push(
         <YesNoField label={props.optionalItems[i].label}
           description={props.optionalItems[i].description}

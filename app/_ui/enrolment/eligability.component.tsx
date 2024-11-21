@@ -1,17 +1,13 @@
-import { Box, Fade, Collapse, Zoom, Stack, Typography, Divider } from "@mui/material";
+import { Box, Collapse, Stack, Typography, Divider } from "@mui/material";
 import React from "react";
-import { CSSTransition } from 'react-transition-group';
 
 import { getYesNoOnChangeHandler, YesNoField } from "../components/fields/yesno";
 import { ITextItem, IYesNoItem } from "../../_lib/armt/definition/field.interfaces";
 import { MarkdownContainer } from "../components/base/markdown";
 
-
-
 type EligabilityItem = IYesNoItem | ITextItem
 
 interface EnrolmentEligabilityProps {
-
   title?: string
   description?: string
   items: EligabilityItem[]
@@ -41,7 +37,7 @@ export function EnrolmentEligability(props: EnrolmentEligabilityProps) {
       items.push(
         <Collapse key={'eligability.' + props.items[i].id + '.collapse'} in={(props.values[props.items[i-1].id] != null)} unmountOnExit>
           <Box display={"flex"} gap={2} flexDirection={"column"}>
-            <Divider />
+            <Divider key={"divider." + i} />
             <YesNoField 
               label={props.items[i].label}
               description={props.items[i].description}

@@ -1,5 +1,5 @@
-import { Box, FormControl, RadioGroup, Radio, Typography, FormLabel, FormControlLabel, Button, Select, SelectChangeEvent, MenuItem, InputLabel, TextField } from "@mui/material";
-import { ChangeEvent, ForwardedRef, MouseEventHandler } from "react";
+import { Box, Typography, MenuItem, TextField } from "@mui/material";
+import { ForwardedRef } from "react";
 import { IDropdownItem } from "@/app/_lib/armt/definition/field.interfaces";
 
 interface ArmtDropdownFieldProps extends IDropdownItem {
@@ -17,14 +17,14 @@ export function ArmtDropdownField(props: ArmtDropdownFieldProps, ref: ForwardedR
       <Typography variant="h2">{props.title}</Typography>
         <TextField
           select
-          value={props.value}
           id={props.id}
+          value={props.value ?? ""}
           onChange={(event) => {props.setFieldValue(props.id, event.target.value)}}
           variant="standard"
           label={props.label}
         >
           {props.choices.map((choice) => (
-            <MenuItem value={choice.code}>{choice.label}</MenuItem>
+            <MenuItem value={choice.code} key={props.id + '.' + choice.code}>{choice.label}</MenuItem>
           ))}          
         </TextField>
   </Box>

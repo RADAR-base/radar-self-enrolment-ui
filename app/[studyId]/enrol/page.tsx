@@ -9,14 +9,11 @@ import { redirect, usePathname } from 'next/navigation'
 import { withBasePath } from '@/app/_lib/util/links';
 
 export default async function Page({ params }: { params: { studyId: string } }) {
-  var registery: StudyProtocolRepository = new StudyProtocolRepository()
-  const protocol = await registery.getStudyProtocol(params.studyId)
   const auth = new Auth()
   const loggedIn = await auth.isLoggedIn()
-  if (loggedIn) { // and in study
-    redirect(withBasePath('portal'))
-  }
-
+  if (loggedIn) {redirect(withBasePath('portal'))} // check study
+  var registery: StudyProtocolRepository = new StudyProtocolRepository()
+  const protocol = await registery.getStudyProtocol(params.studyId)
   return (
     <main>
       <Box sx={{ flexGrow: 1, margin: {xs: 0, sm: 2}}} 

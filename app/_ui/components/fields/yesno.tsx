@@ -1,4 +1,4 @@
-import { Box, Divider, FormControl, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { Box, FormControl, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { ForwardedRef } from "react";
 import { MarkdownContainer } from "../base/markdown";
 
