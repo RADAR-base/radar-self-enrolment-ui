@@ -42,8 +42,6 @@ export interface IHeroBlock {
 }
 
 export function HeroBlock(props: IHeroBlock, ref: ForwardedRef<HTMLDivElement>) {
-        const theme = useTheme();
-        const isSmallScreen = theme.breakpoints.down("sm");
         return (
           <Box 
             display={"flex"} 

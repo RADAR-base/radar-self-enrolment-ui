@@ -24,9 +24,10 @@ export function EnrolmentRegister({setFieldValue, values, errors, ...props}: Enr
           value={values.email ?? ''}
           onChange={(ev) => setFieldValue('register.email', ev.target.value)}
           error={(errors.email != undefined) && (errors.email.length > 0)}
-          helperText={errors.email}
+          helperText={<Typography variant="overline"  color="error">{errors.email}</Typography>}
           fullWidth
           />
+
         <TextField
           id="password"
           name="password"
@@ -35,7 +36,7 @@ export function EnrolmentRegister({setFieldValue, values, errors, ...props}: Enr
           value={values.password ?? ''}
           onChange={(ev) => setFieldValue('register.password', ev.target.value)}
           error={(errors.password != undefined) && (errors.password.length > 0)}
-          helperText={errors.password}
+          helperText={<Typography variant="overline"  color="error">{errors.password}</Typography>}
           fullWidth
           />
     </Box>

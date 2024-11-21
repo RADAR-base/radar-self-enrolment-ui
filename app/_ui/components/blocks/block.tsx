@@ -29,7 +29,6 @@ function BlockContainer({children, props}: {children: React.ReactNode, props: Bl
       alignItems="center"
       display="flex"
       style={{background: props.blockBackground}}
-      //sx={{}}
       >
         {children}
       </Box>)

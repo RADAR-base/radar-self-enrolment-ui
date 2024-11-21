@@ -28,8 +28,8 @@ export function ArmtTextField({label, description, errorText, type, ...props}: A
           value={props.value ?? ""}
           disabled={props.disabled}
           onChange={handleChange(props.setFieldValue)}
+          helperText={<Typography variant="overline" component={'span'} color="error">{errorText}</Typography>}
         />
-        <Typography variant="overline" component={'span'} color="error">{errorText}</Typography>
       </Box>
     </FormControl>
   )

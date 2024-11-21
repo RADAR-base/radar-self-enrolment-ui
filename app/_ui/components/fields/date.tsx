@@ -1,8 +1,8 @@
-import { Box, FormControl, Typography } from "@mui/material";
-import { ChangeEvent, ForwardedRef } from "react";
+import { Box, Typography } from "@mui/material";
+import { ForwardedRef } from "react";
 import { IDateItem } from "@/app/_lib/armt/definition/field.interfaces";
-import { DateField, DatePicker } from "@mui/x-date-pickers";
-import dayjs, { Dayjs } from 'dayjs';
+import { DatePicker } from "@mui/x-date-pickers";
+import dayjs from 'dayjs';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -14,10 +14,6 @@ interface ArmtDateFieldProps extends IDateItem {
   disabled?: boolean,
   key?: string,
   color? : 'primary' | 'secondary' | 'standard' | 'error' | 'info' | 'success' | 'warning'
-}
-
-function handleChange(setFieldValue: (id: string, value: string) => void) {
-  return (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setFieldValue(event.target.id, event.target.value)
 }
 
 export function ArmtDateField({label, description, errorText, ...props}: ArmtDateFieldProps, ref: ForwardedRef<HTMLDivElement>) {
