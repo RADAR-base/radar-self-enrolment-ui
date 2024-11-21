@@ -32,13 +32,11 @@ function CTAButtons(cta?: ICallToAction, cta2?: ICallToAction) {
   return <Box display={"flex"}  flexShrink={0} gap={2} flexDirection={{xs: 'column', sm: 'row'}}>{cta1Button}{cta2Button}</Box>
 }
 
-
-
 export interface IHeroBlock {
   blockType: 'hero'
   title?: string
   subtitle?: string
-  heroImage: IHeroImage
+  heroImage?: IHeroImage
   cta?: ICallToAction
   cta2?: ICallToAction
 }
@@ -51,7 +49,7 @@ export function HeroBlock(props: IHeroBlock, ref: ForwardedRef<HTMLDivElement>) 
             display={"flex"} 
             flexDirection={{xs: "column-reverse", sm: "row"}}
           >
-            <Box display={"flex"} flexDirection={"column"} textAlign={{xs: "center", sm: "left"}} flexShrink={1} flex={0.3} padding={4} margin="auto">
+            <Box display={"flex"} flexDirection={"column"} textAlign={{xs: "center", sm: "left"}} flexShrink={1} flex={0.3} padding={2} margin="auto" gap={1}>
               <Typography variant="h1">{props.title}</Typography>
               <Typography variant="subtitle1">{props.subtitle}</Typography>
               {CTAButtons(props.cta, props.cta2)}
@@ -64,7 +62,7 @@ export function HeroBlock(props: IHeroBlock, ref: ForwardedRef<HTMLDivElement>) 
                 minHeight: "max(20rem, min(50vw, 50vh))",
                 maxHeight: '50vh'
             }}>
-            <Image src={withBasePath(props.heroImage.src)} fill alt={props.heroImage.altText} style={{objectFit: 'cover'}} />
+            {props.heroImage && <Image src={withBasePath(props.heroImage.src)} fill alt={props.heroImage.altText} style={{objectFit: 'cover'}} />}
             </Container>
             </Box>
           </Box>

@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import NextLink from 'next/link'
 
@@ -27,9 +27,7 @@ function NavBar(props: NavBarProps) {
   };
 
   return (
-  <AppBar 
-          color='inherit'
-      >
+  <AppBar color='inherit'>
     <Container maxWidth='lg' sx={{padding: 2}}> 
       <Toolbar variant='dense' disableGutters>
         <Box  flexGrow={1}          // Large & small title

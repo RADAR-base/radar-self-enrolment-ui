@@ -3,8 +3,9 @@
           {
             "blockType": "hero",
             "title": "Hello",
-            "blockBackground": "linear-gradient(#e66465, #9198e5)",
-            "heroImage": {"src": "/study/paprka/resources/hero.png", "altText": "PAPRkA hero image"}
+            "noCard": true,
+            "blockBackground": "white url('/kratos-ui/study/paprka/resources/hero.png') no-repeat center",
+            "cta": {"text": "Join Study", "href": "paprka/enrol"}
           },
           {
             "blockType": "text",
