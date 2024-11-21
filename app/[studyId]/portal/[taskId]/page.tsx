@@ -40,7 +40,7 @@ export default async function Page({ params }: { params: { studyId: string, task
             alignItems="center">
         <Container maxWidth="lg" disableGutters>
           <RadarCard>
-            <ArmtContent redcapDef={armtDef}></ArmtContent>
+            <ArmtContent studyId={params.studyId} taskId={params.taskId} redcapDef={armtDef}></ArmtContent>
           </RadarCard>
         </Container>
       </Box>

@@ -7,12 +7,15 @@ import { ArmtDefinition } from "@/app/_lib/armt/definition/definition.types";
 import { schemaFromDefinition } from "@/app/_lib/armt/validation/parser";
 import { RadarRedcapDefinition } from "@/app/_lib/armt/definition/redcap.types";
 import fromRedcapDefinition from "@/app/_lib/armt/definition/fromRedcapDefinition";
+import { withBasePath } from "@/app/_lib/util/links";
 
 interface ArmtContentProps {
+  studyId: string
+  taskId: string
   redcapDef: RadarRedcapDefinition
 }
 
-export function ArmtContent({redcapDef}: ArmtContentProps) {
+export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
   const armtDef: ArmtDefinition = fromRedcapDefinition(redcapDef)
   const schema = schemaFromDefinition(armtDef)
   const router = useRouter()
@@ -22,9 +25,23 @@ export function ArmtContent({redcapDef}: ArmtContentProps) {
     validateOnBlur: true,
     initialValues: {},
     validationSchema: schema,
-    onSubmit: (values) => {
-      console.log(values)
-    },
+    onSubmit: async (values) => {
+      // formik.setSubmitting(true)
+      let resp = await fetch(
+        withBasePath('/api/study/' + studyId + '/tasks/' + taskId),
+        {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(values)
+        }
+      )
+      if (resp.ok) {
+        router.push('/' + studyId + '/portal') 
+      } else {
+        formik.setSubmitting(false)
+        console.log(await resp.json())
+      }
+    }
   })
 
   const ControlButtons = (
@@ -45,7 +62,7 @@ export function ArmtContent({redcapDef}: ArmtContentProps) {
         }}
         >
           <Button variant="contained" onClick={router.back}>Back</Button>
-          <Button variant="contained" type={"submit"} disabled={!formik.isValid}>Submit</Button>
+          <Button variant="contained" type={"submit"} disabled={(!formik.isValid) || formik.isSubmitting}>Submit</Button>
       </Box>
     </Box>
   )
