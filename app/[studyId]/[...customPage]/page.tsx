@@ -11,7 +11,6 @@ export async function generateStaticParams() {
   var params: {studyId: string, customPage: string[]}[] = []
   for (let i = 0; i < studyIds.length; i++) {
     let pageRoutes = await pageRepo.getAllPageRoutes(studyIds[i])
-    console.log(pageRoutes.length)
     for (let j = 0; j < pageRoutes.length; j++) {
       params.push({studyId: studyIds[i], customPage: pageRoutes[j]})
     }

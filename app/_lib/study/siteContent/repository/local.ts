@@ -6,7 +6,6 @@ import path from "path";
 export class LocalPageRepository implements PageRepository {
   async getAllPageRoutes(studyId: string): Promise<string[][]> {
     let dir = await fs.opendir('public/study/paprka/pages')
-    console.log(dir)
     return [['asd'], ['asd', 'zxc']]
   }
   getPage(studyId: string, route: string): Promise<WebsitePageContent> {

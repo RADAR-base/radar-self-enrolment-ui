@@ -5,10 +5,7 @@ import { schemaFromDefinition } from "@/app/_lib/armt/validation/parser";
 import fromRedcapDefinition from "@/app/_lib/armt/definition/fromRedcapDefinition";
 import { withBasePath } from "@/app/_lib/util/links";
 import { StudyProtocol } from "@/app/_lib/study/protocol";
-
-export interface SubmitTaskParams {
-  
-}
+import { whoAmI } from "@/app/_lib/auth/ory/api.server";
 
 export async function POST(
   request: NextRequest,
@@ -16,6 +13,17 @@ export async function POST(
 ) {
   const {studyId, taskId}  = (await params)
   let protocol: StudyProtocol
+  let oryUser: any
+  try {
+    const resp = await whoAmI()
+    if (resp.status != 200) {
+      return NextResponse.json({error: {type: 'authentication', content: {message: "No user session"}}}, {status: 403})
+    }
+    oryUser = await resp.json()
+  } catch {
+    return NextResponse.json({error: {type: 'authentication', content: {message: "Error decoding user session"}}}, {status: 403})
+  }
+
   try {
     const registery: StudyProtocolRepository = new StudyProtocolRepository()  
     protocol = await registery.getStudyProtocol(studyId)
@@ -36,5 +44,6 @@ export async function POST(
   } catch (error) {
     return NextResponse.json({error: {type: 'validation', content: error}} , {status: 400})
   }
+
   return new NextResponse(null, {status: 200})
 }

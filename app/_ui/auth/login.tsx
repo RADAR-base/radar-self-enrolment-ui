@@ -32,7 +32,6 @@ export function LoginComponent(props: LoginProps) {
     if (response.ok) {
       const data = await response.json()
       router.push(pathname + '?' + createQueryString('flowId', data.id ))
-      console.log(data)
       setFlow(data)
     }
   }
@@ -70,7 +69,6 @@ export function LoginComponent(props: LoginProps) {
           onLogin()
         } else {
           const data = await res.json()
-          console.log(data)
         }
       }
   });

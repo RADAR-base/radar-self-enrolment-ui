@@ -4,6 +4,8 @@ import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
 import { ArmtDefinitionRepository, getDefinition } from '@/app/_lib/armt/repository/repository';
 import { ArmtContent } from '@/app/_ui/components/form/pageContent';
 import { RadarCard } from '@/app/_ui/components/base/card';
+import {whoAmI} from '@/app/_lib/auth/ory/api.server';
+
 
 // export const dynamicParams = false
 
@@ -14,7 +16,6 @@ import { RadarCard } from '@/app/_ui/components/base/card';
 //   var params: {studyId: string, customPage: string[]}[] = []
 //   for (let i = 0; i < studyIds.length; i++) {
 //     let pageRoutes = await pageRepo.getAllPageRoutes(studyIds[i])
-//     console.log(pageRoutes.length)
 //     for (let j = 0; j < pageRoutes.length; j++) {
 //       params.push({studyId: studyIds[i], customPage: pageRoutes[j]})
 //     }

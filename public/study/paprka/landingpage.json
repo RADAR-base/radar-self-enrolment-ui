@@ -2,10 +2,17 @@
     "blocks": [
           {
             "blockType": "hero",
-            "title": "Hello",
+            "title": "PAPRKA: How Active are People After Knee Surgery?",
+            "subtitle": "The Physical Activity Patterns after Knee Arthroplasty (PAPrKA) study will discover how physical activity changes after a knee joint replacement, in the first months of recovery as well as long-term improvements.\n\nLed by the University of Manchester, we will ask people who have had surgery to share data from their fitness devices and apps, so we can find answers to these questions.",
             "noCard": true,
-            "blockBackground": "white url('/kratos-ui/study/paprka/resources/hero.png') no-repeat center",
+            "blockBackground": "linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), center / cover no-repeat url('/kratos-ui/study/paprka/resources/hero.png'), #ffffff",
             "cta": {"text": "Join Study", "href": "paprka/enrol"}
+          },
+          {
+            "blockType": "markdown",
+            "noCard": false,
+            "title": "Who Can Take Part?", 
+            "content": "<br />\nPeople living with knee osteoarthritis who had a total or partial knee \n- between January 2016 and December \n- are over 18 years old and live in England, Wales, Northern Ireland, Isle of Man or Guernsey.\n<br />\n\nPeople must have used a smartphone or wearable device to track their activity in the year before their knee replacement and 2 years after surgery.\n<br />\n\nThe device they used can \n- a smart phone application (which can be any of the following: Google Fit, Strava or Apple \n- a wearable (which can be any of the following: Fitbit, Apple watch, Polar, Garmin, or Oura)\n<br />\n\nPeople who can read and understand English or have support from someone who can.\n<br />\n\nPeople must be willing to give us permission to access their physical activity data and the information held about their knee replacement surgery in the National Joint Registry.\n"
           },
           {
             "blockType": "text",
@@ -16,9 +23,7 @@
           },
           {
             "blockType": "video",
-            "blockBackground": "black",
-            "noCard": true,
-            "blockPadding": 0,
+            "noCard": false,
             "video": {
               "src": "/file_example_MP4_480_1_5MG.mp4",
               "type": "video/mp4",

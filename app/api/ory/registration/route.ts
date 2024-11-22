@@ -9,7 +9,6 @@ export interface oryRegistrationParams {
 }
 
 export async function POST(request: NextRequest) {
-  console.log(request)
   const {email, password, traits, csrf_token} = (await request.json()) as oryRegistrationParams
   const flowId = request.nextUrl.searchParams.get('flow')
   if (flowId == null) {

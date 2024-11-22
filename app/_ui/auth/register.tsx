@@ -3,7 +3,6 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import * as Yup from 'yup';
 
 import { Box, Button, Stack, styled, TextField, Typography } from "@mui/material";
-
 import { useFormik } from "formik";
 import { useCallback, useEffect, useState } from "react";
 import { withBasePath } from "@/app/_lib/util/links";
@@ -43,7 +42,6 @@ const Register: React.FC<{onRegister?: () => void}> = (props: {onRegister?: () =
     if (response.ok) {
       const data = await response.json()
       router.push(pathname + '?' + createQueryString('flowId', data.id ))
-      console.log(data)
       setFlow(data)
     }
   }
@@ -93,7 +91,6 @@ const Register: React.FC<{onRegister?: () => void}> = (props: {onRegister?: () =
         }
       }
   });
-
   return (
     <Box 
       justifyContent={"center"}

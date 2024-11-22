@@ -26,11 +26,11 @@ export function VideoBlock(props: IVideoBlock, ref: ForwardedRef<HTMLDivElement>
       <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
         <Typography variant="h2">{props.title}</Typography>
         <Typography variant="subtitle1">{props.subtitle}</Typography>
-        <Container>
+        <Box>
           <video width={props.video.width} height={props.video.height} {...props.video.params} autoPlay>
             <source src={withBasePath(props.video.src)} type={props.video.type}></source>
           </video>
-        </Container>
+        </Box>
       </Box>
   )
 }

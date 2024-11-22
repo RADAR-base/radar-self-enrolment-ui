@@ -8,7 +8,6 @@ function generateCheckDigit(s: string): number {
 
 export default function nhsNumber(s: string): boolean {
   s = s.replaceAll(' ', '').replaceAll('-', '')
-  console.log(s)
   if (s.length != 10) {
     return false
   }
