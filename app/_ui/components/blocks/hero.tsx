@@ -49,7 +49,7 @@ export function HeroBlock(props: IHeroBlock, ref: ForwardedRef<HTMLDivElement>) 
       flexDirection={{xs: "column-reverse", sm: "row"}}
       minHeight={"40vh"}
     >
-      <Box display={"flex"} flexDirection={"column"} textAlign={{xs: "center", sm: "left"}} flexShrink={1} flex={flex} padding={2} margin="auto" gap={1}>
+      <Box display={"flex"} flexDirection={"column"} textAlign={{xs: "center", sm: "left"}} flexShrink={1} flex={flex} margin="auto" gap={1}>
         <Typography variant="h1">{props.title}</Typography>
         <Typography variant="subtitle1">{props.subtitle}</Typography>
         {CTAButtons(props.cta, props.cta2)}
