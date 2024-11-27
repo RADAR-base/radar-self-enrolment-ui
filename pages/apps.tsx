@@ -32,8 +32,14 @@ const Apps: NextPage = () => {
   const [traits, setTraits] = useState<any>()
   const [projects, setProjects] = useState<any>([])
 
-  const handleNavigation = () => {
-    router.replace("/fitbit")
+  const handleNavigation = (type: string) => {
+    if (type === 'app') {
+      const appUrl = `org.phidatalab.radar-armt:/?session=${encodeURIComponent("test")}`;
+      window.location.href = "org.phidatalab.radar-armt:/"
+    }
+    else {
+      router.replace("/fitbit")
+    }
   }
 
   useEffect(() => {
@@ -91,14 +97,14 @@ const QrForm: React.FC<QrFormProps> = ({ projects, baseUrl, navigate }) => {
             <QRCode value={baseUrl + "?projectId=" + project.id} size={140} />
             <br />
             <br />
-            <button className="col-xs-4">Login with Active App</button>
+            <button className="col-xs-4" onClick={() => navigate('app')}>Login with Active App</button>
             <br />
             <br />
             <br />
             <div>
               <label className="inputLabel">Connect Your Fitbit</label>
               <p>Click the button below to redirect to Fitbit.</p>
-              <button className="col-xs-4" onClick={navigate}>
+              <button className="col-xs-4" onClick={() => navigate('fitbit')}>
                 Login with Fitbit
               </button>
             </div>
