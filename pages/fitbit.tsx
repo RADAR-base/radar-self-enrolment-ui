@@ -4,7 +4,6 @@ import Head from "next/head"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { ReactNode, useEffect, useState } from "react"
-import QRCode from "react-qr-code"
 
 import { ActionCard, CenterLink, Methods, CardTitle } from "../pkg"
 import ory from "../pkg/sdk"
@@ -28,10 +27,16 @@ const Fitbit: NextPage = () => {
   const { flow: flowId, return_to: returnTo } = router.query
   const [traits, setTraits] = useState<any>()
   const [projects, setProjects] = useState<any>([])
-  const [tokenHandled, setTokenHandled] = useState(false) // Flag to ensure token is handled once
+  const [tokenHandled, setTokenHandled] = useState(false)
+  const [isFetchingToken, setIsFetchingToken] = useState(false) // Prevent multiple calls
 
   const handleNavigation = () => {
     return restSourceClient.redirectToAuthRequestLink()
+  }
+
+  const isTokenExpired = (expiryTime: string | null) => {
+    if (!expiryTime) return true
+    return new Date().getTime() > new Date(expiryTime).getTime()
   }
 
   useEffect(() => {
@@ -44,29 +49,48 @@ const Fitbit: NextPage = () => {
 
   useEffect(() => {
     const handleToken = async () => {
-      if (!router.isReady || !projects.length || tokenHandled) return
+      if (!router.isReady || !projects.length || tokenHandled || isFetchingToken) return
 
       const existingToken = localStorage.getItem("access_token")
+      const tokenExpiry = localStorage.getItem("access_token_expiry")
 
-      if (existingToken) {
+      if (existingToken && !isTokenExpired(tokenExpiry)) {
         await restSourceClient.redirectToRestSourceAuthLink(
           existingToken,
-          projects[0],
+          projects[0]
         )
         setTokenHandled(true)
         return
       }
 
-      const token = await restSourceClient.getAccessTokenFromRedirect()
-      if (token) {
-        localStorage.setItem("access_token", token)
-        await restSourceClient.redirectToRestSourceAuthLink(token, projects[0])
-        setTokenHandled(true)
+      // Token is either missing or expired; fetch a new one
+      setIsFetchingToken(true)
+      try {
+        const tokenResponse = await restSourceClient.getAccessTokenFromRedirect()
+        if (tokenResponse?.access_token && tokenResponse?.expires_in) {
+          const accessToken = tokenResponse.access_token
+          const expiryTime = new Date(
+            new Date().getTime() + tokenResponse.expires_in * 1000
+          ).toISOString()
+
+          localStorage.setItem("access_token", accessToken)
+          localStorage.setItem("access_token_expiry", expiryTime)
+
+          await restSourceClient.redirectToRestSourceAuthLink(
+            accessToken,
+            projects[0]
+          )
+          setTokenHandled(true)
+        }
+      } catch (error) {
+        console.error("Failed to fetch token:", error)
+      } finally {
+        setIsFetchingToken(false)
       }
     }
 
     handleToken()
-  }, [router.isReady, projects, tokenHandled])
+  }, [router.isReady, projects, tokenHandled, isFetchingToken])
 
   return (
     <>

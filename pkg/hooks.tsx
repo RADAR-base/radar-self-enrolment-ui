@@ -31,6 +31,7 @@ export function LogoutLink(deps?: DependencyList) {
     if (logoutToken) {
       ory
         .updateLogoutFlow({ token: logoutToken })
+        .then(() => Promise.resolve(localStorage.clear()))
         .then(() => router.push("/login"))
         .then(() => router.reload())
     }

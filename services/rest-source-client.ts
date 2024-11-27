@@ -54,7 +54,7 @@ export class RestSourceClient {
   async getAccessToken(
     code: string,
     redirectUri: string,
-  ): Promise<string | null> {
+  ): Promise<any> {
     const bodyParams = new URLSearchParams({
       grant_type: this.GRANT_TYPE,
       code,
@@ -77,14 +77,14 @@ export class RestSourceClient {
       }
 
       const data = await response.json()
-      return data.access_token || null
+      return data || null
     } catch (error) {
       console.error(error)
       return null
     }
   }
 
-  async getAccessTokenFromRedirect(): Promise<string | null> {
+  async getAccessTokenFromRedirect(): Promise<any> {
     const url = new URL(window.location.href)
     const code = url.searchParams.get("code")
     if (!code) return null
@@ -102,11 +102,9 @@ export class RestSourceClient {
       "SUBJECT.CREATE",
     ].join("%20")
 
-    const authUrl = `${this.AUTH_BASE_URL}/auth?client_id=${
-      this.CLIENT_ID
-    }&response_type=code&state=${Date.now()}&audience=res_restAuthorizer&scope=${scopes}&redirect_uri=${
-      window.location.href.split("?")[0]
-    }`
+    const authUrl = `${this.AUTH_BASE_URL}/auth?client_id=${this.CLIENT_ID
+      }&response_type=code&state=${Date.now()}&audience=res_restAuthorizer&scope=${scopes}&redirect_uri=${window.location.href.split("?")[0]
+      }`
 
     window.location.href = authUrl
   }
