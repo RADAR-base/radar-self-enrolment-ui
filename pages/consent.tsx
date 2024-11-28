@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 
-import { MarginCard, CardTitle, TextCenterButton } from "../pkg"
+import { MarginCard, CardTitle, TextCenterButton, LogoutLink } from "../pkg"
 import ory from "../pkg/sdk"
 
 const Consent = () => {
@@ -12,6 +12,8 @@ const Consent = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const basePath = process.env.BASE_PATH || "/kratos-ui"
+
+  const onLogout = LogoutLink()
 
   useEffect(() => {
     const { consent_challenge } = router.query
@@ -167,7 +169,7 @@ const Consent = () => {
           </button>
           <button
             className="consent-button"
-            type="submit"
+            onClick={onLogout}
             name="consent_action"
             value="deny"
           >

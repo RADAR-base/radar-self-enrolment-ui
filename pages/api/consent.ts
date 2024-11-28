@@ -8,7 +8,7 @@ const extractSession = (identity: any, grantScope: string[]) => {
   const session: any = {
     access_token: {
       roles: identity.metadata_public.roles,
-      scope: identity.metadata_public.scope,
+      scope: grantScope,
       authorities: identity.metadata_public.authorities,
       sources: identity.metadata_public.sources,
       user_name: identity.metadata_public.mp_login,
