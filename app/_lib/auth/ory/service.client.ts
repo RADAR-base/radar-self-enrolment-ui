@@ -1,5 +1,5 @@
 import { AuthResponse, ClientAuthService, ServerAuthService } from '../service.interface'
-import * as ory from './api.server'
+import * as ory from './kratos'
 import { OrySession } from './types'
 import { getCsrfToken } from './util'
 

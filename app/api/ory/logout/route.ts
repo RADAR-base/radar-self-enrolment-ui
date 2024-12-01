@@ -1,4 +1,4 @@
-import { updateLogoutFlow } from "@/app/_lib/auth/ory/api.server"
+import { updateLogoutFlow } from "@/app/_lib/auth/ory/kratos"
 import { NextRequest, NextResponse } from "next/server"
 
 export interface oryLogoutParams {

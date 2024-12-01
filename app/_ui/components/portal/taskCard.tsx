@@ -9,7 +9,7 @@ export type RadarBlockCardClassKey = "root";
 
 export interface RadarTaskCardProps {
   armtProtocol: ArmtProtocol
-  status?: "pending" | "complete" | "disabled"
+  status?: "todo" | "done" | "disabled"
 }
 
 const RadarTaskCardRoot = styled(Paper, {name: 'RadarTaskCard', slot: 'root'})(({ theme }) => ({
@@ -41,10 +41,10 @@ export const RadarTaskCard = React.forwardRef(function RadarBlockCard({armtProto
         <NextLink href={'portal/' + id} passHref legacyBehavior>
           <Button 
             variant="contained"
-            color={(status == "complete") ? "success" : "warning"}
+            color={(status == "done") ? "success" : "warning"}
             disabled={status == "disabled"}
             >
-              {(status == "complete") ? "Done" : "Todo"}
+              {(status == "done") ? "Done" : "Todo"}
           </Button>
         </NextLink>
       </Box>

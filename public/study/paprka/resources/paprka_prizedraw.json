@@ -1,0 +1,42 @@
+[
+    {
+        "field_name": "paprka_prizedraw_heading",
+        "form_name": "paprka_prizedraw",
+        "field_type": "descriptive",
+        "field_label": "##Prize Draw\n\nYour involvement in our study is greatly appreciated.\n\nAs a thank you for sharing your time and data with us, and supporting our research study, you can enter our prize draw.\n\nThis will give you a chance to win one of ten £25 Amazon gift cards as a thank you for taking part."
+    },
+    {
+        "field_name": "paprka_prizedraw_raffle",
+        "form_name": "paprka_prizedraw",
+        "field_type": "radio",
+        "field_label": "Will you be interested in participating in the raffle draw for a £25 Amazon gift card? This to thank you for participating in the study.",
+        "select_choices_or_calculations": [
+            {
+                "code": "yes",
+                "label": "Yes"
+            },
+            {
+                "code": "no",
+                "label": "No"
+            }
+        ],
+        "required_field": "true"
+    },
+    {
+        "field_name": "paprka_prizedraw_feedback",
+        "form_name": "paprka_prizedraw",
+        "field_type": "radio",
+        "field_label": "Are you interested in answering three short questions in order to provide feedback regarding your participation in this research?",
+        "select_choices_or_calculations": [
+            {
+                "code": "yes",
+                "label": "Yes"
+            },
+            {
+                "code": "no",
+                "label": "No"
+            }
+        ],
+        "required_field": "true"
+    }
+]

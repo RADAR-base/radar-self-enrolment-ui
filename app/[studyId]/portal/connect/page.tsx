@@ -5,6 +5,7 @@ import { ArmtDefinitionRepository, getDefinition } from '@/app/_lib/armt/reposit
 import { ArmtContent } from '@/app/_ui/components/form/pageContent';
 import { RadarCard } from '@/app/_ui/components/base/card';
 import {whoAmI} from '@/app/_lib/auth/ory/kratos';
+import { DevicesPanel } from '@/app/_ui/portal/devicesPanel';
 
 
 // export const dynamicParams = false
@@ -23,26 +24,19 @@ import {whoAmI} from '@/app/_lib/auth/ory/kratos';
 //   return params
 // }
 
-export default async function Page({ params }: { params: { studyId: string, taskId: string} }) {
+export default async function Page({ params }: { params: { studyId: string} }) {
   const registery: StudyProtocolRepository = new StudyProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)
   const armtRepo = new ArmtDefinitionRepository(protocol)
-  const armtDef = await armtRepo.getDefinition(params.taskId)
-  if (armtDef == undefined) {
-    return <main></main>
-  }
   return (
     <main>
       <Box sx={{ flexGrow: 1, margin: {xs: 0, sm: 2}}} 
             style={{marginLeft: "min(4, calc(100vw - 100%))"}}
-
             display="flex"
             justifyContent="center"
             alignItems="center">
         <Container maxWidth="lg" disableGutters>
-          <RadarCard>
-            <ArmtContent studyId={params.studyId} taskId={params.taskId} redcapDef={armtDef}></ArmtContent>
-          </RadarCard>
+          <DevicesPanel protocol={protocol}></DevicesPanel>
         </Container>
       </Box>
     </main>

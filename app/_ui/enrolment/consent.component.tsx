@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { IYesNoItem } from "../../_lib/armt/definition/field.interfaces";
 import { MarkdownContainer } from "../components/base/markdown";
 import SignaturePad from 'react-signature-pad-wrapper';
+import { SigPad } from "../components/base/signature";
 
 type ConsentItem = IYesNoItem
 
@@ -18,21 +19,6 @@ interface EnrolmentConsentProps {
 }
 
 export function EnrolmentConsent(props: EnrolmentConsentProps) {
-  const [width, setWidth] = useState(100);
-  const [height, setHeight] = useState(100);
-
-  useEffect(() => {
-      const resizeObserver = new ResizeObserver((event) => {
-          // Depending on the layout, you may need to swap inlineSize with blockSize
-          // https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry/contentBoxSize
-          setWidth(event[0].contentBoxSize[0].inlineSize);
-          setHeight(event[0].contentBoxSize[0].blockSize);
-      });
-      const column = document.getElementsByClassName("sigpadBox").item(0)
-      if (column) {resizeObserver.observe(column)}
-  });
-
-
   const title = props.title ? props.title : 'Consent'
   const description = props.description
 
@@ -79,5 +65,9 @@ export function EnrolmentConsent(props: EnrolmentConsentProps) {
       {(props.optionalItems) && <Typography variant="h3" align="left">Optional Items</Typography>}
       {(props.optionalItems) && <Typography variant="subtitle1" align="left">The following activities are optional, you may participate in the research without agreeing to the following:</Typography>}
       {props.optionalItems && optionalItems}
+      <Divider />
+      <Typography variant="h3" align="left">Sign here</Typography>
+      <SigPad></SigPad>
+
     </Stack>
 )}

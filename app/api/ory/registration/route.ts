@@ -1,4 +1,4 @@
-import { updateRegistrationFlow } from "@/app/_lib/auth/ory/api.server"
+import { updateRegistrationFlow } from "@/app/_lib/auth/ory/kratos"
 import { NextRequest, NextResponse } from "next/server"
 
 export interface oryRegistrationParams {

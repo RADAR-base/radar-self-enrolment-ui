@@ -29,7 +29,11 @@ function setCookies(res: Response) {
 
 export async function createLoginFlow(params?: {login_challenge?: string, refresh?: boolean}): Promise<NextResponse> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
-  const url = new URL("self-service/login/browser", BASEURL)
+  let url = new URL("self-service/login/browser", BASEURL)
+  if (params?.login_challenge) {
+    let urlParams = new URLSearchParams([['login_challenge', params?.login_challenge]])
+    url.search = urlParams.toString()
+  }
   const res = await fetch(url, {
     headers: { 
       'accept': 'application/json',

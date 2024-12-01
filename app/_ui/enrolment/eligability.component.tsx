@@ -4,6 +4,7 @@ import React from "react";
 import { getYesNoOnChangeHandler, YesNoField } from "../components/fields/yesno";
 import { ITextItem, IYesNoItem } from "../../_lib/armt/definition/field.interfaces";
 import { MarkdownContainer } from "../components/base/markdown";
+import { SigPad } from "../components/base/signature";
 
 type EligabilityItem = IYesNoItem | ITextItem
 

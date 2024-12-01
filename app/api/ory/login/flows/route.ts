@@ -1,4 +1,4 @@
-import { getLoginFlow } from "@/app/_lib/auth/ory/api.server"
+import { getLoginFlow } from "@/app/_lib/auth/ory/kratos"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(request: NextRequest) {

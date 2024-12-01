@@ -21,8 +21,8 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
   const router = useRouter()
   const formik = useFormik({
     validateOnChange: true,
-    validateOnMount: true,
-    validateOnBlur: true,
+    validateOnMount: false,
+    validateOnBlur: false,
     initialValues: {},
     validationSchema: schema,
     onSubmit: async (values) => {

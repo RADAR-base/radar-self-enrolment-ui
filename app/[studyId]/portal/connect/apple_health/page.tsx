@@ -1,10 +1,8 @@
 "use server"
 import { Box, Container } from '@mui/material';
 import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
-import { ArmtDefinitionRepository, getDefinition } from '@/app/_lib/armt/repository/repository';
-import { ArmtContent } from '@/app/_ui/components/form/pageContent';
+import QRCode from 'react-qr-code';
 import { RadarCard } from '@/app/_ui/components/base/card';
-import {whoAmI} from '@/app/_lib/auth/ory/kratos';
 
 
 // export const dynamicParams = false
@@ -23,14 +21,9 @@ import {whoAmI} from '@/app/_lib/auth/ory/kratos';
 //   return params
 // }
 
-export default async function Page({ params }: { params: { studyId: string, taskId: string} }) {
+export default async function Page({ params }: { params: { studyId: string} }) {
   const registery: StudyProtocolRepository = new StudyProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)
-  const armtRepo = new ArmtDefinitionRepository(protocol)
-  const armtDef = await armtRepo.getDefinition(params.taskId)
-  if (armtDef == undefined) {
-    return <main></main>
-  }
   return (
     <main>
       <Box sx={{ flexGrow: 1, margin: {xs: 0, sm: 2}}} 
@@ -41,7 +34,7 @@ export default async function Page({ params }: { params: { studyId: string, task
             alignItems="center">
         <Container maxWidth="lg" disableGutters>
           <RadarCard>
-            <ArmtContent studyId={params.studyId} taskId={params.taskId} redcapDef={armtDef}></ArmtContent>
+            <QRCode value={process.env.HYDRA_PUBLIC_URL + "?projectId=" + params.studyId} size={140} ></QRCode>
           </RadarCard>
         </Container>
       </Box>

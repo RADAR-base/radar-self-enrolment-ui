@@ -34,7 +34,7 @@
           }
       }, 
       {
-        "id": "device_connect",
+        "id": "connect",
         "appearance": {},
         "schedule": {},
         "metadata": {
@@ -42,13 +42,7 @@
           "order": 2,
           "description": "Share your fitness tracker or smartphone app with us.",
           "optional": false,
-          "type": "redcap_github",
-          "definitionLink": {
-            "org": "string",
-            "project": "string",
-            "avsc": "string",
-            "name": "string"
-          }
+          "type": "inbuilt"
         }
       },
       {
@@ -60,13 +54,8 @@
           "order": 3,
           "description": "Win a £25 Amazon voucher.",
           "optional": true,
-          "type": "redcap_github",
-          "definitionLink": {
-            "org": "string",
-            "project": "string",
-            "avsc": "string",
-            "name": "string"
-          }
+          "type": "redcap_local",
+          "path": "/public/study/paprka/resources/paprka_prizedraw.json"
         }
       },
       {
@@ -78,13 +67,8 @@
           "order": 4,
           "description": "Help us make this process easier for others.",
           "optional": true,
-          "type": "redcap_github",
-          "definitionLink": {
-            "org": "string",
-            "project": "string",
-            "avsc": "string",
-            "name": "string"
-          }
+          "type": "redcap_local",
+          "path": "/public/study/paprka/resources/paprka_feedback.json"
         }
       }
     ],
@@ -301,6 +285,9 @@
                 }
             ],
             "copyrightText": "© 2024 Health Research from Home"
+        },
+        "portal": {
+          "title": "Complete Tasks to Join Study"
         }
     }
 }
