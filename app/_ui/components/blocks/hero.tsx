@@ -4,6 +4,7 @@ import { Box, Button, Container, Typography, useTheme } from "@mui/material";
 import Image from "next/image";
 import { ForwardedRef } from "react";
 
+
 interface ICallToAction {
   text: string
   href?: string
@@ -17,10 +18,14 @@ interface IHeroImage {
 
 
 function CTAButton(cta: ICallToAction) {
+  const theme = useTheme()
+  let sx2 = {width: { xs: "auto", sm: "auto" }}
+  let sx = theme.components?.MuiButton?.defaultProps?.sx
+  sx = {...sx, ...sx2}
   return <Button variant="contained" 
                  href={cta.href}
                  onClick={cta.onClick}
-                 sx={{ width: { xs: "auto", sm: "auto" } }}>
+                 sx={sx}>
           {cta.text}
         </Button>
 }
