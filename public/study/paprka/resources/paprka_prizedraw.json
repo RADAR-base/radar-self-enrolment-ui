@@ -3,7 +3,8 @@
         "field_name": "paprka_prizedraw_heading",
         "form_name": "paprka_prizedraw",
         "field_type": "descriptive",
-        "field_label": "##Prize Draw\n\nYour involvement in our study is greatly appreciated.\n\nAs a thank you for sharing your time and data with us, and supporting our research study, you can enter our prize draw.\n\nThis will give you a chance to win one of ten £25 Amazon gift cards as a thank you for taking part."
+        "section_header": "Prize Draw",
+        "field_label": "Your involvement in our study is greatly appreciated.\n\nAs a thank you for sharing your time and data with us, and supporting our research study, you can enter our prize draw.\n\nThis will give you a chance to win one of ten £25 Amazon gift cards as a thank you for taking part."
     },
     {
         "field_name": "paprka_prizedraw_raffle",

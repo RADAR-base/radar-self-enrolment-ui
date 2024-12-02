@@ -1,5 +1,5 @@
 "use client"
-import { Box, Button, Container, Typography } from "@mui/material"
+import { Box, Button, Container, Modal, Typography } from "@mui/material"
 import { RadarTaskCard, RadarTaskCardProps } from '@/app/_ui/components/portal/taskCard';
 import Grid from '@mui/material/Grid2';
 import { ArmtProtocol, StudyProtocol } from "@/app/_lib/study/protocol";
@@ -10,6 +10,53 @@ import React from "react";
 import { RadarCard } from "../components/base/card";
 import { CircularProgressWithLabel } from "../components/base/circularProgress";
 import { MarkdownContainer } from "../components/base/markdown";
+import { useRouter } from "next/navigation";
+
+
+function FinishModal(props: {disabled: boolean, allComplete: boolean}) {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const router = useRouter()
+  const finishStudy = () => {
+    router.push('/')
+  }
+  return (
+    <div>
+      <Button onClick={props.allComplete ? finishStudy : handleOpen} disabled={props.disabled} variant='contained'>Finish</Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          minWidth: 400,
+          maxWidth: 600,
+          bgcolor: 'background.paper',
+          borderRadius: 2,
+          // border: '2px solid #000',
+          boxShadow: 24,
+          p: 4}}>
+          <Typography id="modal-modal-title" variant="h2" component="h2">
+            Study complete
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            {"There are still optional tasks available.\nIf you would like to complete them, please press 'Back' and click on the cards still marked with 'Todo'. If not, please press 'Finish' to end the study."}
+          </Typography>
+          <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} paddingTop={2}> 
+            <Button onClick={handleClose} variant="contained">Back</Button>
+            <Button onClick={finishStudy} variant="contained">Finish</Button>
+          </Box>
+        </Box>
+      </Modal>
+    </div>
+  );
+}
 
 
 async function fetchTaskStatus(studyId: string) {
@@ -80,7 +127,7 @@ export function TaskPanel(props: TaskPanel) {
                 <CircularProgressWithLabel thickness={2} size={80} variant='determinate' value={(numRequiredTasksComplete/numRequiredTasks) * 100}>
                   <Typography variant='subtitle2'>{numRequiredTasksComplete} / {numRequiredTasks}</Typography>
                 </CircularProgressWithLabel>
-                <Button variant="contained">Finish</Button>
+                <FinishModal disabled={numRequiredTasksComplete < numRequiredTasks} allComplete={numTasksComplete == numTasks}></FinishModal>
               </Box>
             </Box>
           </RadarCard>

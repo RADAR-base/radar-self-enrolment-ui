@@ -5,7 +5,7 @@
             "title": "PAPRKA: How Active are People After Knee Surgery?",
             "subtitle": "The Physical Activity Patterns after Knee Arthroplasty (PAPrKA) study will discover how physical activity changes after a knee joint replacement, in the first months of recovery as well as long-term improvements.\n\nLed by the University of Manchester, we will ask people who have had surgery to share data from their fitness devices and apps, so we can find answers to these questions.",
             "noCard": true,
-            "blockBackground": "linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), center / cover no-repeat url('/kratos-ui/study/paprka/resources/hero.png'), #ffffff",
+            "blockBackground": "linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 1)), center / cover no-repeat url('/kratos-ui/study/paprka/resources/hero.png'), #ffffff",
             "cta": {"text": "Join Study", "href": "paprka/enrol"}
           },
           {

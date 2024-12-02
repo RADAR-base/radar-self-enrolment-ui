@@ -256,7 +256,7 @@
         "navbarLinks": [
             {"text": "Home", "href": "/paprka"},
             {"text": "Portal", "href": "/paprka/portal"},
-            {"text": "Enrol", "href": "/paprka/enrol"}
+            {"text": "Join Study", "href": "/paprka/enrol"}
           ],
         "footer": {
             "columns": [
@@ -288,6 +288,9 @@
         },
         "portal": {
           "title": "Complete Tasks to Join Study"
+        },
+        "analytics": {
+          "gaId": "G-MV0HNLTBH5"
         }
     }
 }

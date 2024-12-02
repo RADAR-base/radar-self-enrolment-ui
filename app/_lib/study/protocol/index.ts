@@ -99,6 +99,7 @@ export type StudyUiConfig = {
   navbarLinks: {text: string, href: string}[];
   footer: FooterProps;
   portal: {title: string, content: string}
+  analytics: {gaId: string}
 };
 
 

@@ -16,17 +16,17 @@ interface ArmtContentProps {
 }
 
 export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
+
   const armtDef: ArmtDefinition = fromRedcapDefinition(redcapDef)
   const schema = schemaFromDefinition(armtDef)
   const router = useRouter()
   const formik = useFormik({
     validateOnChange: true,
-    validateOnMount: false,
+    validateOnMount: true,
     validateOnBlur: false,
     initialValues: {},
     validationSchema: schema,
     onSubmit: async (values) => {
-      // formik.setSubmitting(true)
       let resp = await fetch(
         withBasePath('/api/study/' + studyId + '/tasks/' + taskId),
         {

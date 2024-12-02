@@ -9,6 +9,9 @@ import NavBar from "@/app/_ui/components/navbar/navbar";
 import {Footer, FooterItem } from "@/app/_ui/components/footer";
 import ProtocolProvider from '@/app/_lib/study/protocol/provider.client';
 import React from 'react';
+import { CookieBanner } from '../_ui/cookies/banner';
+import { cookies } from 'next/headers';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 const getStudyTitle = (studyId: string) => {
   return studyId ? studyId + " Study" : 'Unknown RADAR Study'
@@ -51,7 +54,8 @@ export async function generateMetadata({params}: {params: {studyId: string}}) {
 
 export default async function StudyLayout({children, params}: Readonly<{children: React.ReactNode, params: {studyId: string}}>) {
   const theme = getStudyTheme(params.studyId);
-
+  const cookieStore = await cookies()
+  const cookieChoice = cookieStore.get("cookieChoice")
   var registery: StudyProtocolRepository = new ProtocolRepository()
   var protocol: StudyProtocol;
   try {
@@ -59,6 +63,7 @@ export default async function StudyLayout({children, params}: Readonly<{children
   } catch {
     redirect('/')
   }
+  const gaEnabled = (protocol.studyUiConfig.analytics?.gaId != undefined) && (cookieChoice != undefined) && (cookieChoice.value == "all")
   return (
     <React.Fragment>
     <ThemeProvider theme={theme}>
@@ -86,6 +91,8 @@ export default async function StudyLayout({children, params}: Readonly<{children
           copyrightText={protocol.studyUiConfig.footer.copyrightText}
         />
       </Box>
+      {(cookieChoice == undefined) ? <CookieBanner /> : null}
+      {gaEnabled && <GoogleAnalytics gaId={protocol.studyUiConfig.analytics.gaId}/>}
     </ThemeProvider>
     </React.Fragment>
   )

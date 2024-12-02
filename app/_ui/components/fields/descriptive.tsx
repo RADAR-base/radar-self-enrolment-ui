@@ -13,7 +13,7 @@ export function ArmtDescriptiveField({title, content, ...props}: ArmtDescriptive
   return (
     <FormControl>
       <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1}>
-        <Typography variant="h4">{title}</Typography>
+        <Typography variant="h2">{title}</Typography>
         <MarkdownContainer>{content}</MarkdownContainer>       
       </Box>
     </FormControl>

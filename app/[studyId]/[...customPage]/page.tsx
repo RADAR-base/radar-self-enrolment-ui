@@ -1,5 +1,6 @@
 import PageRepository from '@/app/_lib/study/siteContent/repository';
 import { RadarCard } from '@/app/_ui/components/base/card';
+import { BlockPage } from '@/app/_ui/components/blocks/blockPage';
 import { Box, Container } from '@mui/material';
 
 export const dynamicParams = false
@@ -19,7 +20,8 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }: { params: { studyId: string, customPage: string[]} }) {
-  const pageContent = null;
+  const pageRepo: PageRepository = new PageRepository()
+  const pageContent = await pageRepo.getPage(params.studyId, params.customPage);
   return (
     <main>
       <Box sx={{ flexGrow: 1, margin: {xs: 0, sm: 2}}} 
@@ -27,9 +29,7 @@ export default async function Page({ params }: { params: { studyId: string, cust
             justifyContent="center"
             alignItems="center">
         <Container maxWidth="lg" disableGutters>
-          <RadarCard>
-            {params.customPage}
-          </RadarCard>
+          <BlockPage blockParams={pageContent.blocks} ></BlockPage>
         </Container>
       </Box>
     </main>

@@ -3,7 +3,8 @@
         "field_name": "paprka_surgery_heading",
         "form_name": "paprka_surgery",
         "field_type": "descriptive",
-        "field_label": "##Tell us about your surgery\n<br />\nInformation about your surgery is vital to us understanding how people recover from a knee replacement.\nYou can find out more information about the way we use personal information and the rights individuals have to control and manage their data by reading our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
+        "section_header": "Tell us about your surgery",
+        "field_label": "Information about your surgery is vital to us understanding how people recover from a knee replacement.\nYou can find out more information about the way we use personal information and the rights individuals have to control and manage their data by reading our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
     },
     {
         "field_name": "paprka_surgery_date",

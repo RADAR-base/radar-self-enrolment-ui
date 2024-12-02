@@ -34,7 +34,7 @@ function CTAButtons(cta?: ICallToAction, cta2?: ICallToAction) {
 
   const cta1Button = cta ? CTAButton(cta) : undefined
   const cta2Button = cta2 ? CTAButton(cta2) : undefined
-  return <Box display={"flex"}  flexShrink={0} gap={2} flexDirection={{xs: 'column', sm: 'row'}}>{cta1Button}{cta2Button}</Box>
+  return <Box display={"flex"} flexShrink={0} gap={2} flexDirection={{xs: 'column', sm: 'row'}}>{cta1Button}{cta2Button}</Box>
 }
 
 export interface IHeroBlock {
