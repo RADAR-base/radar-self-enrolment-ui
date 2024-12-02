@@ -59,8 +59,7 @@ export function HeroBlock(props: IHeroBlock, ref: ForwardedRef<HTMLDivElement>) 
         <Typography variant="subtitle1">{props.subtitle}</Typography>
         {CTAButtons(props.cta, props.cta2)}
       </Box>
-      <Box flex={1}>
-        {props.heroImage && 
+      {props.heroImage && <Box flex={1}>
           <Container 
             sx={{
               position: 'relative', 
@@ -70,8 +69,8 @@ export function HeroBlock(props: IHeroBlock, ref: ForwardedRef<HTMLDivElement>) 
           }}>
             <Image src={withBasePath(props.heroImage.src)} fill alt={props.heroImage.altText} style={{objectFit: 'cover'}} />
           </Container>
-        }
       </Box>
+      }
     </Box>
   )
 }
