@@ -70,7 +70,7 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
     <Container sx={{
       paddingRight: 4,
       paddingLeft: 4,
-      paddingTop: 4
+      paddingTop: 3
     }}>
       <form onSubmit={formik.handleSubmit}>
         <Stack gap={4} margin={"auto"}>
