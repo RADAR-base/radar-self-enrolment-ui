@@ -95,6 +95,18 @@ const paprkaOptions = createTheme({
       defaultProps: {
         variant: "standard"
       }
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        standard: {
+          fontSize: '1rem',
+        },
+        shrink: {
+          fontSize: '1rem',
+          fontWeight: '700',
+          transform: 'translate(0, -10px)'
+        }
+      }
     }
   }
 })

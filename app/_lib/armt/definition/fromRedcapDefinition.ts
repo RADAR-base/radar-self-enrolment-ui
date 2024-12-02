@@ -90,13 +90,15 @@ function FieldFromRedcap(field: RadarRedcapFieldDefinition): ArmtItem {
       } else {
         content = {
           fieldType: "text",
+          multiline: (field.field_annotation == 'multiline'),
           id: field.field_name,
           title: field.section_header,
           label: field.field_label,
           type: field.text_validation_type_or_show_slider_number,
         }
       validation = getTextSchema(field)
-    }}
+      }
+    }
   if (field.required_field) {
     validation = validation?.required("")
   }

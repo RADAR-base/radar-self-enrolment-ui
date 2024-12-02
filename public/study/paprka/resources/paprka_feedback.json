@@ -1,164 +1,85 @@
 [
     {
-        "field_name": "paprka_surgery_heading",
-        "form_name": "paprka_surgery",
+        "field_name": "paprka_feedback_heading",
+        "form_name": "paprka_feedback",
         "field_type": "descriptive",
-        "section_header": "Tell us about your surgery",
-        "field_label": "Information about your surgery is vital to us understanding how people recover from a knee replacement.\nYou can find out more information about the way we use personal information and the rights individuals have to control and manage their data by reading our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
+        "section_header": "Give us your views",
+        "field_label": "Your experience is important to us. If you think we can improve the way you sign up to be a part of our study, please let us know."
     },
     {
-        "field_name": "paprka_surgery_date",
-        "form_name": "paprka_surgery",
-        "section_header": "",
-        "field_type": "text",
-        "field_label": "Surgery Date",
-        "select_choices_or_calculations": "",
-        "field_note": "",
-        "text_validation_type_or_show_slider_number": "datetime_dmy",
-        "text_validation_min": "01/01/2016",
-        "text_validation_max": "01/01/2024",
-        "identifier": "",
-        "branching_logic": "",
-        "required_field": "true",
-        "custom_alignment": "",
-        "question_number": "",
-        "matrix_group_name": "",
-        "matrix_ranking": "",
-        "field_annotation": "",
-        "evaluated_logic": ""
-    },
-    {
-        "field_name": "paprka_surgery_text1",
-        "form_name": "paprka_surgery",
-        "field_type": "descriptive",
-        "field_label": "We would like to ask about your current satisfaction level with the knee replacement surgery you had, either total or partial.  If you have had more than one knee replacement between 2016 and 2022, please complete these questions with respect to the more recent knee replacement in that time period."
-    },
-    {
-        "field_name": "paprka_surgery_satisfaction",
-        "form_name": "paprka_surgery",
+        "field_name": "paprka_feedback_data_collection",
+        "form_name": "paprka_feedback",
         "section_header": "",
         "field_type": "radio",
-        "field_label": "How satisfied are you with the results of your surgery?",
+        "field_label": "How easy did you find the data collection process?",
         "select_choices_or_calculations": [
             {
                 "code": "0",
-                "label": "Very satisfied"
+                "label": "Very difficult"
             },
             {
-                "code": "1",
-                "label": "Somewhat satisfied"
-            },
-            {
-                "code": "2",
-                "label": "Somewhat dissatisfied"
-            },
-            {
-                "code": "3",
-                "label": "Very dissatisfied"
+                "code": "10",
+                "label": "Very easy"
             }
         ],
         "required_field": "true"
     },
     {
-        "field_name": "paprka_surgery_text2",
-        "form_name": "paprka_surgery",
-        "field_type": "descriptive",
-        "field_label": "This part is intended to gather additional information that will assist in gaining a better understanding of patterns of physical activity in different people.\n"
-    },
-    {
-        "field_name": "paprka_surgery_education",
-        "form_name": "paprka_surgery",
+        "field_name": "paprka_feedback_referrer",
+        "form_name": "paprka_feedback",
         "section_header": "",
-        "field_type": "radio",
-        "field_label": "What is your highest level of education?",
+        "field_type": "dropdown",
+        "field_label": "Where did you hear about this study?",
         "select_choices_or_calculations": [
             {
-                "code": "0",
-                "label": "No formal qualifications"
+                "code": "tv",
+                "label": "TV"
             },
             {
-                "code": "1",
-                "label": "1-4 GCSE passes (grade A* to C or grade 4 and above) and any other GCSEs at other grades, or equivalent qualifications"
+                "code": "radio",
+                "label": "Radio"
             },
             {
-                "code": "2",
-                "label": "5 or more GCSE passes (grade A* to C or grade 4 and above) or equivalent qualifications"
-            },
-            {
-                "code": "3",
-                "label": "Apprenticeships"
-            },
-            {
-                "code": "4",
-                "label": "2 or more A Levels or equivalent qualifications"
-            },
-            {
-                "code": "5",
-                "label": "Higher National Certificate (HNC), Higher National Diploma (HND), Bachelor's degree, or post-graduate qualifications"
-            },
-            {
-                "code": "6",
-                "label": "Other qualifications, of unknown level"
+                "code": "facebook",
+                "label": "Facebook"
+            },            {
+                "code": "x",
+                "label": "X (formerly Twitter)"
+            },            {
+                "code": "youtube",
+                "label": "YouTube"
+            },            {
+                "code": "instagram",
+                "label": "Instagram"
+            },            {
+                "code": "linkedin",
+                "label": "LinkedIn"
+            },            {
+                "code": "wearable_manufacturer",
+                "label": "Through advertisement by my fitness tracker manufacturer"
+            },            {
+                "code": "njr",
+                "label": "Through the National Joint Registry"
+            },            {
+                "code": "friend",
+                "label": "Through a friend"
+            },            {
+                "code": "poster",
+                "label": "Through a poster"
+            },            {
+                "code": "patient_group",
+                "label": "Through a patient group"
             }
         ],
-        "field_note": "We ask for this because it will help us understand the association between people’s physical activity and education.",
-        "text_validation_type_or_show_slider_number": "",
-        "text_validation_min": "",
-        "text_validation_max": "",
-        "identifier": "",
-        "branching_logic": "",
-        "required_field": "true",
-        "custom_alignment": "",
-        "question_number": "",
-        "matrix_group_name": "",
-        "matrix_ranking": "",
-        "field_annotation": "",
-        "evaluated_logic": ""
+        "required_field": "true"
     },
     {
-        "field_name": "paprka_surgery_work",
-        "form_name": "paprka_surgery",
+        "field_name": "paprka_feedback_additional",
+        "form_name": "paprka_feedback",
         "section_header": "",
-        "field_type": "radio",
-        "field_label": "What is your current work status?",
-        "select_choices_or_calculations": [
-            {
-                "code": "0",
-                "label": "Working full-time"
-            },
-            {
-                "code": "1",
-                "label": "Working part-time (less than 25 hours per week)"
-            },
-            {
-                "code": "2",
-                "label": "Retired"
-            },
-            {
-                "code": "3",
-                "label": "Out of work because of the knee osteoarthritis."
-            },
-            {
-                "code": "4",
-                "label": "Out of work but not because of the knee osteoarthritis"
-            },
-            {
-                "code": "5",
-                "label": "Other"
-            }
-        ],
-        "field_note": "We ask for this because it will help us understand the association between people’s physical activity and work.",
-        "text_validation_type_or_show_slider_number": "",
-        "text_validation_min": "",
-        "text_validation_max": "",
-        "identifier": "",
-        "branching_logic": "",
+        "field_type": "text",
+        "field_label": "Please provide any additional feedback, comments, suggestions, or areas for improvement, if you have any.",
         "required_field": "true",
-        "custom_alignment": "",
-        "question_number": "",
-        "matrix_group_name": "",
-        "matrix_ranking": "",
-        "field_annotation": "",
-        "evaluated_logic": ""
+        "field_annotation": "multiline" 
     }
 ]

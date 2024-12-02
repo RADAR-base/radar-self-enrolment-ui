@@ -1,10 +1,12 @@
-import { Box, Divider, Stack, Typography } from "@mui/material";
+"use client"
+import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { getYesNoOnChangeHandler, YesNoField } from "@/app/_ui/components/fields/yesno";
 import React, { useEffect, useState } from "react";
 import { IYesNoItem } from "../../_lib/armt/definition/field.interfaces";
 import { MarkdownContainer } from "../components/base/markdown";
 import SignaturePad from 'react-signature-pad-wrapper';
 import { SigPad } from "../components/base/signature";
+import { ArmtSignatureField } from "../components/fields/signature";
 
 type ConsentItem = IYesNoItem
 
@@ -13,9 +15,9 @@ interface EnrolmentConsentProps {
   description?: string
   requiredItems: ConsentItem[]
   optionalItems?: ConsentItem[]
-  setFieldValue: (id: string, value: boolean) => void
-  values: {[key: string]: boolean | undefined}
-  errors: {[key: string]: string | undefined}
+  setFieldValue: (id: string, value: any) => void
+  values: {[key: string]: any}
+  errors: {[key: string]: any | undefined}
 }
 
 export function EnrolmentConsent(props: EnrolmentConsentProps) {
@@ -67,7 +69,6 @@ export function EnrolmentConsent(props: EnrolmentConsentProps) {
       {props.optionalItems && optionalItems}
       <Divider />
       <Typography variant="h3" align="left">Sign here</Typography>
-      <SigPad></SigPad>
-
+      <ArmtSignatureField setFieldValue={props.setFieldValue} fieldType="signature" id={"consent.signature"} value={props.values['signature']} />
     </Stack>
 )}

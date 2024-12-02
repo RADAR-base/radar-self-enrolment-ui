@@ -18,6 +18,7 @@ export interface IYesNoItem extends IItem {
 export interface ITextItem extends IItem {
   fieldType: "text",
   type?: string
+  multiline?: boolean
 }
 
 export interface ITextItem extends IItem {
@@ -25,6 +26,9 @@ export interface ITextItem extends IItem {
   type?: string
 }
 
+export interface ISignatureItem extends IItem {
+  fieldType: "signature",
+}
 
 export interface IRadioChoice {
   code: string,

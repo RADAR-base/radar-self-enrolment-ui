@@ -31,6 +31,7 @@ function generateConsentSchema(protocol: EnrolmentProtocol): Yup.Schema {
   protocol.consent.requiredItems.forEach(
     (item) => schema[item.id] = Yup.boolean().required().isTrue(item.errorText ?? "You must agree to this item to take part in the study")
   )
+  schema['signature'] = Yup.string().required()
   return Yup.object(schema)
 }
 
@@ -42,14 +43,15 @@ function generateEligabilityInitialValues(protocol: EnrolmentProtocol): {[key: s
   return values
 }
 
-function generateConsentInitialValues(protocol: EnrolmentProtocol): {[key: string]: boolean | undefined} {
-  const values: {[key: string]: boolean | undefined} = {}
+function generateConsentInitialValues(protocol: EnrolmentProtocol): {[key: string]: any} {
+  const values: {[key: string]: any} = {}
   protocol.consent.requiredItems.forEach(
     (item) => values[item.id] = undefined
   )
   protocol.consent.optionalItems?.forEach(
     (item) => values[item.id] = undefined
   )
+  values['consent_signature'] = undefined
   return values
 }
 

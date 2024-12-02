@@ -16,6 +16,11 @@ export function ArmtDropdownField(props: ArmtDropdownFieldProps, ref: ForwardedR
     <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1} key={props.key}>
       <Typography variant="h2">{props.title}</Typography>
         <TextField
+            slotProps={
+              {inputLabel: {
+                margin: 'dense'
+              }
+          }}
           select
           id={props.id}
           value={props.value ?? ""}
