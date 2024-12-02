@@ -52,7 +52,7 @@ const Consent = () => {
             body: JSON.stringify({
               consentChallenge: consent_challenge,
               consentAction: "accept",
-              grantScope: [],
+              grantScope: consentData.requested_scope,
               remember: false,
               identity: sessionData.identity,
             }),
