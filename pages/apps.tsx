@@ -34,8 +34,7 @@ const Apps: NextPage = () => {
 
   const handleNavigation = (type: string) => {
     if (type === 'app') {
-      const appUrl = `org.phidatalab.radar-armt:/?session=${encodeURIComponent("test")}`;
-      window.location.href = "org.phidatalab.radar-armt:/"
+      router.replace("/armt")
     }
     else {
       router.replace("/fitbit")
@@ -93,10 +92,7 @@ const QrForm: React.FC<QrFormProps> = ({ projects, baseUrl, navigate }) => {
           <div key={project.id} className="project-form">
             <h3>{project.name}</h3>
             <label className="inputLabel">Active App</label>
-            <p>Scan the QR code below with your app.</p>
-            <QRCode value={baseUrl + "?projectId=" + project.id} size={140} />
-            <br />
-            <br />
+            <p>Click the button below to login with the active app.</p>
             <button className="col-xs-4" onClick={() => navigate('app')}>Login with Active App</button>
             <br />
             <br />

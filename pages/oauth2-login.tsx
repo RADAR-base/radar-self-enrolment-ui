@@ -12,7 +12,7 @@ const OAuth2Login = () => {
   const [challenge, setChallenge] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [traits, setTraits] = useState<any>(null)
-  const [projects, setProjects] = useState<any>([])
+  const [projects, setProjects] = useState<any>(null)
   const [id, setId] = useState<any>(null)
 
   const basePath = process.env.BASE_PATH || "/kratos-ui"
@@ -26,13 +26,17 @@ const OAuth2Login = () => {
         const traits = data?.identity?.traits
         const projects = traits?.projects
         const id = data?.identity?.id
+        const schema_id = data?.identity?.schema_id
         setId(data?.identity?.id)
         setTraits(traits)
         setProjects(traits?.projects)
         setChallenge(String(login_challenge))
 
         if (traits && login_challenge) {
-          const subject = projects && projects[0] ? projects[0].userId : id
+          let subject = id
+          if (schema_id == 'subject') {
+            subject = projects[0].userId
+          }
           handleLogin(subject, login_challenge)
         }
       } catch (error) {
@@ -44,7 +48,7 @@ const OAuth2Login = () => {
       }
     }
 
-    if (!challenge) {
+    if (!traits) {
       checkSession()
     }
   }, [router])
