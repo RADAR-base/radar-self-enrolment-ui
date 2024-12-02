@@ -40,6 +40,14 @@ export interface IRadioItem extends IItem {
   choices: IRadioChoice[]
 }
 
+export interface ISliderItem extends IItem {
+  fieldType: "slider",
+  marks?: {value: number, label: string}[]
+  min?: number
+  max?: number
+  step?: number
+}
+
 export interface IDropdownItem extends IItem {
   fieldType: "dropdown",
   choices: IRadioChoice[]

@@ -8,6 +8,7 @@ import { ArmtTextField } from "../fields/text";
 import { YesNoField } from "../fields/yesno";
 import { ArmtDateField } from "../fields/date";
 import { ArmtDropdownField } from "../fields/dropdown";
+import { ArmtSliderField } from "../fields/slider";
 
 interface ArmtFieldProps {
   item: ArmtItem
@@ -35,6 +36,9 @@ export function ArmtField({ item, value, setFieldValue, errorText }: ArmtFieldPr
     }
     case "dropdown": {
       return <ArmtDropdownField {...item.content} value={value} setFieldValue={setFieldValue} errorText={errorText} />
+    }
+    case "slider": {
+      return <ArmtSliderField {...item.content} value={value} setFieldValue={setFieldValue} errorText={errorText} />
     }
   }
 }

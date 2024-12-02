@@ -3,8 +3,8 @@
         "field_name": "paprka_surgery_heading",
         "form_name": "paprka_surgery",
         "field_type": "descriptive",
-        "section_header": "Tell us about your surgery",
-        "field_label": "Information about your surgery is vital to us understanding how people recover from a knee replacement.\nYou can find out more information about the way we use personal information and the rights individuals have to control and manage their data by reading our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
+        "section_header": "",
+        "field_label": "##Tell us about your surgery\n\nInformation about your surgery is vital to us understanding how people recover from a knee replacement.\nYou can find out more information about the way we use personal information and the rights individuals have to control and manage their data by reading our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
     },
     {
         "field_name": "paprka_surgery_date",
@@ -36,9 +36,9 @@
     {
         "field_name": "paprka_surgery_satisfaction",
         "form_name": "paprka_surgery",
-        "section_header": "",
+        "section_header": "How satisfied are you with the results of your surgery?",
         "field_type": "radio",
-        "field_label": "How satisfied are you with the results of your surgery?",
+        "field_label": "",
         "select_choices_or_calculations": [
             {
                 "code": "0",
@@ -68,9 +68,9 @@
     {
         "field_name": "paprka_surgery_education",
         "form_name": "paprka_surgery",
-        "section_header": "",
+        "section_header": "What is your highest level of education?",
         "field_type": "radio",
-        "field_label": "What is your highest level of education?",
+        "field_label": "",
         "select_choices_or_calculations": [
             {
                 "code": "0",
@@ -118,9 +118,9 @@
     {
         "field_name": "paprka_surgery_work",
         "form_name": "paprka_surgery",
-        "section_header": "",
+        "section_header": "What is your current work status?",
         "field_type": "radio",
-        "field_label": "What is your current work status?",
+        "field_label": "",
         "select_choices_or_calculations": [
             {
                 "code": "0",

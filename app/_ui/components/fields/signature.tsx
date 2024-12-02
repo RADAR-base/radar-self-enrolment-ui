@@ -43,6 +43,7 @@ export function ArmtSignatureField({label, description, errorText, ...props}: Ar
           margin: "0 auto",
           border: "1px solid 444",
           maxWidth: "600",
+          width: "100%",
           maxHeight: "200"
         }}
       />

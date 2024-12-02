@@ -14,7 +14,8 @@ export function ArmtDropdownField(props: ArmtDropdownFieldProps, ref: ForwardedR
 
   return (
     <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1} key={props.key}>
-      <Typography variant="h2">{props.title}</Typography>
+      <Typography variant="h4">{props.title}</Typography>
+      <Typography variant="body1" component={'span'} fontStyle={'italic'}>{props.description}</Typography>
         <TextField
             slotProps={
               {inputLabel: {

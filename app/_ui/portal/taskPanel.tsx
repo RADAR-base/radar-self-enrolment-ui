@@ -115,7 +115,7 @@ export function TaskPanel(props: TaskPanel) {
             <Box display={'flex'}
                 justifyContent={'space-between'}
                 textAlign={'left'} alignContent={'center'}
-                alignItems={'Center'}
+                alignItems={'flex-start'}
                 padding={2}>
               <Box display='flex' flexDirection='column'>
                 <Typography variant="h2">{props.protocol.studyUiConfig.portal.title}</Typography>
@@ -123,7 +123,7 @@ export function TaskPanel(props: TaskPanel) {
                   {props.protocol.studyUiConfig.portal.content}
                 </MarkdownContainer>
               </Box>
-              <Box display={'flex'} flexDirection={'row'} gap={2} alignItems={'center'}>
+              <Box display={'flex'} gap={2} alignItems={'center'} sx={{flexDirection: {xs: 'column', sm: 'row'}}}>
                 <CircularProgressWithLabel thickness={2} size={80} variant='determinate' value={(numRequiredTasksComplete/numRequiredTasks) * 100}>
                   <Typography variant='subtitle2'>{numRequiredTasksComplete} / {numRequiredTasks}</Typography>
                 </CircularProgressWithLabel>

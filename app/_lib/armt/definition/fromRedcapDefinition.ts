@@ -26,6 +26,10 @@ function getTextSchema(field: RadarRedcapFieldDefinition) {
       let validation = Yup.string().nhsNumber("The number you entered is not a valid NHS number.")
       return validation
     }
+    case "email": {
+      let validation = Yup.string().email("The email address you entered is not valid")
+      return validation
+    }
     default: {      
         return Yup.string()
     }
@@ -47,16 +51,29 @@ function FieldFromRedcap(field: RadarRedcapFieldDefinition): ArmtItem {
         id: field.field_name,
         label: field.field_label,
         title: field.section_header,
+        description: field.field_note,
         choices: field.select_choices_or_calculations,
       }
       validation = Yup.string().oneOf(field.select_choices_or_calculations.map((choice) => choice.code))
   }
+  if (field.field_type == "slider") {
+    content = {
+      fieldType: "slider",
+      id: field.field_name,
+      label: field.field_label,
+      title: field.section_header,
+      description: field.field_note,
+      marks: field.select_choices_or_calculations.map((v) => {return {value: +v.code, label: v.label}}),
+    }
+    validation = Yup.number()
+}
   if (field.field_type == "dropdown") {
     content = {
       fieldType: "dropdown",
       id: field.field_name,
       label: field.field_label,
       title: field.section_header,
+      description: field.field_note,
       choices: field.select_choices_or_calculations,
     }
     validation = Yup.string().oneOf(field.select_choices_or_calculations.map((choice) => choice.code))
@@ -66,6 +83,7 @@ function FieldFromRedcap(field: RadarRedcapFieldDefinition): ArmtItem {
         fieldType: "descriptive",
         id: field.field_name,
         title: field.section_header,
+        description: field.field_note,
         content: field.field_label,
       }
     }
@@ -74,6 +92,7 @@ function FieldFromRedcap(field: RadarRedcapFieldDefinition): ArmtItem {
         fieldType: "yesno",
         id: field.field_name,
         title: field.section_header,
+        description: field.field_note,
         label: field.field_label,
       }
       validation = Yup.boolean()
@@ -84,20 +103,33 @@ function FieldFromRedcap(field: RadarRedcapFieldDefinition): ArmtItem {
           fieldType: 'date',
           id: field.field_name,
           title: field.section_header,
+          description: field.field_note,
           label: field.field_label
         }
         validation = getTextSchema(field)
       } else {
         content = {
           fieldType: "text",
-          multiline: (field.field_annotation == 'multiline'),
           id: field.field_name,
           title: field.section_header,
+          description: field.field_note,
           label: field.field_label,
           type: field.text_validation_type_or_show_slider_number,
         }
       validation = getTextSchema(field)
       }
+    }
+    if (field.field_type == "notes") {
+        content = {
+          fieldType: "text",
+          multiline: true,
+          id: field.field_name,
+          title: field.section_header,
+          description: field.field_note,
+          label: field.field_label,
+          type: field.text_validation_type_or_show_slider_number,
+        }
+      validation = getTextSchema(field)
     }
   if (field.required_field) {
     validation = validation?.required("")

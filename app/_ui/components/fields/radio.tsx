@@ -40,9 +40,10 @@ function groupHandleChange(id: string, setFieldValue: (id: string, value: string
 export function ArmtRadioField(props: ArmtRadioFieldProps, ref: ForwardedRef<HTMLDivElement>) {
   return (
     <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1} key={props.key}>
-      <Typography variant="h2">{props.title}</Typography>
+      <Typography variant="h4">{props.title}</Typography>
       {/*<FormLabel>*/}
-      <Typography variant="h4" component={'span'}>{props.label}</Typography>
+      {props.label && <Typography variant="body1" component={'span'}>{props.label}</Typography>}
+      {props.description && <Typography variant="body1" component={'span'} fontStyle={'italic'}>{props.description}</Typography>}
       {/*</FormLabel>*/}
       <FormControl>
       <RadioGroup
