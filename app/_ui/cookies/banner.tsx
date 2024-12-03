@@ -23,22 +23,24 @@ export function CookieBanner() {
   return (
     <Grow in={open}>
     <Box sx={{
+      zIndex: 1000,
       position: 'fixed',
-      bottom: '5%',
-      left: '5%',
+      bottom: {sm: '5%', xs: '0'},
+      left: {sm: '5%', xs: '0'},
+      right: {sm: '5%', xs: '0'},
       // transform: 'translate(-50%, -50%)',
-      minWidth: 400,
+      minWidth: 300,
       maxWidth: 600,
       bgcolor: 'background.paper',
       borderRadius: 2,
       // border: '2px solid #000',
-      boxShadow: 24,
+      boxShadow: 16,
       p: 4}}>
       <Typography id="modal-modal-title" variant="h3">
         Cookie consent
       </Typography>
       <Typography sx={{ mt: 2 }}>
-        {"We use functional cookies to keep you logged in between visits. If you accept all cookies, we will also use analytic cookies. These help us understand how people interact with the study."}
+        {"We use functional cookies to keep you logged in between visits.\nIf you accept all cookies we will also use analytic cookies, which are only used to help us understand how people interact with the study."}
       </Typography>
       
       <Box display={'flex'} flexDirection={'row'} justifyContent={'flex-end'} marginTop={2} gap={1}> 

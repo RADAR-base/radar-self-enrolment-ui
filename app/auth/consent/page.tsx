@@ -60,30 +60,28 @@ export default function Page() {
   const consentChallenge = searchParams.get('consent_challenge') ?? ""
 
   function accept() {
-    const session = {
-      id_token: {
-        email: userSession['identity']['traits']['email'],
-      },
-      access_token: null
+    const body = {
+      consentAction: 'accept',
+      grantScope: scopes,
+      remember: 'true',
+      identity: userSession.identity
     }
-    // hydra.acceptOAuth2ConsentRequest({consentChallenge: consent.challenge}).then(
-    //   (resp) => router.push(resp.data.redirect_to)
-    // )
-    acceptConsentRequest({
-      consent_challenge: consentChallenge,
-      identity: session,
-      grant_scope: scopes,
-      remember: true,
-      rememberFor: 3600,
-      grant_access_token_audience: consent['requested_access_token_audience']
+    fetch(withBasePath('/api/consent?' + new URLSearchParams({
+      consent_challenge: consentChallenge
+    })), {
+      method: 'POST',
+      body: JSON.stringify(body)
     }).then(
-      (redirect_to) => router.push(redirect_to)
+      (r) => {
+        r.json().then(
+          (d) => {
+            router.push(d.redirect_to)
+          }
+        )
+      }
     )
   }
-
-
   useEffect(() => {
-    console.log(consent)
     if (consentChallenge == "") {
       router.push('/')
       return
@@ -96,10 +94,7 @@ export default function Page() {
     } else {
       setScopes(consent['requested_scope'])
     }
-  }, [consent, userSession])
-
-  console.log(consent)
-  console.log(userSession)
+  }, [consent])
 
   if ((!!consent?.client?.skip_consent) && (!!userSession)) {
     acceptSkipConsent(consent, userSession)

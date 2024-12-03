@@ -27,7 +27,11 @@ export async function GET(
   request: NextRequest, 
   { params }: { params: Promise<{ consent_challenge: string }> }
 ) {
-  const { consent_challenge: consentChallenge } = (await params)
+  const consentChallenge = request.nextUrl.searchParams.get('consent_challenge') ?? undefined
+  if (consentChallenge == undefined) {
+    return NextResponse.json({'error': 'No consent_challenge param provided'}, {status: 401})
+  }
+
   return getConsentRequest(consentChallenge)
 }
 
@@ -35,14 +39,17 @@ export async function POST(
   request: NextRequest, 
   { params }: { params: Promise<{ consent_challenge: string }> }
 ) {
-  const { consent_challenge: consentChallenge } = (await params)
+  const consentChallenge = request.nextUrl.searchParams.get('consent_challenge') ?? undefined
+  if (consentChallenge == undefined) {
+    return NextResponse.json({'error': 'No consent_challenge param provided'}, {status: 401})
+  }
   const { consentAction, grantScope, remember, identity } = await request.json()
+
   const session = extractSession(identity, grantScope)
 
   const consentRequest = await getConsentRequest(consentChallenge)
   const consentBody = await consentRequest.json()
-  const grant_access_token_audience = consentBody.request_access_token_audience
-  console.log(session)
+  const grant_access_token_audience = consentBody.requested_access_token_audience
 
   if (!consentChallenge || !consentAction) {
     return NextResponse.json({error: 'Missing required parameters'}, {status: 401})
@@ -51,22 +58,22 @@ export async function POST(
   if (consentAction == "accept") {
     let url = new URL(`${baseURL}/admin/oauth2/auth/requests/consent/accept`)
     url.search = new URLSearchParams([['consent_challenge', consentChallenge]]).toString()
+    const body = {
+      grant_scope: grantScope,
+      grant_access_token_audience: grant_access_token_audience,
+      session,
+      remember: Boolean(remember),
+      remember_for: 3600
+    }
     const acceptResponse = await fetch(url, {
-        headers: { 
+      method: 'PUT',
+      headers: { 
         'accept': 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        grant_scope: session.access_token.scope,
-        grant_access_token_audience: grant_access_token_audience,
-        session,
-        remember: Boolean(remember),
-        remember_for: 3600
-      })
+      body: JSON.stringify(body)
     })
-    console.log(acceptResponse)
     const acceptBody = await acceptResponse.json()
-    console.log(acceptBody)
-    return
+    return NextResponse.json(acceptBody)
   }
 }

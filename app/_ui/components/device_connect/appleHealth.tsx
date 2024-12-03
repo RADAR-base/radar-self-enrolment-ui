@@ -34,9 +34,15 @@ export function HealthKitPage(props: HealthKitPageProps) {
           <Typography variant="body1">This study uses the RADAR aRMT app to access Apple data. If you would like you share your Apple Health data with us, you will need to download the app on your iOS device.</Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
-          <a href="https://apps.apple.com/us/app/radar-active-rmt/id1483953055?itscg=30200&itsct=apps_box_badge&mttnsubad=1483953055" style={{display: "inline-block"}}>
-          <img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us?releaseDate=1579046400" alt="Download on the App Store" style={{width: 246, height: 82}} />
-          </a>          
+          <a href="https://apps.apple.com/us/app/radar-active-rmt/id1483953055?itscg=30200&itsct=apps_box_badge&mttnsubad=1483953055" style={{display: "inline-block"}} target="_blank">
+          <Image
+            src={withBasePath('/devices/apple_download_app.svg')}
+            height={80}
+            width={200}
+            alt={"Download the RADAR App on the App Store"}
+            /> 
+          </a>   
+      
         </Grid>
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 2: Open the app</Typography>
@@ -79,7 +85,7 @@ export function HealthKitPage(props: HealthKitPageProps) {
           Image
         </Grid>
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 6: Complete the Health Kit task</Typography>
+          <Typography variant="h3">Step 6: Complete the Apple Health task</Typography>
           <Typography variant="body1"></Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>

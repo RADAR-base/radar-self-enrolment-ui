@@ -95,11 +95,9 @@ function createLoginFlow(loginChallenge: string, setFlow: (value: any) => void) 
     withBasePath('/api/ory/login/browser?login_challenge=' + loginChallenge),
     {cache: 'no-store'}
   ).then((response) => {
-    console.log('response', response)
       if (response.status == 200) {
         response.json().then(
           (data) => {
-            console.log('data', data)
             setFlow(data)
           }
         )
@@ -124,53 +122,15 @@ export default function Page() {
 
   let flowId = searchParams.get('flowId')
 
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString())
-      params.set(name, value)
-      return params.toString()
-    },
-    [searchParams]
-  )
-
   useEffect(() => {
-    console.log('userSession: ', userSession)
     if (userSession === undefined) {
       getUserSession(setUserSession)
     }
-    // if (userSession === null) {
-      console.log('flow', flow)
       if (flow == undefined) {
-        // if (flowId != null) {
-          // let v = {}
-          // kratos.getLoginFlow({flowId: flowId}).then(
-          //   (response) => {
-          //     if (response.ok) {
-          //       console.log('get flow ok')
-          //       response.json().then(
-          //         (data) => {
-          //           router.push(pathname + '?' + createQueryString('flowId', data.id ))
-
-          //           setFlow(data)
-          //           setContent(<LoginForm flow={data} />)
-          //         }
-          //       )
-          //     } else {
-          //       console.log('cant get flow')
-          //     }
-          //   }
-          // )
-        // }
-        // else {
-        // console.log('flowID is null')
         createLoginFlow(loginChallenge ?? '', setFlow)
-      // }
-        // } 
-      //}
     } else {
       setContent(<LoginForm flow={flow}></LoginForm>)
     }
   }, [flow, userSession])
-  console.log('final flow', flow)
   return <Card>{content}</Card>
 }
