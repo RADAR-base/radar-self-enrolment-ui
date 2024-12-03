@@ -171,8 +171,17 @@
                 {
                     "fieldType": "yesno",
                     "id": "optional1",
-                    "label": "Optional  1",
-                    "description": "Eligability item description"
+                    "description": "I understand that the principal investigator of this study may make my physical activity data available to other researchers for future research and that this may include researchers working abroad. I give permission for these individuals to have access to my data, (but not any personal identifying information about me), I offer my physical activity data as a gift."
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "optional2",
+                    "description": "I agree that the PAPrKA team may retain my name and contact details to tell me about other research projects in the future."
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "optional3",
+                    "description": "I agree that the PAPrKA team may retain my contact details in order to provide me with a summary of the findings for this study."
                   }
             ]
         },
