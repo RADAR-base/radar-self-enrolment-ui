@@ -1,11 +1,12 @@
 "use client"
-import { Box, Button, Card, Stack, TextField } from "@mui/material";
+import { Box, Button, Card, CircularProgress, Stack, TextField, Typography } from "@mui/material";
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import { useFormik } from "formik"
 import { useState, useEffect, useCallback } from 'react';
 import { withBasePath } from '@/app/_lib/util/links';
 import { getCsrfToken } from "@/app/_lib/auth/ory/util";
+import { LogoutButton } from "@/app/_ui/auth/logout";
 
 interface LoginFormProps {
   flow?: any
@@ -42,10 +43,11 @@ function LoginForm({flow: flow}: LoginFormProps) {
       display="flex"
       alignItems="center"
       alignContent="center"
+      height={'100%'}
       p={4}>
       <form onSubmit={formik.handleSubmit}>
           <Stack spacing={2} alignItems="center">
-          <h1>Login</h1>
+          <Typography variant="h2">Login</Typography>
           <TextField
               id="email"
               name="email"
@@ -74,8 +76,20 @@ function LoginForm({flow: flow}: LoginFormProps) {
     </Box>)
 }
 
-function LoginWithCurrentAccountButton() {
-
+function LoginWithCurrentAccountForm(props: {userSession: any, loginChallenge: string}) {
+  const router = useRouter()
+  return (      
+    <Box 
+      display="flex"
+      height={'100%'}
+      flexDirection={'column'}
+      gap={2}
+      p={4}>
+      <Typography variant="h2">Login</Typography>
+      <Typography>Log in to [app] as {props.userSession.identity.traits.email}</Typography>
+      <Button onClick={() => acceptWithCurrentAccount(props.loginChallenge, router)}>Sign in</Button>
+      <LogoutButton />
+    </Box>)
 }
 
 function getUserSession(setSession: (value: any) => void) {
@@ -85,6 +99,8 @@ function getUserSession(setSession: (value: any) => void) {
         response.json().then(
           (data) => setSession(data)
         )
+      } else {
+        setSession(null)
       }
     }
   )
@@ -106,6 +122,31 @@ function createLoginFlow(loginChallenge: string, setFlow: (value: any) => void) 
   )
 }
 
+async function acceptWithCurrentAccount(loginChallenge: string, router: any): Promise<void> {
+  const response = await fetch(withBasePath(`/api/oauth-login?login_challenge=${loginChallenge}`),
+    {
+      method: 'POST',
+      body: JSON.stringify({remember: true})
+    }
+  )
+  try {
+    if (response.ok) {
+      const data = await response.json()
+      router.push(data.redirect_to)
+    } else {
+      console.log(response)
+      // router.push('/')
+    }
+  } catch (error) {
+    router.push('/')
+  }
+}
+
+function userIsParticipant(userSession: any): boolean {
+  return userSession?.identity?.schema_id == "subject"
+}
+
+
 export default function Page() {
   const router = useRouter()
   const pathname = usePathname()
@@ -113,24 +154,31 @@ export default function Page() {
   
   const [userSession, setUserSession] = useState<any>(undefined)
   const [flow, setFlow] = useState<any>();  
-  const [content, setContent] = useState<JSX.Element>(<div>hi</div>)
+  const [content, setContent] = useState<JSX.Element>(<CircularProgress  sx={{  top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} />)
 
   const loginChallenge = searchParams.get('login_challenge') ?? undefined
   if (loginChallenge == undefined) {
     router.push('/auth/login')
+    return
   }
 
   let flowId = searchParams.get('flowId')
-
   useEffect(() => {
     if (userSession === undefined) {
       getUserSession(setUserSession)
-    }
+    } else if (userSession === null) {
       if (flow == undefined) {
         createLoginFlow(loginChallenge ?? '', setFlow)
+      } else {
+        setContent(<LoginForm flow={flow}></LoginForm>)
+      }
     } else {
-      setContent(<LoginForm flow={flow}></LoginForm>)
+      if (userIsParticipant(userSession)) {
+        acceptWithCurrentAccount(loginChallenge, router)
+        return
+      }
+      setContent(<LoginWithCurrentAccountForm userSession={userSession} loginChallenge={loginChallenge} />)
     }
   }, [flow, userSession])
-  return <Card>{content}</Card>
+  return <Card><Box display={'flex'} alignItems={'center'} justifyContent={'center'} width={300} height={350}>{content}</Box></Card>
 }

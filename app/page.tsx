@@ -9,8 +9,11 @@ import NavBar from "@/app/_ui/components/navbar/navbar";
 import { Footer } from "@/app/_ui/components/footer";
 import { LogoutButton } from "@/app/_ui/auth/logout";
 import Link from "next/link";
+import { whoAmI } from "./_lib/auth/ory/kratos";
 
 export default async function Home() {
+  const session = await (await whoAmI()).json()
+
   return (
     <Box
     sx={{
@@ -46,6 +49,9 @@ export default async function Home() {
                 </Grid>
                 <Grid size={{xs: 12, md: 6}}>
                   <LogoutButton />
+                </Grid>
+                <Grid size={{xs: 12, md: 12}}>
+                  {JSON.stringify(session)}
                 </Grid>
               </Grid>
             </RadarCard>

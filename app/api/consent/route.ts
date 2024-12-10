@@ -1,3 +1,4 @@
+import { whoAmI } from "@/app/_lib/auth/ory/kratos"
 import { NextRequest, NextResponse } from "next/server"
 
 const baseURL = process.env.HYDRA_ADMIN_URL
@@ -7,7 +8,7 @@ const extractSession = (identity: any, grantScope: string[]) => {
   const session: any = {
     access_token: {
       roles: identity.metadata_public.roles,
-      scope: identity.metadata_public.scope,
+      scope: grantScope,
       authorities: identity.metadata_public.authorities,
       sources: identity.metadata_public.sources,
       user_name: identity.metadata_public.mp_login,
@@ -15,6 +16,18 @@ const extractSession = (identity: any, grantScope: string[]) => {
     id_token: {},
   }
   return session
+}
+
+function userIsParticipant(userSession: any): boolean {
+  return userSession?.identity?.schema_id == "subject"
+}
+
+function getUserId(userSession: any): string {
+  if (userIsParticipant(userSession)) {
+    const projects: any[] = userSession?.identity?.traits?.projects
+    return projects[0]?.userId
+  }
+  return userSession?.identity?.id
 }
 
 function getConsentRequest(consentChallenge: string) {
@@ -39,11 +52,26 @@ export async function POST(
   request: NextRequest, 
   { params }: { params: Promise<{ consent_challenge: string }> }
 ) {
+  let oryUser: any
+  let userId: string
+  let identity: any
+  try {
+    const resp = await whoAmI()
+    if (resp.status != 200) {
+      return NextResponse.json({error: {type: 'authentication', content: {message: "No user session"}}}, {status: 403})
+    }
+    oryUser = await resp.json()
+    userId = getUserId(oryUser)
+    identity = oryUser['identity']
+  } catch {
+    return NextResponse.json({error: {type: 'authentication', content: {message: "Error decoding user session"}}}, {status: 403})
+  }
+
   const consentChallenge = request.nextUrl.searchParams.get('consent_challenge') ?? undefined
   if (consentChallenge == undefined) {
     return NextResponse.json({'error': 'No consent_challenge param provided'}, {status: 401})
   }
-  const { consentAction, grantScope, remember, identity } = await request.json()
+  const { consentAction, grantScope, remember } = await request.json()
 
   const session = extractSession(identity, grantScope)
 

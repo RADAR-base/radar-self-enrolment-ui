@@ -24,13 +24,6 @@ export default async function Page({ params }: { params: { studyId: string, cust
   const pageContent = await pageRepo.getPage(params.studyId, params.customPage);
   return (
     <main>
-      <Box sx={{ flexGrow: 1, margin: {xs: 0, sm: 2}}} 
-            display="flex"
-            justifyContent="center"
-            alignItems="center">
-        <Container maxWidth="lg" disableGutters>
           <BlockPage blockParams={pageContent.blocks} ></BlockPage>
-        </Container>
-      </Box>
     </main>
   )}

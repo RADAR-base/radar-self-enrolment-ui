@@ -1,13 +1,15 @@
 "use client"
-import { Button, Container, Typography } from "@mui/material"
+import { Box, Button, Container, Typography } from "@mui/material"
 import Grid from '@mui/material/Grid2';
 import { StudyProtocol } from "@/app/_lib/study/protocol";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { withBasePath } from "@/app/_lib/util/links";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { RadarCard } from "../base/card";
 import {QRCodeSVG} from 'qrcode.react'
 import Image from 'next/image'
+import { getAccessTokenFromCode, getAuthLink } from "@/app/_lib/radar/questionnaire_app/service";
+import NextButton from "../base/nextButton";
 
 interface HealthKitPageProps {
   protocol: StudyProtocol
@@ -16,6 +18,37 @@ interface HealthKitPageProps {
 export function HealthKitPage(props: HealthKitPageProps) {
   const studyId = props.protocol.studyId
   const router = useRouter()
+  const code = useSearchParams().get('code')
+  const [isFetchingToken, setIsFetchingToken] = useState(false)
+  const [tokenHandled, setTokenHandled] = useState<boolean>(false)
+  const [qrCode, setQrCode] = useState<any>(undefined)
+
+  useEffect(() => {
+    const handleToken = async () => {
+      if (isFetchingToken || tokenHandled) return
+      if (code) {
+        const tokenResponse = await getAccessTokenFromCode(code)
+        if (tokenResponse?.access_token && tokenResponse?.expires_in) {
+          console.log(tokenResponse)
+          tokenResponse['iat'] =  Math.floor(Date.now() / 1000)
+          const shortToken = { 
+            iat: tokenResponse.iat, 
+            expires_in: tokenResponse.expires_in, 
+            refresh_token: tokenResponse.refresh_token, 
+            scope: tokenResponse.scope, 
+            token_type: tokenResponse.token_type 
+          }
+          console.log('short token: ', shortToken)
+          const url = await getAuthLink(shortToken, studyId)
+          console.log('qr url: ', url)
+          setQrCode(url)
+        }
+      }
+      setIsFetchingToken(true)
+    }
+    handleToken()
+  }, [])
+
   return (
   <Container maxWidth="lg" disableGutters>
     <RadarCard>
@@ -24,7 +57,7 @@ export function HealthKitPage(props: HealthKitPageProps) {
           <div>
             <Typography variant="h2">Connect to Apple Health</Typography>
             <Typography variant="body1">
-              {"Apple Health is the app which collects all Apple devices use to organise your health and fitness data. All your Apple Watch and iPhone data relating to health is stored there. It is also possible to connect other wearable devices.\n"
+              {"Apple Health is the app which collects all Apple devices use to organise your health and fitness data. All your Apple Watch and iPhone data relating to health is stored there. That information can only be accessed from apps installed on an iOS device. Please follow the steps below to link your Apple Health data to our study.\n\nIt is also possible to connect other, non-Apple, devices to Apple Health. If you have already done so, you can share that data with us by following the same steps below.\n"
               }
             </Typography>
           </div>
@@ -75,7 +108,10 @@ export function HealthKitPage(props: HealthKitPageProps) {
           <Typography variant="body1">While the app is showing the scanning screen, point it at the following QR code. Scanning the QR code will connect the app to this study.</Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
-          <QRCodeSVG value={process.env.NEXT_PUBLIC_HYDRA_PUBLIC_URL + "?projectId=" + studyId} size={200} />
+          <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
+            {qrCode && <QRCodeSVG value={qrCode} size={200} />}
+            <NextButton href='/connect/armt'>Generate QR Code</NextButton>
+          </Box>
         </Grid>
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 5: Log in</Typography>

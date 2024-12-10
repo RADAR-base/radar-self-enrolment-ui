@@ -264,8 +264,8 @@
         "studyIconSrc": "/study/paprka/resources/hrfh_low.png",
         "navbarLinks": [
             {"text": "Home", "href": "/paprka"},
-            {"text": "Portal", "href": "/paprka/portal"},
-            {"text": "Join Study", "href": "/paprka/enrol"}
+            {"text": "About", "href": "/paprka/about"},
+            {"text": "Portal", "href": "/paprka/portal"}
           ],
         "footer": {
             "columns": [
@@ -299,7 +299,7 @@
           "title": "Complete Tasks to Join Study"
         },
         "analytics": {
-          "gaId": "G-MV0HNLTBH5"
+          "gaId": "G-LTRMSY2PNR"
         }
     }
 }

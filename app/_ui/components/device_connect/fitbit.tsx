@@ -2,9 +2,9 @@
 import { Button, Container, Typography } from "@mui/material"
 import Grid from '@mui/material/Grid2';
 import { StudyProtocol } from "@/app/_lib/study/protocol";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { withBasePath } from "@/app/_lib/util/links";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { RadarCard } from "../base/card";
 import {QRCodeSVG} from 'qrcode.react'
 import Image from 'next/image'
@@ -27,7 +27,34 @@ interface FitbitPageProps {
 
 export function FitbitPage(props: FitbitPageProps) {
   const studyId = props.protocol.studyId
+  const searchParams = useSearchParams()
+  const fitbitCode = searchParams.get('code')
   const router = useRouter()
+
+  const [test, setTest] = useState<any>(undefined)
+
+  if (fitbitCode != undefined) {
+    router.push(`/${studyId}/portal/connect?success=Fitbit`)
+  }
+
+  useEffect(() => {
+    if (test == undefined) {
+      fetch(withBasePath('/api/connect/armtApp'), {
+          credentials: 'include'
+        }
+      ).then(
+          (r) => {
+            if (r.ok) {
+              console.log(r)
+              r.json().then(
+                (d) => setTest(d)
+              )
+            }
+          }
+        )
+      }
+  })
+
   return (
   <Container maxWidth="lg" disableGutters>
     <RadarCard>
@@ -84,7 +111,7 @@ export function FitbitPage(props: FitbitPageProps) {
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Button variant={'contained'}
-            onClick={() => router.push('./')}
+            onClick={() => router.push('./?success=Fitbit')}
           >
             {`    Finish    `}
           </Button>

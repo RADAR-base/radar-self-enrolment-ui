@@ -40,7 +40,7 @@ export function CookieBanner() {
         Cookie consent
       </Typography>
       <Typography sx={{ mt: 2 }}>
-        {"We use functional cookies to keep you logged in between visits.\nIf you accept all cookies we will also use analytic cookies, which are only used to help us understand how people interact with the study."}
+        {"We use functional cookies to keep you logged in between visits.\nIf you accept all cookies we will also use analytic cookies, which we use to help us understand how people interact with the study."}
       </Typography>
       
       <Box display={'flex'} flexDirection={'row'} justifyContent={'flex-end'} marginTop={2} gap={1}> 

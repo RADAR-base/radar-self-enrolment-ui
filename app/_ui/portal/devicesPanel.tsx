@@ -3,6 +3,7 @@ import { Box, Button, Container, Typography } from "@mui/material"
 import Grid from '@mui/material/Grid2';
 import { StudyProtocol } from "@/app/_lib/study/protocol";
 import NextLink from 'next/link'
+import { useSearchParams } from 'next/navigation'
 
 import React, { useState } from "react";
 import { RadarDeviceCard } from "@/app/_ui/components/portal/deviceCard";
@@ -11,6 +12,7 @@ import { MarkdownContainer } from "../components/base/markdown";
 import { withBasePath } from "@/app/_lib/util/links";
 import { useRouter } from "next/navigation";
 import NextButton from "../components/base/nextButton";
+import { DeviceConnectedBanner } from "../components/device_connect/successBanner";
 
 interface DevicesPanel {
   protocol: StudyProtocol
@@ -20,6 +22,10 @@ export function DevicesPanel(props: DevicesPanel) {
   const devices = ['fitbit', 'apple_health', 'garmin', 'oura']
   const [submitting, setSubmitting] = useState<boolean>(false)
   const router = useRouter()
+  
+  const searchParams = useSearchParams()
+
+  const deviceConnected = searchParams.get('success')
 
   async function onSubmit() {
     setSubmitting(true)
@@ -41,6 +47,7 @@ export function DevicesPanel(props: DevicesPanel) {
 
   return (
   <Container maxWidth="lg" disableGutters>
+  {(deviceConnected != undefined) ? <DeviceConnectedBanner device={deviceConnected} onFinish={onSubmit}></DeviceConnectedBanner> : null}
   <Grid container spacing={2} gridAutoColumns={'3lf'} gridAutoFlow={"column"}>
     <Grid size={12}>
       <RadarCard>

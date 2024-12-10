@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button, Card, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, CircularProgress, Stack, Typography } from "@mui/material";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -18,12 +18,17 @@ import { Configuration, OAuth2Api, FrontendApi, IdentityApi } from "@ory/client"
 
 
 async function acceptSkipConsent(consent: {challenge: string}, userSession: OrySession) {
-  const router = useRouter()
+  // const router = useRouter()
   // let r = await hydra.acceptOAuth2ConsentRequest({consentChallenge: consent.challenge})
   // if (r.status == 200) {
   //   router.push(r.data.redirect_to)
   // }
 }
+
+function userIsParticipant(userSession: any): boolean {
+  return userSession?.identity?.schema_id == "subject"
+}
+
 
 function getUserSession(setSession: (value: any) => void) {
   fetch(withBasePath('/api/ory/whoAmI'), {cache: 'no-store'}).then(
@@ -47,7 +52,17 @@ function getConsentRequest(consentChallenge: string, setConsent: (value: any) =>
   )
 }
 
-
+function ConsentForm(props: {accept: () => void, userSession: any, scopes?: string[]}) {
+  return   <Stack padding={2}>
+              {props.userSession && props.userSession['identity']['traits']['email']}
+              <Typography variant='subtitle1'>Requested Scopes</Typography>
+              {props.scopes && props.scopes.map((s, i) => <Typography key={i}>{s}</Typography>)}
+              <Box display='flex' flexDirection={'row'} justifyContent={'space-between'}>
+                <Button>Reject</Button>
+                <Button onClick={props.accept}>Accept</Button>
+              </Box>
+            </Stack>
+}
 
 export default function Page() {
   const router = useRouter()
@@ -55,7 +70,8 @@ export default function Page() {
 
   const [userSession, setUserSession] = useState<any>(undefined)
   const [consent, setConsent] = useState<any>(undefined)
-  const [scopes, setScopes] = useState<string[]>([])
+  const [scopes, setScopes] = useState<string[] | undefined>(undefined)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const consentChallenge = searchParams.get('consent_challenge') ?? ""
 
@@ -64,7 +80,6 @@ export default function Page() {
       consentAction: 'accept',
       grantScope: scopes,
       remember: 'true',
-      identity: userSession.identity
     }
     fetch(withBasePath('/api/consent?' + new URLSearchParams({
       consent_challenge: consentChallenge
@@ -73,11 +88,15 @@ export default function Page() {
       body: JSON.stringify(body)
     }).then(
       (r) => {
-        r.json().then(
-          (d) => {
-            router.push(d.redirect_to)
-          }
-        )
+        if (r.ok) {
+          r.json().then(
+            (d) => {
+              router.push(d.redirect_to)
+            }
+          )
+        } else {
+          console.log(r)
+        }
       }
     )
   }
@@ -93,6 +112,11 @@ export default function Page() {
       getConsentRequest(consentChallenge, setConsent)
     } else {
       setScopes(consent['requested_scope'])
+      if (userIsParticipant(userSession) && (scopes != undefined)) {
+        accept()
+      } else {
+        setIsLoading(false)
+      }
     }
   }, [consent])
 
@@ -101,15 +125,11 @@ export default function Page() {
   }
   return (
     <Card>
-      <Stack padding={2}>
-        {userSession && userSession['identity']['traits']['email']}
-        <Typography variant='subtitle1'>Requested Scopes</Typography>
-        {scopes.map((s, i) => <Typography key={i}>{s}</Typography>)}
-        <Box display='flex' flexDirection={'row'} justifyContent={'space-between'}>
-          <Button>Reject</Button>
-          <Button onClick={accept}>Accept</Button>
-        </Box>
-      </Stack>
+      <Box display={'flex'} alignItems={'center'} justifyContent={'center'} minWidth={300} minHeight={350}>
+      {isLoading ? <CircularProgress  sx={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} /> 
+                 : <ConsentForm accept={accept} userSession={userSession} scopes={scopes} />
+      }
+      </Box>
     </Card>
   )
 }

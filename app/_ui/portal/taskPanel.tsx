@@ -19,7 +19,7 @@ function FinishModal(props: {disabled: boolean, allComplete: boolean}) {
   const handleClose = () => setOpen(false);
   const router = useRouter()
   const finishStudy = () => {
-    router.push('/')
+    router.push('finish')
   }
   return (
     <div>

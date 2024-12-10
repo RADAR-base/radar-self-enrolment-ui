@@ -34,7 +34,7 @@ export function ArmtSignatureField({label, description, errorText, ...props}: Ar
     </Box>
   )
   const sigImg = (
-    <Box sx={{padding: 2}}>
+    <Box sx={{padding: 2, maxWidth: 500, maxHeight: 200}}>
       <img
         src={props.value}
         alt="signature"

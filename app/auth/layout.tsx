@@ -19,7 +19,6 @@ export default function StudyLayout({
     <Container maxWidth="md">
       <Stack m={4} spacing={4} alignItems="center"> 
         <div>{children}</div>
-        <Button href="/" fullWidth variant="contained" LinkComponent={Link}>Home</Button>
       </Stack>
     </Container>
   );
