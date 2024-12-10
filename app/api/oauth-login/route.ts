@@ -50,8 +50,9 @@ export async function POST(
       }
     )
     return response
-  } catch {
-    console.log('err')
+  } catch (error) {
+    console.log(      `${baseURL}/oauth2/auth/requests/login/accept?login_challenge=${loginChallenge}`    )
+    console.log(error)
   }
   return new NextResponse('Error', {status: 403})
 }

@@ -1,8 +1,10 @@
+import { randomUUID } from "crypto"
+
 const AUTH_BASE_URL = process.env.NEXT_PUBLIC_HYDRA_PUBLIC_URL + "/oauth2"
 const GRANT_TYPE = "authorization_code"
 const CLIENT_ID = "aRMT"
 const CLIENT_SECRET = "secret"
-const REDIRECT_URI = process.env.ARMT_REDIRECT_URI
+const REDIRECT_URI = process.env.NEXT_PUBLIC_ARMT_REDIRECT_URI
 
 export async function getAccessToken(
   code: string,
@@ -46,7 +48,7 @@ export async function getAccessTokenFromCode(code: string): Promise<any> {
   }
 }
 
-export function authRequestLink(): string {
+export function authRequestLink(state: string): string {
   const scopes = [
     "SOURCETYPE.READ",
     "PROJECT.READ",
@@ -57,8 +59,9 @@ export function authRequestLink(): string {
     "SOURCETYPE.UPDATE",
     "offline_access"
   ].join("%20")
+  console.log(REDIRECT_URI)
   const audience = ["res_ManagementPortal", "res_gateway", "res_AppServer"].join("%20")
-  const authUrl = `${AUTH_BASE_URL}/auth?client_id=${CLIENT_ID}&response_type=code&state=${Date.now()}&audience=${audience}&scope=${scopes}&redirect_uri=${REDIRECT_URI}`
+  const authUrl = `${AUTH_BASE_URL}/auth?client_id=${CLIENT_ID}&response_type=code&state=${state}&audience=${audience}&scope=${scopes}&redirect_uri=${REDIRECT_URI}`
   return authUrl
 }
 

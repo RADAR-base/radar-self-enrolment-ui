@@ -9,6 +9,7 @@ const HYDRA_PUBLIC_URL = process.env.HYDRA_PUBLIC_URL
 const CLIENT_ID = 'aRMT'
 const CLIENT_SECRET = 'secret'
 const GRANT_TYPE = 'authorization_code'
+const REDIRECT_URI = process.env.NEXT_PUBLIC_ARMT_REDIRECT_URI
 
 // Helper function to extract session data
 const extractSession = (identity: any, grantScope: string[]) => {
@@ -32,6 +33,10 @@ function getConsentRequest(consentChallenge: string) {
 }
 
 function getLoginChallengeUrl(state: string) {
+  if (REDIRECT_URI == undefined) {
+    return ""
+  }
+  console.log('redir url: ', REDIRECT_URI)
   const scopes = [
     "SOURCETYPE.READ",
     "PROJECT.READ",
@@ -49,7 +54,7 @@ function getLoginChallengeUrl(state: string) {
     ['state', state],
     ['audience', ['res_ManagementPortal'].join('\%20')],
     ['scopes', scopes.join('%20')],
-    ['redirect_uri', 'http://localhost:3000/kratos-ui/']
+    ['redirect_uri', REDIRECT_URI]
   ]).toString()
   return u
 }

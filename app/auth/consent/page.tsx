@@ -7,24 +7,6 @@ import { OrySession } from "@/app/_lib/auth/ory/types";
 import { withBasePath } from "@/app/_lib/util/links";
 import { acceptConsentRequest } from "@/app/_lib/auth/ory/hydra";
 
-
-import { Configuration, OAuth2Api, FrontendApi, IdentityApi } from "@ory/client"
-
- const hydra = new OAuth2Api(
-  new Configuration({
-    basePath: 'http://localhost:4445',
-  })
-)
-
-
-async function acceptSkipConsent(consent: {challenge: string}, userSession: OrySession) {
-  // const router = useRouter()
-  // let r = await hydra.acceptOAuth2ConsentRequest({consentChallenge: consent.challenge})
-  // if (r.status == 200) {
-  //   router.push(r.data.redirect_to)
-  // }
-}
-
 function userIsParticipant(userSession: any): boolean {
   return userSession?.identity?.schema_id == "subject"
 }
@@ -42,24 +24,29 @@ function getUserSession(setSession: (value: any) => void) {
   )
 }
 
-function getConsentRequest(consentChallenge: string, setConsent: (value: any) => void) {
+function getConsentRequest(consentChallenge: string,
+                           setConsent: (value: any) => void,
+                           setScopes: (value: string[]) => void) {
   fetch(withBasePath('/api/ory/consent?consent_challenge=' + consentChallenge)).then(
     (response) => {
       if (response.ok) {
-        response.json().then((data => setConsent(data)))
+        response.json().then((data => {
+          setConsent(data)
+          setScopes(data['requested_scope'])
+        }))
       }
     }
   )
 }
 
-function ConsentForm(props: {accept: () => void, userSession: any, scopes?: string[]}) {
+function ConsentForm(props: {accept: (scopes: string[]) => void, userSession: any, scopes: string[]}) {
   return   <Stack padding={2}>
               {props.userSession && props.userSession['identity']['traits']['email']}
               <Typography variant='subtitle1'>Requested Scopes</Typography>
               {props.scopes && props.scopes.map((s, i) => <Typography key={i}>{s}</Typography>)}
               <Box display='flex' flexDirection={'row'} justifyContent={'space-between'}>
                 <Button>Reject</Button>
-                <Button onClick={props.accept}>Accept</Button>
+                <Button onClick={() => props.accept(props.scopes)}>Accept</Button>
               </Box>
             </Stack>
 }
@@ -70,17 +57,23 @@ export default function Page() {
 
   const [userSession, setUserSession] = useState<any>(undefined)
   const [consent, setConsent] = useState<any>(undefined)
-  const [scopes, setScopes] = useState<string[] | undefined>(undefined)
+  const [scopes, setScopes] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [accepted, setAccepted] = useState<boolean>(false)
 
   const consentChallenge = searchParams.get('consent_challenge') ?? ""
 
+  async function acceptSkipConsent() {
+  
+  }
   function accept() {
     const body = {
       consentAction: 'accept',
       grantScope: scopes,
       remember: 'true',
     }
+    if (accepted) { return }
+    setAccepted(true)
     fetch(withBasePath('/api/consent?' + new URLSearchParams({
       consent_challenge: consentChallenge
     })), {
@@ -109,10 +102,10 @@ export default function Page() {
       getUserSession(setUserSession)
     }
     if (consent == undefined) {
-      getConsentRequest(consentChallenge, setConsent)
-    } else {
-      setScopes(consent['requested_scope'])
-      if (userIsParticipant(userSession) && (scopes != undefined)) {
+      getConsentRequest(consentChallenge, setConsent, setScopes)
+    }
+    if ((scopes.length > 0) && (userSession != undefined)) {
+      if (userIsParticipant(userSession)) {
         accept()
       } else {
         setIsLoading(false)
@@ -121,7 +114,7 @@ export default function Page() {
   }, [consent])
 
   if ((!!consent?.client?.skip_consent) && (!!userSession)) {
-    acceptSkipConsent(consent, userSession)
+    accept()
   }
   return (
     <Card>
