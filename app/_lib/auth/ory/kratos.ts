@@ -31,7 +31,7 @@ export async function createLoginFlow(params?: {login_challenge?: string, refres
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   let url = new URL("self-service/login/browser", BASEURL)
   if (params?.login_challenge) {
-    let urlParams = new URLSearchParams([['login_challenge', params?.login_challenge]])
+    let urlParams = new URLSearchParams([['login_challenge', params.login_challenge]])
     url.search = urlParams.toString()
   }
   const res = await fetch(url, {

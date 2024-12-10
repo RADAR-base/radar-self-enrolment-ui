@@ -34,13 +34,13 @@ export async function POST(
 
   const loginChallenge = request.nextUrl.searchParams.get('login_challenge') ?? undefined
   if (loginChallenge == undefined) {
-    return NextResponse.json({'error': 'No login_challenge param provided'}, {status: 403})
+    return NextResponse.json({'error': 'No login_challenge param provided'}, {status: 401})
   }
 
   const { remember } = await request.json()
   try {
     const response = await fetch(
-      `${baseURL}/oauth2/auth/requests/login/accept?login_challenge=${loginChallenge}`,
+      `${baseURL}/admin/oauth2/auth/requests/login/accept?login_challenge=${loginChallenge}`,
       {
         method: 'PUT',
         body: JSON.stringify({
@@ -51,8 +51,7 @@ export async function POST(
     )
     return response
   } catch (error) {
-    console.log(      `${baseURL}/oauth2/auth/requests/login/accept?login_challenge=${loginChallenge}`    )
     console.log(error)
   }
-  return new NextResponse('Error', {status: 403})
+  return new NextResponse('Error', {status: 401})
 }
