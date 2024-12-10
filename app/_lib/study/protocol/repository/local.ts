@@ -16,6 +16,7 @@ export class LocalProtocolRepository implements StudyProtocolRepository {
     throw new Error('Can not load study protocol for studyId: ' + studyId)
   }
   async getStudies(): Promise<string[]> {
-    return await (fs.readdir(process.cwd() + '/public/study/').then(l => l.filter(item => !/(^|\/)\.[^/.]/g.test(item))))
+    return ['paprka']
+    // return await (fs.readdir(process.cwd() + '/public/study/').then(l => l.filter(item => !/(^|\/)\.[^/.]/g.test(item))))
   }
 }

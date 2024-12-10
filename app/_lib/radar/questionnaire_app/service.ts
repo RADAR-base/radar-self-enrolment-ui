@@ -2,7 +2,7 @@ const AUTH_BASE_URL = process.env.NEXT_PUBLIC_HYDRA_PUBLIC_URL + "/oauth2"
 const GRANT_TYPE = "authorization_code"
 const CLIENT_ID = "aRMT"
 const CLIENT_SECRET = "secret"
-const REDIRECT_URI = 'http://localhost:3000/kratos-ui/connect/armt'
+const REDIRECT_URI = process.env.ARMT_REDIRECT_URI
 
 export async function getAccessToken(
   code: string,
@@ -39,7 +39,11 @@ export async function getAccessToken(
 
 export async function getAccessTokenFromCode(code: string): Promise<any> {
   const redirectUri = REDIRECT_URI
-  return getAccessToken(code, redirectUri)
+  if (redirectUri) {
+    return getAccessToken(code, redirectUri)
+  } else {
+    throw "No ARMT redirect URI specified"
+  }
 }
 
 export function authRequestLink(): string {

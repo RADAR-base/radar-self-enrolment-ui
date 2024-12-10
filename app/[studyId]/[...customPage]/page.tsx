@@ -3,7 +3,7 @@ import { RadarCard } from '@/app/_ui/components/base/card';
 import { BlockPage } from '@/app/_ui/components/blocks/blockPage';
 import { Box, Container } from '@mui/material';
 
-export const dynamicParams = false
+export const dynamicParams = true
 
 export async function generateStaticParams() {
   // study repo
