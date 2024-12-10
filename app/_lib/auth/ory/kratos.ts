@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 
 const BASEURL = process.env.KRATOS_INTERNAL_URL;
 
-function parseSetCookie(c: string): [string, string, {[key: string]: string | boolean}] {
+function parseSetCookie(c: string): [string, string, { [key: string]: string | boolean }] {
   var split = c.split(';')
   var namevalue = split[0].split('=')
   var opts = Object.fromEntries(split.slice(1).map(
@@ -27,15 +27,15 @@ function setCookies(res: Response) {
   )
 }
 
-export async function createLoginFlow(params?: {login_challenge?: string, refresh?: boolean}): Promise<NextResponse> {
+export async function createLoginFlow(params?: { login_challenge?: string, refresh?: boolean }): Promise<NextResponse> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
-  let url = new URL("self-service/login/browser", BASEURL)
+  let url = new URL(BASEURL + "/self-service/login/browser")
   if (params?.login_challenge) {
     let urlParams = new URLSearchParams([['login_challenge', params?.login_challenge]])
     url.search = urlParams.toString()
   }
   const res = await fetch(url, {
-    headers: { 
+    headers: {
       'accept': 'application/json',
       Cookie: cookieString,
     },
@@ -47,7 +47,7 @@ export async function createLoginFlow(params?: {login_challenge?: string, refres
 
 export async function submitLoginFlow(email: string, password: string, csrf_token: string, flow_id: string): Promise<NextResponse> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
-  var url = new URL("self-service/login", process.env.KRATOS_INTERNAL_URL)
+  var url = new URL(BASEURL + "/self-service/login")
   var params = new URLSearchParams([["flow", flow_id]])
   url.search = params.toString();
   const res = await fetch(url, {
@@ -62,7 +62,7 @@ export async function submitLoginFlow(email: string, password: string, csrf_toke
       method: 'password',
       identifier: email,
       password: password,
-      csrf_token: csrf_token,   
+      csrf_token: csrf_token,
     })
   }) as NextResponse
   setCookies(res)
@@ -72,7 +72,7 @@ export async function submitLoginFlow(email: string, password: string, csrf_toke
 
 export async function getLoginFlow(flowId: string): Promise<Response> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
-  var url = new URL('self-service/login/flows', BASEURL)
+  var url = new URL(BASEURL + '/self-service/login/flows')
   var params = new URLSearchParams([
     ['flow', flowId]
   ])
@@ -90,7 +90,7 @@ export async function getLoginFlow(flowId: string): Promise<Response> {
 
 export async function createLogoutFlow(): Promise<Response> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
-  var url = new URL('self-service/logout/browser', BASEURL)
+  var url = new URL(BASEURL + '/self-service/logout/browser')
   return await fetch(url, {
     method: 'GET',
     headers: {
@@ -103,7 +103,7 @@ export async function createLogoutFlow(): Promise<Response> {
 
 export async function updateLogoutFlow(logout_token: string): Promise<Response> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
-  var url = new URL('self-service/logout', BASEURL)
+  var url = new URL(BASEURL + '/self-service/logout')
   var params = new URLSearchParams([
     ['token', logout_token]
   ])
@@ -120,7 +120,7 @@ export async function updateLogoutFlow(logout_token: string): Promise<Response> 
 
 export async function createRegistrationFlow(): Promise<Response> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
-  var url = new URL('self-service/registration/browser', BASEURL)
+  var url = new URL(BASEURL + '/self-service/registration/browser')
   return await fetch(url, {
     method: 'GET',
     headers: {
@@ -132,7 +132,7 @@ export async function createRegistrationFlow(): Promise<Response> {
 
 export async function getRegistrationFlow(flowId: string): Promise<Response> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
-  var url = new URL('self-service/registration/flows', BASEURL)
+  var url = new URL(BASEURL + '/self-service/registration/flows')
   var params = new URLSearchParams([
     ['flow', flowId]
   ])
@@ -149,7 +149,7 @@ export async function getRegistrationFlow(flowId: string): Promise<Response> {
 
 export async function updateRegistrationFlow(flowId: string, data: any): Promise<Response> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
-  var url = new URL("self-service/registration", BASEURL)
+  var url = new URL(BASEURL + "/self-service/registration")
   var params = new URLSearchParams([["flow", flowId]])
   url.search = params.toString();
   return await fetch(url, {
@@ -166,13 +166,13 @@ export async function updateRegistrationFlow(flowId: string, data: any): Promise
 
 export async function whoAmI(): Promise<Response> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
-  const url = new URL("sessions/whoami", BASEURL)
+  const url = new URL(BASEURL + "/sessions/whoami")
   const res = await fetch(url,
     {
-      headers: { 
+      headers: {
         'accept': 'application/json',
         Cookie: cookieString,
-       },
+      },
     })
   setCookies(res)
   return res
