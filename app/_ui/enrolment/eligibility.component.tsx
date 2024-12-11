@@ -6,19 +6,19 @@ import { ITextItem, IYesNoItem } from "../../_lib/armt/definition/field.interfac
 import { MarkdownContainer } from "../components/base/markdown";
 import { SigPad } from "../components/base/signature";
 
-type EligabilityItem = IYesNoItem | ITextItem
+type EligibilityItem = IYesNoItem | ITextItem
 
-interface EnrolmentEligabilityProps {
+interface EnrolmentEligibilityProps {
   title?: string
   description?: string
-  items: EligabilityItem[]
+  items: EligibilityItem[]
   setFieldValue: (id: string, value: boolean) => void
   values: {[key: string]: boolean | undefined}
   errors: {[key: string]: string | undefined}
 }
 
-export function EnrolmentEligability(props: EnrolmentEligabilityProps) {
-  const title = props.title ? props.title : 'Eligability'
+export function EnrolmentEligibility(props: EnrolmentEligibilityProps) {
+  const title = props.title ? props.title : 'Eligibility'
   const description = props.description
   const onChange = (event: any, value: boolean) => {
     return getYesNoOnChangeHandler(props.setFieldValue)(event, value)
@@ -29,14 +29,14 @@ export function EnrolmentEligability(props: EnrolmentEligabilityProps) {
       description={props.items[0].description}
       value={props.values[props.items[0].id]}
       onChange={onChange}
-      id={'eligability.' + props.items[0].id}
+      id={'eligibility.' + props.items[0].id}
       errorText={(props.values[props.items[0].id] != null) ? props.errors[props.items[0].id] : ""}
-      key={'eligability.' + props.items[0].id}
+      key={'eligibility.' + props.items[0].id}
     />
   ];
   for (let i = 1; i < props.items.length; i++) {
       items.push(
-        <Collapse key={'eligability.' + props.items[i].id + '.collapse'} in={(props.values[props.items[i-1].id] != null)} unmountOnExit>
+        <Collapse key={'eligibility.' + props.items[i].id + '.collapse'} in={(props.values[props.items[i-1].id] != null)} unmountOnExit>
           <Box display={"flex"} gap={2} flexDirection={"column"}>
             <Divider key={"divider." + i} />
             <YesNoField 
@@ -44,9 +44,9 @@ export function EnrolmentEligability(props: EnrolmentEligabilityProps) {
               description={props.items[i].description}
               value={props.values[props.items[i].id]}
               onChange={onChange}
-              id={'eligability.' + props.items[i].id}
+              id={'eligibility.' + props.items[i].id}
               errorText={(props.values[props.items[i].id] != null) ? props.errors[props.items[i].id] : ""}
-              key={'eligability.' + props.items[i].id}/>
+              key={'eligibility.' + props.items[i].id}/>
               </Box>
           </Collapse>
       )

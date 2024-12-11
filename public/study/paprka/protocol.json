@@ -73,8 +73,8 @@
       }
     ],
     "enrolment": {
-        "eligability": {
-            "title": "Check Your Eligability",
+        "eligibility": {
+            "title": "Check Your Eligibility",
             "description": "We can only accept people onto our study if they answer Yes to the following questions.",
             "items": [
                 {

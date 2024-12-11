@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import { Box, Button, Container, Divider, Stack, Typography } from '@mui/material';
 
 import { EnrolmentStudyInformation } from './information.component';
-import { EnrolmentEligability } from './eligability.component';
+import { EnrolmentEligibility } from './eligibility.component';
 import { EnrolmentConsent } from './consent.component';
 import { EnrolmentProtocol, StudyProtocol } from '@/app/_lib/study/protocol';
 import fromRedcapDefinition from '@/app/_lib/armt/definition/fromRedcapDefinition';
@@ -18,9 +18,9 @@ import { withBasePath } from '@/app/_lib/util/links';
 import { getCsrfToken } from '@/app/_lib/auth/ory/util';
 
 
-function generateEligabilitySchema(protocol: EnrolmentProtocol): Yup.Schema {
+function generateEligibilitySchema(protocol: EnrolmentProtocol): Yup.Schema {
   const schema: {[key: string]: Yup.Schema} = {};
-  protocol.eligability.items.forEach(
+  protocol.eligibility.items.forEach(
     (item) => schema[item.id] = Yup.boolean().required().isTrue(item.errorText ?? "This must be true to take part in the study")
   )
   return Yup.object(schema)
@@ -35,9 +35,9 @@ function generateConsentSchema(protocol: EnrolmentProtocol): Yup.Schema {
   return Yup.object(schema)
 }
 
-function generateEligabilityInitialValues(protocol: EnrolmentProtocol): {[key: string]: boolean | undefined} {
+function generateEligibilityInitialValues(protocol: EnrolmentProtocol): {[key: string]: boolean | undefined} {
   const values: {[key: string]: boolean | undefined} = {}
-  protocol.eligability.items.forEach(
+  protocol.eligibility.items.forEach(
     (item) => values[item.id] = undefined
   )
   return values
@@ -101,7 +101,7 @@ function generateSteps(protocol: EnrolmentProtocol) {
   if (protocol.studyInformation) {
     steps.push("studyInformation")
   }
-  steps.push("eligability")
+  steps.push("eligibility")
   steps.push("consent")
   if (protocol.additional) {
     steps.push("additional")
@@ -144,10 +144,10 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
     additionalDefinition = fromRedcapDefinition(protocol.additional.items)
   }
 
-  const eligabilitySchema = generateEligabilitySchema(protocol)
+  const eligibilitySchema = generateEligibilitySchema(protocol)
   const consentSchema = generateConsentSchema(protocol)
   let schemas: {[key: string]: Yup.Schema} = {
-    eligability: eligabilitySchema,
+    eligibility: eligibilitySchema,
     consent: consentSchema,
     register: registerSchema
   }
@@ -160,7 +160,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
     validateOnMount: false,
     validateOnBlur: false,
     initialValues: {
-      'eligability': generateEligabilityInitialValues(protocol),
+      'eligibility': generateEligibilityInitialValues(protocol),
       'consent': generateConsentInitialValues(protocol),
       'additional': {},
       'register': {'email': undefined, 'password': undefined}
@@ -215,13 +215,13 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
         title={protocol.studyInformation?.title}
         content={protocol.studyInformation?.content}
       />,
-    eligability: <EnrolmentEligability 
+    eligibility: <EnrolmentEligibility 
         setFieldValue={formik.setFieldValue}
-        errors={(formik.errors['eligability']) ? formik.errors['eligability'] : {}}
-        values={formik.values['eligability']}
-        title={protocol.eligability.title}
-        description={protocol.eligability.description}
-        items={protocol.eligability.items}
+        errors={(formik.errors['eligibility']) ? formik.errors['eligibility'] : {}}
+        values={formik.values['eligibility']}
+        title={protocol.eligibility.title}
+        description={protocol.eligibility.description}
+        items={protocol.eligibility.items}
       />,
     consent: <EnrolmentConsent 
       setFieldValue={formik.setFieldValue}

@@ -11,7 +11,7 @@ export type Onboarding = {
   steps: OnboardingStep[];
 };
 
-export type EligabilityItem = IYesNoItem
+export type EligibilityItem = IYesNoItem
 export type ConsentItem = IYesNoItem
 
 export type EnrolmentStudyInformation = {
@@ -19,10 +19,10 @@ export type EnrolmentStudyInformation = {
   content?: string
 };
 
-export type EnrolmentEligability = {
+export type EnrolmentEligibility = {
   title?: string,
   description?: string,
-  items: EligabilityItem[]
+  items: EligibilityItem[]
 }
 
 
@@ -46,7 +46,7 @@ export type EnrolmentAccount = {
 
 export type EnrolmentProtocol = {
   studyInformation?: EnrolmentStudyInformation,
-  eligability: EnrolmentEligability,
+  eligibility: EnrolmentEligibility,
   consent: EnrolmentConsent,
   additional?: EnrolmentAdditional
   account?: EnrolmentAccount
