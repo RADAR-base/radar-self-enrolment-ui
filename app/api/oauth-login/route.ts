@@ -40,7 +40,7 @@ export async function POST(
   const { remember } = await request.json()
   try {
     const response = await fetch(
-      `${baseURL}/admin/oauth2/auth/requests/login/accept?login_challenge=${loginChallenge}`,
+      `${baseURL}/oauth2/auth/requests/login/accept?login_challenge=${loginChallenge}`,
       {
         method: 'PUT',
         body: JSON.stringify({

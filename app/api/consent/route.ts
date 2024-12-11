@@ -31,7 +31,7 @@ function getUserId(userSession: any): string {
 }
 
 function getConsentRequest(consentChallenge: string) {
-  let url = new URL(`${baseURL}/admin/oauth2/auth/requests/consent`)
+  let url = new URL(`${baseURL}/oauth2/auth/requests/consent`)
   url.search = new URLSearchParams([['consent_challenge', consentChallenge]]).toString()
   return fetch(url)
 }
@@ -84,7 +84,7 @@ export async function POST(
   }
 
   if (consentAction == "accept") {
-    let url = new URL(`${baseURL}/admin/oauth2/auth/requests/consent/accept`)
+    let url = new URL(`${baseURL}/oauth2/auth/requests/consent/accept`)
     url.search = new URLSearchParams([['consent_challenge', consentChallenge]]).toString()
     const body = {
       grant_scope: grantScope,

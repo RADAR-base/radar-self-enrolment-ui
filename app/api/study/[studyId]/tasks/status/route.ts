@@ -11,7 +11,7 @@ export interface ArmtStatus {
 }
 
 async function getExistingTasks(studyId: string, userId: string) {
-  const r = await fetch(process.env.KRATOS_ADMIN_URL + '/admin/identities/' + userId, {
+  const r = await fetch(process.env.KRATOS_ADMIN_URL + '/identities/' + userId, {
     method: 'GET',
     headers: {
       'accept': 'application/json',

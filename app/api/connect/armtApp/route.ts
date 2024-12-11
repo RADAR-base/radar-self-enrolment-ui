@@ -27,7 +27,7 @@ const extractSession = (identity: any, grantScope: string[]) => {
 }
 
 function getConsentRequest(consentChallenge: string) {
-  let url = new URL(`${HYDRA_ADMIN_URL}/admin/oauth2/auth/requests/consent`)
+  let url = new URL(`${HYDRA_ADMIN_URL}/oauth2/auth/requests/consent`)
   url.search = new URLSearchParams([['consent_challenge', consentChallenge]]).toString()
   return fetch(url)
 }

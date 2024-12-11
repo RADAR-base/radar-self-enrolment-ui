@@ -8,7 +8,7 @@ import { whoAmI } from "@/app/_lib/auth/ory/kratos";
 import { ActiveTaskResponse } from "@/app/_lib/armt/response/response.interface";
 
 async function sendTaskResponse(studyId: string, userId: string, taskData: ActiveTaskResponse) {
-  return await fetch(process.env.KRATOS_ADMIN_URL + '/admin/identities/' + userId, {
+  return await fetch(process.env.KRATOS_ADMIN_URL + '/identities/' + userId, {
     method: 'PATCH',
     headers: {
       'accept': 'application/json',
