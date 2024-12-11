@@ -57,7 +57,7 @@ function generateConsentInitialValues(protocol: EnrolmentProtocol): {[key: strin
 
 const registerSchema = Yup.object().shape({
   email: Yup.string().email("Invalid Email").required(""),
-  password: Yup.string().min(8, "Password must be at least 8 characters").required("")
+  password: Yup.string().min(12, "Password must be at least 12 characters").required("")
 })
 
 
@@ -199,13 +199,14 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
               (data) => {
                 if (data?.ui?.messages !== undefined) {
                   setErrorText(data.ui.messages[0]['text'])
-                  formik.setSubmitting(false)
                   scrollToTop()
                 }              
               }
             )
-          } 
+          }
         }
+      ).finally(
+        () => formik.setSubmitting(false)
       )
     },
   })

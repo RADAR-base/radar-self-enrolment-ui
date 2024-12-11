@@ -17,7 +17,7 @@ const CustomTextField = styled(TextField)({
 
 const RegisterSchema = Yup.object().shape({
   email: Yup.string().email("Invalid Email").required("Required"),
-  password: Yup.string().min(8, "Password must be at least 8 characters").required("Required")
+  password: Yup.string().min(12, "Password must be at least 12 characters").required("Required")
 })
 
 const Register: React.FC<{onRegister?: () => void}> = (props: {onRegister?: () => void}) => {

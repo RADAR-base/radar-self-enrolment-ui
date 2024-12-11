@@ -45,7 +45,6 @@ export async function POST(
 
   const values = (await request.json())
 
-
   try {
     const registery: StudyProtocolRepository = new StudyProtocolRepository()  
     protocol = await registery.getStudyProtocol(studyId)
