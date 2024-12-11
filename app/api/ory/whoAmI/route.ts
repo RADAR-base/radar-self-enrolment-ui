@@ -3,13 +3,13 @@ import { cookies } from "next/headers"
 
 export async function GET(request: Request) {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
-  const url = new URL("sessions/whoami", process.env.KRATOS_INTERNAL_URL)
+  const url = new URL(process.env.KRATOS_INTERNAL_URL + "/sessions/whoami")
   const res = await fetch(url,
     {
-      headers: { 
+      headers: {
         'accept': 'application/json',
         Cookie: cookieString,
-       },
+      },
     })
   setCookies(res)
   return res
