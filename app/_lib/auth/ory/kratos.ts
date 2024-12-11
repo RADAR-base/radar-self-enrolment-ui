@@ -44,7 +44,6 @@ export async function createLoginFlow(params?: { login_challenge?: string, refre
   return res
 }
 
-
 export async function submitLoginFlow(email: string, password: string, csrf_token: string, flow_id: string): Promise<NextResponse> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + "/self-service/login")
@@ -69,7 +68,6 @@ export async function submitLoginFlow(email: string, password: string, csrf_toke
   return res
 }
 
-
 export async function getLoginFlow(flowId: string): Promise<Response> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + '/self-service/login/flows')
@@ -87,7 +85,6 @@ export async function getLoginFlow(flowId: string): Promise<Response> {
   })
 }
 
-
 export async function createLogoutFlow(): Promise<Response> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + '/self-service/logout/browser')
@@ -99,7 +96,6 @@ export async function createLogoutFlow(): Promise<Response> {
     },
   })
 }
-
 
 export async function updateLogoutFlow(logout_token: string): Promise<Response> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
@@ -116,7 +112,6 @@ export async function updateLogoutFlow(logout_token: string): Promise<Response> 
     },
   })
 }
-
 
 export async function createRegistrationFlow(): Promise<Response> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
@@ -162,7 +157,6 @@ export async function updateRegistrationFlow(flowId: string, data: any): Promise
     body: JSON.stringify(data)
   })
 }
-
 
 export async function whoAmI(): Promise<Response> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
