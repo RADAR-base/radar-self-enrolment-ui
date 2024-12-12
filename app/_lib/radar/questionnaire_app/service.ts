@@ -2,8 +2,8 @@ import { randomUUID } from "crypto"
 
 const AUTH_BASE_URL = process.env.NEXT_PUBLIC_HYDRA_PUBLIC_URL + "/oauth2"
 const GRANT_TYPE = "authorization_code"
-const CLIENT_ID = "aRMT"
-const CLIENT_SECRET = "secret"
+const CLIENT_ID = process.env.ARMT_CLIENT_ID ?? "aRMT"
+const CLIENT_SECRET = process.env.ARMT_CLIENT_SECRET  ?? ""
 const REDIRECT_URI = process.env.NEXT_PUBLIC_ARMT_REDIRECT_URI
 
 export async function getAccessToken(
