@@ -1,14 +1,6 @@
 {
     "blocks": [
           {
-            "blockType": "hero",
-            "title": "PAPRKA: How Active are People After Knee Surgery?",
-            "subtitle": "The Physical Activity Patterns after Knee Arthroplasty (PAPrKA) study will discover how physical activity changes after a knee joint replacement, in the first months of recovery as well as long-term improvements.\n\nLed by the University of Manchester, we will ask people who have had surgery to share data from their fitness devices and apps, so we can find answers to these questions.",
-            "noCard": true,
-            "blockBackground": "linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 1)), center / cover no-repeat url('/kratos-ui/study/paprka/resources/hero.png'), #ffffff",
-            "cta": {"text": "Join Study", "href": "paprka/enrol"}
-          },
-          {
             "blockType": "column",
             "noCard": true,
             "blockBackground": "white",
@@ -38,25 +30,9 @@
           },
           {
             "blockType": "text",
-            "noCard": false,
+            "noCard": true,
             "title": "Connecting Your Fitness Tracker", 
             "content": "We will collect data from participants using wearable fitness trackers or smartphone apps and analyse it to understand recovery and mobility after knee surgery.\n\nWe’re looking for people who tracked activity levels before and after surgery using Fitbit, Apple Watch, Garmin, Polar, Strava, Oura, Apple Health or Google Fit.\n\nConnecting your device couldn’t be simpler. With help from real patients, we have designed a step-by-step process that will support anyone to connect their device in a stress-free way."
-          },
-          {
-            "blockType": "column",
-            "noCard": true,
-            "title": "More Information", 
-            "blockBackground": "white",
-            "content": {
-              "block1": {
-                "blockType": "text",
-                "content": "We understand that you may have questions about our research, what your involvement may be, how your data will be used, who has access to your data, how we will keep your data safe, and much more. We created our Participant Information Sheet to provide you with these answers.\n\nIf you have any further questions, please contact us using the details below.\n"
-              },
-              "block2": {
-                "blockType": "markdown",
-                "content": "<iframe src='/kratos-ui/study/paprka/resources/paprka_pis.pdf#view=FitH' width='100%' height='800px' loading='lazy' title='Information Sheet'></iframe>"
-              }
-            }
           },
           {
             "blockType": "markdown",

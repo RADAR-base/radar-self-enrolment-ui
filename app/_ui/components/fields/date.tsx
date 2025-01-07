@@ -30,7 +30,7 @@ export function ArmtDateField({label, description, errorText, ...props}: ArmtDat
           value={props.value ? dayjs(props.value) : null}
           disabled={props.disabled}
           openTo="year"
-          views={['year','month','day']}
+          views={['year','month', 'day']}
           format='DD/MM/YYYY'
           formatDensity='spacious'
           label={label}

@@ -39,7 +39,10 @@ function NavBar(props: NavBarProps) {
               paddingRight={4}
         >
             {props.logo_src && 
-            <Image src={withBasePath(props.logo_src)} alt='Study logo' width={32} height={32}/>
+            <Box height={"3rem"}>
+              <img src={withBasePath(props.logo_src)} alt='Study logo' height={"100%"}></img>
+              {/* <Image src={withBasePath(props.logo_src)} alt='Study logo' fill={true} objectFit='contain'/> */}
+            </Box>
             }
             <Typography variant="h1" align="center">
               {props.title}

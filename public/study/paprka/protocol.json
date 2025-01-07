@@ -46,25 +46,12 @@
         }
       },
       {
-        "id": "paprka_prizedraw",
-        "appearance": {},
-        "schedule": {},
-        "metadata": {
-          "title": "Prize Draw",
-          "order": 3,
-          "description": "Win a £25 Amazon voucher.",
-          "optional": true,
-          "type": "redcap_local",
-          "path": "/public/study/paprka/resources/paprka_prizedraw.json"
-        }
-      },
-      {
         "id": "paprka_feedback",
         "appearance": {},
         "schedule": {},
         "metadata": {
           "title": "Feedback",
-          "order": 4,
+          "order": 3,
           "description": "Help us make this process easier for others.",
           "optional": true,
           "type": "redcap_local",
@@ -99,7 +86,7 @@
         },
         "consent": {
             "title": "Consent",
-            "description": "Before you can take part in this study, we need your consent to access information from your fitness tracker or smartphone app, and your NHS records.\n\nYour data will be managed by the PAPRKA research team and will not be shared with any other parties. You can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)",
+            "description": "Before you can take part in this study, we need your consent to access activity data from your iPhone, fitness tracker or smartphone app, and your National Join Registry knee replacement surgery record.\n\nYour data will be managed by the PAPRKA research team and will not be shared with any other parties. You can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)",
             "requiredItems": [
                 {
                     "fieldType": "yesno",
@@ -261,7 +248,7 @@
     },
     "studyUiConfig": {
         "materialTheme": {},
-        "studyIconSrc": "/study/paprka/resources/hrfh_low.png",
+        "studyIconSrc": "/study/paprka/resources/hrfh_landscape_text.jpg",
         "navbarLinks": [
             {"text": "Home", "href": "/paprka"},
             {"text": "About", "href": "/paprka/about"},

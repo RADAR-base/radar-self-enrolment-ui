@@ -14,6 +14,25 @@ import { useRouter } from "next/navigation";
 import NextButton from "../components/base/nextButton";
 import { DeviceConnectedBanner } from "../components/device_connect/successBanner";
 
+const TEMP_CONTENT: {[key: string]: any} = {
+  'fitbit': {
+    title: 'Fitbit',
+    description: 'Wearable fitness tracker'
+  },
+  'apple_health': {
+    title: 'Apple Health',
+    description: 'Wearable fitness tracker'
+  },  
+  'garmin': {
+    title: 'Garmin',
+    description: 'Wearable fitness tracker'
+  },
+  'oura': {
+    title: 'Oura',
+    description: 'Wearable fitness tracker'
+  },
+}
+
 interface DevicesPanel {
   protocol: StudyProtocol
 }
@@ -55,7 +74,7 @@ export function DevicesPanel(props: DevicesPanel) {
             textAlign={'left'} alignContent={'flex-start'}
             alignItems={'flex-start'}
             padding={3}>
-          <Typography variant="h2">Connect Devices</Typography>
+          <Typography variant="h2">Connect Your iPhone, Fitness Tracker or Smartphone App</Typography>
           <MarkdownContainer>
           {"By sharing your activity data with us we gain valuable insights into recovery and mobility after knee replacement surgery.\n<br />\nFollow the step-by-step instructions [link TBC] or watch a video [link TBC] to show you how to connect your fitness tracker or smartphone app.\n<br />\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data by reading our privacy policy\n<br />\n**How do I Identify my device?**\n\nCheck the logo on your fitness tracker or smartphone application to find your device or app below."}
           </MarkdownContainer>
@@ -70,7 +89,7 @@ export function DevicesPanel(props: DevicesPanel) {
     </Grid>
     {devices.map((deviceId, i) => (
       <Grid size={{xs: 12, sm: 6, md: 4}} key={'task.'+i}>
-        <RadarDeviceCard deviceId={deviceId}></RadarDeviceCard>
+        <RadarDeviceCard deviceId={deviceId} title={TEMP_CONTENT[deviceId].title} description={TEMP_CONTENT[deviceId].description} ></RadarDeviceCard>
       </Grid>
     ))}
   </Grid>
