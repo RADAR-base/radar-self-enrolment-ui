@@ -1,6 +1,7 @@
 import { Button, Typography, Link } from '@mui/material'
 import { getOverrides, MuiMarkdown } from 'mui-markdown'
 import Image from 'next/image'
+import HoverPopover from './hoverPopover'
 
 interface MarkdownContainerProps {
   children?: string
@@ -13,6 +14,9 @@ export function MarkdownContainer({children, ...props }: MarkdownContainerProps)
     <MuiMarkdown 
       overrides={{
         ...getOverrides({}),
+        HoverPopover: {
+          component: HoverPopover
+        },
         Image: {
           component: Image,
           props: {

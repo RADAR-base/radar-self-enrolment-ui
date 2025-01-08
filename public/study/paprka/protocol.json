@@ -111,7 +111,7 @@
                   {
                     "fieldType": "yesno",
                     "id": "required5",
-                    "description": "I give permission for the PAPrKA team to access my knee replacement data stored with National Joint Registry to collect information for the study.\n"
+                    "description": "I give permission for the PAPrKA team to access my knee replacement data stored with National Joint Registry <HoverPopover innerContent=\"Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1\" outerContent=\"ℹ️\" /> to collect information for the study.\n"
                   },
                   {
                     "fieldType": "yesno",
