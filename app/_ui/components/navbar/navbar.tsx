@@ -1,11 +1,106 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Image from 'next/image'
 import NextLink from 'next/link'
 
-import { AppBar, Box, Button, Container, Divider, IconButton, Link, Menu, MenuItem, Toolbar, Typography } from '@mui/material'
+import { AppBar, Box, Button, Container, Divider, IconButton, Link, Menu, MenuItem, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu';
 import { withBasePath } from '@/app/_lib/util/links'
+import { AccountButton } from './accountButton'
+import { ProtocolContext } from '@/app/_lib/study/protocol/provider.client'
+import { ParticipantContext } from '@/app/_lib/auth/provider.client'
+
+
+interface MenuProps {
+  links?: {text: string, href: string}[]
+  loggedIn: boolean,
+  studyId?: string
+}
+
+function SmallMenu(props: MenuProps) {
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => setAnchorElNav(event.currentTarget);
+  const handleCloseNavMenu = () => setAnchorElNav(null);
+  return (
+    <Box flexGrow={1}
+         flexDirection='row'
+         alignItems='center'
+         justifyContent='flex-end'
+         display='flex'>
+      <AccountButton />
+      <IconButton
+        size="large"
+        aria-label="account of current user"
+        aria-controls="menu-appbar"
+        aria-haspopup="true"
+        onClick={handleOpenNavMenu}
+        color="inherit">
+        <MenuIcon />
+      </IconButton>
+      <Menu
+        id="menu-appbar"
+        anchorEl={anchorElNav}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        keepMounted
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={Boolean(anchorElNav)}
+        onClose={handleCloseNavMenu}>
+        {props.links?.map((link, i) => (
+          <MenuItem
+            key={i}>
+            <Typography sx={{ textAlign: 'center' }}>
+              <NextLink href={link.href} passHref legacyBehavior>
+                <Link underline='none' variant='button' sx={{textTransform: 'none'}}  onClick={handleCloseNavMenu}>
+                  {link.text}
+                </Link>
+              </NextLink>
+            </Typography>
+          </MenuItem>
+        ))}
+        {(props.loggedIn && props.studyId) && 
+        <MenuItem>
+          <Typography sx={{ textAlign: 'center' }}>
+            <NextLink href={`/${props.studyId}/portal`} passHref legacyBehavior>
+              <Link underline='none' variant='button' sx={{textTransform: 'none'}}  onClick={handleCloseNavMenu}>
+                Portal
+              </Link>
+            </NextLink>
+          </Typography>
+        </MenuItem>
+        }
+      </Menu>
+    </Box>
+  )
+}
+
+function LargeMenu(props: MenuProps) {
+  return (
+    <Box flexGrow={1} flexDirection='row' alignItems='center' justifyContent='flex-end'
+         gap={2} display='flex'>
+      {props.links?.map(
+        (link, i) => {
+          return (
+            <NextLink href={link.href} passHref legacyBehavior key={i}>
+              <Button sx={{textTransform: 'none'}}>{link.text}</Button>
+            </NextLink>)
+        }
+        
+      )}
+      {(props.loggedIn && props.studyId) && 
+        <NextLink href={`/${props.studyId}/portal`} passHref legacyBehavior>
+            <Button sx={{textTransform: 'none'}}>Portal</Button>
+        </NextLink>
+      }
+      <AccountButton />
+    </Box>
+  )
+}
 
 interface NavBarProps {
   title?: string;
@@ -16,16 +111,10 @@ interface NavBarProps {
 };
 
 function NavBar(props: NavBarProps) {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('sm'));
+  const participant = useContext(ParticipantContext);
+  const study = useContext(ProtocolContext)
   return (
   <AppBar color='inherit'>
     <Container maxWidth='lg' sx={{padding: 2}}> 
@@ -36,81 +125,13 @@ function NavBar(props: NavBarProps) {
               justifyContent='flex-start'
               alignItems='center'
               gap={2}
-              paddingRight={4}
-        >
-            {props.logo_src && 
-            <Box height={"3rem"}>
-              <img src={withBasePath(props.logo_src)} alt='Study logo' height={"100%"}></img>
-              {/* <Image src={withBasePath(props.logo_src)} alt='Study logo' fill={true} objectFit='contain'/> */}
-            </Box>
-            }
-            <Typography variant="h1" align="center">
-              {props.title}
-            </Typography>
+              paddingRight={4}>
+          {props.logo_src &&<Box height={"3rem"}><img src={withBasePath(props.logo_src)} alt='Study logo' height={"100%"}></img></Box>}
+          <Typography variant="h1" align="center">
+            {props.title}
+          </Typography>
         </Box>
-        {props.links && 
-        <Box flexGrow={1}            // Small Menu
-              flexDirection='row'
-              alignItems='center'
-              justifyContent='flex-end'
-              sx={{ display: { xs: 'flex', sm: 'none' } }}>
-          <IconButton
-            size="large"
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleOpenNavMenu}
-            color="inherit"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorElNav}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorElNav)}
-            onClose={handleCloseNavMenu}
-            sx={{ display: { xs: 'block', sm: 'none' } }}
-          >
-            {props.links?.map((link, i) => (
-              <MenuItem
-                key={i}>
-                <Typography sx={{ textAlign: 'center' }}>
-                  <NextLink href={link.href} passHref legacyBehavior>
-                    <Link underline='none' variant='button' sx={{textTransform: 'none'}}  onClick={handleCloseNavMenu}>
-                      {link.text}
-                    </Link>
-                  </NextLink>
-                </Typography>
-              </MenuItem>
-            ))}
-          </Menu>
-        </Box>
-        }
-        <Box  flexGrow={1}            // Large menu
-              flexDirection='row'
-              alignItems='center'
-              justifyContent='flex-end'
-              gap={2}
-              sx={{ display: { xs: 'none', sm: 'flex' } }}
-              >
-          {props.links?.map(
-            (link, i) => {
-              return (
-                <NextLink href={link.href} passHref legacyBehavior key={i}>
-                  <Button sx={{textTransform: 'none'}}>{link.text}</Button>
-                </NextLink>)
-            }
-          )}
-        </Box>
+        {matches ? <SmallMenu links={props.links} loggedIn={participant?.loggedIn ?? false} studyId={study.studyId} /> : <LargeMenu links={props.links} loggedIn={participant?.loggedIn ?? false} studyId={study.studyId} />}
       </Toolbar>
     </Container>
     <Divider style={{width: '100%', paddingLeft: 0}}/>

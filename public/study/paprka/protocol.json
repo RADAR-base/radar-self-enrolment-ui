@@ -251,8 +251,7 @@
         "studyIconSrc": "/study/paprka/resources/hrfh_landscape_text.jpg",
         "navbarLinks": [
             {"text": "Home", "href": "/paprka"},
-            {"text": "About", "href": "/paprka/about"},
-            {"text": "Portal", "href": "/paprka/portal"}
+            {"text": "About", "href": "/paprka/about"}
           ],
         "footer": {
             "columns": [

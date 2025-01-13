@@ -1,13 +1,15 @@
 "use client"
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { Box, Button, Stack, TextField } from "@mui/material"
-import React, { useCallback, useEffect, useState } from "react"
+import { Box, Button, Stack, TextField, Typography } from "@mui/material"
+import React, { useCallback, useContext, useEffect, useState } from "react"
 import { useFormik } from "formik"
 import { withBasePath } from "@/app/_lib/util/links"
 import { getCsrfToken } from '@/app/_lib/auth/ory/util'
+import { ParticipantContext } from '@/app/_lib/auth/provider.client'
 
 interface LoginProps {
     onLogin?: () => void
+    redirectTo?: string
     loginChallenge?: string
 }
 
@@ -15,7 +17,6 @@ export function LoginComponent(props: LoginProps) {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const router = useRouter()
-
   let [flow, setFlow] = useState<any>();
 
   const createQueryString = useCallback(
@@ -56,7 +57,11 @@ export function LoginComponent(props: LoginProps) {
       getFlow(setFlow)
     }
   }, [flow])
-  const onLogin = props.onLogin ? props.onLogin : () => router.push('/')
+
+  const onLogin = props.onLogin ? props.onLogin : () => {
+    window.location.replace(props.redirectTo ?? '/')
+    // router.refresh()
+  }
   const formik = useFormik({
       initialValues: {
           email: '',
@@ -72,39 +77,37 @@ export function LoginComponent(props: LoginProps) {
         }
       }
   });
+  
 
   return (
-          <Box 
-          display="flex"
-          alignItems="center"
-          alignContent="center"
-          p={4}>
-          <form onSubmit={formik.handleSubmit}>
-              <Stack spacing={2} alignItems="center">
-              <h1>Login</h1>
-              <TextField
-                  id="email"
-                  name="email"
-                  label="Email"
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.email && Boolean(formik.errors.email)}/>
-              <TextField
-                  id="password"
-                  name="password"
-                  label="Password"
-                  type="password"
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.password && Boolean(formik.errors.password)}/>
-              <Button color="primary" variant="contained" type="submit" disabled={formik.isSubmitting || (flow==undefined)}>
-                  Login
-              </Button>
-              </Stack>
-          </form>
-      </Box>
+    <form onSubmit={formik.handleSubmit}>
+        <Stack spacing={2} alignItems="center">
+        <Typography variant='h1'>Login</Typography>
+        <TextField
+            fullWidth
+            id="email"
+            name="email"
+            label="Email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            />
+        <TextField
+            fullWidth
+            id="password"
+            name="password"
+            label="Password"
+            type="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.password && Boolean(formik.errors.password)}/>
+        <Button color="primary" variant="contained" type="submit" disabled={formik.isSubmitting || (flow==undefined)} style={{alignSelf: 'end'}}>
+            Login
+        </Button>
+        </Stack>
+    </form>
 )}
 
 export default LoginComponent

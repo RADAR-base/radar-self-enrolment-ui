@@ -27,7 +27,6 @@ const RadarDeviceCardRoot = styled(Paper, {name: 'RadarDeviceCard', slot: 'root'
   maxWidth: "lg"
 }));
 
-
 export const RadarDeviceCard = React.forwardRef(function RadarDeviceCard({deviceId, status, title, description}: RadarDeviceCardProps, ref) {
   return <RadarDeviceCardRoot>
     <Box display='flex' gap={2} height={"100%"} flexDirection={'row'} justifyItems={'center'}>

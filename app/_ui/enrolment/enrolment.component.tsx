@@ -192,6 +192,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
         (res) => {
           if (res.ok) {
             router.push("portal")
+            window.location.reload()
             return
           }
           if (res.status == 400) {
