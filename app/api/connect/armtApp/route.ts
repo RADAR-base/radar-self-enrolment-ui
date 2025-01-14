@@ -7,7 +7,7 @@ import { withBasePath } from "@/app/_lib/util/links"
 const HYDRA_ADMIN_URL = process.env.HYDRA_ADMIN_URL
 const HYDRA_PUBLIC_URL = process.env.HYDRA_PUBLIC_URL
 const CLIENT_ID = 'aRMT'
-const CLIENT_SECRET = 'secret'
+const CLIENT_SECRET = ''
 const GRANT_TYPE = 'authorization_code'
 const REDIRECT_URI = process.env.NEXT_PUBLIC_ARMT_REDIRECT_URI
 
@@ -60,7 +60,7 @@ function getLoginChallengeUrl(state: string) {
 }
 
 export async function GET(
-  request: NextRequest, 
+  request: NextRequest,
   { params }: { params: Promise<{ consent_challenge: string }> }
 ) {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
@@ -71,13 +71,13 @@ export async function GET(
   try {
     const resp = await whoAmI()
     if (resp.status != 200) {
-      return NextResponse.json({error: {type: 'authentication', content: {message: "No user session"}}}, {status: 403})
+      return NextResponse.json({ error: { type: 'authentication', content: { message: "No user session" } } }, { status: 403 })
     }
     oryUser = await resp.json()
     userId = oryUser['identity']['id']
     identity = oryUser['identity']
   } catch {
-    return NextResponse.json({error: {type: 'authentication', content: {message: "Error decoding user session"}}}, {status: 403})
+    return NextResponse.json({ error: { type: 'authentication', content: { message: "Error decoding user session" } } }, { status: 403 })
   }
 
   const res1 = await fetch(getLoginChallengeUrl(state), {
