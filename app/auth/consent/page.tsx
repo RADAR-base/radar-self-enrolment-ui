@@ -64,8 +64,8 @@ export default function Page() {
   const consentChallenge = searchParams.get('consent_challenge') ?? ""
 
   async function acceptSkipConsent() {
-  
   }
+
   function accept() {
     const body = {
       consentAction: 'accept',

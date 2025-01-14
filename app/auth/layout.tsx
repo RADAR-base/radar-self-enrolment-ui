@@ -17,7 +17,7 @@ export default function StudyLayout({
 }>) {
   return (
     <Container maxWidth="md">
-      <Stack m={4} spacing={4} alignItems="center"> 
+      <Stack m={4} spacing={4} alignItems="center" alignContent={'center'}> 
         <div>{children}</div>
       </Stack>
     </Container>
