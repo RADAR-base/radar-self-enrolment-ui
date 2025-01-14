@@ -15,7 +15,7 @@ let url = new URL('https://www.fitbit.com/oauth2/authorize')
 url.search = new URLSearchParams([
   [  'response_type', 'code'],
     ['client_id', _clientId],
-    ['redirect_uri',  'http://localhost:3000/kratos-ui/paprka/portal/connect/fitbit'],
+    ['redirect_uri',  'https://dev.radarbasedev.co.uk/kratos-ui/paprka/portal/connect/fitbit'],
     ['expires_in', '604800'],
     ['scope', ['activity', 'heartrate', 'location', 'nutrition', 'profile', 'sleep', 'weight'].join(' ')]
 ]
