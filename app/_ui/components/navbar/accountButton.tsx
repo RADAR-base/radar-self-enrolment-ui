@@ -107,9 +107,9 @@ interface AccountButtonProps {
 export function AccountButton(props: AccountButtonProps) {
   const protocol = useContext(ProtocolContext);
   const participant = useContext(ParticipantContext);
-  const [loggedIn, setLoggedIn] = React.useState<boolean | undefined>(participant?.loggedIn)
+  const loggedIn = participant?.loggedIn
   const signInLink = protocol.studyId ? withBasePath(`/${protocol.studyId}/login`) : withBasePath('/auth/login')
   return <div>
-    {loggedIn ? <LoggedInButtons /> : <Button variant='outlined' href={signInLink}>Sign In</Button>}
+    {loggedIn ? <LoggedInButtons /> : <Button variant='outlined' href={signInLink} style={{'textWrap': 'nowrap'}}>Sign In</Button>}
   </div>
 }

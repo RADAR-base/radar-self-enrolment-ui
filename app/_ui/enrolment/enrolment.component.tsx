@@ -341,9 +341,10 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
       }}
     >
       <form onSubmit={formik.handleSubmit}>
-        <Stack gap={4} margin={"auto"}>
+        <Stack display={'inline'} gap={2} margin={"auto"}>
           {errorText && <Typography variant='overline' color='error'>{errorText}</Typography>}
           {stepContent[steps[stepIdx]]}
+          <br />
           {ControlButtons}
         </Stack>  
       </form>

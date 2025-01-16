@@ -116,7 +116,7 @@ function NavBar(props: NavBarProps) {
   const participant = useContext(ParticipantContext);
   const study = useContext(ProtocolContext)
   return (
-  <AppBar color='inherit'>
+  <AppBar color='inherit' sx={{'overflowX': 'auto'}}>
     <Container maxWidth='lg' sx={{padding: 2}}> 
       <Toolbar variant='dense' disableGutters>
         <Box  flexGrow={1}          // Large & small title
@@ -127,9 +127,7 @@ function NavBar(props: NavBarProps) {
               gap={2}
               paddingRight={4}>
           {props.logo_src &&<Box height={"3rem"}><img src={withBasePath(props.logo_src)} alt='Study logo' height={"100%"}></img></Box>}
-          <Typography variant="h1" align="center">
-            {props.title}
-          </Typography>
+          <Typography display={{'xs': 'none', 'md': 'block'}} variant="h1" align="center">{props.title}</Typography>
         </Box>
         {matches ? <SmallMenu links={props.links} loggedIn={participant?.loggedIn ?? false} studyId={study.studyId} /> : <LargeMenu links={props.links} loggedIn={participant?.loggedIn ?? false} studyId={study.studyId} />}
       </Toolbar>

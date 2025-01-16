@@ -19,7 +19,7 @@ export function ArmtSignatureField({label, description, errorText, ...props}: Ar
   const [open, setOpen] = React.useState(false);
   const [isTypeEntrySignature, setIsTypeEntrySignature] = React.useState<boolean>(false)
   const [typedSignature, setTypedSignature] = React.useState<string>("")
-
+  window.devicePixelRatio = 1
   const canvasIsBlank = () => {
     const canvas = signCanvas.current?.getCanvas()
     if (canvas) {
@@ -45,12 +45,16 @@ export function ArmtSignatureField({label, description, errorText, ...props}: Ar
       if (ctx) {
         ctx.textAlign = "center"
         ctx.font = "50px Cursive"
-        ctx.fillText(typedSignature, canvas.width*0.5,canvas.height*0.5, 500)
+        ctx.fillText(typedSignature, canvas.width / (2 * devicePixelRatio), canvas.height / (2 * devicePixelRatio), 800)
       }
     }
   }
 
   const saveCanvas = () => {
+    const canvas = signCanvas.current
+    if (canvas) {
+      const htmlCanvas = canvas.getCanvas()
+    }
     const imgStr = signCanvas.current?.getTrimmedCanvas().toDataURL()
     props.setFieldValue(props.id, imgStr)
     handleClose()
@@ -74,6 +78,7 @@ export function ArmtSignatureField({label, description, errorText, ...props}: Ar
               />
     </Box>
   )
+
   const sigImg = (
       <img
         src={props.value}
@@ -82,8 +87,8 @@ export function ArmtSignatureField({label, description, errorText, ...props}: Ar
           display: "block",
           margin: "0 auto",
           border: "1px solid 444",
-          maxWidth: 600,
-          maxHeight: 200,
+          maxWidth: '100%',
+          maxHeight: '100%',
           justifySelf: 'left'
         }}
       />
@@ -100,7 +105,7 @@ export function ArmtSignatureField({label, description, errorText, ...props}: Ar
       <Box display={"flex"} flexDirection={"column"} textAlign={"left"} marginTop={1} alignItems={'flex-start'} gap={1}>
         <Typography variant="h4" component={'span'}>{props.title}</Typography>
         <Typography variant="body1" component={'span'} >{description}</Typography>
-        <Box display='flex' sx={{ border: '1px solid #999', borderRadius: 2, width: 800, minHeight: 200}} alignItems={'center'} justifyItems={'center'}>
+        <Box display='flex' sx={{ border: '1px solid #999', borderRadius: 2, maxWidth: 800, width: '100%', height: 200}} alignItems={'center'} justifyItems={'center'}>
           {props.value ? (sigImg) : null}
         </Box>
         <div>
@@ -147,6 +152,7 @@ export function ArmtSignatureField({label, description, errorText, ...props}: Ar
               <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} paddingTop={1}> 
                 <Button onClick={handleClose}>Back</Button>
                 <Button onClick={save}>Save</Button>
+                <Button onClick={drawText}>Draw</Button>
               </Box>
             </Box>
           </Modal>
