@@ -67,26 +67,23 @@
                 {
                     "fieldType": "yesno",
                     "id": "criteria1",
-                    "description": "Are you over 18 years of age?",
-                    "errorText": "You must be over 18 to take part in this study."
+                    "description": "Are you over 18 years of age?"
                   },
                   {
                     "fieldType": "yesno",
                     "id": "criteria2",
-                    "description": "Have you had total, or partial, knee replacement surgery between January 2016 and December 2022?",
-                    "errorText": "Only those who have had recent knee replacement surgery can take part"
+                    "description": "Have you had total, or partial, knee replacement surgery, either through the NHS or a private healthcare provider, between January 2017 and December 2023?"
                   },
                   {
                     "fieldType": "yesno",
                     "id": "criteria3",
-                    "description": "Did you use a smartphone app or fitness tracker to track your activity in the year before your knee replacement and 2 years after surgery?",
-                    "errorText": "This studies needs smartphone or fitness tracker data from around the period of a knee replacement surgery"
+                    "description": "Did you use a smartphone app or fitness tracker to track your activity after your surgery? An iPhone automatically collects activity data."
                 }
             ]
         },
         "consent": {
             "title": "Consent",
-            "description": "Before you can take part in this study, we need your consent to access activity data from your iPhone, fitness tracker or smartphone app, and your National Join Registry knee replacement surgery record.\n\nYour data will be managed by the PAPRKA research team and will not be shared with any other parties. You can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)",
+            "description": "Before you can take part in this study, we need your consent to access activity data from your iPhone, fitness tracker or smartphone app, and your National Join Registry knee replacement surgery record.\n<br />\nWe also need you to create an account, using an email and password, so you can log back into the PAPrKA research study portal. You may want to do this to update your personal information or if you decide to leave the study.\n<br />\nYour data will be managed by the PAPRKA research team and will not be shared with any other parties. You can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)",
             "requiredItems": [
                 {
                     "fieldType": "yesno",
@@ -242,7 +239,7 @@
             ]
         },
         "account": {
-            "title": "Register Account",
+            "title": "Register Account Continued",
             "description": "You need an account to give us your information and connect your fitness tracker or smartphone app.\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
         }
     },
@@ -256,10 +253,10 @@
         "footer": {
             "columns": [
                 {
-                    "title": "Study Links",
+                    "title": "More Information",
                     "items": [
-                      {"text": "Home", "href": "#"},
-                      {"text": "About the study", "href": "#"},
+                      {"text": "Home", "href": "/paprka"},
+                      {"text": "About the study", "href": "/paprka/about"},
                       {"text": "Subscribe", "href": "#"},
                       {"text": "LinkedIn", "href": "https://www.linkedin.com/company/health-research-from-home"},
                       {"text": "RADAR", "href": "/"}
@@ -272,10 +269,10 @@
                     ]
                 },
                 {
-                    "title": "Legal Links",
+                    "title": "Legal",
                     "items": [
-                        {"text": "Privacy Policy", "href": "privacy"},
-                        {"text": "Cookie Policy", "href": "cookies"}
+                        {"text": "Privacy Policy", "href": "/paprka/privacy"},
+                        {"text": "Cookie Policy", "href": "/paprka/cookies"}
                     ]
                 }
             ],

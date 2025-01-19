@@ -152,7 +152,6 @@ export function ArmtSignatureField({label, description, errorText, ...props}: Ar
               <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} paddingTop={1}> 
                 <Button onClick={handleClose}>Back</Button>
                 <Button onClick={save}>Save</Button>
-                <Button onClick={drawText}>Draw</Button>
               </Box>
             </Box>
           </Modal>

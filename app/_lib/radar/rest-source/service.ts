@@ -1,10 +1,9 @@
 const USER_ENDPOINT = ''
 const AUTH_BASE_URL = process.env.NEXT_PUBLIC_HYDRA_PUBLIC_URL + "/oauth2"
 const GRANT_TYPE = "authorization_code"
-const CLIENT_ID = process.env.ARMT_CLIENT_ID ?? "aRMT"
+const CLIENT_ID = process.env.ARMT_CLIENT_ID ?? "SEP"
 const CLIENT_SECRET = process.env.ARMT_CLIENT_SECRET  ?? ""
-const REDIRECT_URI = process.env.NEXT_PUBLIC_REST_REDIRECT_URI
-
+const REDIRECT_URI = process.env.NEXT_PUBLIC_RSA_REDIRECT_URI
 
 async function getRestSourceUser(
   accessToken: string,

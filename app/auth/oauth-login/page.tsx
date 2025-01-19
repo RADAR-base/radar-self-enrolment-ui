@@ -7,6 +7,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { withBasePath } from '@/app/_lib/util/links';
 import { getCsrfToken } from "@/app/_lib/auth/ory/util";
 import { LogoutButton } from "@/app/_ui/auth/logout";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 interface LoginFormProps {
   flow?: any
@@ -27,7 +28,6 @@ function LoginForm({flow: flow}: LoginFormProps) {
         csrf_token: getCsrfToken(flow),      
       } 
       if (flow == undefined) { return }
-      // let resp = await ory.submitLoginFlow(flow.id, body)
       let resp = await fetch(withBasePath('/api/ory/login?flow=' + flow.id), 
         {method: 'POST', body: JSON.stringify(body)})
       if (resp.status == 422) {
@@ -122,7 +122,7 @@ function createLoginFlow(loginChallenge: string, setFlow: (value: any) => void) 
   )
 }
 
-async function acceptWithCurrentAccount(loginChallenge: string, router: any): Promise<void> {
+async function acceptWithCurrentAccount(loginChallenge: string, router: AppRouterInstance): Promise<void> {
   const response = await fetch(withBasePath(`/api/oauth-login?login_challenge=${loginChallenge}`),
     {
       method: 'POST',
@@ -146,6 +146,9 @@ function userIsParticipant(userSession: any): boolean {
   return userSession?.identity?.schema_id == "subject"
 }
 
+function LoginCard(params: {children: React.ReactElement}) {
+  return <Card><Box display={'flex'} alignItems={'center'} justifyContent={'center'} width={300} height={350}>{params.children}</Box></Card>
+}
 
 export default function Page() {
   const router = useRouter()
@@ -161,24 +164,26 @@ export default function Page() {
     router.push('/auth/login')
     return
   }
-
   let flowId = searchParams.get('flowId')
   useEffect(() => {
     if (userSession === undefined) {
+      console.log('get user session')
       getUserSession(setUserSession)
     } else if (userSession === null) {
       if (flow == undefined) {
+        console.log('create login flow')
         createLoginFlow(loginChallenge ?? '', setFlow)
       } else {
-        setContent(<LoginForm flow={flow}></LoginForm>)
+        setContent(<LoginCard><LoginForm flow={flow}></LoginForm></LoginCard>)
       }
     } else {
       if (userIsParticipant(userSession)) {
+        console.log('accept current account')
         acceptWithCurrentAccount(loginChallenge, router)
         return
       }
-      setContent(<LoginWithCurrentAccountForm userSession={userSession} loginChallenge={loginChallenge} />)
+      setContent(<LoginCard><LoginWithCurrentAccountForm userSession={userSession} loginChallenge={loginChallenge} /></LoginCard>)
     }
   }, [flow, userSession])
-  return <Card><Box display={'flex'} alignItems={'center'} justifyContent={'center'} width={300} height={350}>{content}</Box></Card>
+  return <div>{content}</div>
 }

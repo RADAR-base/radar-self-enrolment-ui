@@ -1,6 +1,6 @@
 "use client"
 
-import { authRequestLink } from "@/app/_lib/radar/questionnaire_app/service";
+import { authRequestLink } from "@/app/_lib/radar/rest-source/service";
 import { Box, Card, CircularProgress, Container, Stack } from "@mui/material";
 import crypto from "crypto";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -24,7 +24,7 @@ export default function Page() {
           if (code == null) {
             router.push(authRequestLink(state))
           } else {
-            router.push(`/${projectId}/portal/connect/apple_health?code=${code}`)
+            router.push(`/${projectId}/portal/connect?code=${code}`)
           }
         }
       } catch (error) {

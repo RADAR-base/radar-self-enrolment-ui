@@ -34,9 +34,15 @@ function getConsentRequest(consentChallenge: string,
           setConsent(data)
           setScopes(data['requested_scope'])
         }))
+      } else {
+        setConsent(null)
       }
     }
   )
+}
+
+function ConsentCard(params: {children: React.ReactElement}) {
+  return <Card><Box display={'flex'} alignItems={'center'} justifyContent={'center'} width={300} height={350}>{params.children}</Box></Card>
 }
 
 function ConsentForm(props: {accept: (scopes: string[]) => void, userSession: any, scopes: string[]}) {
@@ -104,11 +110,19 @@ export default function Page() {
     if (consent == undefined) {
       getConsentRequest(consentChallenge, setConsent, setScopes)
     }
+    if (consent == null) {
+      // Set error content
+    }
     if ((scopes.length > 0) && (userSession != undefined)) {
       if (userIsParticipant(userSession)) {
         accept()
       } else {
         setIsLoading(false)
+      }
+    } else {
+      if ((consent != undefined) && (userSession != undefined)) {
+        console.log(consent, userSession)
+        window.reload()
       }
     }
   }, [consent])
@@ -117,12 +131,10 @@ export default function Page() {
     accept()
   }
   return (
-    <Card>
-      <Box display={'flex'} alignItems={'center'} justifyContent={'center'} minWidth={300} minHeight={350}>
+    <div>
       {isLoading ? <CircularProgress  sx={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} /> 
-                 : <ConsentForm accept={accept} userSession={userSession} scopes={scopes} />
+                 : <ConsentCard><ConsentForm accept={accept} userSession={userSession} scopes={scopes} /></ConsentCard>
       }
-      </Box>
-    </Card>
+    </div>
   )
 }

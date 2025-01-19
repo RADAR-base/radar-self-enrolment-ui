@@ -21,7 +21,7 @@ const TEMP_CONTENT: {[key: string]: any} = {
   },
   'apple_health': {
     title: 'Apple Health',
-    description: 'Wearable fitness tracker'
+    description: 'Apple Watch or iPhone'
   },  
   'garmin': {
     title: 'Garmin',
