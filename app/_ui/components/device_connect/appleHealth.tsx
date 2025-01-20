@@ -2,23 +2,27 @@
 import { Box, Button, Container, Typography } from "@mui/material"
 import Grid from '@mui/material/Grid2';
 import { StudyProtocol } from "@/app/_lib/study/protocol";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { withBasePath } from "@/app/_lib/util/links";
-import { useRouter, useSearchParams } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { RadarCard } from "../base/card";
 import {QRCodeSVG} from 'qrcode.react'
 import Image from 'next/image'
 import { getAccessTokenFromCode, getAuthLink } from "@/app/_lib/radar/questionnaire_app/service";
 import NextButton from "../base/nextButton";
+import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 
-interface HealthKitPageProps {
-  protocol: StudyProtocol
-}
+export function HealthKitPage() {
+  const protocol = useContext(ProtocolContext);
 
-export function HealthKitPage(props: HealthKitPageProps) {
-  const studyId = props.protocol.studyId
+  const studyId = protocol.studyId
   const router = useRouter()
   const code = useSearchParams().get('code')
+
+  if (code == undefined) {
+    redirect('/connect/armt')
+  }
+
   const [isFetchingToken, setIsFetchingToken] = useState(false)
   const [tokenHandled, setTokenHandled] = useState<boolean>(false)
   const [qrCode, setQrCode] = useState<any>(undefined)
@@ -38,9 +42,7 @@ export function HealthKitPage(props: HealthKitPageProps) {
             scope: tokenResponse.scope, 
             token_type: tokenResponse.token_type 
           }
-          console.log('short token: ', shortToken)
           const url = await getAuthLink(shortToken, studyId)
-          console.log('qr url: ', url)
           setQrCode(url)
         }
       }

@@ -1,59 +1,37 @@
 "use client"
 import { Button, Container, Typography } from "@mui/material"
 import Grid from '@mui/material/Grid2';
-import { StudyProtocol } from "@/app/_lib/study/protocol";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { withBasePath } from "@/app/_lib/util/links";
 import { useRouter, useSearchParams } from "next/navigation";
 import { RadarCard } from "../base/card";
-import {QRCodeSVG} from 'qrcode.react'
 import Image from 'next/image'
+import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
+import { ParticipantContext } from "@/app/_lib/auth/provider.client";
 
-const _clientId = '22BGY5';
-
-let url = new URL('https://www.fitbit.com/oauth2/authorize')
-url.search = new URLSearchParams([
-  [  'response_type', 'code'],
-    ['client_id', _clientId],
-    ['redirect_uri',  'https://dev.radarbasedev.co.uk/kratos-ui/paprka/portal/connect/fitbit'],
-    ['expires_in', '604800'],
-    ['scope', ['activity', 'heartrate', 'location', 'nutrition', 'profile', 'sleep', 'weight'].join(' ')]
-]
-).toString()
-
-interface FitbitPageProps {
-  protocol: StudyProtocol
-}
-
-export function FitbitPage(props: FitbitPageProps) {
-  const studyId = props.protocol.studyId
+export function FitbitPage() {
+  const protocol = useContext(ProtocolContext);
+  const participant = useContext(ParticipantContext);
+  
   const searchParams = useSearchParams()
-  const fitbitCode = searchParams.get('code')
   const router = useRouter()
 
-  const [test, setTest] = useState<any>(undefined)
-
-  if (fitbitCode != undefined) {
-    router.push(`/${studyId}/portal/connect?success=Fitbit`)
-  }
+  const [linkUrl, setLinkUrl] = useState<string | undefined>(undefined)
+  const redirect_uri = encodeURIComponent(`/${protocol.studyId}/portal/connect?success=Fitbit`)
 
   useEffect(() => {
-    if (test == undefined) {
-      fetch(withBasePath('/api/connect/armtApp'), {
-          credentials: 'include'
-        }
-      ).then(
-          (r) => {
-            if (r.ok) {
-              console.log(r)
-              r.json().then(
-                (d) => setTest(d)
-              )
-            }
+    if (linkUrl == undefined) {
+      fetch(withBasePath('/api/connect/rsa?device=FitBit&redirect_uri=' + redirect_uri)).then(
+        (resp) => {
+          if (resp.ok) {
+            resp.text().then(
+              (link) => setLinkUrl(link)
+            )
           }
-        )
-      }
-  })
+        }
+      )
+    }
+  }, [linkUrl])
 
   return (
   <Container maxWidth="lg" disableGutters>
@@ -74,7 +52,7 @@ export function FitbitPage(props: FitbitPageProps) {
           <Typography variant="body1">This will redirect you away from this page to Fitbit's website. At the end of the process, you will return here.</Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
-          <Button href={url.toString()} variant="contained">Link Fitbit</Button>
+          <Button href={linkUrl} variant="contained" disabled={linkUrl == undefined}>Link Fitbit</Button>
         </Grid>
         
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
