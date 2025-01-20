@@ -1,4 +1,5 @@
 import { whoAmI } from "@/app/_lib/auth/ory/kratos"
+import { withBasePath } from "@/app/_lib/util/links"
 import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -88,7 +89,7 @@ async function getRestSourceAuthLink(
 }
 
 export async function GET(request: NextRequest) {
-  const redirect_uri  = request.nextUrl.searchParams.get('redirect_uri') ?? RSA_REDIRECT_URL
+  const redirect_uri  = withBasePath(request.nextUrl.searchParams.get('redirect_uri') ?? RSA_REDIRECT_URL)
   const sourceType  = request.nextUrl.searchParams.get('device')
   if (sourceType == undefined) {
     return new NextResponse('A device search parameter must be specified', {status: 400})
