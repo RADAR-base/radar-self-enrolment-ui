@@ -78,8 +78,6 @@ export default async function StudyLayout({children, params}: Readonly<{children
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <ProtocolProvider protocol={protocol}>
-
-
         <Box
           sx={{
             minHeight: '100vh',

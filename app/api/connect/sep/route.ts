@@ -1,7 +1,7 @@
 import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 
-const AUTH_BASE_URL = process.env.NEXT_PUBLIC_HYDRA_PUBLIC_URL + "/oauth2"
+const AUTH_BASE_URL = process.env.HYDRA_PUBLIC_URL + "/oauth2"
 const GRANT_TYPE = "authorization_code"
 const CLIENT_ID = process.env.SEP_CLIENT_ID ?? "SEP"
 const CLIENT_SECRET = process.env.SEP_CLIENT_SECRET  ?? ""
@@ -36,7 +36,6 @@ async function getAccessToken(
     const data = await response.json()
     return data || null
   } catch (error) {
-    console.error(error)
     return null
   }
 }

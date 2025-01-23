@@ -3,14 +3,10 @@ import { withBasePath } from "@/app/_lib/util/links"
 import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 
-const RSA_BACKEND_URL = 'https://dev.radarbasedev.co.uk/rest-sources/backend'
+const RSA_BACKEND_URL = process.env.RSA_BACKEND_URL // 'https://dev.radarbasedev.co.uk/rest-sources/backend'
 const RSA_FRONTEND_URL = 'https://dev.radarbasedev.co.uk/rest-sources/authorizer'
 const RSA_REDIRECT_URL = 'https://dev.radarbasedev.co.uk/kratos-ui/'
-// const AUTH_BASE_URL = process.env.NEXT_PUBLIC_HYDRA_PUBLIC_URL + "/oauth2"
-// const GRANT_TYPE = "authorization_code"
-// const CLIENT_ID = process.env.SEP_CLIENT_ID ?? "SEP"
-// const CLIENT_SECRET = process.env.SEP_CLIENT_SECRET  ?? ""
-// const REDIRECT_URI = process.env.NEXT_PUBLIC_SEP_REDIRECT_URI
+
 
 async function makeRestSourceUser(
   accessToken: string,
@@ -19,6 +15,7 @@ async function makeRestSourceUser(
   sourceType: string
 ): Promise<string | null> {
   try {
+    if (RSA_BACKEND_URL == undefined) {return null}
     const response = await fetch(`${RSA_BACKEND_URL}/users`, {
       method: "POST",
       headers: {
@@ -57,6 +54,7 @@ async function getRestSourceAuthLink(
   userId: string,
   redirect_uri: string
 ): Promise<string | null> {
+  console.error(`url: ${RSA_BACKEND_URL}/registrations`)
   try {
     const response = await fetch(`${RSA_BACKEND_URL}/registrations`, {
       method: "POST",
@@ -65,7 +63,7 @@ async function getRestSourceAuthLink(
         Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({
-        userId,
+        userId: userId,
         persistent: false,
       }),
     })

@@ -9,6 +9,8 @@ import { withBasePath } from '@/app/_lib/util/links'
 import { AccountButton } from './accountButton'
 import { ProtocolContext } from '@/app/_lib/study/protocol/provider.client'
 import { ParticipantContext } from '@/app/_lib/auth/provider.client'
+import { useRouter } from 'next/navigation'
+import NextButton from '../base/nextButton'
 
 
 interface MenuProps {
@@ -21,6 +23,7 @@ function SmallMenu(props: MenuProps) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => setAnchorElNav(event.currentTarget);
   const handleCloseNavMenu = () => setAnchorElNav(null);
+  const router = useRouter()
   return (
     <Box flexGrow={1}
          flexDirection='row'
@@ -53,25 +56,23 @@ function SmallMenu(props: MenuProps) {
         onClose={handleCloseNavMenu}>
         {props.links?.map((link, i) => (
           <MenuItem
+            onClick={() => {
+                handleCloseNavMenu()
+                router.push(link.href)
+              }
+            }
             key={i}>
-            <Typography sx={{ textAlign: 'center' }}>
-              <NextLink href={link.href} passHref legacyBehavior>
-                <Link underline='none' variant='button' sx={{textTransform: 'none'}}  onClick={handleCloseNavMenu}>
-                  {link.text}
-                </Link>
-              </NextLink>
-            </Typography>
+              {link.text}
           </MenuItem>
         ))}
         {(props.loggedIn && props.studyId) && 
-        <MenuItem>
-          <Typography sx={{ textAlign: 'center' }}>
-            <NextLink href={`/${props.studyId}/portal`} passHref legacyBehavior>
-              <Link underline='none' variant='button' sx={{textTransform: 'none'}}  onClick={handleCloseNavMenu}>
-                Portal
-              </Link>
-            </NextLink>
-          </Typography>
+        <MenuItem
+          onClick={() => {
+              handleCloseNavMenu()
+              router.push(`/${props.studyId}/portal`)
+            }
+        }>
+          Portal
         </MenuItem>
         }
       </Menu>
@@ -83,20 +84,8 @@ function LargeMenu(props: MenuProps) {
   return (
     <Box flexGrow={1} flexDirection='row' alignItems='center' justifyContent='flex-end'
          gap={2} display='flex'>
-      {props.links?.map(
-        (link, i) => {
-          return (
-            <NextLink href={link.href} passHref legacyBehavior key={i}>
-              <Button sx={{textTransform: 'none'}}>{link.text}</Button>
-            </NextLink>)
-        }
-        
-      )}
-      {(props.loggedIn && props.studyId) && 
-        <NextLink href={`/${props.studyId}/portal`} passHref legacyBehavior>
-            <Button sx={{textTransform: 'none'}}>Portal</Button>
-        </NextLink>
-      }
+      {props.links?.map((link, i) => <NextButton href={link.href} key={i}>{link.text}</NextButton>)}
+      {(props.loggedIn && props.studyId) && <NextButton href={`/${props.studyId}/portal`}>Portal</NextButton>}
       <AccountButton />
     </Box>
   )

@@ -31,7 +31,7 @@ export function OuraPage() {
         }
       )
     }
-  }, [linkUrl])
+  })
 
   return (
   <Container maxWidth="lg" disableGutters>

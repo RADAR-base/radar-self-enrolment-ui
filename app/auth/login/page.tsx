@@ -7,12 +7,11 @@ import { useSearchParams } from 'next/navigation';
 export default function Page() {
   const searchParams = useSearchParams()
   const redirectTo = searchParams.get('redirect_to') ?? withBasePath('/')
-
-    return (
-    <Card>
-      <Box m={4}>
-        <Login redirectTo={redirectTo} />
-      </Box>
-    </Card>
-  )
+  return (
+  <Card>
+    <Box m={4}>
+      <Login redirectTo={redirectTo} />
+    </Box>
+  </Card>
+)
 }

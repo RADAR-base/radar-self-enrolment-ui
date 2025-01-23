@@ -31,7 +31,7 @@ export function FitbitPage() {
         }
       )
     }
-  }, [linkUrl])
+  })
 
   return (
   <Container maxWidth="lg" disableGutters>

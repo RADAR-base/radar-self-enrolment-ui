@@ -32,7 +32,7 @@ function LoginForm({flow: flow}: LoginFormProps) {
         {method: 'POST', body: JSON.stringify(body)})
       if (resp.status == 422) {
         let {redirect_browser_to: url} = await resp.json()
-        router.push(url)
+        router.replace(url)
       } else {
         console.log('Other error')
       }
@@ -129,16 +129,9 @@ async function acceptWithCurrentAccount(loginChallenge: string, router: AppRoute
       body: JSON.stringify({remember: true})
     }
   )
-  try {
-    if (response.ok) {
-      const data = await response.json()
-      router.push(data.redirect_to)
-    } else {
-      console.log(response)
-      // router.push('/')
-    }
-  } catch (error) {
-    router.push('/')
+  if (response.ok) {
+    const data = await response.json()
+    window.location.replace(data.redirect_to)
   }
 }
 
@@ -157,33 +150,30 @@ export default function Page() {
   
   const [userSession, setUserSession] = useState<any>(undefined)
   const [flow, setFlow] = useState<any>();  
-  const [content, setContent] = useState<JSX.Element>(<CircularProgress  sx={{  top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} />)
+  const [content, setContent] = useState<JSX.Element>(<div></div>)
 
   const loginChallenge = searchParams.get('login_challenge') ?? undefined
   if (loginChallenge == undefined) {
-    router.push('/auth/login')
+    window.location.replace(withBasePath('/auth/login'))
     return
   }
   let flowId = searchParams.get('flowId')
   useEffect(() => {
     if (userSession === undefined) {
-      console.log('get user session')
       getUserSession(setUserSession)
     } else if (userSession === null) {
       if (flow == undefined) {
-        console.log('create login flow')
         createLoginFlow(loginChallenge ?? '', setFlow)
       } else {
         setContent(<LoginCard><LoginForm flow={flow}></LoginForm></LoginCard>)
       }
     } else {
       if (userIsParticipant(userSession)) {
-        console.log('accept current account')
         acceptWithCurrentAccount(loginChallenge, router)
         return
       }
       setContent(<LoginCard><LoginWithCurrentAccountForm userSession={userSession} loginChallenge={loginChallenge} /></LoginCard>)
     }
   }, [flow, userSession])
-  return <div>{content}</div>
+  return content
 }

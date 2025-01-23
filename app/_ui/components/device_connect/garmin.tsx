@@ -12,10 +12,7 @@ import { ParticipantContext } from "@/app/_lib/auth/provider.client";
 export function GarminPage() {
   const protocol = useContext(ProtocolContext);
   const participant = useContext(ParticipantContext);
-  
-  const searchParams = useSearchParams()
-  const router = useRouter()
-
+ 
   const [linkUrl, setLinkUrl] = useState<string | undefined>(undefined)
   const redirect_uri = encodeURIComponent(`/${protocol.studyId}/portal/connect?success=Garmin`)
 
@@ -31,7 +28,7 @@ export function GarminPage() {
         }
       )
     }
-  }, [linkUrl])
+  })
 
   return (
   <Container maxWidth="lg" disableGutters>

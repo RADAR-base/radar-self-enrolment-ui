@@ -90,7 +90,7 @@ export default function Page() {
         if (r.ok) {
           r.json().then(
             (d) => {
-              router.push(d.redirect_to)
+              window.location.replace(d.redirect_to)
             }
           )
         } else {
@@ -101,7 +101,7 @@ export default function Page() {
   }
   useEffect(() => {
     if (consentChallenge == "") {
-      router.push('/')
+      router.replace('/')
       return
     }
     if (userSession == undefined) {
@@ -122,19 +122,15 @@ export default function Page() {
     } else {
       if ((consent != undefined) && (userSession != undefined)) {
         console.log(consent, userSession)
-        window.reload()
+        console.log('stuck?')
       }
     }
-  }, [consent])
+  }, [consent, userSession])
 
   if ((!!consent?.client?.skip_consent) && (!!userSession)) {
     accept()
   }
-  return (
-    <div>
-      {isLoading ? <CircularProgress  sx={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} /> 
-                 : <ConsentCard><ConsentForm accept={accept} userSession={userSession} scopes={scopes} /></ConsentCard>
-      }
-    </div>
-  )
+  return isLoading ? 
+              <div></div>
+            : <ConsentCard><ConsentForm accept={accept} userSession={userSession} scopes={scopes} /></ConsentCard>
 }
