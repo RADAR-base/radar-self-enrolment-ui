@@ -63,7 +63,7 @@ class OryAuthServerService extends ClientAuthService {
     }
     traits['email'] = email
     const body = {
-      method: 'password',
+      method: "password",
       password: password,
       csrf_token: getCsrfToken(flow),
       traits: traits

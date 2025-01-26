@@ -76,7 +76,7 @@ export function DevicesPanel(props: DevicesPanel) {
             padding={3}>
           <Typography variant="h2">Connect Your iPhone, Fitness Tracker or Smartphone App</Typography>
           <MarkdownContainer>
-          {"By sharing your activity data with us we gain valuable insights into recovery and mobility after knee replacement surgery.\n<br />\nFollow the step-by-step instructions [link TBC] or watch a video [link TBC] to show you how to connect your fitness tracker or smartphone app.\n<br />\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data by reading our privacy policy\n<br />\n**How do I Identify my device?**\n\nCheck the logo on your fitness tracker or smartphone application to find your device or app below."}
+          {"By sharing your activity data with us we gain valuable insights into recovery and mobility after knee replacement surgery.\n<br />\nFollow the step-by-step instructions [link TBC] or watch a video [link TBC] to show you how to connect your iPhone, fitness tracker or smartphone app.\n<br />\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data by reading our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n<br />\n**How do I Identify my device?**\n\nCheck the logo on your fitness tracker or smartphone application to find your device or app below."}
           </MarkdownContainer>
           <Box display='flex' flexDirection='row' justifyContent={'space-between'} width={'100%'} paddingTop={2}>
             <NextButton href={'/paprka/portal'} variant='contained'>Back</NextButton>

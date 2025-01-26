@@ -77,6 +77,11 @@
                   {
                     "fieldType": "yesno",
                     "id": "criteria3",
+                    "description": "Did you use a smartphone app or fitness tracker to track your activity before your surgery? An iPhone automatically collects activity data."
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "criteria4",
                     "description": "Did you use a smartphone app or fitness tracker to track your activity after your surgery? An iPhone automatically collects activity data."
                 }
             ]
