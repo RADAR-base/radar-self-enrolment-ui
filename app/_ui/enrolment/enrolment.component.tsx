@@ -17,7 +17,6 @@ import { EnrolmentRegister } from './register.component';
 import { withBasePath } from '@/app/_lib/util/links';
 import { getCsrfToken } from '@/app/_lib/auth/ory/util';
 
-
 function generateEligibilitySchema(protocol: EnrolmentProtocol): Yup.Schema {
   const schema: {[key: string]: Yup.Schema} = {};
   protocol.eligibility.items.forEach(
@@ -154,6 +153,24 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   if (additionalDefinition) {
     schemas['additional'] = schemaFromDefinition(additionalDefinition)
   }
+  
+  const displayErrors = (flow: IOryRegistrationFlow) => {
+    console.log(flow)
+    if (flow) {
+      if ((flow.ui.messages) && (flow.ui.messages.length > 0)) {
+        setErrorText(flow.ui.messages[0].text)
+      }
+      flow.ui.nodes.filter(node => node.messages.length > 0).forEach(
+        (node) => {
+          if ((node.attributes.name) == 'traits.email') {
+            formik.setErrors({register: {email: node.messages[0].text}})
+          } else if ((node.attributes.name) == 'password') {
+            formik.setErrors({register: {password: node.messages[0].text}})
+          }
+        }
+      )
+    }
+  }
 
   const formik = useFormik({
     validateOnChange: true,
@@ -178,7 +195,8 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
               id: studyProtocol.studyId,
               name: studyProtocol.name,
               userId: crypto.randomUUID(),
-              ...traits
+              ...traits,
+              version: protocol.version
             }
           ]
         }
@@ -201,7 +219,9 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
                 if (data?.ui?.messages !== undefined) {
                   setErrorText(data.ui.messages[0]['text'])
                   scrollToTop()
-                }              
+                } 
+                displayErrors(data)   
+                setFlow(data)          
               }
             )
           }
@@ -225,7 +245,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
         description={protocol.eligibility.description}
         items={protocol.eligibility.items}
       />,
-    consent: <EnrolmentConsent 
+    consent: <EnrolmentConsent
       setFieldValue={formik.setFieldValue}
       errors={(formik.errors['consent']) ? formik.errors['consent'] : {}}
       values={formik.values['consent']}
@@ -233,6 +253,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
       description={protocol.consent.description}
       requiredItems={protocol.consent.requiredItems}
       optionalItems={protocol.consent.optionalItems}
+      signatureDescription={protocol.consent.signatureDescription}
     />,
     additional: (protocol.additional == undefined) ? undefined : 
         <ArmtForm 

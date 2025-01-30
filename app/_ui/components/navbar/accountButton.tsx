@@ -10,7 +10,7 @@ import NextButton from '../base/nextButton'
 import { useRouter } from 'next/navigation'
 
 interface LoggedInButtonsProps {
-  studyId: string
+  studyId?: string
 }
 
 function LoggedInButtons(props: LoggedInButtonsProps) {
@@ -51,7 +51,7 @@ function LoggedInButtons(props: LoggedInButtonsProps) {
 
         <MenuItem onClick={() => {
           handleCloseNavMenu()
-          router.push('/' + props.studyId + '/logout')
+          router.push('/' + (props.studyId ?? 'auth') + '/logout')
         }}>
           Sign Out
         </MenuItem>
@@ -71,6 +71,6 @@ export function AccountButton(props: AccountButtonProps) {
   const loggedIn = participant?.loggedIn
   const signInLink = protocol.studyId ? withBasePath(`/${protocol.studyId}/login`) : withBasePath('/auth/login')
   return <div>
-    {loggedIn ? <LoggedInButtons studyId={protocol.studyId}/> : <Button variant='outlined' href={signInLink} style={{'textWrap': 'nowrap'}}>Sign In</Button>}
+    {loggedIn ? <LoggedInButtons studyId={protocol.studyId ?? 'auth'}/> : <Button variant='outlined' href={signInLink} style={{'textWrap': 'nowrap'}}>Sign In</Button>}
   </div>
 }

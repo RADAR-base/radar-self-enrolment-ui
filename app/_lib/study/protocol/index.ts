@@ -31,6 +31,7 @@ export type EnrolmentConsent = {
   description?: string,
   requiredItems: ConsentItem[],
   optionalItems?: ConsentItem[],
+  signatureDescription?: string
 };
 
 export type EnrolmentAdditional = {
@@ -49,7 +50,8 @@ export type EnrolmentProtocol = {
   eligibility: EnrolmentEligibility,
   consent: EnrolmentConsent,
   additional?: EnrolmentAdditional
-  account?: EnrolmentAccount
+  account?: EnrolmentAccount,
+  version: string
 }
 
 export type ArmtSchedule = {};

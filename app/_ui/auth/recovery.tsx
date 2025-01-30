@@ -7,11 +7,11 @@ import { withBasePath } from "@/app/_lib/util/links"
 import { getCsrfToken } from '@/app/_lib/auth/ory/util'
 import { ParticipantContext } from '@/app/_lib/auth/provider.client'
 
-interface LoginProps {
+interface RecoveryProps {
     redirectTo?: string
 }
 
-export function RecoveryComponent(props: LoginProps) {
+export function RecoveryComponent(props: RecoveryProps) {
   const router = useRouter()
 
   const participant = useContext(ParticipantContext)

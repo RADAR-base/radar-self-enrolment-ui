@@ -105,8 +105,8 @@ export function ArmtSignatureField({label, description, errorText, ...props}: Ar
       <Box display={"flex"} flexDirection={"column"} textAlign={"left"} marginTop={1} alignItems={'flex-start'} gap={1}>
         <Typography variant="h4" component={'span'}>{props.title}</Typography>
         <Typography variant="body1" component={'span'} >{description}</Typography>
-        <Box display='flex' sx={{ border: '1px solid #999', borderRadius: 2, maxWidth: 800, width: '100%', height: 200}} alignItems={'center'} justifyItems={'center'}>
-          {props.value ? (sigImg) : null}
+        <Box onClick={handleOpen} display='flex' sx={{ border: '1px solid #999', borderRadius: 2, maxWidth: 800, width: '100%', height: 200}} alignItems={'center'} justifyItems={'center'}>
+          {props.value ? (sigImg) : <Typography alignSelf={'center'} margin={'auto'}>Click to sign</Typography>}
         </Box>
         <div>
           <Button onClick={handleOpen} variant='outlined'>Click to sign</Button>

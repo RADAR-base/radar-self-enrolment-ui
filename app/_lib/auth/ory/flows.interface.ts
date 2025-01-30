@@ -43,3 +43,14 @@ interface IOryLoginFlow {
   ui: IOryUi,
   updated_at: Date
 }
+
+interface IOryRegistrationFlow {
+  expires_at: Date,
+  id: string,
+  issued_at: Date,
+  organization_id?: string,
+  request_url: string,
+  state: string,
+  ui: IOryUi,
+  updated_at: Date
+}
