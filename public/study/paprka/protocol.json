@@ -60,6 +60,7 @@
       }
     ],
     "enrolment": {
+        "version": "0.1",
         "eligibility": {
             "title": "Check Your Eligibility",
             "description": "We can only accept people onto our study if they answer Yes to the following questions.",
@@ -93,32 +94,32 @@
                 {
                     "fieldType": "yesno",
                     "id": "required1",
-                    "description": "I confirm that I have read the attached information sheet **(Version 2.0, Date 10/04/2024)** for the above study and have had the opportunity to consider the information and ask questions and had these answered satisfactorily.\n"
+                    "description": "I confirm that I have read the attached information sheet (Version 3.0, Date xx/xx/xx) for the above study and have had the opportunity to consider the information and ask questions and had these answered satisfactorily.\n"
                   },
                   {
                     "fieldType": "yesno",
                     "id": "required2",
-                    "description": "I understand that my participation in the study is voluntary and that I am free to withdraw at any time without giving a reason and without detriment to myself.  I understand that it will not be possible to remove my data from the project once it has been anonymised and forms part of the data set.\n\nI agree to take part on this basis."
+                    "description": "I understand that my participation in the study is voluntary and that I am free to withdraw at any time without giving a reason and without detriment to myself. I understand that it will not be possible to remove my data from the project once it has been anonymised and forms part of the data set.\n\nI agree to take part on this basis.\n"
                   },
                   {
                     "fieldType": "yesno",
                     "id": "required3",
-                    "description": "I understand my involvement in this study involves:\n- Answering an online survey and\n- Allowing the PAPrKA team to:\n  - access physical activity data from my fitness tracker provider.\n  - access data about my knee replacement from the National Joint Registry.\n  - work with the National Joint Registry to link and analyse my physical activity data, knee replacement data, and survey data to answer the PAPrKA study questions.\n"
+                    "description": "I understand my involvement in this study involves:\n- Answering an online survey on a platform hosted by King’s College London and\n- Allowing the PAPrKA team to:\n  - access physical activity data from my fitness tracker provider.\n  - access data about my knee replacement from the National Joint Registry.\n  - work with the National Joint Registry to link and analyse my physical activity data, knee replacement data, and survey data to answer the PAPrKA study questions.\n"
                   },
                   {
                     "fieldType": "yesno",
                     "id": "required4",
-                    "description": "I give permission for the PAPrKA team to access my physical activity data stored with my fitness tracker provider to collect information for the study.\n"
+                    "description": "I give permission for the PAPrKA team to access my physical activity data stored with my fitness tracker provider. This means the PAPrKA team will collect any data available between January 2016 and December 2024.\n"
                   },
                   {
                     "fieldType": "yesno",
                     "id": "required5",
-                    "description": "I give permission for the PAPrKA team to access my knee replacement data stored with National Joint Registry <HoverPopover innerContent=\"Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1 Test 1\" outerContent=\"ℹ️\" /> to collect information for the study.\n"
+                    "description": "I give permission for the PAPrKA team to access my knee replacement data stored with the National Joint Registry to collect information for the study.\n"
                   },
                   {
                     "fieldType": "yesno",
                     "id": "required6",
-                    "description": "I give permission for the PAPrKA team to share my identifying information (surname, date of birth, NHS number, gender and postcode) with the National Joint Registry, to allow for my knee replacement data, physical activity data and survey response to be linked.\n"
+                    "description": "I give permission for the PAPrKA team to share my identifying information (full name, date of birth, NHS number, sex and postcode) with the National Joint Registry, to allow for my knee replacement data, physical activity data and survey response to be linked.\n"
                   },
                   {
                     "fieldType": "yesno",
@@ -138,21 +139,11 @@
                   {
                     "fieldType": "yesno",
                     "id": "required10",
-                    "description": "I agree that any anonymised data collected may be made available to other researchers\n"
-                  },
-                  {
-                    "fieldType": "yesno",
-                    "id": "required11",
-                    "description": "I understand that my full name and email address will be passed to the University's Finance team for the sole purpose of sending me the **Amazon voucher, if I agree to take part in the prize draw and win.**\n"
-                  },
-                  {
-                    "fieldType": "yesno",
-                    "id": "required12",
                     "description": "I understand that data collected during the study may be looked at by individuals from the University of Manchester or regulatory authorities, where it is relevant to my taking part in this research. I give permission for these individuals to have access to my data.\n"
                   },
                   {
                     "fieldType": "yesno",
-                    "id": "required13",
+                    "id": "required11",
                     "description": "I agree to take part in this study.\n"
                   }
             ],
@@ -160,19 +151,25 @@
                 {
                     "fieldType": "yesno",
                     "id": "optional1",
-                    "description": "I understand that the principal investigator of this study may make my physical activity data available to other researchers for future research and that this may include researchers working abroad. I give permission for these individuals to have access to my data, (but not any personal identifying information about me), I offer my physical activity data as a gift."
+                    "description": "I agree my physical activity data, survey data and demographic data, being held at Manchester University, can be used by other researchers, to answer research questions over and above those for the PAPrKA study.\n\nI agree on the basis that only pseudonymised data will be shared and where there are data protection measures in place to ensure the confidentiality of the data.\n"
                   },
                   {
                     "fieldType": "yesno",
                     "id": "optional2",
-                    "description": "I agree that the PAPrKA team may retain my name and contact details to tell me about other research projects in the future."
+                    "description": "I would like to take part in the prize draw\n\nI understand that my full name and email address will be passed to the University's Finance team for the sole purpose of sending me the Amazon voucher, If I agree to take part in the prize draw and win.\n"
                   },
                   {
                     "fieldType": "yesno",
                     "id": "optional3",
-                    "description": "I agree that the PAPrKA team may retain my contact details in order to provide me with a summary of the findings for this study."
+                    "description": "I agree that the researchers may contact me in future about other research projects.\n"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "optional4",
+                    "description": "I agree that the researchers may retain my contact details in order to provide me with a summary of the findings for this study.\n"
                   }
-            ]
+            ],
+            "signatureDescription": "**Data Protection**\n\n**The personal information we collect and use to conduct this research will be processed in accordance with data protection law as explained in the Participant Information Sheet and the [Privacy Notice for Research Participants](https://documents.manchester.ac.uk/display.aspx?DocID=37095).**\n\nBy signing this consent form, I declare that I have provided accurate identity details (full name and electronic signature).\n"
         },
         "additional": {
             "title": "Register Account",
