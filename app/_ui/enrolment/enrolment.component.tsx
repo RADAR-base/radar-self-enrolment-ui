@@ -20,7 +20,7 @@ import { getCsrfToken } from '@/app/_lib/auth/ory/util';
 
 function generateEligibilitySchema(protocol: EnrolmentProtocol): Yup.Schema {
   const schema: {[key: string]: Yup.Schema} = {};
-  protocol.eligibility.items.forEach(
+  protocol.eligibility?.items.forEach(
     (item) => schema[item.id] = Yup.boolean().required().isTrue(item.errorText ?? "This must be true to take part in the study")
   )
   return Yup.object(schema)
@@ -28,7 +28,7 @@ function generateEligibilitySchema(protocol: EnrolmentProtocol): Yup.Schema {
 
 function generateConsentSchema(protocol: EnrolmentProtocol): Yup.Schema {
   const schema: {[key: string]: Yup.Schema} = {};
-  protocol.consent.requiredItems.forEach(
+  protocol.consent?.requiredItems.forEach(
     (item) => schema[item.id] = Yup.boolean().required().isTrue(item.errorText ?? "You must agree to this item to take part in the study")
   )
   schema['signature'] = Yup.string().required()
@@ -37,7 +37,7 @@ function generateConsentSchema(protocol: EnrolmentProtocol): Yup.Schema {
 
 function generateEligibilityInitialValues(protocol: EnrolmentProtocol): {[key: string]: boolean | undefined} {
   const values: {[key: string]: boolean | undefined} = {}
-  protocol.eligibility.items.forEach(
+  protocol.eligibility?.items.forEach(
     (item) => values[item.id] = undefined
   )
   return values
@@ -45,10 +45,10 @@ function generateEligibilityInitialValues(protocol: EnrolmentProtocol): {[key: s
 
 function generateConsentInitialValues(protocol: EnrolmentProtocol): {[key: string]: any} {
   const values: {[key: string]: any} = {}
-  protocol.consent.requiredItems.forEach(
+  protocol.consent?.requiredItems.forEach(
     (item) => values[item.id] = undefined
   )
-  protocol.consent.optionalItems?.forEach(
+  protocol.consent?.optionalItems?.forEach(
     (item) => values[item.id] = undefined
   )
   values['consent_signature'] = undefined
@@ -96,14 +96,18 @@ function SubmitButton(props: SubmitButtonProps) {
           </Button>
 }
 
-function generateSteps(protocol: EnrolmentProtocol) {
-  const steps: string[] = []
-  if (protocol.studyInformation) {
+function generateSteps(protocol: EnrolmentProtocol, stepContent: {[key: string]: React.ReactNode}) {
+  const steps: string[] = [];
+  if (protocol.studyInformation && stepContent["studyInformation"]) {
     steps.push("studyInformation")
   }
-  steps.push("eligibility")
-  steps.push("consent")
-  if (protocol.additional) {
+  if (stepContent["eligibility"]) {
+    steps.push("eligibility")
+  }
+  if (stepContent["consent"]) {
+    steps.push("consent")
+  }
+  if (protocol.additional && stepContent["additional"]) {
     steps.push("additional")
   }
   steps.push("register")
@@ -138,10 +142,9 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
     }
   }
 
-  const steps = generateSteps(protocol)
   let additionalDefinition: ArmtDefinition | undefined;
   if (protocol.additional) {
-    additionalDefinition = fromRedcapDefinition(protocol.additional.items)
+    additionalDefinition = fromRedcapDefinition(protocol.additional?.items)
   }
 
   const eligibilitySchema = generateEligibilitySchema(protocol)
@@ -212,43 +215,75 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
     },
   })
 
-  const stepContent: {[key: string]: React.ReactNode} = {
-    studyInformation: <EnrolmentStudyInformation 
-        title={protocol.studyInformation?.title}
-        content={protocol.studyInformation?.content}
-      />,
-    eligibility: <EnrolmentEligibility 
+  const stepContent: { [key: string]: React.ReactNode } = {
+    ...(protocol.studyInformation && protocol.studyInformation.title && protocol.studyInformation.content
+      ? {
+          studyInformation: (
+            <EnrolmentStudyInformation
+              title={protocol.studyInformation.title}
+              content={protocol.studyInformation.content}
+            />
+          ),
+        }
+      : {}),
+  
+    ...(protocol.eligibility && protocol.eligibility?.items
+      ? {
+          eligibility: (
+            <EnrolmentEligibility
+              setFieldValue={formik.setFieldValue}
+              errors={formik.errors["eligibility"] || {}}
+              values={formik.values["eligibility"]}
+              title={protocol.eligibility.title}
+              description={protocol.eligibility.description}
+              items={protocol.eligibility.items}
+            />
+          ),
+        }
+      : {}),
+  
+    ...(protocol.consent && (protocol.consent?.requiredItems || protocol.consent?.optionalItems)
+      ? {
+          consent: (
+            <EnrolmentConsent
+              setFieldValue={formik.setFieldValue}
+              errors={formik.errors["consent"] || {}}
+              values={formik.values["consent"]}
+              title={protocol.consent.title}
+              description={protocol.consent.description}
+              requiredItems={protocol.consent.requiredItems}
+              optionalItems={protocol.consent.optionalItems}
+            />
+          ),
+        }
+      : {}),
+  
+    ...(protocol.additional && protocol.additional?.items 
+      ? {
+          additional: (
+            <ArmtForm
+              title={protocol.additional.title}
+              definition={fromRedcapDefinition(protocol.additional.items)}
+              values={formik.values.additional}
+              errors={formik.errors["additional"]}
+              setFieldValue={(id, value) => formik.setFieldValue("additional." + id, value)}
+            />
+          ),
+        }
+      : {}),
+  
+    register: (
+      <EnrolmentRegister
         setFieldValue={formik.setFieldValue}
-        errors={(formik.errors['eligibility']) ? formik.errors['eligibility'] : {}}
-        values={formik.values['eligibility']}
-        title={protocol.eligibility.title}
-        description={protocol.eligibility.description}
-        items={protocol.eligibility.items}
-      />,
-    consent: <EnrolmentConsent 
-      setFieldValue={formik.setFieldValue}
-      errors={(formik.errors['consent']) ? formik.errors['consent'] : {}}
-      values={formik.values['consent']}
-      title={protocol.consent.title}
-      description={protocol.consent.description}
-      requiredItems={protocol.consent.requiredItems}
-      optionalItems={protocol.consent.optionalItems}
-    />,
-    additional: (protocol.additional == undefined) ? undefined : 
-        <ArmtForm 
-            title={protocol.additional.title}
-            definition={fromRedcapDefinition(protocol.additional.items)}
-            values={formik.values.additional}
-            errors={formik.errors['additional']}
-            setFieldValue={(id, value) => formik.setFieldValue('additional.' + id, value)} />,
-    register: <EnrolmentRegister
-      setFieldValue={formik.setFieldValue}
-      title={protocol.account?.title}
-      description={protocol.account?.description}
-      errors={(formik.errors['register']) ? formik.errors['register'] : {}}
-      values={formik.values['register']}
-    />,
+        title={protocol.account?.title}
+        description={protocol.account?.description}
+        errors={formik.errors["register"] || {}}
+        values={formik.values["register"]}
+      />
+    ), 
   }
+
+  const steps = generateSteps(protocol, stepContent)
 
   const _getKeyValue_ = (key: string) => (obj: Record<string, any>) => obj[key];
   function validateStep() {
