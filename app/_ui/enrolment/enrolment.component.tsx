@@ -173,7 +173,6 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
     },
     validationSchema: Yup.object(schemas),
     onSubmit: (values) => {
-      console.log("Submitting")
       const {register, ...traits} = values
       const body = {
         email: register.email,
@@ -218,10 +217,6 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
       )
     },
   })
-
-  useEffect(() => {
-    console.log("Formik errors:", formik.errors);
-  }, [formik.errors]);
 
   const stepContent: { [key: string]: React.ReactNode } = {
     ...(protocol.studyInformation && protocol.studyInformation.title && protocol.studyInformation.content
@@ -368,10 +363,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
           {stepperDots}
         </Box>
         {((stepIdx+1) == steps.length) ? 
-          <SubmitButton disabled={disabled || formik.isSubmitting} onClick={() => {
-            console.log("Submit button clicked");
-            formik.submitForm();
-          }} /> : 
+          <SubmitButton disabled={disabled || formik.isSubmitting} onClick={formik.submitForm} /> : 
           <NextButton disabled={disabled} onClick={nextStep} />
         }
       </Box>
