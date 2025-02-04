@@ -27,7 +27,6 @@ export default async function StudyLayout({children, params}: Readonly<{children
   const userSessionResponse = await whoAmI()
   if (!userSessionResponse.ok) {
     redirect('./')
-    return <div></div>
   }
   const userSession = await userSessionResponse.json()
 

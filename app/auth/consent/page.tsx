@@ -119,11 +119,6 @@ export default function Page() {
       } else {
         setIsLoading(false)
       }
-    } else {
-      if ((consent != undefined) && (userSession != undefined)) {
-        console.log(consent, userSession)
-        console.log('stuck?')
-      }
     }
   }, [consent, userSession])
 
