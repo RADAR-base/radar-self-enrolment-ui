@@ -276,6 +276,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
               description={protocol.consent.description}
               requiredItems={protocol.consent.requiredItems}
               optionalItems={protocol.consent.optionalItems}
+              signatureDescription={protocol.consent.signatureDescription}
             />
           ),
         }
