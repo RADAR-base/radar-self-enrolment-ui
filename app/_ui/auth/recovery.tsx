@@ -15,7 +15,7 @@ function EnterEmailRecoveryComponent(props: {flow?: IOryRecoveryFlow, setFlow: (
     const body = {
       email: email,
       csrf_token: getCsrfToken(props.flow),
-      method: 'code'
+      method: 'link'
     }
     if (props.flow) {
       const res = await fetch(withBasePath('/api/ory/recovery?' + new URLSearchParams({

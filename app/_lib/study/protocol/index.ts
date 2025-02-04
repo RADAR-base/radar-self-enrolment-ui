@@ -82,8 +82,10 @@ interface ArmtMetadataLocal extends ArmtMetadataBase {
   path: string
 }
 
-interface ArmtMetadataInbuilt extends ArmtMetadataBase {
+export interface ArmtMetadataInbuilt extends ArmtMetadataBase {
   type: "inbuilt"
+  inbuiltId: string,
+  options: any
 }
 
 export type ArmtMetadata = ArmtMetadataGithub | ArmtMetadataInbuilt | ArmtMetadataLocal

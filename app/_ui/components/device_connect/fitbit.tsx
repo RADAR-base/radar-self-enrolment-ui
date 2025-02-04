@@ -12,10 +12,7 @@ import { ParticipantContext } from "@/app/_lib/auth/provider.client";
 export function FitbitPage() {
   const protocol = useContext(ProtocolContext);
   const participant = useContext(ParticipantContext);
-  
-  const searchParams = useSearchParams()
   const router = useRouter()
-
   const [linkUrl, setLinkUrl] = useState<string | undefined>(undefined)
   const redirect_uri = encodeURIComponent(`/${protocol.studyId}/portal/connect?success=Fitbit`)
 
@@ -82,21 +79,7 @@ export function FitbitPage() {
               style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
             />
         </Grid>
-
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 4: Done</Typography>
-          <Typography variant="body1">Press the following 'Finish' button to continue</Typography>
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-          <Button variant={'contained'}
-            onClick={() => router.push('./?success=Fitbit')}
-          >
-            {`    Finish    `}
-          </Button>
-        </Grid>
-
       </Grid>
-      
     </RadarCard>
   </Container>
   )

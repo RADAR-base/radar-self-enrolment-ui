@@ -3,7 +3,7 @@ import { Box, Button, Container, Typography } from "@mui/material"
 import Grid from '@mui/material/Grid2';
 import React, { useContext, useEffect, useState } from "react";
 import { withBasePath } from "@/app/_lib/util/links";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { RadarCard } from "../base/card";
 import {QRCodeSVG} from 'qrcode.react'
 import Image from 'next/image'
@@ -16,6 +16,7 @@ export function HealthKitPage() {
 
   const studyId = protocol.studyId
   const router = useRouter()
+  const pathname = usePathname()
   const code = useSearchParams().get('code')
   const [isFetchingToken, setIsFetchingToken] = useState(false)
   const [tokenHandled, setTokenHandled] = useState<boolean>(false)
@@ -44,6 +45,7 @@ export function HealthKitPage() {
           const url = await getAuthLink(shortToken, studyId)
           setQrCode(url)
           setTokenHandled(true)
+          router.replace(pathname)
         }
       }
     }
