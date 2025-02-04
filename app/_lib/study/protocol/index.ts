@@ -67,7 +67,8 @@ type ArmtMetadataBase = {
   order?: number,
   showInPortal?: boolean
   optional?: boolean
-  type: "redcap_github" | "redcap_local" | "inbuilt"
+  type: "redcap_github" | "redcap_local" | "inbuilt",
+  options?: any
 }
 
 interface ArmtMetadataGithub extends ArmtMetadataBase {
@@ -96,10 +97,10 @@ export type ArmtProtocol = {
 export type StudyUiConfig = {
   materialTheme: ThemeOptions;
   studyIconSrc: string;
-  navbarLinks: {text: string, href: string}[];
+  navbarLinks: { text: string, href: string }[];
   footer: FooterProps;
-  portal: {title: string, content: string}
-  analytics: {gaId: string}
+  portal: { title: string, content: string }
+  analytics: { gaId: string }
 };
 
 

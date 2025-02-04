@@ -39,7 +39,8 @@ interface DevicesPanel {
 
 export function DevicesPanel(props: DevicesPanel) {
   const projectId = localStorage.getItem('studyId')
-  const devices = ['fitbit', 'apple_health', 'garmin', 'oura']
+  const connectProtocol = props.protocol.protocols.find(p => p.id == 'connect')
+  const devices: string[] = connectProtocol?.metadata?.options?.devices
   const [submitting, setSubmitting] = useState<boolean>(false)
   const router = useRouter()
   
