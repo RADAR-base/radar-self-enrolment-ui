@@ -11,6 +11,7 @@ interface LoginProps {
     onLogin?: () => void
     redirectTo?: string
     loginChallenge?: string
+    flow?: IOryLoginFlow
 }
 
 export function LoginComponent(props: LoginProps) {
@@ -24,7 +25,7 @@ export function LoginComponent(props: LoginProps) {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   let [errorText, setErrorText] = useState<string>('');
-  let [flow, setFlow] = useState<IOryLoginFlow | undefined>(undefined);
+  let [flow, setFlow] = useState<IOryLoginFlow | undefined>(props.flow);
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -132,7 +133,7 @@ export function LoginComponent(props: LoginProps) {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.password && Boolean(formik.errors.password)}/>
-        <Link href={'accountrecovery'}>Forgot password?</Link>
+        <Link href={'recovery'}>Forgot password?</Link>
         <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} width={'100%'}>
           <Button color="primary" variant="contained" onClick={() => router.back()}>
               Back

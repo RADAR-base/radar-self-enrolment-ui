@@ -17,7 +17,6 @@ async function logout(): Promise<Response> {
   }
 }
 
-
 export default function Page({ params }: { params: { studyId: string } }) {
   const router = useRouter()
   const redirect_uri = '/' + params.studyId

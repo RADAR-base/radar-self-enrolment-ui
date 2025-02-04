@@ -51,7 +51,9 @@ function LoggedInButtons(props: LoggedInButtonsProps) {
 
         <MenuItem onClick={() => {
           handleCloseNavMenu()
-          router.push('/' + (props.studyId ?? 'auth') + '/logout')
+          fetch(withBasePath('/api/auth/logout')).then(
+            () => {router.refresh()}
+          )
         }}>
           Sign Out
         </MenuItem>

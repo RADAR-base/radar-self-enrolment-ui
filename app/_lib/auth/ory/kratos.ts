@@ -142,7 +142,7 @@ export async function getRegistrationFlow(flowId: string): Promise<Response> {
   })
 }
 
-interface IUpdateRegistrationFlowBodyPassword {
+export interface IUpdateRegistrationFlowBodyPassword {
   csrf_token: string,
   method: string,
   password: string,
@@ -182,7 +182,7 @@ export async function getRecoveryFlow(flowId: string): Promise<Response> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + '/self-service/recovery/flows')
   var params = new URLSearchParams([
-    ['flow', flowId]
+    ['id', flowId]
   ])
   url.search = params.toString()
   return await fetch(url, {
@@ -195,27 +195,76 @@ export async function getRecoveryFlow(flowId: string): Promise<Response> {
   })
 }
 
-interface IUpdateRecoveryFlowBodyCode {
+export interface IUpdateRecoveryFlowBodyCode {
   csrf_token: string,
   code: string,
   method: string,
   transient_payload?: any
 }
 
-interface IUpdateRecoveryFlowBodyEmail {
+export interface IUpdateRecoveryFlowBodyEmail {
   csrf_token: string,
   email: string,
   method: string,
   transient_payload: any
 }
 
-export async function updateRecoveryFlow(flowId: string, token: string, data: IUpdateRecoveryFlowBodyCode | IUpdateRecoveryFlowBodyEmail): Promise<Response> {
+export async function updateRecoveryFlow(flowId: string, data: IUpdateRecoveryFlowBodyCode | IUpdateRecoveryFlowBodyEmail, token?: string): Promise<Response> {
   const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + "/self-service/recovery")
   var params = new URLSearchParams([
     ["flow", flowId],
-    ["token", token]
   ])
+  if (token) { params.append("token", token) }
+  url.search = params.toString();
+  return await fetch(url, {
+    method: 'POST',
+    headers: {
+      'accept': 'application/json',
+      'Content-Type': 'application/json',
+      Cookie: cookieString,
+    },
+    body: JSON.stringify(data)
+  })
+}
+
+
+export async function getVerificationFlow(flowId: string): Promise<Response> {
+  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  var url = new URL(BASEURL + '/self-service/verification/flows')
+  var params = new URLSearchParams([
+    ['id', flowId]
+  ])
+  url.search = params.toString()
+  return await fetch(url, {
+    method: 'GET',
+    headers: {
+      'accept': 'application/json',
+      'Content-Type': 'application/json',
+      Cookie: cookieString,
+    },
+  })
+}
+
+export async function createVerificationFlow(return_to?: string): Promise<Response> {
+  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  var url = new URL(BASEURL + '/self-service/verification/browser')
+  return await fetch(url, {
+    method: 'GET',
+    headers: {
+      'accept': 'application/json',
+      Cookie: cookieString,
+    },
+  })
+}
+
+export async function completeVerificationFlow(flowId: string, data: IUpdateRecoveryFlowBodyCode | IUpdateRecoveryFlowBodyEmail, token?: string): Promise<Response> {
+  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  var url = new URL(BASEURL + "/self-service/verification")
+  var params = new URLSearchParams([
+    ["flow", flowId],
+  ])
+  if (token) { params.append("token", token) }
   url.search = params.toString();
   return await fetch(url, {
     method: 'POST',
