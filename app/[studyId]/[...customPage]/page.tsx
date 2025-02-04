@@ -8,7 +8,7 @@ export const dynamicParams = true
 export async function generateStaticParams() {
   // study repo
   const pageRepo: PageRepository = new PageRepository()
-  const studyIds = ['paprka']
+  const studyIds = await pageRepo.getAllStudyIds()
   var params: {studyId: string, customPage: string[]}[] = []
   for (let i = 0; i < studyIds.length; i++) {
     let pageRoutes = await pageRepo.getAllPageRoutes(studyIds[i])

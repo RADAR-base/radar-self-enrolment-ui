@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Page({ params }: { params: { studyId: string} }) {
-  const projectId = 'paprka'
+  const projectId = localStorage.getItem('studyId')
   const router = useRouter()
   const [tokenHandled, setTokenHandled] = useState(false)
   const [isFetchingToken, setIsFetchingToken] = useState(false) // Prevent multiple calls

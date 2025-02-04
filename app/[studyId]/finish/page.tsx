@@ -12,6 +12,7 @@ import { RadarDeviceCard } from '@/app/_ui/components/portal/deviceCard';
 
 
 export default async function Page({ params }: { params: { studyId: string, taskId: string} }) {
+  const projectId = localStorage.getItem('studyId')
   const registery: StudyProtocolRepository = new StudyProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)
   return (
@@ -29,7 +30,7 @@ export default async function Page({ params }: { params: { studyId: string, task
               <Typography variant="subtitle1">You have successfully joined the {protocol.name} research study.</Typography>
               <Typography variant="body1">{"\nThanks to your contribution, our research will help millions of people living with knee osteoarthritis who will undergo knee replacement surgeries in the future.\n\nThe results of the study will be published at the end of 2026. You can receive regular updates and be the first to hear the results by subscribing to our newsletter"}</Typography>
               <Box display='flex' flexDirection='row' justifyContent='flex-start' width={'100%'} paddingTop={2}>
-                <NextButton href={'/paprka/portal'} variant='contained'>Back</NextButton>
+                <NextButton href={`/${projectId}/portal`}  variant='contained'>Back</NextButton>
               </Box>
             </Box>
           </RadarCard>

@@ -2,6 +2,7 @@ import PageRepository from "@/app/_lib/study/siteContent/repository";
 import { BlockPage } from "@/app/_ui/components/blocks/blockPage";
 import ProtocolRepository from "@/app/_lib/study/protocol/repository";
 import HoverPopover from "../_ui/components/base/hoverPopover";
+import StudyStorage from "../_ui/components/storage/studyStorage";
 
 // export const dynamicParams = true
 
@@ -15,6 +16,7 @@ export default async function Page({ params }: { params: { studyId: string } }) 
   const pageContent = await pageRegistry.getLandingPage(params.studyId)
   return (
     <main>
+      <StudyStorage studyId={params.studyId} />
       <BlockPage blockParams={pageContent.blocks} ></BlockPage>
     </main>
   )}
