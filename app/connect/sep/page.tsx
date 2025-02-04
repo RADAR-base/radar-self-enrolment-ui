@@ -5,7 +5,7 @@ import crypto from "crypto";
 import { useSearchParams } from "next/navigation";
 
 export default function Page() {
-  const projectId = 'paprka'
+  const projectId = localStorage.getItem('studyId')
   const code = useSearchParams().get('code')
   const state = crypto.randomBytes(20).toString('hex')
   
