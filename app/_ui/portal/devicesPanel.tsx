@@ -45,7 +45,7 @@ export function DevicesPanel() {
   const protocol = useContext(ProtocolContext);
   const devices = ((protocol.protocols
                           .find((p) => ((p.metadata.type == 'inbuilt') && (p.metadata.inbuiltId == 'connect')))
-                          ?.metadata as ArmtMetadataInbuilt).options.devices as string[] 
+                          ?.metadata as ArmtMetadataInbuilt)?.options.devices as string[] 
                   ?? DEFAULT_DEVICES)
 
   async function onSubmit() {
