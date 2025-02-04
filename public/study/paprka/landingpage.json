@@ -8,7 +8,7 @@
             "content": {
               "block1": {
                 "blockType": "markdown",
-                "content": "#PAPRKA: How Active are People After Knee Surgery?\n<br />\nThe Physical Activity Patterns after Knee Arthroplasty (PAPrKA) study will discover how physical activity changes after a knee joint replacement, in the first months of recovery as well as long-term improvements.\n<br />\nLed by the University of Manchester, we will ask people who have had surgery to share data from their fitness devices and apps, so we can find answers to these questions.\n<br/>\n<button variant='contained' href='paprka/enrol'>Join Study</button>"
+                "content": "#PAPRKA: How Active are People After Knee Surgery?\n<br />\nThe Physical Activity Patterns after Knee Arthroplasty (PAPrKA) study will discover how long it takes to recover from knee surgery and how quickly people can expect to get their mobility back.\n<br />\nLed by the University of Manchester, we will ask people who have had surgery via the NHS or through a private healthcare provider, to share past data from their fitness tracker and smartphone applications and link it to their National Joint Registry record, so we can find answers to these questions.\n<br/>\n<button variant='contained' href='paprka/enrol'>Join Study</button>"
               },
               "block2": {
                 "blockType": "video",
@@ -26,20 +26,30 @@
             "noCard": true,
             "title": "Who Can Take Part?", 
             "blockBackground": "white",
-            "content": "<br />\nPeople living with knee osteoarthritis who had a total or partial knee replacement:\n- between January 2016 and December \n- are over 18 years old and live in England, Wales, Northern Ireland, Isle of Man or Guernsey.\n<br />\n\nPeople must have used a smartphone or wearable device to track their activity in the year before their knee replacement and 2 years after surgery.\n<br />\n\nThe device they used can be:\n- a smart phone application (which can be any of the following: Google Fit, Strava or Apple \n- a wearable (which can be any of the following: Fitbit, Apple watch, Polar, Garmin, or Oura)\n<br />\n\nPeople who can read and understand English or have support from someone who can.\n<br />\n\nPeople must be willing to give us permission to access their physical activity data and the information held about their knee replacement surgery in the National Joint Registry.\n<br />\n<button variant='contained'>Eligibility Full Document</button>"
+            "content": "People living with knee osteoarthritis who had a total or partial knee replacement by the NHS or a private healthcare provider:\n- between January 2017 and December 2023 \n- are over 18 years old and live in England, Wales, Northern Ireland, Isle of Man or Guernsey.\n<br />\n\nPeople must have used a smartphone or fitness tracker to track their activity between June 2016 and December 2024. \n<br />\n\nThe device they used can be: iPhone, Fitbit, Apple Watch, Garmin and Oura Ring.\n<br />\n\nPeople who can read and understand English or have support from someone who can.\n<br />\n\nPeople must be willing to give us permission to access their physical activity data and the information held about their knee replacement surgery in the National Joint Registry.\n<br />\n<button variant='contained' href='study/paprka/resources/paprka_protocol.pdf'>Eligibility Full Document</button>"
           },
           {
-            "blockType": "text",
+            "blockType": "column",
             "noCard": true,
-            "title": "Connecting Your Fitness Tracker", 
-            "content": "We will collect data from participants using wearable fitness trackers or smartphone apps and analyse it to understand recovery and mobility after knee surgery.\n\nWe’re looking for people who tracked activity levels before and after surgery using Fitbit, Apple Watch, Garmin, Polar, Strava, Oura, Apple Health or Google Fit.\n\nConnecting your device couldn’t be simpler. With help from real patients, we have designed a step-by-step process that will support anyone to connect their device in a stress-free way."
+            "blockBackground": "white",
+            "title": "Connecting Your Fitness Tracker",
+            "content": {
+              "block1": {
+                "blockType": "text",
+                "content": "We will collect data from participants using wearable fitness trackers or smartphone apps and analyse it to understand recovery and mobility after knee surgery.\n\nWe’re looking for people who tracked activity levels before and after surgery using an iPhone, Fitbit, Apple Watch, Garmin and Oura Ring.\n\nConnecting your device couldn’t be simpler. With help from real patients, we have designed a step-by-step process that will support anyone to connect their device in a stress-free way."
+              },
+              "block2": {
+                "blockType": "markdown",
+                "content": "![Connect your device](/kratos-ui/study/paprka/resources/connect_your_device.jpg \"Connect\")"
+              }
+            }
           },
           {
             "blockType": "markdown",
             "noCard": true,
             "title": "More Information", 
             "blockBackground": "white",
-            "content": "We understand that you may have questions about our research, what your involvement may be, how your data will be used, who has access to your data, how we will keep your data safe, and much more. We created our Participant Information Sheet to provide you with these answers.\n\nIf you have any further questions, please contact us using the details below.\n<br />\n<iframe\n src='/kratos-ui/study/paprka/resources/paprka_pis.pdf#view=FitH&toolbar=1'\n width='100%'\n height='800px'\n loading='lazy'\n title='Information Sheet'\n></iframe>"
+            "content": "We understand that you may have questions about our research, what your involvement may be, how your data will be used, who has access to your data, how we will keep your data safe, and much more. We created our Participant Information Sheet to provide you with these answers.\n\nIf you have any further questions, please contact us using the details below.\n<br />\n<button variant='contained' href='study/paprka/resources/paprka_pis.pdf'>Participant Information Sheet</button>"
           },
           {
             "blockType": "carousel",

@@ -9,6 +9,7 @@ interface IItem {
 
 export interface IDateItem extends IItem {
   fieldType: "date",
+  views?: string[]
 }
 
 export interface IYesNoItem extends IItem {

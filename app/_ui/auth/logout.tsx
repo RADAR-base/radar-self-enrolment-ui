@@ -29,8 +29,10 @@ export function LogoutButton(props: LogoutProps) {
   return <Button
     color="error"
     onClick={() => {
+      console.log('logout...')
       logout().then(
         (res) => {
+          console.log(res)
           if (res.status==204) {
             onLogout()
           }

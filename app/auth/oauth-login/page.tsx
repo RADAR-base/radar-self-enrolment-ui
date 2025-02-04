@@ -7,6 +7,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { withBasePath } from '@/app/_lib/util/links';
 import { getCsrfToken } from "@/app/_lib/auth/ory/util";
 import { LogoutButton } from "@/app/_ui/auth/logout";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 interface LoginFormProps {
   flow?: any
@@ -27,12 +28,11 @@ function LoginForm({flow: flow}: LoginFormProps) {
         csrf_token: getCsrfToken(flow),      
       } 
       if (flow == undefined) { return }
-      // let resp = await ory.submitLoginFlow(flow.id, body)
       let resp = await fetch(withBasePath('/api/ory/login?flow=' + flow.id), 
         {method: 'POST', body: JSON.stringify(body)})
       if (resp.status == 422) {
         let {redirect_browser_to: url} = await resp.json()
-        router.push(url)
+        router.replace(url)
       } else {
         console.log('Other error')
       }
@@ -122,23 +122,16 @@ function createLoginFlow(loginChallenge: string, setFlow: (value: any) => void) 
   )
 }
 
-async function acceptWithCurrentAccount(loginChallenge: string, router: any): Promise<void> {
+async function acceptWithCurrentAccount(loginChallenge: string, router: AppRouterInstance): Promise<void> {
   const response = await fetch(withBasePath(`/api/oauth-login?login_challenge=${loginChallenge}`),
     {
       method: 'POST',
       body: JSON.stringify({remember: true})
     }
   )
-  try {
-    if (response.ok) {
-      const data = await response.json()
-      router.push(data.redirect_to)
-    } else {
-      console.log(response)
-      // router.push('/')
-    }
-  } catch (error) {
-    router.push('/')
+  if (response.ok) {
+    const data = await response.json()
+    window.location.replace(data.redirect_to)
   }
 }
 
@@ -146,6 +139,9 @@ function userIsParticipant(userSession: any): boolean {
   return userSession?.identity?.schema_id == "subject"
 }
 
+function LoginCard(params: {children: React.ReactElement}) {
+  return <Card><Box display={'flex'} alignItems={'center'} justifyContent={'center'} width={300} height={350}>{params.children}</Box></Card>
+}
 
 export default function Page() {
   const router = useRouter()
@@ -154,14 +150,13 @@ export default function Page() {
   
   const [userSession, setUserSession] = useState<any>(undefined)
   const [flow, setFlow] = useState<any>();  
-  const [content, setContent] = useState<JSX.Element>(<CircularProgress  sx={{  top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} />)
+  const [content, setContent] = useState<JSX.Element>(<div></div>)
 
   const loginChallenge = searchParams.get('login_challenge') ?? undefined
   if (loginChallenge == undefined) {
-    router.push('/auth/login')
+    window.location.replace(withBasePath('/auth/login'))
     return
   }
-
   let flowId = searchParams.get('flowId')
   useEffect(() => {
     if (userSession === undefined) {
@@ -170,15 +165,15 @@ export default function Page() {
       if (flow == undefined) {
         createLoginFlow(loginChallenge ?? '', setFlow)
       } else {
-        setContent(<LoginForm flow={flow}></LoginForm>)
+        setContent(<LoginCard><LoginForm flow={flow}></LoginForm></LoginCard>)
       }
     } else {
       if (userIsParticipant(userSession)) {
         acceptWithCurrentAccount(loginChallenge, router)
         return
       }
-      setContent(<LoginWithCurrentAccountForm userSession={userSession} loginChallenge={loginChallenge} />)
+      setContent(<LoginCard><LoginWithCurrentAccountForm userSession={userSession} loginChallenge={loginChallenge} /></LoginCard>)
     }
   }, [flow, userSession])
-  return <Card><Box display={'flex'} alignItems={'center'} justifyContent={'center'} width={300} height={350}>{content}</Box></Card>
+  return content
 }

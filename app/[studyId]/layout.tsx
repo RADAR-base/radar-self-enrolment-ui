@@ -70,6 +70,7 @@ export default async function StudyLayout({children, params}: Readonly<{children
     redirect('/')
   }
 
+
   const gaEnabled = (protocol.studyUiConfig.analytics?.gaId != undefined) && (cookieChoice != undefined) && (cookieChoice.value == "all")
 
   return (
@@ -77,8 +78,6 @@ export default async function StudyLayout({children, params}: Readonly<{children
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <ProtocolProvider protocol={protocol}>
-
-
         <Box
           sx={{
             minHeight: '100vh',

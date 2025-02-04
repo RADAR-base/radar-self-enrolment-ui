@@ -53,5 +53,5 @@ export async function POST(
   } catch (error) {
     console.log(error)
   }
-  return new NextResponse('Error', {status: 401})
+  return NextResponse.json({error: {type: 'unknown', content: {message: "An unknown error occured"}}}, {status: 401})
 }

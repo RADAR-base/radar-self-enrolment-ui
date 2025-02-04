@@ -22,6 +22,7 @@
     "dayjs": "^1.11.13",
     "formik": "^2.4.6",
     "glob": "^11.0.0",
+    "jwt-decode": "^4.0.0",
     "mui-markdown": "^1.2.2",
     "next": "^14.2.5",
     "nextjs-google-analytics": "^2.3.7",

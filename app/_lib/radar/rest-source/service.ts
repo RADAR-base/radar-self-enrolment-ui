@@ -1,52 +1,6 @@
-const USER_ENDPOINT = ''
 const AUTH_BASE_URL = process.env.NEXT_PUBLIC_HYDRA_PUBLIC_URL + "/oauth2"
-const GRANT_TYPE = "authorization_code"
-const CLIENT_ID = process.env.ARMT_CLIENT_ID ?? "aRMT"
-const CLIENT_SECRET = process.env.ARMT_CLIENT_SECRET  ?? ""
-const REDIRECT_URI = process.env.NEXT_PUBLIC_REST_REDIRECT_URI
-
-
-async function getRestSourceUser(
-  accessToken: string,
-  userId: string,
-  projectId: string,
-  sourceType: string
-): Promise<string | null> {
-  try {
-    const response = await fetch(USER_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({
-        userId: userId,
-        projectId: projectId,
-        sourceType: sourceType,
-        startDate: new Date().toISOString(),
-      }),
-    })
-
-    if (!response.ok) {
-      const data = await response.json()
-      if (response.status === 409 && data.user) {
-        console.warn("User already exists:", data.message)
-        return data.user.id
-      } else {
-        throw new Error(
-          `Failed to create user: ${data.message || response.statusText}`,
-        )
-      }
-    }
-
-    const userDto = await response.json()
-    return userDto.id
-  } catch (error) {
-    console.error(error)
-    return null
-  }
-}
-
+const CLIENT_ID = process.env.SEP_CLIENT_ID ?? "SEP"
+const REDIRECT_URI = process.env.NEXT_PUBLIC_SEP_REDIRECT_URI
 
 export function authRequestLink(state: string): string {
   const scopes = [

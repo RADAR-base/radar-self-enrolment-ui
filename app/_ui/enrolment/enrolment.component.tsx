@@ -17,7 +17,6 @@ import { EnrolmentRegister } from './register.component';
 import { withBasePath } from '@/app/_lib/util/links';
 import { getCsrfToken } from '@/app/_lib/auth/ory/util';
 
-
 function generateEligibilitySchema(protocol: EnrolmentProtocol): Yup.Schema {
   const schema: {[key: string]: Yup.Schema} = {};
   protocol.eligibility?.items.forEach(
@@ -160,6 +159,24 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   if (additionalDefinition) {
     schemas['additional'] = schemaFromDefinition(additionalDefinition)
   }
+  
+  const displayErrors = (flow: IOryRegistrationFlow) => {
+    console.log(flow)
+    if (flow) {
+      if ((flow.ui.messages) && (flow.ui.messages.length > 0)) {
+        setErrorText(flow.ui.messages[0].text)
+      }
+      flow.ui.nodes.filter(node => node.messages.length > 0).forEach(
+        (node) => {
+          if ((node.attributes.name) == 'traits.email') {
+            formik.setErrors({register: {email: node.messages[0].text}})
+          } else if ((node.attributes.name) == 'password') {
+            formik.setErrors({register: {password: node.messages[0].text}})
+          }
+        }
+      )
+    }
+  }
 
   const formik = useFormik({
     validateOnChange: true,
@@ -184,7 +201,8 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
               id: studyProtocol.studyId,
               name: studyProtocol.name,
               userId: crypto.randomUUID(),
-              ...traits
+              ...traits,
+              version: protocol.version
             }
           ]
         }
@@ -207,7 +225,9 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
                 if (data?.ui?.messages !== undefined) {
                   setErrorText(data.ui.messages[0]['text'])
                   scrollToTop()
-                }              
+                } 
+                displayErrors(data)   
+                setFlow(data)          
               }
             )
           }
@@ -235,7 +255,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
           eligibility: (
             <EnrolmentEligibility
               setFieldValue={formik.setFieldValue}
-              errors={formik.errors["eligibility"] || {}}
+              errors={(formik.errors['eligibility']) ? formik.errors['eligibility'] : {}}
               values={formik.values["eligibility"]}
               title={protocol.eligibility.title}
               description={protocol.eligibility.description}
@@ -250,7 +270,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
           consent: (
             <EnrolmentConsent
               setFieldValue={formik.setFieldValue}
-              errors={formik.errors["consent"] || {}}
+              errors={(formik.errors['consent']) ? formik.errors['consent'] : {}}
               values={formik.values["consent"]}
               title={protocol.consent.title}
               description={protocol.consent.description}
@@ -268,7 +288,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
               title={protocol.additional.title}
               definition={fromRedcapDefinition(protocol.additional.items)}
               values={formik.values.additional}
-              errors={formik.errors["additional"]}
+              errors={formik.errors['additional']}
               setFieldValue={(id, value) => formik.setFieldValue("additional." + id, value)}
             />
           ),
@@ -280,7 +300,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
         setFieldValue={formik.setFieldValue}
         title={protocol.account?.title}
         description={protocol.account?.description}
-        errors={formik.errors["register"] || {}}
+        errors={(formik.errors['register']) ? formik.errors['register'] : {}}
         values={formik.values["register"]}
       />
     ), 
@@ -379,9 +399,10 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
       }}
     >
       <form onSubmit={formik.handleSubmit}>
-        <Stack gap={4} margin={"auto"}>
+        <Stack display={'inline'} gap={2} margin={"auto"}>
           {errorText && <Typography variant='overline' color='error'>{errorText}</Typography>}
           {stepContent[steps[stepIdx]]}
+          <br />
           {ControlButtons}
         </Stack>  
       </form>

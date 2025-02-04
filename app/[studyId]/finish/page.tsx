@@ -17,8 +17,12 @@ export default async function Page({ params }: { params: { studyId: string, task
   const protocol = await registery.getStudyProtocol(params.studyId)
   return (
     <main>
+       <Box sx={{ flexGrow: 1, margin: 2}} 
+      display="flex"
+      justifyContent="center"
+      alignItems="center">
       <Container maxWidth="lg" disableGutters>
-      <Grid container spacing={2} gridAutoColumns={'3lf'} gridAutoFlow={"column"} marginTop={2}>
+      <Grid container spacing={2} gridAutoColumns={'3lf'} gridAutoFlow={"column"}>
         <Grid size={12}>
           <RadarCard>
             <Box display={'flex'} flexDirection={'column'}
@@ -37,5 +41,6 @@ export default async function Page({ params }: { params: { studyId: string, task
         </Grid>
       </Grid>
       </Container>
+      </Box>
     </main>
   )}

@@ -1,12 +1,10 @@
-import { randomUUID } from "crypto"
-
 const AUTH_BASE_URL = process.env.NEXT_PUBLIC_HYDRA_PUBLIC_URL + "/oauth2"
 const GRANT_TYPE = "authorization_code"
 const CLIENT_ID = process.env.ARMT_CLIENT_ID ?? "aRMT"
 const CLIENT_SECRET = process.env.ARMT_CLIENT_SECRET  ?? ""
 const REDIRECT_URI = process.env.NEXT_PUBLIC_ARMT_REDIRECT_URI
 
-export async function getAccessToken(
+export async function getAccessToken( // This needs to be moved to an API route
   code: string,
   redirectUri: string,
 ): Promise<any> {
@@ -39,7 +37,7 @@ export async function getAccessToken(
   }
 }
 
-export async function getAccessTokenFromCode(code: string): Promise<any> {
+export async function getAccessTokenFromCode(code: string): Promise<any> { // This needs to be moved to an API route
   const redirectUri = REDIRECT_URI
   if (redirectUri) {
     return getAccessToken(code, redirectUri)

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
-import { Button, Container, Link as MuiLink, Stack } from "@mui/material";
+import { Box, Button, Container, Link as MuiLink, Stack } from "@mui/material";
 import Link from "next/link";
 
 
@@ -10,16 +10,22 @@ export const metadata: Metadata = {
   description: "Webportal for RADAR-base remote monitoring research studies",
 };
 
-export default function StudyLayout({
+export default function AuthLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <Container maxWidth="md">
-      <Stack m={4} spacing={4} alignItems="center" alignContent={'center'}> 
-        <div>{children}</div>
-      </Stack>
-    </Container>
-  );
+    <main>
+       <Box m={'auto'}
+            p={2} 
+            display="flex"
+            justifyContent="center"
+            minWidth={'100vW'}
+            minHeight={'100vH'}
+            alignItems='center'>
+        {children}
+      </Box>
+    </main>
+  )
 }

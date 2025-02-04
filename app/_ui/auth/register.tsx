@@ -51,7 +51,7 @@ const Register: React.FC<{onRegister?: () => void}> = (props: {onRegister?: () =
       email: email,
       password: password,
       csrf_token: getCsrfToken(flow),
-      traits: {testo: 'h'}
+      traits: {}
     }
     const res = await fetch(withBasePath('/api/ory/registration?' + new URLSearchParams({
       flow: flow.id

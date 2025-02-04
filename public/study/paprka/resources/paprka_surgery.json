@@ -12,7 +12,16 @@
         "section_header": "",
         "field_type": "text",
         "field_label": "Surgery Date",
-        "select_choices_or_calculations": "",
+        "select_choices_or_calculations": [
+            {
+                "code": "year",
+                "label": ""
+            },
+            {
+                "code": "month",
+                "label": ""
+            }
+        ],
         "field_note": "",
         "text_validation_type_or_show_slider_number": "datetime_dmy",
         "text_validation_min": "01/01/2016",

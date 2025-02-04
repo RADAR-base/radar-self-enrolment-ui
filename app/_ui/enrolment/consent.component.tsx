@@ -12,7 +12,8 @@ type ConsentItem = IYesNoItem
 
 interface EnrolmentConsentProps {
   title?: string
-  description?: string
+  description?: string,
+  signatureDescription?: string
   requiredItems: ConsentItem[]
   optionalItems?: ConsentItem[]
   setFieldValue: (id: string, value: any) => void
@@ -68,7 +69,7 @@ export function EnrolmentConsent(props: EnrolmentConsentProps) {
       {(props.optionalItems) && <Typography variant="subtitle1" align="left">The following activities are optional, you may participate in the research without agreeing to the following:</Typography>}
       {props.optionalItems && optionalItems}
       <Divider />
-      <Typography variant="h3" align="left">Sign here</Typography>
+      {<MarkdownContainer>{props.signatureDescription ?? "Sign here"}</MarkdownContainer>}
       <ArmtSignatureField setFieldValue={props.setFieldValue} fieldType="signature" id={"consent.signature"} value={props.values['signature']} />
     </Stack>
 )}

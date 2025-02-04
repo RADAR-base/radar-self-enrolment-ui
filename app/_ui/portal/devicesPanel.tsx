@@ -1,11 +1,11 @@
 "use client"
 import { Box, Button, Container, Typography } from "@mui/material"
 import Grid from '@mui/material/Grid2';
-import { StudyProtocol } from "@/app/_lib/study/protocol";
+import { ArmtMetadataInbuilt, StudyProtocol } from "@/app/_lib/study/protocol";
 import NextLink from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { RadarDeviceCard } from "@/app/_ui/components/portal/deviceCard";
 import { RadarCard } from "../components/base/card";
 import { MarkdownContainer } from "../components/base/markdown";
@@ -13,6 +13,7 @@ import { withBasePath } from "@/app/_lib/util/links";
 import { useRouter } from "next/navigation";
 import NextButton from "../components/base/nextButton";
 import { DeviceConnectedBanner } from "../components/device_connect/successBanner";
+import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 
 const TEMP_CONTENT: {[key: string]: any} = {
   'fitbit': {
@@ -21,7 +22,7 @@ const TEMP_CONTENT: {[key: string]: any} = {
   },
   'apple_health': {
     title: 'Apple Health',
-    description: 'Wearable fitness tracker'
+    description: 'Apple Watch or iPhone'
   },  
   'garmin': {
     title: 'Garmin',
@@ -33,25 +34,24 @@ const TEMP_CONTENT: {[key: string]: any} = {
   },
 }
 
-interface DevicesPanel {
-  protocol: StudyProtocol
-}
+const DEFAULT_DEVICES = ['fitbit', 'apple_health', 'garmin', 'oura']
 
-export function DevicesPanel(props: DevicesPanel) {
+export function DevicesPanel() {
   const projectId = localStorage.getItem('studyId')
-  const connectProtocol = props.protocol.protocols.find(p => p.id == 'connect')
-  const devices: string[] = connectProtocol?.metadata?.options?.devices
   const [submitting, setSubmitting] = useState<boolean>(false)
   const router = useRouter()
-  
   const searchParams = useSearchParams()
-
   const deviceConnected = searchParams.get('success')
+  const protocol = useContext(ProtocolContext);
+  const devices = ((protocol.protocols
+                          .find((p) => ((p.metadata.type == 'inbuilt') && (p.metadata.inbuiltId == 'connect')))
+                          ?.metadata as ArmtMetadataInbuilt).options.devices as string[] 
+                  ?? DEFAULT_DEVICES)
 
   async function onSubmit() {
     setSubmitting(true)
     let resp = await fetch(
-      withBasePath('/api/study/' + props.protocol.studyId + '/tasks/connect'),
+      withBasePath('/api/study/' + protocol.studyId + '/tasks/connect'),
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -59,7 +59,7 @@ export function DevicesPanel(props: DevicesPanel) {
       }
     )
     if (resp.ok) {
-      router.push('/' + props.protocol.studyId + '/portal') 
+      router.push('/' + protocol.studyId + '/portal') 
     } else {
       console.log(await resp.json())
     }
@@ -78,7 +78,7 @@ export function DevicesPanel(props: DevicesPanel) {
             padding={3}>
           <Typography variant="h2">Connect Your iPhone, Fitness Tracker or Smartphone App</Typography>
           <MarkdownContainer>
-          {"By sharing your activity data with us we gain valuable insights into recovery and mobility after knee replacement surgery.\n<br />\nFollow the step-by-step instructions [link TBC] or watch a video [link TBC] to show you how to connect your fitness tracker or smartphone app.\n<br />\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data by reading our privacy policy\n<br />\n**How do I Identify my device?**\n\nCheck the logo on your fitness tracker or smartphone application to find your device or app below."}
+          {"By sharing your activity data with us we gain valuable insights into recovery and mobility after knee replacement surgery.\n<br />\nFollow the step-by-step instructions [link TBC] or watch a video [link TBC] to show you how to connect your iPhone, fitness tracker or smartphone app.\n<br />\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data by reading our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n<br />\n**How do I Identify my device?**\n\nCheck the logo on your fitness tracker or smartphone application to find your device or app below."}
           </MarkdownContainer>
           <Box display='flex' flexDirection='row' justifyContent={'space-between'} width={'100%'} paddingTop={2}>
             <NextButton href={`/${projectId}/portal`} variant='contained'>Back</NextButton>

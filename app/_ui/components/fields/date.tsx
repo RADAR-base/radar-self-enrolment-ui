@@ -1,12 +1,16 @@
 import { Box, Typography } from "@mui/material";
 import { ForwardedRef } from "react";
 import { IDateItem } from "@/app/_lib/armt/definition/field.interfaces";
-import { DatePicker } from "@mui/x-date-pickers";
+import { DatePicker, DateView } from "@mui/x-date-pickers";
 import dayjs from 'dayjs';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
+
+function formatFromView(view: DateView[]) {
+
+}
 
 interface ArmtDateFieldProps extends IDateItem {
   setFieldValue: (id: string, value: Date) => void
@@ -30,8 +34,7 @@ export function ArmtDateField({label, description, errorText, ...props}: ArmtDat
           value={props.value ? dayjs(props.value) : null}
           disabled={props.disabled}
           openTo="year"
-          views={['year','month', 'day']}
-          format='DD/MM/YYYY'
+          views={(props.views ?? ['year','month', 'day']) as DateView[]}
           formatDensity='spacious'
           label={label}
           onChange={(value, context) => {

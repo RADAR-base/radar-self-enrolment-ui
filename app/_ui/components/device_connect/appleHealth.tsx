@@ -1,35 +1,39 @@
 "use client"
 import { Box, Button, Container, Typography } from "@mui/material"
 import Grid from '@mui/material/Grid2';
-import { StudyProtocol } from "@/app/_lib/study/protocol";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { withBasePath } from "@/app/_lib/util/links";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { RadarCard } from "../base/card";
 import {QRCodeSVG} from 'qrcode.react'
 import Image from 'next/image'
 import { getAccessTokenFromCode, getAuthLink } from "@/app/_lib/radar/questionnaire_app/service";
 import NextButton from "../base/nextButton";
+import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 
-interface HealthKitPageProps {
-  protocol: StudyProtocol
-}
+export function HealthKitPage() {
+  const protocol = useContext(ProtocolContext);
 
-export function HealthKitPage(props: HealthKitPageProps) {
-  const studyId = props.protocol.studyId
+  const studyId = protocol.studyId
   const router = useRouter()
+  const pathname = usePathname()
   const code = useSearchParams().get('code')
   const [isFetchingToken, setIsFetchingToken] = useState(false)
   const [tokenHandled, setTokenHandled] = useState<boolean>(false)
   const [qrCode, setQrCode] = useState<any>(undefined)
 
+
+  if ((code == undefined) && (qrCode == undefined) && (isFetchingToken == false)) {
+    window.location.replace(withBasePath('/connect/armt'))
+  }
+  
   useEffect(() => {
     const handleToken = async () => {
       if (isFetchingToken || tokenHandled) return
       if (code) {
+        setIsFetchingToken(true)
         const tokenResponse = await getAccessTokenFromCode(code)
         if (tokenResponse?.access_token && tokenResponse?.expires_in) {
-          console.log(tokenResponse)
           tokenResponse['iat'] =  Math.floor(Date.now() / 1000)
           const shortToken = { 
             iat: tokenResponse.iat, 
@@ -38,16 +42,15 @@ export function HealthKitPage(props: HealthKitPageProps) {
             scope: tokenResponse.scope, 
             token_type: tokenResponse.token_type 
           }
-          console.log('short token: ', shortToken)
           const url = await getAuthLink(shortToken, studyId)
-          console.log('qr url: ', url)
           setQrCode(url)
+          setTokenHandled(true)
+          router.replace(pathname)
         }
       }
-      setIsFetchingToken(true)
     }
     handleToken()
-  }, [])
+  }, [code, isFetchingToken])
 
   return (
   <Container maxWidth="lg" disableGutters>
