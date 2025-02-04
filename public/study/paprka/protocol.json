@@ -42,7 +42,10 @@
           "order": 2,
           "description": "Share your fitness tracker or smartphone app with us.",
           "optional": false,
-          "type": "inbuilt"
+          "type": "inbuilt",
+          "options": {
+            "devices":  ["fitbit", "apple_health", "garmin", "oura"]
+          }
         }
       },
       {
