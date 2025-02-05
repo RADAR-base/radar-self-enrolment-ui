@@ -20,6 +20,10 @@ const TEMP_CONTENT: {[key: string]: any} = {
     title: 'Fitbit',
     description: 'Wearable fitness tracker'
   },
+  'radar_armt': {
+    title: 'RADAR Questionnaire',
+    description: 'Apple iPhone or Android phone'
+  },  
   'apple_health': {
     title: 'Apple Health',
     description: 'Apple Watch or iPhone'

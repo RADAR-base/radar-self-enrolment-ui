@@ -5,16 +5,20 @@ import crypto from "crypto";
 import { useSearchParams } from "next/navigation";
 
 export default function Page() {
-  const projectId = localStorage.getItem('studyId')
   const code = useSearchParams().get('code')
-  const state = crypto.randomBytes(20).toString('hex')
+  const state = crypto.randomBytes(20).toString('hex')  
+  let redirectUri = useSearchParams().get('redirect_uri')
+  if(redirectUri) {
+    localStorage.setItem('redirectUri', redirectUri)
+  }
 
   if (code == null) {
     window.location.replace(authRequestLink(state))
   } else {
     let searchParams = new URLSearchParams([['code', code]])
+    redirectUri = localStorage.getItem('redirectUri')
     fetch(withBasePath('/api/connect/sep?' + searchParams.toString())).then(
-      (r) => window.location.replace(withBasePath(`/${projectId}/portal/connect/apple_health?code=${code}`))
+      (r) => window.location.replace(withBasePath(`${redirectUri}?code=${code}`))
     )
   }
   return
