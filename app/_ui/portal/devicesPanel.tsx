@@ -41,12 +41,12 @@ const TEMP_CONTENT: {[key: string]: any} = {
 const DEFAULT_DEVICES = ['fitbit', 'apple_health', 'garmin', 'oura']
 
 export function DevicesPanel() {
-  const projectId = localStorage.getItem('studyId')
   const [submitting, setSubmitting] = useState<boolean>(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const deviceConnected = searchParams.get('success')
-  const protocol = useContext(ProtocolContext);
+  const protocol = useContext(ProtocolContext)
+  const projectId = protocol.studyId
   const devices = ((protocol.protocols
                           .find((p) => ((p.metadata.type == 'inbuilt') && (p.metadata.inbuiltId == 'connect')))
                           ?.metadata as ArmtMetadataInbuilt)?.options.devices as string[] 

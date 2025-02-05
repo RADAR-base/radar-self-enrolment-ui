@@ -10,11 +10,10 @@ import { MarkdownContainer } from '@/app/_ui/components/base/markdown';
 import NextButton from '@/app/_ui/components/base/nextButton';
 import { RadarDeviceCard } from '@/app/_ui/components/portal/deviceCard';
 
-
 export default async function Page({ params }: { params: { studyId: string, taskId: string} }) {
-  const projectId = localStorage.getItem('studyId')
   const registery: StudyProtocolRepository = new StudyProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)
+  const projectId = protocol.studyId
   return (
     <main>
        <Box sx={{ flexGrow: 1, margin: 2}} 
