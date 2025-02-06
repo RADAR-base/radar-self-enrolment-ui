@@ -33,6 +33,7 @@ export default function Page() {
       } else {
         console.log('State not equal')
         console.log(storedState, returnedState)
+        window.location.replace(withBasePath(return_to))
       }
     }
   }, [])

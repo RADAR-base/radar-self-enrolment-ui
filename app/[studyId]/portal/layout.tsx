@@ -33,7 +33,7 @@ function token_matches_session(token: string, session: any, studyId: string): bo
 export default async function StudyLayout({children, params}: Readonly<{children: React.ReactNode, params: {studyId: string}}>) {
   const cookieStore = cookies()
   const kratos_cookie = cookieStore.get('ory_kratos_session')
-  const return_to = '/' + params.studyId
+  const return_to = '/' + params.studyId + '/portal'
 
   if (kratos_cookie == undefined) {redirect('./')}
 
