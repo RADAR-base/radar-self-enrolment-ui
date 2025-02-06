@@ -39,7 +39,6 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
         router.push('/' + studyId + '/portal') 
       } else {
         formik.setSubmitting(false)
-        console.log(await resp.json())
       }
     }
   })
