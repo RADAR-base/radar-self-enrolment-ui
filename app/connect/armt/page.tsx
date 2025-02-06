@@ -4,6 +4,7 @@ import { withBasePath } from "@/app/_lib/util/links";
 import crypto from "crypto";
 import { useSearchParams } from "next/navigation";
 
+
 export default function Page() {
   const code = useSearchParams().get('code')
   const state = crypto.randomBytes(20).toString('hex')  
