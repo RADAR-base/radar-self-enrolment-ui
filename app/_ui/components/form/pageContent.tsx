@@ -16,7 +16,6 @@ interface ArmtContentProps {
 }
 
 export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
-
   const armtDef: ArmtDefinition = fromRedcapDefinition(redcapDef)
   const schema = schemaFromDefinition(armtDef)
   const router = useRouter()
