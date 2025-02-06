@@ -65,7 +65,6 @@ export function DevicesPanel() {
     if (resp.ok) {
       router.push('/' + protocol.studyId + '/portal') 
     } else {
-      console.log(await resp.json())
     }
     setSubmitting(false)
   }

@@ -57,7 +57,6 @@ export function authRequestLink(state: string): string {
     "SOURCETYPE.UPDATE",
     "offline_access"
   ].join("%20")
-  console.log(REDIRECT_URI)
   const audience = ["res_ManagementPortal", "res_gateway", "res_AppServer"].join("%20")
   const authUrl = `${AUTH_BASE_URL}/auth?client_id=${CLIENT_ID}&response_type=code&state=${state}&audience=${audience}&scope=${scopes}&redirect_uri=${REDIRECT_URI}`
   return authUrl

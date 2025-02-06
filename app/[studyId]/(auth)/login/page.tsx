@@ -6,6 +6,7 @@ import LoginComponent from '@/app/_ui/auth/login';
 import { redirect  } from 'next/navigation'
 import { withBasePath } from '@/app/_lib/util/links';
 import { createLoginFlow } from '@/app/_lib/auth/ory/kratos';
+import { cookies } from 'next/headers';
 
 
 export default async function Page({
@@ -17,10 +18,16 @@ export default async function Page({
 }) {  
   const studyId = (await params).studyId
   const flowId = (await searchParams).flowId
+  const cookieJar = cookies()
+  const csrfToken = cookieJar.getAll().find((c) => c.name.startsWith('csrf_token_'))
   let flow: IOryLoginFlow | undefined
-  if (flowId == undefined) {
-    const resp = await createLoginFlow()
-    flow = await resp.json() as IOryLoginFlow
+  if ((flowId == undefined) && (csrfToken != undefined)) {
+    try {
+      const resp = await createLoginFlow()
+      flow = await resp.json() as IOryLoginFlow
+    } catch (e) {
+      console.log(e)
+    }
   }
   return (
     <main>

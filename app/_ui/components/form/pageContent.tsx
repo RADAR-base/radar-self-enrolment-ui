@@ -16,7 +16,6 @@ interface ArmtContentProps {
 }
 
 export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
-
   const armtDef: ArmtDefinition = fromRedcapDefinition(redcapDef)
   const schema = schemaFromDefinition(armtDef)
   const router = useRouter()
@@ -36,10 +35,10 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
         }
       )
       if (resp.ok) {
-        router.push('/' + studyId + '/portal') 
+        router.push('/' + studyId + '/portal')
+        router.refresh()
       } else {
         formik.setSubmitting(false)
-        console.log(await resp.json())
       }
     }
   })

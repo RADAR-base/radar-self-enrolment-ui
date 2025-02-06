@@ -24,7 +24,7 @@ export function ArmtPage() {
 
 
   if ((code == undefined) && (qrCode == undefined) && (isFetchingToken == false)) {
-    window.location.replace(withBasePath(`/connect/armt?redirect_uri=/${studyId}/portal/connect/radar_armt`))
+    window.location.replace(withBasePath(`/connect/armt?return_to=/${studyId}/portal/connect/radar_armt`))
   }
   
   useEffect(() => {
@@ -113,7 +113,7 @@ export function ArmtPage() {
         <Grid size={{xs: 12, sm: 6}}>
           <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
             {qrCode && <QRCodeSVG value={qrCode} size={200} />}
-            <NextButton href='/connect/armt'>Generate QR Code</NextButton>
+            <NextButton href={`/connect/armt?return_to=/${studyId}/portal/connect/radar_armt`}>Generate QR Code</NextButton>
           </Box>
         </Grid>
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>

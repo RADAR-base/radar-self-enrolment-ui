@@ -6,8 +6,16 @@ import { useEffect, useState } from 'react';
 import { withBasePath } from '@/app/_lib/util/links';
 import { getCsrfToken } from '@/app/_lib/auth/ory/util';
 import { useFormik } from 'formik';
+import Yup from '@/app/_lib/armt/validation/yup'
 
-function EnterEmailRecoveryComponent(props: {flow?: IOryRecoveryFlow, setFlow: (flow: IOryRecoveryFlow) => void}) {
+interface EnterEmailRecoveryComponentProps {
+  flow?: IOryRecoveryFlow
+  setFlow: (flow: IOryRecoveryFlow) => void
+  email?: string
+  setEmail: (email: string) => void
+}
+
+function EnterEmailRecoveryComponent(props: EnterEmailRecoveryComponentProps) {
   let [errorText, setErrorText] = useState<string>('');
   const router = useRouter()
 
@@ -15,7 +23,7 @@ function EnterEmailRecoveryComponent(props: {flow?: IOryRecoveryFlow, setFlow: (
     const body = {
       email: email,
       csrf_token: getCsrfToken(props.flow),
-      method: 'link'
+      method: 'code'
     }
     if (props.flow) {
       const res = await fetch(withBasePath('/api/ory/recovery?' + new URLSearchParams({
@@ -28,6 +36,7 @@ function EnterEmailRecoveryComponent(props: {flow?: IOryRecoveryFlow, setFlow: (
       if (res.ok) {
         const newFlow = (await res.json()) as IOryRecoveryFlow
         displayErrors(newFlow)
+        props.setEmail(formik.values.email)
         props.setFlow(newFlow)
       }
   }
@@ -39,19 +48,16 @@ function EnterEmailRecoveryComponent(props: {flow?: IOryRecoveryFlow, setFlow: (
         setErrorText(flow.ui.messages[0].text)
       }
       flow.ui.nodes.filter(node => node.messages.length > 0).forEach(
-        (node) => {
-          if ((node.attributes.name) in formik.errors) {
-            formik.errors[node.attributes.name] = node.messages[0].text
-          }
-        }
+        (node) => {setErrorText(node.messages[0].text)}
       )
     }
   }
 
   const formik = useFormik({
       initialValues: {
-          email: '',
+          email: props.email ?? '',
       },
+      validationSchema: Yup.object({email: Yup.string().email("Please enter a valid email").required()}),
       onSubmit: async (values: any) => {
         const resp = await submit(values.email)
       }
@@ -59,7 +65,7 @@ function EnterEmailRecoveryComponent(props: {flow?: IOryRecoveryFlow, setFlow: (
 
   return (
     <form onSubmit={formik.handleSubmit}>
-        <Stack spacing={4} alignItems="flex-start">
+      <Stack spacing={4} alignItems="flex-start">
         {errorText && <Typography variant='overline' color='error'>{errorText}</Typography>}
         <TextField
             fullWidth
@@ -69,26 +75,90 @@ function EnterEmailRecoveryComponent(props: {flow?: IOryRecoveryFlow, setFlow: (
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={<Typography variant="overline" component={'span'} color="error">{formik.errors.email?.toString()}</Typography>}
+            error={(formik.errors.email != undefined)}
             />
-        <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} width={'100%'}>
-          <Button color="primary" variant="contained" onClick={() => router.back()}>
-              Back
-          </Button>
-          <Button color="primary" variant="contained" type="submit" disabled={formik.isSubmitting || (props.flow==undefined)}>
-              Submit
-          </Button>
-        </Box>
+          <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} width={'100%'}>
+            <Button color="primary" variant="contained" onClick={() => router.back()}>
+                Back
+            </Button>
+            <Button color="primary" variant="contained" type="submit" disabled={formik.isSubmitting || (props.flow==undefined)}>
+                Submit
+            </Button>
+          </Box>
         </Stack>
     </form>
   )
 }
 
-function LinkSentComponent() {
+interface EmailSentComponentProps {
+  flow: IOryRecoveryFlow
+  setFlow: (flow: IOryRecoveryFlow) => void
+}
 
-  return <Box>
-    <Typography>An email has been sent</Typography>
-  </Box>
+function EmailSentComponent(props: EmailSentComponentProps) {
+  const [errorText, setErrorText] = useState<string>()
+  async function submit(code: string) {
+    const body = {
+      code: code,
+      csrf_token: getCsrfToken(props.flow),
+      method: 'code'
+    }
+    if (props.flow) {
+      const res = await fetch(withBasePath('/api/ory/recovery?' + new URLSearchParams({
+        flow: props.flow.id
+      })), {
+        method: 'POST',
+        body: JSON.stringify(body)
+      })
+      if (res.status == 422) {
+        const data = await res.json()
+        const redirUri = new URL(data.redirect_browser_to)
+      } else {
+        const data = await res.json()
+        props.setFlow(data)
+      }
+  }
+  }
+  
+  const formik = useFormik({
+    initialValues: {code: ''},
+    validationSchema: Yup.object({code: Yup.string().matches(/^[0-9]+$/, 'Must be numeric').required('Required')}),
+    onSubmit: (values: any) => {submit(values.code)}
+  });
+
+  return (
+    <form onSubmit={formik.handleSubmit}>
+    <Box display={'flex'} flexDirection={'column'} gap={4}>
+      <Typography>An email has been sent containing a recovery code. Please enter it in the box below</Typography>
+      {errorText && <Typography variant='overline' color='error'>{errorText}</Typography>}
+      <TextField
+              fullWidth
+              id="code"
+              name="code"
+              label="Recovery Code"
+              value={formik.values.code}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              slotProps={{htmlInput: {'inputMode': 'numeric'}, input: {inputMode: 'numeric'}}}
+              helperText={<Typography variant="overline" component={'span'} color="error">{formik.errors.code?.toString()}</Typography>}
+              error={(formik.errors.code != undefined)}
+              />
+      <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} width={'100%'}>
+        <Button color="primary" variant="contained" onClick={() => {}}>
+          Back
+        </Button>
+        <Button color="primary" variant="contained" onClick={() => {}}>
+          Resend Code
+        </Button>
+        <Button color="primary" variant="contained" type="submit" disabled={formik.isSubmitting}>
+          Submit
+        </Button>
+
+      </Box>
+    </Box>
+    </form>
+  )
 }
 
 interface RecoveryComponentProps {
@@ -98,8 +168,11 @@ interface RecoveryComponentProps {
 export function RecoveryComponent(props: RecoveryComponentProps): React.ReactElement {
   const searchParams = useSearchParams()
   const [flow, setFlow] = useState<IOryRecoveryFlow | undefined>(props.flow)
-  const [content, setContent] = useState<React.ReactElement>(<EnterEmailRecoveryComponent flow={flow} setFlow={setFlow} />) // <CircularProgress style={{alignSelf: 'centers'}} />)
+  const [email, setEmail] = useState<string>()
+  const [content, setContent] = useState<React.ReactElement>(<EnterEmailRecoveryComponent flow={flow} setFlow={setFlow} email={email} setEmail={setEmail} />)
   const flowId = searchParams.get('flow')
+
+  console.log(flow)
 
   useEffect(() => {
     if (flow == undefined) {
@@ -133,13 +206,13 @@ export function RecoveryComponent(props: RecoveryComponentProps): React.ReactEle
   if (flow) {
     switch (flow.state) {
       case 'choose_method':
-        setContent(<EnterEmailRecoveryComponent flow={flow} setFlow={setFlow} />)
+        setContent(<EnterEmailRecoveryComponent flow={flow} setFlow={setFlow} email={email} setEmail={setEmail} />)
         break
       case 'sent_email':
-        setContent(<LinkSentComponent />)
+        setContent(<EmailSentComponent flow={flow} setFlow={setFlow} />)
         break
       default:
-        setContent(<CircularProgress style={{alignSelf: 'centers'}}/>)
+        setContent(<CircularProgress style={{alignSelf: 'center'}}/>)
         break
     }
   }

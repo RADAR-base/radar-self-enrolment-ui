@@ -36,7 +36,6 @@ function getLoginChallengeUrl(state: string) {
   if (REDIRECT_URI == undefined) {
     return ""
   }
-  console.log('redir url: ', REDIRECT_URI)
   const scopes = [
     "SOURCETYPE.READ",
     "PROJECT.READ",
@@ -83,19 +82,12 @@ export async function GET(
   const res1 = await fetch(getLoginChallengeUrl(state), {
     credentials: 'include'
   })
-  console.log('res1 headers: ', res1.headers)
-  res1.headers.getSetCookie().map(
-    (c) => {
-      console.log('cookies: ', c)
-    }
-  )
   const loginChallengeUrl = (new URL(res1.url))
   const loginChallenge = loginChallengeUrl.searchParams.get('login_challenge')
 
   const loginChallengeReq = await fetch(loginChallengeUrl, {
     credentials: 'include'
   })
-  console.log('loginChallengeReq', loginChallengeReq)
 
   const res2 = await fetch(
     `${HYDRA_ADMIN_URL}/oauth2/auth/requests/login/accept?login_challenge=${loginChallenge}`,
@@ -111,15 +103,12 @@ export async function GET(
       }
     }
   )
-  console.log('res2: ', res2)
   const loginRedirectTo = (await res2.json())['redirect_to']
-  console.log('res2 redirect to url: ', loginRedirectTo)
   const res3 = await fetch(loginRedirectTo, {
     credentials: 'include',
     headers: {
       Cookie: cookieString,
     }
   })
-  console.log('res3', res3)
   return new NextResponse(res1.url)
 }

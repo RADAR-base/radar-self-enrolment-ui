@@ -4,6 +4,19 @@ import { redirect } from 'next/navigation';
 import { jwtDecode } from "jwt-decode";
 import React from 'react';
 import { authRequestLink } from '@/app/_lib/radar/rest-source/service';
+import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
+import { StudyProtocol } from '@/app/_lib/study/protocol';
+
+
+export async function generateMetadata({params}: {params: {studyId: string}}) {
+  var registery: StudyProtocolRepository = new StudyProtocolRepository()
+  var protocol: StudyProtocol;
+  protocol = await registery.getStudyProtocol(params.studyId)
+  if (protocol == undefined){ return }
+  return {
+    title: protocol.name + ' Portal',
+  }
+}
 
 function token_matches_session(token: string, session: any, studyId: string): boolean {
   const env = process.env.NODE_ENV
@@ -20,7 +33,7 @@ function token_matches_session(token: string, session: any, studyId: string): bo
 export default async function StudyLayout({children, params}: Readonly<{children: React.ReactNode, params: {studyId: string}}>) {
   const cookieStore = cookies()
   const kratos_cookie = cookieStore.get('ory_kratos_session')
-  const state = crypto.randomUUID()
+  const return_to = '/' + params.studyId + '/portal'
 
   if (kratos_cookie == undefined) {redirect('./')}
 
@@ -32,11 +45,11 @@ export default async function StudyLayout({children, params}: Readonly<{children
 
   const sep_access_token = cookieStore.get('sep_access_token')
   if (sep_access_token == undefined) {
-    redirect(authRequestLink(state))
+    redirect('/connect/sep?return_to=' + return_to)
   }
 
   if (!token_matches_session(sep_access_token.value, userSession, params.studyId)) {
-    redirect(authRequestLink(state))
+    redirect('/connect/sep?return_to=' + return_to)
   }
 
   return <React.Fragment>{children}</React.Fragment>
