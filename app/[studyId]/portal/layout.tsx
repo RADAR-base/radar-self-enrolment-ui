@@ -4,6 +4,19 @@ import { redirect } from 'next/navigation';
 import { jwtDecode } from "jwt-decode";
 import React from 'react';
 import { authRequestLink } from '@/app/_lib/radar/rest-source/service';
+import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
+import { StudyProtocol } from '@/app/_lib/study/protocol';
+
+
+export async function generateMetadata({params}: {params: {studyId: string}}) {
+  var registery: StudyProtocolRepository = new StudyProtocolRepository()
+  var protocol: StudyProtocol;
+  protocol = await registery.getStudyProtocol(params.studyId)
+  if (protocol == undefined){ return }
+  return {
+    title: protocol.name + ' Portal',
+  }
+}
 
 function token_matches_session(token: string, session: any, studyId: string): boolean {
   const env = process.env.NODE_ENV

@@ -9,24 +9,12 @@ import { CookieBanner } from '@/app/_ui/cookies/banner';
 import { cookies } from 'next/headers';
 import { GoogleAnalytics } from '@next/third-parties/google';
 
-import { whoAmI } from '@/app/_lib/auth/ory/kratos';
 import { isAbsolutePath, withBasePath } from "@/app/_lib/util/links";
 
 import { getStudyTheme } from "@/app/_lib/theme/themeprovider";
-import ParticipantProvider, { Participant } from '../_lib/auth/provider.client';
 import ProtocolProvider from '@/app/_lib/study/protocol/provider.client';
 import ProtocolRepository, { StudyProtocolRepository } from "@/app/_lib/study/protocol/repository";
 import { StudyProtocol } from '@/app/_lib/study/protocol';
-
-
-const getStudyTitle = (studyId: string) => {
-  return studyId ? studyId + " Study" : 'Unknown RADAR Study'
-}
-
-const getStudyDescription = (studyId: string) => {
-  const description = studyId ? "Study description for " + studyId : "Unknown study"
-  return description
-}
 
 function makeRelativePaths(links: FooterItem[], studyId: string): FooterItem[] {
   return links.map(
@@ -47,8 +35,7 @@ export async function generateMetadata({params}: {params: {studyId: string}}) {
   protocol = await registery.getStudyProtocol(params.studyId)
   if (protocol == undefined){ return }
   return {
-    title: getStudyTitle(protocol.studyId),
-    description: getStudyDescription(protocol.studyId),
+    title: protocol.name + ' Study',
     icons: [
       {
         href: withBasePath(protocol.studyUiConfig.faviconSrc),
