@@ -16,6 +16,8 @@ import { schemaFromDefinition } from '@/app/_lib/armt/validation/parser';
 import { EnrolmentRegister } from './register.component';
 import { withBasePath } from '@/app/_lib/util/links';
 import { getCsrfToken } from '@/app/_lib/auth/ory/util';
+import { sendGAEvent } from '@next/third-parties/google'
+
 
 function generateEligibilitySchema(protocol: EnrolmentProtocol): Yup.Schema {
   const schema: {[key: string]: Yup.Schema} = {};
@@ -207,6 +209,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
           ]
         }
       }
+      sendGAEvent('event', 'study_enrolment', {status: 'submitting'})
       fetch(withBasePath('/api/ory/registration?' + new URLSearchParams({
         flow: flow.id
       })), {
@@ -215,11 +218,13 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
       }).then(
         (res) => {
           if (res.ok) {
+            sendGAEvent('event', 'study_enrolment', {status: 'joined'})
             router.push("portal")
             window.location.reload()
             return
           }
           if (res.status == 400) {
+            sendGAEvent('event', 'study_enrolment', {status: 'submission_error'})
             res.json().then(
               (data) => {
                 if (data?.ui?.messages !== undefined) {
@@ -323,12 +328,14 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   function nextStep() {
     if ((stepIdx + 1) < steps.length) {
       scrollToTop()
+      sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx + 1], status: 'ongoing'})
       setStep(stepIdx + 1)
     }
   }
   
   function previousStep() {
     if (stepIdx > 0) {
+      sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx - 1], status: 'ongoing'})
       setStep(stepIdx - 1)
       scrollToTop()
     } else {
@@ -338,6 +345,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
 
   useEffect(() => {
     if (flow === undefined) {
+      sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx], status: 'start'})
       getFlow(setFlow)
     } else {
       validateStep()
@@ -347,7 +355,6 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
 
   const shapeStyles = { width: '0.5rem', height: '0.5rem' };
   const shapeCircleStyles = { borderRadius: '50%' };
-  const rectangle = <Box component="span" sx={shapeStyles} />;
   const circle = (active: boolean, key?: string) => {
     return <Box component="span"
                 key={key}
