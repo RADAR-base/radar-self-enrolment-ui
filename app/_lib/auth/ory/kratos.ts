@@ -206,7 +206,7 @@ export interface IUpdateRecoveryFlowBodyEmail {
   csrf_token: string,
   email: string,
   method: string,
-  transient_payload: any
+  transient_payload?: any
 }
 
 export async function updateRecoveryFlow(flowId: string, data: IUpdateRecoveryFlowBodyCode | IUpdateRecoveryFlowBodyEmail, token?: string): Promise<Response> {
