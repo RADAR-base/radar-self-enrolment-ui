@@ -35,7 +35,8 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
         }
       )
       if (resp.ok) {
-        router.push('/' + studyId + '/portal') 
+        router.push('/' + studyId + '/portal')
+        router.refresh()
       } else {
         formik.setSubmitting(false)
       }
