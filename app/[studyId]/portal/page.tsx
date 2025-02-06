@@ -20,10 +20,7 @@ async function fetchTaskStatus(studyId: string): Promise<{[key: string]: ArmtSta
 }
 
 export default async function Page({ params }: { params: { studyId: string } }) {
-  var registery: StudyProtocolRepository = new StudyProtocolRepository()
-  const protocol = await registery.getStudyProtocol(params.studyId)
   const status = await fetchTaskStatus(params.studyId)
-
   return (
     <main>
       <TaskPanel armtStatuses={status ?? undefined}/>
