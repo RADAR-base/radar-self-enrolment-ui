@@ -1,44 +1,36 @@
-"use client"
-import { redirect, useRouter } from 'next/navigation'
-import { withBasePath } from '@/app/_lib/util/links';
-import { useEffect, useState } from 'react';
+import { completeVerificationFlow, createRecoveryFlow, createVerificationFlow, whoAmI } from "@/app/_lib/auth/ory/kratos"
+import { getCsrfToken } from "@/app/_lib/auth/ory/util"
+import { VerificationComponent } from "@/app/_ui/auth/verification"
+import { Container, Box } from "@mui/material"
 
-// async function logout(): Promise<Response> {
-//   const flowResponse = await fetch(withBasePath('/api/ory/logout/browser'))
-//   if (flowResponse.ok) {
-//     const flowData = await flowResponse.json()
-//     const logoutResponse = await fetch(withBasePath('/api/ory/logout?') + 
-//       new URLSearchParams({
-//         logout_token: flowData['logout_token']
-//       })
-//     )
-//     return logoutResponse
-//   } else {
-//     return flowResponse
-//   }
-// }
-
-
-export default function Page({ params }: { params: { studyId: string } }) {
-  const router = useRouter()
-  const redirect_uri = '/' + params.studyId
-  const [flow, setFlow] = useState<IOryVerificationFlow | undefined>(undefined)
-
-  useEffect(() => {
-    if (flow == undefined) {
-      fetch(withBasePath('/api/ory/verification/browser')).then(
-        (response) => {
-          if (response.ok) {
-            response.json().then(
-              (data) => {
-                setFlow(data as IOryVerificationFlow)
-              }
-            )
-          }
-        }
-      )
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ studyId: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+  const userSession = await (await whoAmI()).json()
+  const flowId = (await searchParams).flowId
+  let flow: IOryVerificationFlow | undefined
+  if (flowId == undefined) {
+    const resp = await createVerificationFlow()
+    flow = await resp.json() as IOryVerificationFlow
+    let userEmail = userSession['identity']['traits']['email'] as string
+    if (userEmail) {
+      const resp2 = await completeVerificationFlow(flow.id, {email: userEmail, csrf_token: getCsrfToken(flow), method: 'code'})
+      if (resp2.ok) {
+        flow = await resp2.json() as IOryVerificationFlow
+      }
     }
-  })
-  console.log(flow)
-  return <div></div>
-}
+  }
+  return (
+    <main>
+      <Container maxWidth="lg" disableGutters>
+        <Box marginTop={2} marginBottom={2} maxWidth={600} justifySelf={'center'} width='100%'>
+          <VerificationComponent flow={flow} />
+        </Box>
+      </Container>
+    </main>
+    )
+  }
