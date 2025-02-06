@@ -11,6 +11,8 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import defaultTheme from "@/app/_lib/theme/definitions/default";
 import ParticipantProvider, { Participant } from "./_lib/auth/provider.client";
 import { whoAmI } from "./_lib/auth/ory/kratos";
+import { cookies } from "next/headers";
+import { GetCSRF } from "./_ui/auth/getCSRF";
 
 export const metadata: Metadata = {
   title: "RADAR WebPortal",
@@ -44,7 +46,8 @@ export default async function RootLayout({
           loggedIn: false
         }
     }
-
+  const cookieJar = cookies()
+  const csrfToken = cookieJar.getAll().find((c) => c.name.startsWith('csrf_token_'))
   return (
     <html lang="en">
       {/* <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /> */}
@@ -55,6 +58,7 @@ export default async function RootLayout({
           <CssBaseline />
 
             <ParticipantProvider participant={participant}>
+            {csrfToken == undefined ? <GetCSRF></GetCSRF> : null}
             <div>{children}</div>
             </ParticipantProvider>
           </ThemeProvider>

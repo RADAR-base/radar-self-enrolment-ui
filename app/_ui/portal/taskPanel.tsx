@@ -5,12 +5,13 @@ import Grid from '@mui/material/Grid2';
 import { ArmtProtocol, StudyProtocol } from "@/app/_lib/study/protocol";
 import { ArmtStatus } from "@/app/api/study/[studyId]/tasks/status/route";
 import { withBasePath } from "@/app/_lib/util/links";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import React from "react";
 import { RadarCard } from "../components/base/card";
 import { CircularProgressWithLabel } from "../components/base/circularProgress";
 import { MarkdownContainer } from "../components/base/markdown";
 import { useRouter } from "next/navigation";
+import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 
 
 function FinishModal(props: {disabled: boolean, allComplete: boolean}) {
@@ -58,7 +59,6 @@ function FinishModal(props: {disabled: boolean, allComplete: boolean}) {
   );
 }
 
-
 async function fetchTaskStatus(studyId: string) {
   let resp = await fetch(withBasePath('/api/study/' + studyId + '/tasks/status'))
   let status = await resp.json()
@@ -66,17 +66,14 @@ async function fetchTaskStatus(studyId: string) {
 }
 
 interface TaskPanel {
-  // studyId: string
-  // armtProtocols: ArmtProtocol[]
-  protocol: StudyProtocol
+  armtStatuses?: {[key: string]: ArmtStatus}
 }
 
 export function TaskPanel(props: TaskPanel) {
-
-  const [armtStatuses, setArmtStatuses] = React.useState<{[key: string]: ArmtStatus} | undefined>(undefined)
-
-  const studyId = props.protocol.studyId
-  const armtProtocols = props.protocol.protocols
+  const [armtStatuses, setArmtStatuses] = React.useState<{[key: string]: ArmtStatus} | undefined>(props.armtStatuses)
+  const protocol = useContext(ProtocolContext);
+  const studyId = protocol.studyId
+  const armtProtocols = protocol.protocols
 
   useEffect(() => {
     if (armtStatuses == undefined) {
@@ -119,9 +116,9 @@ export function TaskPanel(props: TaskPanel) {
                 padding={3}
                 gap={2}>
               <Box display='flex' flexDirection='column'>
-                <Typography variant="h2">{props.protocol.studyUiConfig.portal.title}</Typography>
+                <Typography variant="h2">{protocol.studyUiConfig.portal.title}</Typography>
                 <MarkdownContainer>
-                  {props.protocol.studyUiConfig.portal.content}
+                  {protocol.studyUiConfig.portal.content}
                 </MarkdownContainer>
               </Box>
               <Box display={'flex'} gap={2} alignItems={'center'} flexDirection={'column'}>

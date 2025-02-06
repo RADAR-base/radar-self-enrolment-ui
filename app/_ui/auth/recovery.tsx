@@ -98,9 +98,7 @@ interface EmailSentComponentProps {
 
 function EmailSentComponent(props: EmailSentComponentProps) {
   const [errorText, setErrorText] = useState<string>()
-  console.log(props.flow)
   async function submit(code: string) {
-    console.log('submitting...')
     const body = {
       code: code,
       csrf_token: getCsrfToken(props.flow),

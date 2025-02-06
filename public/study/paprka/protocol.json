@@ -251,11 +251,14 @@
     },
     "studyUiConfig": {
         "materialTheme": {},
-        "studyIconSrc": "/study/paprka/resources/hrfh_landscape_text.jpg",
-        "navbarLinks": [
+        "faviconSrc": "/study/paprka/resources/hrfh_low.png",
+        "navbar": {
+          "links": [
             {"text": "Home", "href": "/paprka"},
             {"text": "About", "href": "/paprka/about"}
           ],
+          "logoSrc": "/study/paprka/resources/hrfh_landscape_text.jpg"
+        },
         "footer": {
             "columns": [
                 {
@@ -286,6 +289,10 @@
         },
         "portal": {
           "title": "Complete Tasks to Join Study"
+        },
+        "finishContent": {
+          "title": "Thank you",
+          "content": "You have successfully joined the PAPrKA research study.\n<br />\nThanks to your contribution, our research will help millions of people living with knee osteoarthritis who will undergo knee replacement surgeries in the future.\n<br />\nThe results of the study will be published at the end of 2026. You can receive regular updates and be the first to hear the results by subscribing to our newsletter"
         },
         "analytics": {
           "gaId": "G-LTRMSY2PNR"

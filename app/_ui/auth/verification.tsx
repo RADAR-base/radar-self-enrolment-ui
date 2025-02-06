@@ -15,7 +15,6 @@ interface EmailSentComponentProps {
 
 function EmailSentComponent(props: EmailSentComponentProps) {
   const [errorText, setErrorText] = useState<string>()
-  console.log(props.flow)
   async function submit(code: string) {
     const body = {
       code: code,

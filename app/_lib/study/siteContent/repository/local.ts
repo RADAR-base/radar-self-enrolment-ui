@@ -1,7 +1,7 @@
 import { WebsitePageContent } from "../index";
 import { PageRepository } from "./interface";
 import { promises as fs } from 'fs';
-import {glob } from "glob";
+import { glob } from "glob";
 import path from "path";
 
 function filePathToParams(p: string) {
@@ -9,8 +9,13 @@ function filePathToParams(p: string) {
 }
 
 export class LocalPageRepository implements PageRepository {
+  async getAllStudyIds(): Promise<string[]> {
+    const studyPaths = await glob('public/study/*', { nodir: false })
+    return studyPaths.map(path => path.split('/').pop() as string)
+  }
+
   async getAllPageRoutes(studyId: string): Promise<string[][]> {
-    const pages = await glob('**/**.json', {cwd: 'public/study/' + studyId + '/pages/'})
+    const pages = await glob('**/**.json', { cwd: 'public/study/' + studyId + '/pages/' })
     return pages.map(filePathToParams)
   }
 

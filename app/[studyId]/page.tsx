@@ -1,7 +1,5 @@
 import PageRepository from "@/app/_lib/study/siteContent/repository";
 import { BlockPage } from "@/app/_ui/components/blocks/blockPage";
-import ProtocolRepository from "@/app/_lib/study/protocol/repository";
-import HoverPopover from "../_ui/components/base/hoverPopover";
 
 // export const dynamicParams = true
 

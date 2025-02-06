@@ -11,7 +11,7 @@ import { getAccessTokenFromCode, getAuthLink } from "@/app/_lib/radar/questionna
 import NextButton from "../base/nextButton";
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 
-export function HealthKitPage() {
+export function ArmtPage() {
   const protocol = useContext(ProtocolContext);
 
   const studyId = protocol.studyId
@@ -24,7 +24,7 @@ export function HealthKitPage() {
 
 
   if ((code == undefined) && (qrCode == undefined) && (isFetchingToken == false)) {
-    window.location.replace(withBasePath(`/connect/armt?return_to=/${studyId}/portal/connect/apple_health`))
+    window.location.replace(withBasePath(`/connect/armt?return_to=/${studyId}/portal/connect/radar_armt`))
   }
   
   useEffect(() => {
@@ -58,16 +58,16 @@ export function HealthKitPage() {
       <Grid container spacing={2} padding={3} gap={2} rowGap={4}>
         <Grid size={12} textAlign={'left'}>
           <div>
-            <Typography variant="h2">Connect to Apple Health</Typography>
+            <Typography variant="h2">Connect to RADAR Active RMT</Typography>
             <Typography variant="body1">
-              {"Apple Health is the app which collects all Apple devices use to organise your health and fitness data. All your Apple Watch and iPhone data relating to health is stored there. That information can only be accessed from apps installed on an iOS device. Please follow the steps below to link your Apple Health data to our study.\n\nIt is also possible to connect other, non-Apple, devices to Apple Health. If you have already done so, you can share that data with us by following the same steps below.\n"
+              {"The RADAR Active RMT app is the app that allows user to answer questionnaires and perform timed tasks (termed in RADAR parlance 'active remote monitoring'. Please follow the steps below to link your RADAR Active RMT to our study.\n"
               }
             </Typography>
           </div>
         </Grid>
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 1: Download the app</Typography>
-          <Typography variant="body1">This study uses the RADAR aRMT app to access Apple data. If you would like you share your Apple Health data with us, you will need to download the app on your iOS device.</Typography>
+          <Typography variant="body1">This study uses the RADAR aRMT app to access Apple data. You will need to download the app from the Apple App Store or Google Playstore.</Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <a href="https://apps.apple.com/us/app/radar-active-rmt/id1483953055?itscg=30200&itsct=apps_box_badge&mttnsubad=1483953055" style={{display: "inline-block"}} target="_blank">
@@ -113,7 +113,7 @@ export function HealthKitPage() {
         <Grid size={{xs: 12, sm: 6}}>
           <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
             {qrCode && <QRCodeSVG value={qrCode} size={200} />}
-            <NextButton href={`/connect/armt?return_to=/${studyId}/portal/connect/apple_health`}>Generate QR Code</NextButton>
+            <NextButton href={`/connect/armt?return_to=/${studyId}/portal/connect/radar_armt`}>Generate QR Code</NextButton>
           </Box>
         </Grid>
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
