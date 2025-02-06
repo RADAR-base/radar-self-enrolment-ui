@@ -20,7 +20,7 @@ function token_matches_session(token: string, session: any, studyId: string): bo
 export default async function StudyLayout({children, params}: Readonly<{children: React.ReactNode, params: {studyId: string}}>) {
   const cookieStore = cookies()
   const kratos_cookie = cookieStore.get('ory_kratos_session')
-  const state = crypto.randomUUID()
+  const return_to = '/' + params.studyId
 
   if (kratos_cookie == undefined) {redirect('./')}
 
@@ -32,11 +32,11 @@ export default async function StudyLayout({children, params}: Readonly<{children
 
   const sep_access_token = cookieStore.get('sep_access_token')
   if (sep_access_token == undefined) {
-    redirect(authRequestLink(state))
+    redirect('/connect/sep?return_to=' + return_to)
   }
 
   if (!token_matches_session(sep_access_token.value, userSession, params.studyId)) {
-    redirect(authRequestLink(state))
+    redirect('/connect/sep?return_to=' + return_to)
   }
 
   return <React.Fragment>{children}</React.Fragment>
