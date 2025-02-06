@@ -251,11 +251,14 @@
     },
     "studyUiConfig": {
         "materialTheme": {},
-        "studyIconSrc": "/study/paprka/resources/hrfh_landscape_text.jpg",
-        "navbarLinks": [
+        "faviconSrc": "/study/paprka/resources/hrfh_low.png",
+        "navbar": {
+          "links": [
             {"text": "Home", "href": "/paprka"},
             {"text": "About", "href": "/paprka/about"}
           ],
+          "logoSrc": "/study/paprka/resources/hrfh_landscape_text.jpg"
+        },
         "footer": {
             "columns": [
                 {

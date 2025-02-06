@@ -51,8 +51,8 @@ export async function generateMetadata({params}: {params: {studyId: string}}) {
     description: getStudyDescription(protocol.studyId),
     icons: [
       {
-        href: withBasePath(protocol.studyUiConfig.studyIconSrc),
-        url: withBasePath(protocol.studyUiConfig.studyIconSrc)
+        href: withBasePath(protocol.studyUiConfig.faviconSrc),
+        url: withBasePath(protocol.studyUiConfig.faviconSrc)
       }
     ]
   }
@@ -88,8 +88,8 @@ export default async function StudyLayout({children, params}: Readonly<{children
 
           <NavBar
             title={protocol.name}
-            logo_src={protocol.studyUiConfig.studyIconSrc}
-            links={protocol.studyUiConfig.navbarLinks}
+            logo_src={protocol.studyUiConfig.navbar.logoSrc}
+            links={protocol.studyUiConfig.navbar.links}
           />
             {children}
           <Footer 
