@@ -26,7 +26,7 @@
     "next": "^14.2.5",
     "react": "^18",
     "react-dom": "^18",
-    "react-qr-code": "^2.0.15",
+    "qrcode.react": "^4.2.0",
     "react-signature-canvas": "^1.0.6",
     "react-signature-pad-wrapper": "^4.0.4",
     "swiper": "^11.1.15",
