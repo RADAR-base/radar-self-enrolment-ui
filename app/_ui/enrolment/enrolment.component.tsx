@@ -219,8 +219,18 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
         (res) => {
           if (res.ok) {
             sendGAEvent('event', 'study_enrolment', {status: 'joined'})
-            router.push("portal")
-            window.location.reload()
+            res.json().then(
+              (data) => {
+                const verificationFlow = data.continue_with[0].flow.id
+                if (verificationFlow) {
+                  router.push(`/${studyProtocol.studyId}/verification?flow=${verificationFlow}`)
+                  router.refresh()
+                } else {
+                  router.push(`/${studyProtocol.studyId}/portal`)
+                  router.refresh()
+                }
+              }
+            )
             return
           }
           if (res.status == 400) {
@@ -232,7 +242,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
                   scrollToTop()
                 } 
                 displayErrors(data)   
-                setFlow(data)          
+                setFlow(data)
               }
             )
           }
