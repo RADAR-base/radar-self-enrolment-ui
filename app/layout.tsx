@@ -4,11 +4,24 @@ import type { Metadata } from "next";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { CssBaseline, ThemeProvider } from "@mui/material";
 
-import defaultTheme from "@/app/_lib/theme/definitions/default";
+import defaultTheme from "@/app/_lib/theme/default";
 import ParticipantProvider, { Participant } from "./_lib/auth/provider.client";
 import { whoAmI } from "./_lib/auth/ory/kratos";
 import { cookies } from "next/headers";
 import { GetCSRF } from "./_ui/auth/getCSRF";
+import { Montserrat, Roboto } from "next/font/google";
+
+const msrt_font = Montserrat({
+  subsets: ['latin'],
+  variable: '--font-montserrat'
+})
+
+const roboto_font = Roboto({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-roboto'
+})
+
 
 export const metadata: Metadata = {
   title: "RADAR WebPortal",
@@ -48,7 +61,7 @@ export default async function RootLayout({
     <html lang="en">
       {/* <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /> */}
       <meta name="viewport" content="initial-scale=1, width=device-width" />
-      <body>
+      <body className={[msrt_font.variable, roboto_font.variable].join(' ')}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={defaultTheme}>
           <CssBaseline />
