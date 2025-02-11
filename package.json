@@ -29,6 +29,7 @@
     "qrcode.react": "^4.1.0",
     "react": "^18",
     "react-alice-carousel": "^2.9.1",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^18",
     "react-multi-carousel": "^2.8.5",
     "react-qr-code": "^2.0.15",
