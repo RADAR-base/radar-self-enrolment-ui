@@ -7,46 +7,49 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { RadarCard } from "../base/card";
 import {QRCodeSVG} from 'qrcode.react'
 import Image from 'next/image'
-import { getAccessTokenFromCode, getAuthLink } from "@/app/_lib/radar/questionnaire_app/service";
 import NextButton from "../base/nextButton";
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
+import { getAuthLink } from "@/app/_lib/connect/armt/authLink";
 
 export function ArmtPage() {
   const protocol = useContext(ProtocolContext);
-
   const studyId = protocol.studyId
   const router = useRouter()
   const pathname = usePathname()
   const code = useSearchParams().get('code')
   const [isFetchingToken, setIsFetchingToken] = useState(false)
-  const [tokenHandled, setTokenHandled] = useState<boolean>(false)
-  const [qrCode, setQrCode] = useState<any>(undefined)
+  const [armtAuthUrl, setArmtAuthUrl] = useState<any>(undefined)
 
 
-  if ((code == undefined) && (qrCode == undefined) && (isFetchingToken == false)) {
-    window.location.replace(withBasePath(`/connect/armt?return_to=/${studyId}/portal/connect/radar_armt`))
+  if ((code == undefined) && (armtAuthUrl == undefined) && (isFetchingToken == false)) {
+    window.location.replace(withBasePath(`/connect/armt?return_to=/${studyId}/portal/connect/apple_health`))
   }
   
   useEffect(() => {
     const handleToken = async () => {
-      if (isFetchingToken || tokenHandled) return
+      if (isFetchingToken || (armtAuthUrl != undefined)) return
       if (code) {
         setIsFetchingToken(true)
-        const tokenResponse = await getAccessTokenFromCode(code)
-        if (tokenResponse?.access_token && tokenResponse?.expires_in) {
-          tokenResponse['iat'] =  Math.floor(Date.now() / 1000)
-          const shortToken = { 
-            iat: tokenResponse.iat, 
-            expires_in: tokenResponse.expires_in, 
-            refresh_token: tokenResponse.refresh_token, 
-            scope: tokenResponse.scope, 
-            token_type: tokenResponse.token_type 
+        const tokenResponse = await fetch(withBasePath('/api/connect/armt/token?code=' + code))
+        if (tokenResponse.ok) {
+          let token = await tokenResponse.json()
+          token?.access_token
+          
+          if (token?.access_token && token?.expires_in) {
+            token['iat'] =  Math.floor(Date.now() / 1000)
+            const shortToken = { 
+              iat: token.iat, 
+              expires_in: token.expires_in, 
+              refresh_token: token.refresh_token, 
+              scope: token.scope, 
+              token_type: token.token_type 
+            }
+            const url = await getAuthLink(shortToken)
+            setArmtAuthUrl(url)
           }
-          const url = await getAuthLink(shortToken, studyId)
-          setQrCode(url)
-          setTokenHandled(true)
-          router.replace(pathname)
         }
+        setIsFetchingToken(false)
+        router.replace(pathname)
       }
     }
     handleToken()
@@ -112,8 +115,8 @@ export function ArmtPage() {
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
-            {qrCode && <QRCodeSVG value={qrCode} size={200} />}
-            <NextButton href={`/connect/armt?return_to=/${studyId}/portal/connect/radar_armt`}>Generate QR Code</NextButton>
+          {armtAuthUrl && <QRCodeSVG value={armtAuthUrl} size={200} />}
+          <NextButton href={`/connect/armt?return_to=${pathname}`}>Generate QR Code</NextButton>
           </Box>
         </Grid>
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>

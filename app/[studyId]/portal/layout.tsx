@@ -3,7 +3,6 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { jwtDecode } from "jwt-decode";
 import React from 'react';
-import { authRequestLink } from '@/app/_lib/radar/rest-source/service';
 import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
 import { StudyProtocol } from '@/app/_lib/study/protocol';
 
