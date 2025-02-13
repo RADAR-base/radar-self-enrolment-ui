@@ -2,6 +2,7 @@ import PageRepository from '@/app/_lib/study/siteContent/repository';
 import { RadarCard } from '@/app/_ui/components/base/card';
 import { BlockPage } from '@/app/_ui/components/blocks/blockPage';
 import { Box, Container } from '@mui/material';
+import { notFound } from 'next/navigation';
 
 export const dynamicParams = true
 
@@ -22,6 +23,9 @@ export async function generateStaticParams() {
 export default async function Page({ params }: { params: { studyId: string, customPage: string[]} }) {
   const pageRepo: PageRepository = new PageRepository()
   const pageContent = await pageRepo.getPage(params.studyId, params.customPage);
+  if (pageContent == undefined) {
+    notFound()
+  }
   return (
     <main>
           <BlockPage blockParams={pageContent.blocks} ></BlockPage>

@@ -11,6 +11,8 @@ import { LogoutButton } from "@/app/_ui/auth/logout";
 import Link from "next/link";
 import { whoAmI } from "./_lib/auth/ory/kratos";
 
+import '@fontsource/roboto/400.css';
+
 export default async function Home() {
   const session = await (await whoAmI()).json()
 
