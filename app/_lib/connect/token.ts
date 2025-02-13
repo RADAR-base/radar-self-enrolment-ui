@@ -1,6 +1,6 @@
 "use server"
 
-const AUTH_BASE_URL = process.env.NEXT_PUBLIC_HYDRA_PUBLIC_URL + "/oauth2"
+const AUTH_BASE_URL = process.env.HYDRA_PUBLIC_URL + "/oauth2"
 const GRANT_TYPE = "authorization_code"
 
 interface GetAccessTokenParams {
