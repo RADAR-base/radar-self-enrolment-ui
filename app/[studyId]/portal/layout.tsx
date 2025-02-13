@@ -9,9 +9,8 @@ import { OrySessionResponse } from '@/app/_lib/auth/ory/types';
 
 
 export async function generateMetadata({params}: {params: {studyId: string}}) {
-  var registery: StudyProtocolRepository = new StudyProtocolRepository()
-  var protocol: StudyProtocol;
-  protocol = await registery.getStudyProtocol(params.studyId)
+  const registery: StudyProtocolRepository = new StudyProtocolRepository()
+  const protocol = await registery.getStudyProtocol(params.studyId)
   if (protocol == undefined){ return }
   return {
     title: protocol.name + ' Portal',

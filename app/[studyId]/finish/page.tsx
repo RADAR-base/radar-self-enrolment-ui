@@ -5,10 +5,12 @@ import { RadarCard } from '@/app/_ui/components/base/card';
 import Grid from '@mui/material/Grid2';
 import { MarkdownContainer } from '@/app/_ui/components/base/markdown';
 import NextButton from '@/app/_ui/components/base/nextButton';
+import { notFound } from 'next/navigation';
 
 export default async function Page({ params }: { params: { studyId: string, taskId: string} }) {
   const registery: StudyProtocolRepository = new StudyProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)
+  if (protocol == undefined) { notFound() }
   return (
     <main>
        <Box sx={{ flexGrow: 1, margin: 2}} 

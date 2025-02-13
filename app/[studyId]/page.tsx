@@ -9,6 +9,7 @@ import { BlockPage } from "@/app/_ui/components/blocks/blockPage";
 // }
 
 export default async function Page({ params }: { params: { studyId: string } }) {
+  
   var pageRegistry: PageRepository = new PageRepository()
   const pageContent = await pageRegistry.getLandingPage(params.studyId)
   return (

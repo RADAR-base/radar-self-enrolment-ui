@@ -9,11 +9,9 @@ export async function GET(
   { params }: { params: Promise<{ studyId: string }> }
 ) {
   let registery: StudyProtocolRepository = new ProtocolRepository()
-  let protocol: StudyProtocol;
   const projectId = (await params).studyId
-  try {
-    protocol = await registery.getStudyProtocol(projectId)
-  } catch {
+  const protocol = await registery.getStudyProtocol(projectId)
+  if (protocol == undefined) {
     return NextResponse.json({error: "No such project", status: 400})
   }
   return NextResponse.json({body: protocol.protocols})
