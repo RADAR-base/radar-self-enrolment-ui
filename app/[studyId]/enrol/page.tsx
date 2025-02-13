@@ -11,7 +11,7 @@ import { withBasePath } from '@/app/_lib/util/links';
 export default async function Page({ params }: { params: { studyId: string } }) {
   const auth = new Auth()
   const loggedIn = await auth.isLoggedIn()
-  if (loggedIn) {redirect(withBasePath('portal'))} // check study
+  if (loggedIn) {redirect(withBasePath('portal'))}
   var registery: StudyProtocolRepository = new StudyProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)
   return (

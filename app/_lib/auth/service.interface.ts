@@ -10,11 +10,11 @@ export abstract class ClientAuthService {
 
   abstract isLoggedIn(): Promise<boolean>;
 
-  abstract getDisplayName(): Promise<string | null>;
+  abstract getDisplayName(): Promise<string | undefined>;
 
-  abstract getEmail(): Promise<string | null>;
+  abstract getEmail(): Promise<string | undefined>;
 
-  abstract getUid(): Promise<string | null>;
+  abstract getUid(): Promise<string | undefined>;
 
   // abstract isEmailVerified(): boolean;
   

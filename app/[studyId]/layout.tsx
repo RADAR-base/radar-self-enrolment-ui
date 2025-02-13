@@ -1,6 +1,6 @@
 import React from 'react';
 import { redirect } from 'next/navigation'
-import { Box, CssBaseline, Theme, ThemeProvider } from "@mui/material";
+import { Box, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 
 import NavBar from "@/app/_ui/components/navbar/navbar";
 import {Footer, FooterItem } from "@/app/_ui/components/footer";
@@ -11,10 +11,10 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 
 import { isAbsolutePath, withBasePath } from "@/app/_lib/util/links";
 
-import { getStudyTheme } from "@/app/_lib/theme/themeprovider";
 import ProtocolProvider from '@/app/_lib/study/protocol/provider.client';
 import ProtocolRepository, { StudyProtocolRepository } from "@/app/_lib/study/protocol/repository";
 import { StudyProtocol } from '@/app/_lib/study/protocol';
+import ThemeProviderFromObject from '../_ui/components/base/themeProviderFromObject';
 
 function makeRelativePaths(links: FooterItem[], studyId: string): FooterItem[] {
   return links.map(
@@ -46,7 +46,6 @@ export async function generateMetadata({params}: {params: {studyId: string}}) {
 }
 
 export default async function StudyLayout({children, params}: Readonly<{children: React.ReactNode, params: {studyId: string}}>) {
-  const theme = getStudyTheme(params.studyId);
   const cookieStore = cookies()
   const cookieChoice = cookieStore.get("cookieChoice")
   var registery: StudyProtocolRepository = new ProtocolRepository()
@@ -57,12 +56,22 @@ export default async function StudyLayout({children, params}: Readonly<{children
     redirect('/')
   }
 
+  const themeObject = protocol.studyUiConfig.materialTheme
+  
 
   const gaEnabled = (protocol.studyUiConfig.analytics?.gaId != undefined) && (cookieChoice != undefined) && (cookieChoice.value == "all")
 
   return (
     <React.Fragment>
-    <ThemeProvider theme={theme}>
+       {/* 
+        TODO - ThemeProviderFromObject does not apply component theming.
+        Meanwhile, ThemeProvider can not take an actual Theme in a server-side component
+        because it contains functions. The themeObject does not contain all required
+        options. By using them in tandem, the entire theme is applied, but there should
+        be a better solution.
+        */}
+      <ThemeProvider theme={themeObject}>      
+      <ThemeProviderFromObject themeObject={themeObject}>
       <CssBaseline />
       <ProtocolProvider protocol={protocol}>
         <Box
@@ -72,7 +81,6 @@ export default async function StudyLayout({children, params}: Readonly<{children
             flexDirection: 'column',
             minWidth: 320
           }}>
-
           <NavBar
             title={protocol.name}
             logo_src={protocol.studyUiConfig.navbar.logoSrc}
@@ -90,7 +98,9 @@ export default async function StudyLayout({children, params}: Readonly<{children
         {(cookieChoice == undefined) ? <CookieBanner /> : null}
         {gaEnabled && <GoogleAnalytics gaId={protocol.studyUiConfig.analytics.gaId}/>}
       </ProtocolProvider>
+    </ThemeProviderFromObject>
     </ThemeProvider>
+
     </React.Fragment>
   )
 }
