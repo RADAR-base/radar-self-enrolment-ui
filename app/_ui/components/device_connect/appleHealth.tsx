@@ -10,6 +10,20 @@ import Image from 'next/image'
 import NextButton from "../base/nextButton";
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 import { getAuthLink } from "@/app/_lib/connect/armt/authLink";
+import { isMobile } from 'react-device-detect';
+
+function MobileContent({armtAuthUrl}: {armtAuthUrl: string}) {
+  return <React.Fragment>
+    <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
+      <Typography variant="h3">Using your phone now?</Typography>
+      <Typography variant="body1">Once the RADAR app is installed, if you are using the same phone to view this website, press the following button to enter the app now and skip to Step 5</Typography>
+    </Grid>
+    <Grid size={{xs: 12, sm: 6}}>
+      <Button href={armtAuthUrl} variant={"contained"}>Open Study App</Button>
+    </Grid>
+  </React.Fragment>
+}
+
 
 export function HealthKitPage() {
   const protocol = useContext(ProtocolContext);
@@ -21,7 +35,7 @@ export function HealthKitPage() {
   const [armtAuthUrl, setArmtAuthUrl] = useState<any>(undefined)
 
   if ((code == undefined) && (armtAuthUrl == undefined) && (isFetchingToken == false)) {
-    window.location.replace(withBasePath(`/connect/armt?return_to=/${studyId}/portal/connect/apple_health`))
+    router.replace(`/connect/armt?return_to=/${studyId}/portal/connect/apple_health`)
   }
   
   useEffect(() => {
@@ -76,9 +90,9 @@ export function HealthKitPage() {
             width={200}
             alt={"Download the RADAR App on the App Store"}
             /> 
-          </a>   
-      
+          </a>
         </Grid>
+        {isMobile && <MobileContent armtAuthUrl={armtAuthUrl} />}
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 2: Open the app</Typography>
           <Typography variant="body1">Once the app is opened, you will see the following screen. Press the 'Start' button.</Typography>
@@ -113,35 +127,26 @@ export function HealthKitPage() {
           <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
             {armtAuthUrl && <QRCodeSVG value={armtAuthUrl} size={200} />}
             <NextButton href={`/connect/armt?return_to=/${pathname}`}>Generate QR Code</NextButton>
+            <Button></Button>
           </Box>
         </Grid>
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 5: Log in</Typography>
-          <Typography variant="body1">Enter the account details you created for this study to log in to the app</Typography>
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-          Image
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 6: Complete the Apple Health task</Typography>
+          <Typography variant="h3">Step 5: Complete the Apple Health task</Typography>
           <Typography variant="body1"></Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           Image
         </Grid>
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 7: Done</Typography>
+          <Typography variant="h3">Step 6: Done</Typography>
           <Typography variant="body1">Once the app has finished, you can continue with this website's tasks. Press the following 'Finish' button to continue</Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
-          <Button variant={'contained'} fullWidth sx={{maxWidth: 200}}
-            onClick={() => router.push('./')}
-          >
+          <Button variant={'contained'} fullWidth sx={{maxWidth: 200}} onClick={() => router.push('./')}>
             Finish
           </Button>
         </Grid>
       </Grid>
-      
     </RadarCard>
   </Container>
   )
