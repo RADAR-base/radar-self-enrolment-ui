@@ -27,7 +27,7 @@ export function VideoBlock(props: IVideoBlock, ref: ForwardedRef<HTMLDivElement>
         <Typography variant="h2">{props.title}</Typography>
         <Typography variant="subtitle1">{props.subtitle}</Typography>
         <Box>
-          <video width={props.video.width} height={props.video.height} {...props.video.params} autoPlay>
+          <video width={props.video.width} height={props.video.height} {...props.video.params}>
             <source src={withBasePath(props.video.src)} type={props.video.type}></source>
           </video>
         </Box>
