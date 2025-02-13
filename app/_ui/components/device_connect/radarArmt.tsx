@@ -10,7 +10,7 @@ import Image from 'next/image'
 import NextButton from "../base/nextButton";
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 import { getAuthLink } from "@/app/_lib/connect/armt/authLink";
-import { isMobile } from "react-device-detect";
+import { isMobile, isTablet } from "react-device-detect";
 
 
 function MobileContent({armtAuthUrl}: {armtAuthUrl: string}) {
@@ -98,7 +98,7 @@ export function ArmtPage() {
           </a>   
       
         </Grid>
-        {isMobile && <MobileContent armtAuthUrl={armtAuthUrl} />}
+        {(isMobile || isTablet) && <MobileContent armtAuthUrl={armtAuthUrl} />}
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 2: Open the app</Typography>
           <Typography variant="body1">Once the app is opened, you will see the following screen. Press the 'Start' button.</Typography>

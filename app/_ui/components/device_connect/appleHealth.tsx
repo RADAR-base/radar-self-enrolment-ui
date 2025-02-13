@@ -10,7 +10,7 @@ import Image from 'next/image'
 import NextButton from "../base/nextButton";
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 import { getAuthLink } from "@/app/_lib/connect/armt/authLink";
-import { isMobile } from 'react-device-detect';
+import { isMobile, isTablet } from 'react-device-detect';
 
 function MobileContent({armtAuthUrl}: {armtAuthUrl: string}) {
   return <React.Fragment>
@@ -73,8 +73,7 @@ export function HealthKitPage() {
           <div>
             <Typography variant="h2">Connect to Apple Health</Typography>
             <Typography variant="body1">
-              {"Apple Health is the app which collects all Apple devices use to organise your health and fitness data. All your Apple Watch and iPhone data relating to health is stored there. That information can only be accessed from apps installed on an iOS device. Please follow the steps below to link your Apple Health data to our study.\n\nIt is also possible to connect other, non-Apple, devices to Apple Health. If you have already done so, you can share that data with us by following the same steps below.\n"
-              }
+              {"Apple Health is the app which collects all Apple devices use to organise your health and fitness data. All your Apple Watch and iPhone data relating to health is stored there. That information can only be accessed from apps installed on an iOS device. Please follow the steps below to link your Apple Health data to our study.\n\nIt is also possible to connect other, non-Apple, devices to Apple Health. If you have already done so, you can share that data with us by following the same steps below.\n"}
             </Typography>
           </div>
         </Grid>
@@ -92,7 +91,7 @@ export function HealthKitPage() {
             /> 
           </a>
         </Grid>
-        {isMobile && <MobileContent armtAuthUrl={armtAuthUrl} />}
+        {(isMobile || isTablet) && <MobileContent armtAuthUrl={armtAuthUrl} />}
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 2: Open the app</Typography>
           <Typography variant="body1">Once the app is opened, you will see the following screen. Press the 'Start' button.</Typography>
