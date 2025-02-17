@@ -1,13 +1,17 @@
 "use client"
 import { Button, Modal, Box, Typography, Grow } from "@mui/material";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useContext } from "react";
 import { acceptOrRejectCookies } from "./actions";
+import NextLink from 'next/link'
+import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 
 
 export function CookieBanner() {
   const [open, setOpen] = React.useState(true);
+  const studyProtocol = useContext(ProtocolContext)
   const router = useRouter()
+  const cookiePolicyLink = studyProtocol ? `/${studyProtocol.studyId}/cookies` : '/cookies'
   const handleAll = () => {
     acceptOrRejectCookies("all")
     setOpen(false)
@@ -39,10 +43,12 @@ export function CookieBanner() {
       <Typography id="modal-modal-title" variant="h3">
         Cookie consent
       </Typography>
-      <Typography sx={{ mt: 2 }}>
+      <Typography sx={{ mt: 2, mb: 1 }}>
         {"We use functional cookies to keep you logged in between visits.\nIf you accept all cookies we will also use analytic cookies, which we use to help us understand how people interact with the study."}
       </Typography>
-      
+      <Typography>
+        For more information, view our <NextLink href={cookiePolicyLink}>cookie policy</NextLink>.
+      </Typography>
       <Box display={'flex'} flexDirection={'row'} justifyContent={'flex-end'} marginTop={2} gap={1}> 
         <Button onClick={handleReject} variant="outlined">Reject All</Button>
         <Button onClick={handleFunctional} variant="outlined">Functional Only</Button>
