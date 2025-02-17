@@ -36,21 +36,25 @@ export function YesNoButton(props: YesNoButtonProps) {
 }
 
 interface YesNoFieldProps extends YesNoButtonProps {
+  title?: string
   label?: string,
   description?: string
   errorText?: string
+  setFieldValue: (id: string, value: boolean) => void
 }
 
-export function YesNoField({label, description, errorText, ...props}: YesNoFieldProps, ref: ForwardedRef<HTMLDivElement>) {
+export function YesNoField({label, description, errorText, setFieldValue, ...props}: YesNoFieldProps, ref: ForwardedRef<HTMLDivElement>) {
   return (
     <FormControl sx={{width: '100%'}}>
-      <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
+      <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1}>
+      {props.title && <Typography variant="h4" component={'span'}>{props.title}</Typography>}
         <Box display={"flex"} flexDirection={{xs: "column", sm: "row"}} justifyContent={"space-between"} alignItems={{xs: "normal", sm: "center"}} gap={{xs: 1, sm: 4}}>
-          <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
-            <Typography variant="h4">{label}</Typography>
-            <MarkdownContainer>{description}</MarkdownContainer>
-          </Box>
-          <YesNoButton {...props}/>
+          {((label != undefined) || (description != undefined)) && 
+            <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
+              <Typography variant="h4">{label}</Typography>
+              <MarkdownContainer>{description}</MarkdownContainer>
+            </Box>}
+          <YesNoButton {...props} onChange={getYesNoOnChangeHandler(setFieldValue)}/>
         </Box>
         <Typography variant="overline"  color="error">{errorText}</Typography>
       </Box>
