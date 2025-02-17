@@ -29,7 +29,6 @@ export default async function getAccessToken(
     })
 
     if (!response.ok) {
-      console.log(response)
       throw new Error(
         `Failed to retrieve access token: ${response.statusText}`,
       )

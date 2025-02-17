@@ -45,7 +45,6 @@ export function HealthKitPage() {
       const tokenResponse = await fetch(withBasePath('/api/connect/armt/token?code=' + code))
       if (tokenResponse.ok) {
         let token = await tokenResponse.json()
-        console.log(token)
         if (token?.access_token && token?.expires_in) {
           token['iat'] =  Math.floor(Date.now() / 1000)
           const shortToken = { 
