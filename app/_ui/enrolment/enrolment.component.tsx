@@ -34,6 +34,9 @@ function generateConsentSchema(protocol: EnrolmentProtocol): Yup.Schema {
       (item) => schema[item.id] = Yup.boolean().required().isTrue(item.errorText ?? "You must agree to this item to take part in the study")
     )
     schema['signature'] = Yup.string().required()
+    schema['first_name'] = Yup.string().required()
+    schema['last_name'] = Yup.string().required()
+    schema['date'] = Yup.string().required()
   }
 
   return Yup.object(schema)
@@ -55,7 +58,11 @@ function generateConsentInitialValues(protocol: EnrolmentProtocol): {[key: strin
   protocol.consent?.optionalItems?.forEach(
     (item) => values[item.id] = undefined
   )
-  values['consent_signature'] = undefined
+  values['signature'] = undefined
+  values['first_name'] = undefined
+  values['last_name'] = undefined
+  values['date'] = (new Date()).toLocaleDateString('en-GB', {day:'numeric', month: 'short', year: 'numeric'})
+
   return values
 }
 
@@ -163,7 +170,6 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   }
   
   const displayErrors = (flow: IOryRegistrationFlow) => {
-    console.log(flow)
     if (flow) {
       if ((flow.ui.messages) && (flow.ui.messages.length > 0)) {
         setErrorText(flow.ui.messages[0].text)
