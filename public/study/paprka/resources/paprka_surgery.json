@@ -11,7 +11,7 @@
         "form_name": "paprka_surgery",
         "section_header": "",
         "field_type": "text",
-        "field_label": "Surgery Date",
+        "field_label": "Most Recent Surgery",
         "select_choices_or_calculations": [
             {
                 "code": "year",
@@ -37,6 +37,24 @@
         "evaluated_logic": ""
     },
     {
+        "field_name": "paprka_surgery_side",
+        "form_name": "paprka_surgery",
+        "section_header": "What side knee was the surgery performed on?",
+        "field_type": "dropdown",
+        "field_label": "",
+        "select_choices_or_calculations": [
+            {
+                "code": "left",
+                "label": "Left"
+            },
+            {
+                "code": "right",
+                "label": "Right"
+            }
+        ],
+        "required_field": "true"
+    },
+    {
         "field_name": "paprka_surgery_text1",
         "form_name": "paprka_surgery",
         "field_type": "descriptive",
@@ -46,7 +64,7 @@
         "field_name": "paprka_surgery_satisfaction",
         "form_name": "paprka_surgery",
         "section_header": "How satisfied are you with the results of your surgery?",
-        "field_type": "radio",
+        "field_type": "dropdown",
         "field_label": "",
         "select_choices_or_calculations": [
             {
@@ -78,7 +96,7 @@
         "field_name": "paprka_surgery_education",
         "form_name": "paprka_surgery",
         "section_header": "What is your highest level of education?",
-        "field_type": "radio",
+        "field_type": "dropdown",
         "field_label": "",
         "select_choices_or_calculations": [
             {
@@ -128,7 +146,7 @@
         "field_name": "paprka_surgery_work",
         "form_name": "paprka_surgery",
         "section_header": "What is your current work status?",
-        "field_type": "radio",
+        "field_type": "dropdown",
         "field_label": "",
         "select_choices_or_calculations": [
             {
@@ -169,5 +187,54 @@
         "matrix_ranking": "",
         "field_annotation": "",
         "evaluated_logic": ""
+    },
+    {
+        "field_name": "paprka_surgery_has_second_surgery",
+        "form_name": "paprka_surgery",
+        "section_header": "Have you had a second knee surgery?",
+        "field_type": "yesno",
+        "required_field": "true"
+    },
+    {
+        "field_name": "paprka_surgery_date_2",
+        "form_name": "paprka_surgery",
+        "section_header": "Second Surgery Date",
+        "field_type": "text",
+        "field_label": "",
+        "select_choices_or_calculations": [
+            {
+                "code": "year",
+                "label": ""
+            },
+            {
+                "code": "month",
+                "label": ""
+            }
+        ],
+        "field_note": "",
+        "text_validation_type_or_show_slider_number": "datetime_dmy",
+        "text_validation_min": "01/01/2016",
+        "text_validation_max": "01/01/2024",
+        "required_field": "",
+        "evaluated_logic": "results['paprka_surgery_has_second_surgery'] == true"
+    },
+    {
+        "field_name": "paprka_surgery_side_2",
+        "form_name": "paprka_surgery",
+        "section_header": "What side knee was the surgery performed on?",
+        "field_type": "dropdown",
+        "field_label": "",
+        "select_choices_or_calculations": [
+            {
+                "code": "left",
+                "label": "Left"
+            },
+            {
+                "code": "right",
+                "label": "Right"
+            }
+        ],
+        "evaluated_logic": "results['paprka_surgery_has_second_surgery'] == true"
+
     }
 ]
