@@ -109,7 +109,6 @@ export function ArmtSignatureField({label, description, errorText, ...props}: Ar
           {props.value ? (sigImg) : <Typography alignSelf={'center'} margin={'auto'}>Click to sign</Typography>}
         </Box>
         <div>
-          <Button onClick={handleOpen} variant='outlined'>Click to sign</Button>
           <Modal
             open={open}
             onClose={handleClose}
