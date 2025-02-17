@@ -59,7 +59,7 @@ export type ArmtGithubRedcapDefinitionLink = {
   org: string
   project: string
   avsc: string
-  name: string
+  ref: string
 }
 
 type ArmtMetadataBase = {
