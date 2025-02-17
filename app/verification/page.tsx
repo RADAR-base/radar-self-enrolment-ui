@@ -1,12 +1,11 @@
 import { completeVerificationFlow, createRecoveryFlow, createVerificationFlow, getVerificationFlow, whoAmI } from "@/app/_lib/auth/ory/kratos"
-import { OrySession } from "@/app/_lib/auth/ory/types"
 import { getCsrfToken } from "@/app/_lib/auth/ory/util"
 import { VerificationComponent } from "@/app/_ui/auth/verification"
 import { Container, Box } from "@mui/material"
 import { cookies } from "next/headers"
+import { OrySession, OrySessionResponse } from "../_lib/auth/ory/types"
 import { redirect } from "next/navigation"
 
-export const fetchCache = 'force-no-store';
 
 async function getUserSession() {
   const userResponse = await whoAmI()
@@ -19,20 +18,29 @@ async function getUserSession() {
 }
 
 export default async function Page({
-  params,
   searchParams,
 }: {
-  params: Promise<{ studyId: string }>
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
   const userSession: OrySession | undefined = await getUserSession()
   if (userSession == undefined) {
-    redirect('/' + (await params).studyId)
+    redirect('/')
   }
+
   const cookieJar = cookies()
   const csrfToken = cookieJar.getAll().find((c) => c.name.startsWith('csrf_token_'))
-  const flowId = (await searchParams).flow
+  const flowId = (await searchParams).flowId
+
+  if (userSession.identity.traits.projects.length > 0) {
+    let redirectUri = `/${userSession.identity.traits.projects[0].id}/verification`
+    if (flowId) {
+      redirectUri = redirectUri + '?flow=' + flowId
+    }
+    redirect(redirectUri)
+  }
+
   let flow: IOryVerificationFlow | undefined
+
   if (csrfToken != undefined) {
     try {
       if (flowId == undefined) {
@@ -53,6 +61,7 @@ export default async function Page({
       console.log(e)
     }
   }
+
   return (
     <main>
       <Container maxWidth="lg" disableGutters>

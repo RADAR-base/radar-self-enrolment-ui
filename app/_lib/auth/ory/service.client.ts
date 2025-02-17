@@ -20,13 +20,13 @@ class OryAuthServerService extends ClientAuthService {
     const resp = await ory.whoAmI()
     return resp.ok
   }
-  async getDisplayName(): Promise<string | null> {
+  async getDisplayName(): Promise<string | undefined> {
     return this.getEmail()
   }
-  async getEmail(): Promise<string | null> {
+  async getEmail(): Promise<string | undefined> {
     return (await this.getSession())?.identity.traits.email
   }
-  async getUid(): Promise<string | null> {
+  async getUid(): Promise<string | undefined> {
     throw (await this.getSession())?.identity.id
   }
   async signIn(email: string, password: string): Promise<AuthResponse> {
