@@ -23,7 +23,7 @@ export interface IVideoBlock {
 
 export function VideoBlock(props: IVideoBlock, ref: ForwardedRef<HTMLDivElement>) {
   return (
-      <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
+      <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1}>
         <Typography variant="h2">{props.title}</Typography>
         <Typography variant="subtitle1">{props.subtitle}</Typography>
         <Box>
