@@ -14,7 +14,7 @@ export function GarminPage() {
   const participant = useContext(ParticipantContext);
  
   const [linkUrl, setLinkUrl] = useState<string | undefined>(undefined)
-  const redirect_uri = encodeURIComponent(`/${protocol.studyId}/portal/connect?success=Garmin`)
+  const redirect_uri = encodeURIComponent(`/${protocol.studyId}/portal/connect?success=garmin`)
 
   useEffect(() => {
     if (linkUrl == undefined) {

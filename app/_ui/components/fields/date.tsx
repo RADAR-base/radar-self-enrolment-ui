@@ -40,6 +40,7 @@ export function ArmtDateField({label, description, errorText, ...props}: ArmtDat
         <Typography variant="body1" component={'span'}>{description}</Typography>
         <DatePicker 
           sx={{
+            pt: 1,
             maxWidth: '16em'
           }}
           key={props.key}
@@ -47,6 +48,8 @@ export function ArmtDateField({label, description, errorText, ...props}: ArmtDat
           disabled={props.disabled}
           openTo="year"
           views={view}
+          minDate={props.minDate ? dayjs(props.minDate) : undefined}
+          maxDate={props.maxDate ? dayjs(props.maxDate) : undefined}
           formatDensity='spacious'
           label={label}
           onChange={(value, context) => {

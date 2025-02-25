@@ -39,11 +39,11 @@ export function DeviceConnectedBanner(props: {device: string, onFinish?: () => {
           Thank you: {props.device} Connected
         </Typography>
         <Typography sx={{ mt: 2 }}>
-          {`You have successfully linked your ${props.device}.\n\nWould you like to link another device?`}
+          {`You have successfully linked your ${props.device}.\n\nAre you done, or would you like to link another device?`}
         </Typography>
         <Box display={'flex'} flexDirection={'row'} justifyContent={'flex-end'} marginTop={2} gap={1}> 
-          <Button onClick={handleReturn} variant="outlined">No</Button>
-          <Button onClick={handleAddMore} variant="outlined">Yes</Button>
+          <Button onClick={handleAddMore} variant="outlined">Link another device</Button>
+          <Button onClick={handleReturn} variant="outlined">Done</Button>
         </Box>
       </Box>
     </Grow>

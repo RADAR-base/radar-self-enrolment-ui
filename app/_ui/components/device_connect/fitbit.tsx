@@ -14,7 +14,7 @@ export function FitbitPage() {
   const participant = useContext(ParticipantContext);
   const router = useRouter()
   const [linkUrl, setLinkUrl] = useState<string | undefined>(undefined)
-  const redirect_uri = encodeURIComponent(`/${protocol.studyId}/portal/connect?success=Fitbit`)
+  const redirect_uri = encodeURIComponent(`/${protocol.studyId}/portal/connect?success=fitbit`)
 
   useEffect(() => {
     if (linkUrl == undefined) {

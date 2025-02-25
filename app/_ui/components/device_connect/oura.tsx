@@ -17,7 +17,7 @@ export function OuraPage() {
   const router = useRouter()
 
   const [linkUrl, setLinkUrl] = useState<string | undefined>(undefined)
-  const redirect_uri = encodeURIComponent(`/${protocol.studyId}/portal/connect?success=Oura`)
+  const redirect_uri = encodeURIComponent(`/${protocol.studyId}/portal/connect?success=oura`)
 
   useEffect(() => {
     if (linkUrl == undefined) {
