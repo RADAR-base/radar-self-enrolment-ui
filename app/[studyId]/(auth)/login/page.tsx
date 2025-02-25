@@ -7,6 +7,7 @@ import { redirect  } from 'next/navigation'
 import { withBasePath } from '@/app/_lib/util/links';
 import { createLoginFlow } from '@/app/_lib/auth/ory/kratos';
 import { cookies } from 'next/headers';
+import { IOryLoginFlow } from '@/app/_lib/auth/ory/flows.interface';
 
 
 export default async function Page({
@@ -32,10 +33,10 @@ export default async function Page({
   return (
     <main>
       <Container maxWidth="lg" disableGutters>
-        <Box marginTop={2} marginBottom={2} maxWidth={600} justifySelf={'center'} width='100%'>
+        <Box marginTop={2} marginBottom={2} marginRight={"auto"} marginLeft={"auto"} maxWidth={600} justifySelf={'center'} width='100%'>
           <RadarCard>
             <Box padding={4}>
-              <LoginComponent redirectTo={withBasePath('/' + studyId)} flow={flow} />
+              <LoginComponent redirectTo={'/' + studyId + '/portal'} flow={flow} />
             </Box>
           </RadarCard>
       </Box>

@@ -8,6 +8,7 @@ import { getCsrfToken } from '@/app/_lib/auth/ory/util';
 import { useFormik } from 'formik';
 import Yup from '@/app/_lib/armt/validation/yup'
 import { ProtocolContext } from '@/app/_lib/study/protocol/provider.client';
+import { IOryVerificationFlow } from '@/app/_lib/auth/ory/flows.interface';
 
 interface EmailSentComponentProps {
   flow: IOryVerificationFlow

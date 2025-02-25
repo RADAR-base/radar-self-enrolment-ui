@@ -1,3 +1,4 @@
+import { IOryVerificationFlow } from "@/app/_lib/auth/ory/flows.interface"
 import { completeVerificationFlow, createRecoveryFlow, createVerificationFlow, getVerificationFlow, whoAmI } from "@/app/_lib/auth/ory/kratos"
 import { OrySession } from "@/app/_lib/auth/ory/types"
 import { getCsrfToken } from "@/app/_lib/auth/ory/util"
@@ -15,7 +16,6 @@ async function getUserSession() {
     return (await userResponse.json()) as OrySession
   }
   return undefined
-
 }
 
 export default async function Page({
@@ -56,7 +56,7 @@ export default async function Page({
   return (
     <main>
       <Container maxWidth="lg" disableGutters>
-        <Box marginTop={2} marginBottom={2} maxWidth={600} justifySelf={'center'} width='100%'>
+        <Box marginTop={2} marginBottom={2} marginRight={"auto"} marginLeft={"auto"} maxWidth={600} justifySelf={'center'} width='100%'>
           <VerificationComponent flow={flow} />
         </Box>
       </Container>

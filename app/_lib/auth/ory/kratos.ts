@@ -1,6 +1,7 @@
 "use server"
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server';
+import { IOrySettingsFlow } from './flows.interface';
 
 const BASEURL = process.env.KRATOS_INTERNAL_URL;
 
@@ -274,6 +275,67 @@ export async function completeVerificationFlow(flowId: string, data: IUpdateReco
       Cookie: cookieString,
     },
     body: JSON.stringify(data)
+  })
+}
+
+
+export async function getSettingsFlow(flowId: string): Promise<Response> {
+  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  var url = new URL(BASEURL + '/self-service/settings/flows')
+  var params = new URLSearchParams([
+    ['id', flowId]
+  ])
+  url.search = params.toString()
+  return await fetch(url, {
+    method: 'GET',
+    headers: {
+      'accept': 'application/json',
+      'Content-Type': 'application/json',
+      Cookie: cookieString,
+    },
+  })
+}
+
+export async function createSettingsFlow(return_to?: string): Promise<Response> {
+  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  var url = new URL(BASEURL + '/self-service/settings/browser')
+  return await fetch(url, {
+    method: 'GET',
+    headers: {
+      'accept': 'application/json',
+      Cookie: cookieString,
+    },
+  })
+}
+
+export interface IUpdateSettingsPassword {
+  csrf_token: string,
+  password: string,
+  transient_payload?: any
+}
+
+export async function completeSettingsFlow(flowId: string, data: IUpdateSettingsPassword): Promise<Response> {
+  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  var url = new URL(BASEURL + "/self-service/settings")
+  var params = new URLSearchParams([
+    ["flow", flowId],
+  ])
+  url.search = params.toString();
+  const body = {
+    password: data.password,
+    method: "password",
+    csrf_token: data.csrf_token,
+    transient_payload: data.transient_payload
+    
+  }
+  return await fetch(url, {
+    method: 'POST',
+    headers: {
+      'accept': 'application/json',
+      'Content-Type': 'application/json',
+      Cookie: cookieString,
+    },
+    body: JSON.stringify(body)
   })
 }
 
