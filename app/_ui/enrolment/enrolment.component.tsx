@@ -17,6 +17,7 @@ import { EnrolmentRegister } from './register.component';
 import { withBasePath } from '@/app/_lib/util/links';
 import { getCsrfToken } from '@/app/_lib/auth/ory/util';
 import { sendGAEvent } from '@next/third-parties/google'
+import { IOryRegistrationFlow } from '@/app/_lib/auth/ory/flows.interface';
 
 
 function generateEligibilitySchema(protocol: EnrolmentProtocol): Yup.Schema {
@@ -260,7 +261,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   })
 
   const stepContent: { [key: string]: React.ReactNode } = {
-    ...(protocol.studyInformation && protocol.studyInformation.title && protocol.studyInformation.content
+    ...(protocol.studyInformation && protocol.studyInformation.content
       ? {
           studyInformation: (
             <EnrolmentStudyInformation
