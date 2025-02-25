@@ -77,28 +77,28 @@
         {
           "fieldType": "yesno",
           "id": "criteria1",
-          "description": "Are you over 18 years of age?"
-        },
-        {
-          "fieldType": "yesno",
-          "id": "criteria2",
           "description": "Have you had total, or partial, knee replacement surgery, either through the NHS or a private healthcare provider, between January 2017 and December 2023?"
         },
         {
           "fieldType": "yesno",
+          "id": "criteria2",
+          "description": "Are you over 18 years of age at the time of the surgery?"
+        },
+        {
+          "fieldType": "yesno",
           "id": "criteria3",
-          "description": "Did you use a smartphone app or fitness tracker to track your activity six months before your surgery? An iPhone automatically collects activity data."
+          "description": "Did you use a smartphone app or fitness tracker to track your activity six months before your surgery? Click Yes, if you use an iPhone because it automatically collects activity data."
         },
         {
           "fieldType": "yesno",
           "id": "criteria4",
-          "description": "Did you use a smartphone app or fitness tracker to track your activity one year after your surgery? An iPhone automatically collects activity data."
+          "description": "Did you use a smartphone app or fitness tracker to track your activity one year after your surgery? Click Yes, if you use an iPhone because it automatically collects activity data."
         }
       ]
     },
     "consent": {
       "title": "Consent",
-      "description": "Before you can take part in this study, we need your consent to access activity data from your iPhone, fitness tracker or smartphone app, and your National Joint Registry knee replacement surgery record.\n<br />\nWe also need you to create an account, using an email and password, so you can log back into the PAPrKA research study portal. You may want to do this to update your personal information or if you decide to leave the study.\n<br />\nYour data will be managed by the PAPRKA research team and will not be shared with any other parties. You can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095).\n",
+      "description": "Before you can take part in this study, we need you to consent to take part. Please read carefully the consent statements and click Yes or No for each statement. ",
       "requiredItems": [
         {
           "fieldType": "yesno",
@@ -238,6 +238,10 @@
     "account": {
       "title": "Register Account Continued",
       "description": "You need an account to give us your information and connect your fitness tracker or smartphone app.\n<br />\nPlease fill out this information as accurately as possible so we can successfully link your activity data to your knee replacement data from the National Joint Registry. \n<br />\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
+    },
+    "studyInformation": {
+      "title": "",
+      "content": "We understand that you may have questions about our research, what your involvement would be and much more. Please read carefully the Participant Information Sheet to find answers to these questions. If you have any questions about what you have read, please feel free to contact the team on <paprka@manchester.ac.uk> and &lt;&lt;teams account&gt;&gt;. In addition, you may wish to talk to a family member or friend about taking part in this study before you go on to sign the consent form.\n<br />\n<object style='min-height:100vh;width:100%' height='fit-content' type='application/pdf' data='/kratos-ui/study/paprka/resources/paprka_pis.pdf'><button variant='contained' href='/kratos-ui/study/paprka/resources/paprka_pis.pdf'>Participant Information Sheet</button></object>"
     }
   },
   "studyUiConfig": {
