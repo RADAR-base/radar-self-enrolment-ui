@@ -36,8 +36,6 @@ export async function GET(request: NextRequest) {
   const audience = clientId === SEP_CLIENT_ID ? SEP_AUDIENCE : ARMT_AUDIENCE
   const scopes = clientId === SEP_CLIENT_ID ? SEP_SCOPES : ARMT_SCOPES
 
-  console.log('uri is', redirectUri)
-
   if (!clientId || !state) {
     return NextResponse.json(
       { error: "Missing required parameters" },
