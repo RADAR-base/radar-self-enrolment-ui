@@ -21,7 +21,9 @@ const extractSession = (identity: any, grantScope: string[]) => {
       sources: identity.metadata_public.sources,
       user_name: identity.metadata_public.mp_login,
     },
-    id_token: {},
+    id_token: {
+      email: identity.traits.email
+    },
   }
   return session
 }
