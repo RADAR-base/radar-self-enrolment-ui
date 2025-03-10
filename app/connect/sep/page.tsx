@@ -50,7 +50,9 @@ export default function Page() {
       localStorage.removeItem(STATE_STORAGE_PATH)
 
       if ((storedState === returnedState) && (storedState != null)) {
-        window.location.replace(withBasePath(`${return_to}?code=${code}`))
+        fetch(withBasePath('/api/connect/sep/token?' + searchParams.toString())).then(
+          (r) => window.location.replace(withBasePath(return_to))
+        )
       } else {
         console.log('State not equal')
         console.log(storedState, returnedState)
