@@ -22,6 +22,7 @@ export type RadarRedcapFieldDefinition = {
   matrix_group_name: string
   matrix_ranking: string
   field_annotation: string
+  evaluated_logic: string
 }
 
 export type RadarRedcapDefinition = RadarRedcapFieldDefinition[]

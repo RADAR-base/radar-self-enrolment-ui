@@ -5,6 +5,7 @@ import { ActiveTaskResponse } from "../../armt/response/response.interface"
 import { whoAmI } from "../../auth/ory/kratos"
 import StudyProtocolRepository from "../protocol/repository"
 import { StudyProtocol } from "../protocol"
+import { notFound } from "next/navigation"
 
 async function getExistingTasks(studyId: string, userId: string) {
   const r = await fetch(process.env.KRATOS_ADMIN_URL + '/identities/' + userId, {
@@ -22,14 +23,11 @@ async function getExistingTasks(studyId: string, userId: string) {
 
 
 export async function allTaskStatus(studyId: string, userId: string): Promise<{[key: string]: ArmtStatus} | null> {
-  let registery: StudyProtocolRepository = new StudyProtocolRepository()
-  let protocol: StudyProtocol;
-  try {
-    protocol = await registery.getStudyProtocol(studyId)
-  } catch {
+  const registery: StudyProtocolRepository = new StudyProtocolRepository()
+  const protocol = await registery.getStudyProtocol(studyId)
+  if (protocol == undefined) { 
     return null
   }
-
   const existingTasks = await getExistingTasks(studyId, userId)
   let status: {[key: string]: ArmtStatus} = {}
 

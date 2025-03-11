@@ -1,9 +1,7 @@
 "use client"
-import { ArmtMetadata, ArmtProtocol } from "@/app/_lib/study/protocol";
-import { Box, Button, Card, Paper, Stack, styled, Typography } from "@mui/material";
+import { Box, Button, Paper, styled, Typography } from "@mui/material";
 import React from "react";
 import NextLink from 'next/link'
-import { metadata } from "@/app/layout";
 import Image from 'next/image'
 import { withBasePath } from "@/app/_lib/util/links";
 

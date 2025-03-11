@@ -1,10 +1,9 @@
 import { Box, Collapse, Stack, Typography, Divider } from "@mui/material";
 import React from "react";
 
-import { getYesNoOnChangeHandler, YesNoField } from "../components/fields/yesno";
+import { YesNoField } from "../components/fields/yesno";
 import { ITextItem, IYesNoItem } from "../../_lib/armt/definition/field.interfaces";
 import { MarkdownContainer } from "../components/base/markdown";
-import { SigPad } from "../components/base/signature";
 
 type EligibilityItem = IYesNoItem | ITextItem
 
@@ -20,15 +19,12 @@ interface EnrolmentEligibilityProps {
 export function EnrolmentEligibility(props: EnrolmentEligibilityProps) {
   const title = props.title ? props.title : 'Eligibility'
   const description = props.description
-  const onChange = (event: any, value: boolean) => {
-    return getYesNoOnChangeHandler(props.setFieldValue)(event, value)
-  }
   var items = [
     <YesNoField
       label={props.items[0].label}
       description={props.items[0].description}
       value={props.values[props.items[0].id]}
-      onChange={onChange}
+      setFieldValue={props.setFieldValue}
       id={'eligibility.' + props.items[0].id}
       errorText={(props.values[props.items[0].id] != null) ? props.errors[props.items[0].id] : ""}
       key={'eligibility.' + props.items[0].id}
@@ -43,7 +39,7 @@ export function EnrolmentEligibility(props: EnrolmentEligibilityProps) {
               label={props.items[i].label}
               description={props.items[i].description}
               value={props.values[props.items[i].id]}
-              onChange={onChange}
+              setFieldValue={props.setFieldValue}
               id={'eligibility.' + props.items[i].id}
               errorText={(props.values[props.items[i].id] != null) ? props.errors[props.items[i].id] : ""}
               key={'eligibility.' + props.items[i].id}/>

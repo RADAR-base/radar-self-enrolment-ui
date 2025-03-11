@@ -27,10 +27,15 @@ export async function POST(
   { params }: { params: Promise<{ studyId: string, taskId: string }> }
 ) {
   const {studyId, taskId}  = (await params)
-  let protocol: StudyProtocol
   let oryUser: any
   let userId: string
   let taskData: ActiveTaskResponse
+
+  const registery: StudyProtocolRepository = new StudyProtocolRepository()  
+  const protocol = await registery.getStudyProtocol(studyId)
+  if (protocol == undefined) {
+    return NextResponse.json({error: {type: 'request', content: 'No such study exists'}}, {status: 400})
+  }
 
   try {
     const resp = await whoAmI()
@@ -42,16 +47,7 @@ export async function POST(
   } catch {
     return NextResponse.json({error: {type: 'authentication', content: {message: "Error decoding user session"}}}, {status: 403})
   }
-
   const values = (await request.json())
-
-  try {
-    const registery: StudyProtocolRepository = new StudyProtocolRepository()  
-    protocol = await registery.getStudyProtocol(studyId)
-  } catch {
-    return NextResponse.json({error: {type: 'request', content: 'No such study exists'}}, {status: 400})
-  }
-
   const armtRepo = new ArmtDefinitionRepository(protocol)
   const taskProtocol = (protocol.protocols.find((e) => e.id == taskId))
   

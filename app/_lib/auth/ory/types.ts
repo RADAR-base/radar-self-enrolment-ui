@@ -1,4 +1,4 @@
-export type OryAuthenticationMethod = {
+interface OryAuthenticationMethod {
   completed_at: string,
   method: string,
   aal?: string,
@@ -6,20 +6,49 @@ export type OryAuthenticationMethod = {
   provider?: string
 }
 
-export type OrySessionDevice = {
+interface OrySessionDevice {
   id: string,
   ip_address: string,
   location: string,
   user_agent: string
 }
 
-export type OryCredentials = any;
+interface OryCredentials {
+  [key: string]: {
+    config: any,
+    created_at: string,
+    identifiers: string[],
+    type: 'password' | 'oidc' | 'totp' | 'lookup_secret' | 'webauthn' | 'code' | 'passkey' | 'profile' | 'link_recovery' | 'code_recovery',
+    updated_at: string,
+    version: number
+  }
+};
 
-export type OryTraits = {
-  email: string,
+interface OryTraitsRadarProject {
+  id: string,
+  name: string,
+  userId: string,
+  [key: string]: any
 }
 
-export type OryIdentity = {
+interface OryTraits {
+  email: string,
+  projects: OryTraitsRadarProject[]
+  [key: string]: any
+}
+
+interface OryVerifiableAddresses {
+  created_at: string,
+  id: string,
+  status: string,
+  updated_at: string,
+  value: string,
+  verified: boolean,
+  verified_at: string,
+  via: 'email' | 'sms'
+}
+
+export interface OryIdentity {
   created_at: string,
   credentials?: OryCredentials,
   id: string,
@@ -31,12 +60,12 @@ export type OryIdentity = {
   schema_url?: string,
   state?: string,
   state_changed_at?: string,
-  traits?: any,
+  traits: OryTraits,
   updated_at?: string,
-  verifiable_addresses: any[],
+  verifiable_addresses: OryVerifiableAddresses[]
 }
 
-export type OrySessionResponse = {
+export interface OrySessionResponse {
   active: boolean,
   authenticated_at: string,
   authentication_methods: OryAuthenticationMethod[],

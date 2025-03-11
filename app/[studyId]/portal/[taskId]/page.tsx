@@ -5,6 +5,7 @@ import { ArmtDefinitionRepository, getDefinition } from '@/app/_lib/armt/reposit
 import { ArmtContent } from '@/app/_ui/components/form/pageContent';
 import { RadarCard } from '@/app/_ui/components/base/card';
 import {whoAmI} from '@/app/_lib/auth/ory/kratos';
+import { notFound } from 'next/navigation';
 
 
 // export const dynamicParams = false
@@ -26,11 +27,11 @@ import {whoAmI} from '@/app/_lib/auth/ory/kratos';
 export default async function Page({ params }: { params: { studyId: string, taskId: string} }) {
   const registery: StudyProtocolRepository = new StudyProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)
+  if (protocol == undefined) { notFound() }
+
   const armtRepo = new ArmtDefinitionRepository(protocol)
   const armtDef = await armtRepo.getDefinition(params.taskId)
-  if (armtDef == undefined) {
-    return <main></main>
-  }
+  if (armtDef == undefined) { return notFound() }
   return (
     <main>
       <Box sx={{ flexGrow: 1, margin: {xs: 0, sm: 2}}} 

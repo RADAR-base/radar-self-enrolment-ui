@@ -1,7 +1,5 @@
 "use client"
-import { RadarCardProps } from '@/app/_ui/components/base/card';
-import { createTheme, Theme } from '@mui/material/styles';
-import { OverridesStyleRules } from '@mui/material/styles/overrides';
+import { createTheme } from '@mui/material/styles';
 import { Inter } from "next/font/google";
 
 const font = Inter({
@@ -9,7 +7,7 @@ const font = Inter({
   subsets: ['latin']
 })
 
-export const defaultOptions = createTheme({
+export const defaultTheme = createTheme({
   palette: {
     background: {
       default: "#f2f2f7"
@@ -28,6 +26,7 @@ export const defaultOptions = createTheme({
     }
   },
   typography: {
+    fontFamily: font.style.fontFamily,
     allVariants: {
       fontFamily: font.style.fontFamily,
       wordBreak: 'break-word',
@@ -64,4 +63,4 @@ export const defaultOptions = createTheme({
   }
 })
 
-export default defaultOptions
+export default defaultTheme

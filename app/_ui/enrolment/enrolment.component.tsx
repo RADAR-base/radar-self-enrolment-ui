@@ -16,6 +16,8 @@ import { schemaFromDefinition } from '@/app/_lib/armt/validation/parser';
 import { EnrolmentRegister } from './register.component';
 import { withBasePath } from '@/app/_lib/util/links';
 import { getCsrfToken } from '@/app/_lib/auth/ory/util';
+import { sendGAEvent } from '@next/third-parties/google'
+
 
 function generateEligibilitySchema(protocol: EnrolmentProtocol): Yup.Schema {
   const schema: {[key: string]: Yup.Schema} = {};
@@ -32,6 +34,9 @@ function generateConsentSchema(protocol: EnrolmentProtocol): Yup.Schema {
       (item) => schema[item.id] = Yup.boolean().required().isTrue(item.errorText ?? "You must agree to this item to take part in the study")
     )
     schema['signature'] = Yup.string().required()
+    schema['first_name'] = Yup.string().required()
+    schema['last_name'] = Yup.string().required()
+    schema['date'] = Yup.string().required()
   }
 
   return Yup.object(schema)
@@ -53,7 +58,11 @@ function generateConsentInitialValues(protocol: EnrolmentProtocol): {[key: strin
   protocol.consent?.optionalItems?.forEach(
     (item) => values[item.id] = undefined
   )
-  values['consent_signature'] = undefined
+  values['signature'] = undefined
+  values['first_name'] = undefined
+  values['last_name'] = undefined
+  values['date'] = (new Date()).toLocaleDateString('en-GB', {day:'numeric', month: 'short', year: 'numeric'})
+
   return values
 }
 
@@ -161,7 +170,6 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   }
   
   const displayErrors = (flow: IOryRegistrationFlow) => {
-    console.log(flow)
     if (flow) {
       if ((flow.ui.messages) && (flow.ui.messages.length > 0)) {
         setErrorText(flow.ui.messages[0].text)
@@ -207,6 +215,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
           ]
         }
       }
+      sendGAEvent('event', 'study_enrolment', {status: 'submitting'})
       fetch(withBasePath('/api/ory/registration?' + new URLSearchParams({
         flow: flow.id
       })), {
@@ -215,11 +224,23 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
       }).then(
         (res) => {
           if (res.ok) {
-            router.push("portal")
-            window.location.reload()
+            sendGAEvent('event', 'study_enrolment', {status: 'joined'})
+            res.json().then(
+              (data) => {
+                const verificationFlow = data.continue_with[0].flow.id
+                if (verificationFlow) {
+                  router.push(`/${studyProtocol.studyId}/verification?flow=${verificationFlow}`)
+                  router.refresh()
+                } else {
+                  router.push(`/${studyProtocol.studyId}/portal`)
+                  router.refresh()
+                }
+              }
+            )
             return
           }
           if (res.status == 400) {
+            sendGAEvent('event', 'study_enrolment', {status: 'submission_error'})
             res.json().then(
               (data) => {
                 if (data?.ui?.messages !== undefined) {
@@ -227,7 +248,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
                   scrollToTop()
                 } 
                 displayErrors(data)   
-                setFlow(data)          
+                setFlow(data)
               }
             )
           }
@@ -323,12 +344,14 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   function nextStep() {
     if ((stepIdx + 1) < steps.length) {
       scrollToTop()
+      sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx + 1], status: 'ongoing'})
       setStep(stepIdx + 1)
     }
   }
   
   function previousStep() {
     if (stepIdx > 0) {
+      sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx - 1], status: 'ongoing'})
       setStep(stepIdx - 1)
       scrollToTop()
     } else {
@@ -338,6 +361,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
 
   useEffect(() => {
     if (flow === undefined) {
+      sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx], status: 'start'})
       getFlow(setFlow)
     } else {
       validateStep()
@@ -347,7 +371,6 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
 
   const shapeStyles = { width: '0.5rem', height: '0.5rem' };
   const shapeCircleStyles = { borderRadius: '50%' };
-  const rectangle = <Box component="span" sx={shapeStyles} />;
   const circle = (active: boolean, key?: string) => {
     return <Box component="span"
                 key={key}

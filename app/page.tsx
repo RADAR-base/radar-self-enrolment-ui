@@ -10,9 +10,11 @@ import { Footer } from "@/app/_ui/components/footer";
 import { LogoutButton } from "@/app/_ui/auth/logout";
 import Link from "next/link";
 import { whoAmI } from "./_lib/auth/ory/kratos";
+import '@fontsource/roboto/400.css';
 
 export default async function Home() {
   const session = await (await whoAmI()).json()
+  const studies = ['paprka', 'RADAR-mCRAVING-KCL-s1']
 
   return (
     <Box
@@ -60,9 +62,11 @@ export default async function Home() {
             <RadarCard>
               <Typography variant="h2" margin={2}>Study routes</Typography>
               <Grid container spacing={2} margin={2}>
-                <Grid size={{xs: 12, md: 6}}>
-                  <Button href="/paprka" fullWidth variant="contained" LinkComponent={Link}>PAPrKA</Button>
-                </Grid>
+                {studies?.map((study: string) => (
+                  <Grid size={{xs: 12, md: 6}}>
+                    <Button href={`/${study}`} fullWidth variant="contained" LinkComponent={Link}>{study}</Button>
+                  </Grid>
+                ))}
               </Grid>
             </RadarCard>
           </Grid>

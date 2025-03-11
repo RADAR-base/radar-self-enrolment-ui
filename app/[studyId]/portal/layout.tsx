@@ -3,15 +3,14 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { jwtDecode } from "jwt-decode";
 import React from 'react';
-import { authRequestLink } from '@/app/_lib/radar/rest-source/service';
 import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
 import { StudyProtocol } from '@/app/_lib/study/protocol';
+import { OrySessionResponse } from '@/app/_lib/auth/ory/types';
 
 
 export async function generateMetadata({params}: {params: {studyId: string}}) {
-  var registery: StudyProtocolRepository = new StudyProtocolRepository()
-  var protocol: StudyProtocol;
-  protocol = await registery.getStudyProtocol(params.studyId)
+  const registery: StudyProtocolRepository = new StudyProtocolRepository()
+  const protocol = await registery.getStudyProtocol(params.studyId)
   if (protocol == undefined){ return }
   return {
     title: protocol.name + ' Portal',
@@ -35,14 +34,22 @@ export default async function StudyLayout({children, params}: Readonly<{children
   const kratos_cookie = cookieStore.get('ory_kratos_session')
   const return_to = '/' + params.studyId + '/portal'
 
-  if (kratos_cookie == undefined) {redirect('./')}
+  if (kratos_cookie == undefined) {redirect(`/${params.studyId}`)}
 
   const userSessionResponse = await whoAmI()
-  if (!userSessionResponse.ok) {
-    redirect('./')
-  }
-  const userSession = await userSessionResponse.json()
+  
+  if (!userSessionResponse.ok) { redirect(`/${params.studyId}`)}
 
+  const userSession = (await userSessionResponse.json()) as OrySessionResponse
+
+  const verifiableAddress = userSession.identity.verifiable_addresses.find((a) => a.value == userSession.identity.traits.email)
+
+  if (verifiableAddress != undefined) {
+      if (!verifiableAddress.verified) {
+        redirect(`/${params.studyId}/verification`)
+      }
+  }
+  
   const sep_access_token = cookieStore.get('sep_access_token')
   if (sep_access_token == undefined) {
     redirect('/connect/sep?return_to=' + return_to)

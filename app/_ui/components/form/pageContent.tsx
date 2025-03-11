@@ -8,6 +8,8 @@ import { schemaFromDefinition } from "@/app/_lib/armt/validation/parser";
 import { RadarRedcapDefinition } from "@/app/_lib/armt/definition/redcap.types";
 import fromRedcapDefinition from "@/app/_lib/armt/definition/fromRedcapDefinition";
 import { withBasePath } from "@/app/_lib/util/links";
+import { sendGAEvent } from "@next/third-parties/google";
+import { useEffect } from "react";
 
 interface ArmtContentProps {
   studyId: string
@@ -26,6 +28,7 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
     initialValues: {},
     validationSchema: schema,
     onSubmit: async (values) => {
+      console.log(values)
       let resp = await fetch(
         withBasePath('/api/study/' + studyId + '/tasks/' + taskId),
         {
@@ -35,13 +38,31 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
         }
       )
       if (resp.ok) {
+        sendGAEvent('event', 'study_task', {
+          'study_id': studyId,
+          'task_id': taskId,
+          'task_status': 'submitted'
+        })
         router.push('/' + studyId + '/portal')
         router.refresh()
       } else {
+        sendGAEvent('event', 'study_task', {
+          'study_id': studyId,
+          'task_id': taskId,
+          'task_status': 'submit_failed'
+        })
         formik.setSubmitting(false)
       }
     }
   })
+
+  useEffect(() => {
+    sendGAEvent('event', 'study_task', {
+      'study_id': studyId,
+      'task_id': taskId,
+      'task_status': 'start'
+    })
+  }, [])
 
   const ControlButtons = (
     <Box 

@@ -1,20 +1,29 @@
 "use client"
 import { Box, Button, CircularProgress, Container, Link, Stack, TextField, Typography } from '@mui/material';
 import { RadarCard } from '@/app/_ui/components/base/card';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useContext, useEffect, useState } from 'react';
 import { withBasePath } from '@/app/_lib/util/links';
 import { getCsrfToken } from '@/app/_lib/auth/ory/util';
 import { useFormik } from 'formik';
 import Yup from '@/app/_lib/armt/validation/yup'
+import { ProtocolContext } from '@/app/_lib/study/protocol/provider.client';
 
 interface EmailSentComponentProps {
   flow: IOryVerificationFlow
   setFlow: (flow: IOryVerificationFlow) => void
 }
 
-function EmailSentComponent(props: EmailSentComponentProps) {
-  const [errorText, setErrorText] = useState<string>()
+function EmailSentComponent(props: EmailSentComponentProps): React.ReactElement {
+  const router = useRouter()
+  let errorText: string | undefined = undefined
+  if (props.flow.ui.messages.length > 0) {
+    let message = props.flow.ui.messages[0]
+    if (message.type == 'error') {
+        errorText = message.text
+    }
+  }
+
   async function submit(code: string) {
     const body = {
       code: code,
@@ -31,12 +40,16 @@ function EmailSentComponent(props: EmailSentComponentProps) {
       if (res.status == 422) {
         const data = await res.json()
         const redirUri = new URL(data.redirect_browser_to)
+        window.location.replace(redirUri)
       } else {
         const data = await res.json()
         props.setFlow(data)
+        formik.setSubmitting(false)
       }
   }
   }
+
+  const pathname = usePathname()
   
   const formik = useFormik({
     initialValues: {code: ''},
@@ -44,11 +57,15 @@ function EmailSentComponent(props: EmailSentComponentProps) {
     onSubmit: (values: any) => {submit(values.code)}
   });
 
+  const resendCode = () => {
+    window.location.replace(withBasePath(pathname))
+  }
+
   return (
     <form onSubmit={formik.handleSubmit}>
     <Box display={'flex'} flexDirection={'column'} gap={4}>
-      <Typography>An email has been sent containing a verification code. Please enter it in the box below</Typography>
       {errorText && <Typography variant='overline' color='error'>{errorText}</Typography>}
+      <Typography>An email has been sent containing a verification code. Please enter it in the box below</Typography>
       <TextField
               fullWidth
               id="code"
@@ -62,76 +79,103 @@ function EmailSentComponent(props: EmailSentComponentProps) {
               error={(formik.errors.code != undefined)}
               />
       <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} width={'100%'}>
-        <Button color="primary" variant="contained" onClick={() => {}}>
+        <Button color="primary" variant="contained" onClick={() => {router.back()}}>
           Back
         </Button>
-        <Button color="primary" variant="contained" onClick={() => {}}>
+        <Button color="primary" variant="contained" onClick={resendCode} disabled={formik.isSubmitting}>
           Resend Code
         </Button>
         <Button color="primary" variant="contained" type="submit" disabled={formik.isSubmitting}>
           Submit
         </Button>
-
       </Box>
     </Box>
     </form>
   )
 }
 
+interface PassedChallengeComponentProps {}
+
+function PassedChallengeComponent(props: PassedChallengeComponentProps): React.ReactElement {
+  return (
+    <Box display={'flex'} flexDirection={'column'} gap={4}>
+      <Typography>Successfully verified account</Typography>
+      <Button href={'portal'}>Continue</Button>
+    </Box>
+    )
+}
+
 interface VerificationComponentProps {
   flow?: IOryVerificationFlow
 }
 
-export function VerificationComponent(props: VerificationComponentProps): React.ReactElement {
-  const [flow, setFlow] = useState<IOryVerificationFlow | undefined>(props.flow)
-  const [content, setContent] = useState<React.ReactElement>()
 
+export function VerificationComponent(props: VerificationComponentProps): React.ReactElement {
   const searchParams = useSearchParams()
+  const pathname = usePathname()
   const flowId = searchParams.get('flow')
+  const [flow, setFlow] = useState<IOryVerificationFlow | undefined>(props.flow)
+  
+  const [content, setContent] = useState<React.ReactElement>(<CircularProgress style={{alignSelf: 'center'}}/>)
+  const router = useRouter()
+  const studyContext = useContext(ProtocolContext)
 
   useEffect(() => {
-    if (flow == undefined) {
-      if (flowId == null) {
-        fetch(withBasePath('/api/ory/verification/browser')).then(
-          (response) => {
-            if (response.ok) {
-              response.json().then(
-                (data) => {
-                  setFlow(data as IOryVerificationFlow)
-                }
-              )
-            }
-          }
-        )
-      } else {
-        fetch(withBasePath(`/api/ory/verification/flows?flow=${flowId}`)).then(
-          (response) => {
-            if (response.ok) {
-              response.json().then(
-                (data) => {
-                  setFlow(data as IOryVerificationFlow)
-                }
-              )
-            }
-          }
-        )
-      }
-    }
+    // if (flow == undefined) {
+    //   console.log('flow undefined')
+    //   if (flowId == null) {
+    //     fetch(withBasePath('/api/ory/verification/browser')).then(
+    //       (response) => {
+    //         if (response.ok) {
+    //           response.json().then(
+    //             (data) => {
+    //               setFlow(data as IOryVerificationFlow)
+    //             }
+    //           )
+    //         }
+    //       }
+    //     )
+    //   } else {
+    //     fetch(withBasePath(`/api/ory/verification/flows?flow=${flowId}`)).then(
+    //       (response) => {
+    //         if (response.ok) {
+    //           response.json().then(
+    //             (data) => {
+    //               setFlow(data as IOryVerificationFlow)
+    //               router.replace(pathname)
+    //             }
+    //           )
+    //         }
+    //       }
+    //     )
+    //   }
+    // }
 
   if (flow) {
+    window.history.replaceState(null, '', withBasePath(pathname + '?flow=' + flow.id))
     switch (flow.state) {
       case 'choose_method':
-        setContent(<CircularProgress />)
+        setContent(<CircularProgress style={{alignSelf: 'center'}}/>)
         break
       case 'sent_email':
         setContent(<EmailSentComponent flow={flow} setFlow={setFlow} />)
+        break
+      case 'passed_challenge':
+        if (studyContext) {
+          router.replace(`/${studyContext.studyId}/portal`)
+          router.refresh()
+        } else {
+          router.push('/')
+          router.refresh()
+        }
+        setContent(<PassedChallengeComponent />)
         break
       default:
         setContent(<CircularProgress style={{alignSelf: 'center'}}/>)
         break
     }
   }
-  }, [flow, flowId])
+  }, [flow])
 
   return (
     <RadarCard>

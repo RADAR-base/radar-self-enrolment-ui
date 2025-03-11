@@ -19,7 +19,7 @@ export class LocalPageRepository implements PageRepository {
     return pages.map(filePathToParams)
   }
 
-  async getPage(studyId: string, route: string[]): Promise<WebsitePageContent> {
+  async getPage(studyId: string, route: string[]): Promise<WebsitePageContent | undefined> {
     var pageContent: WebsitePageContent
     const fn = '/public/study/' + studyId + '/pages/' + route.join('/') + '.json'
     try {
@@ -29,7 +29,7 @@ export class LocalPageRepository implements PageRepository {
     } catch (err) {
       console.log(err)
     }
-    throw new Error('Can not load ' + route)
+    return undefined
   }
 
   async getLandingPage(studyId: string): Promise<WebsitePageContent> {
