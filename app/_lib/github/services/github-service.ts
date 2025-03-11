@@ -169,15 +169,9 @@ export class GithubService {
   async initiateFetch(
     projectId: string,
     fileNameSubset: string,
-    version: string,
   ): Promise<string | undefined> {
     await this.getDefinitionUriMap(projectId, fileNameSubset, "json")
-    const fileName = this.buildDefinitionFileName(
-      projectId,
-      fileNameSubset,
-      version,
-      "json",
-    )
+    const fileName = `${fileNameSubset}.json`
 
     const definitionFileUrl: string | undefined =
       await this.getDefinitionFileUrl(fileName)
@@ -201,8 +195,6 @@ export class GithubService {
       .filter(
         (node: TreeNode) =>
           node.path.includes(projectName) &&
-          node.path.includes(definitionsFor) &&
-          node.path.includes(version) &&
           node.path.endsWith(".json"),
       )
       .reduce((map: Map<string, string>, node: TreeNode) => {

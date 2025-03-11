@@ -1,29 +1,20 @@
 import { GithubService } from "@/app/_lib/github/services/github-service"
 import { StudyProtocol } from "../index"
 import { StudyProtocolRepository } from "./interface"
+import { REMOTE_DEFINITIONS_CONFIG } from "@/app/_lib/github/config/github-config"
 
 export class GitHubProtocolRepository implements StudyProtocolRepository {
     private githubService: GithubService
-    private projectName: string
 
-    constructor(projectName: string) {
+    constructor() {
         this.githubService = new GithubService()
-        this.projectName = projectName
     }
 
     async getStudyProtocol(studyId: string): Promise<StudyProtocol> {
         try {
-            // Build the file name for the protocol based on studyId
-            const fileName = `protocol.json`
-            const protocolFileUrl = await this.githubService.getDefinitionFileUrl(fileName)
-
-            if (protocolFileUrl) {
-                // Fetch the protocol content from GitHub
-                const protocolContentJson = await this.githubService.fetchGithubContent(protocolFileUrl, true)
-                return JSON.parse(protocolContentJson) as StudyProtocol
-            }
-
-            throw new Error(`Cannot load study protocol for studyId: ${studyId}`)
+            const fileName = REMOTE_DEFINITIONS_CONFIG.PROTOCOL_DEFINITION_FILE_NAME_CONTENT
+            const landingPageContentJson = await this.githubService.initiateFetch(studyId, fileName)
+            return JSON.parse(landingPageContentJson!!) as StudyProtocol
         } catch (error) {
             console.error(`Error fetching study protocol for studyId ${studyId}:`, error)
             throw error
@@ -33,7 +24,7 @@ export class GitHubProtocolRepository implements StudyProtocolRepository {
     async getStudies(): Promise<string[]> {
         try {
             // Fetch the list of study directories from GitHub using the GithubService
-            const studyUriMap = await this.githubService.getDefinitionUriMap(this.projectName, "study", "json")
+            const studyUriMap = await this.githubService.getDefinitionUriMap("projects", "json")
 
             // Return the study IDs (keys in the map)
             return Array.from(studyUriMap.keys())
