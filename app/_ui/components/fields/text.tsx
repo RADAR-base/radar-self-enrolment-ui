@@ -18,8 +18,7 @@ export function ArmtTextField({label, description, errorText, type, ...props}: A
   const labelComponent = label ? <Box paddingRight={1} style={{'background': 'white'}}>{label}</Box> : null
   const mt = (((props.title != undefined ) || (description != undefined)) && (label == undefined)) ? 2 : 0
   return (
-    <FormControl>
-      <Box display={"flex"} flexDirection={"column"} textAlign={"left"} marginTop={1}>
+      <Box display={"flex"} flexDirection={"column"} textAlign={"left"} >
         {props.title && <Typography variant="h4" component={'span'}>{props.title}</Typography>}
         <Typography variant="body1" fontStyle={'italic'}>{description}</Typography>
         <TextField
@@ -38,6 +37,5 @@ export function ArmtTextField({label, description, errorText, type, ...props}: A
           variant={props.multiline ? "outlined" : "standard"}
         />
       </Box>
-    </FormControl>
   )
 }

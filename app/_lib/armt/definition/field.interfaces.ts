@@ -9,7 +9,7 @@ interface IItem {
 
 export interface IDateItem extends IItem {
   fieldType: "date",
-  views?: string[]
+  views?: ("year" | "month" | "day")[]
 }
 
 export interface IYesNoItem extends IItem {
@@ -20,11 +20,6 @@ export interface ITextItem extends IItem {
   fieldType: "text",
   type?: string
   multiline?: boolean
-}
-
-export interface ITextItem extends IItem {
-  fieldType: "text",
-  type?: string
 }
 
 export interface ISignatureItem extends IItem {

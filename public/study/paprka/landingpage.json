@@ -16,7 +16,7 @@
                   "src": "/file_example_MP4_480_1_5MG.mp4",
                   "type": "video/mp4",
                   "width": "100%",
-                  "params": {"controls": true, "muted": true, "autoPlay": true}
+                  "params": {"controls": true, "muted": false, "autoPlay": false, "playsInline": true}
                 }
               }
             }
@@ -26,7 +26,7 @@
             "noCard": true,
             "title": "Who Can Take Part?", 
             "blockBackground": "white",
-            "content": "People living with knee osteoarthritis who had a total or partial knee replacement by the NHS or a private healthcare provider:\n- between January 2017 and December 2023 \n- are over 18 years old and live in England, Wales, Northern Ireland, Isle of Man or Guernsey.\n<br />\n\nPeople must have used a smartphone or fitness tracker to track their activity between June 2016 and December 2024. \n<br />\n\nThe device they used can be: iPhone, Fitbit, Apple Watch, Garmin and Oura Ring.\n<br />\n\nPeople who can read and understand English or have support from someone who can.\n<br />\n\nPeople must be willing to give us permission to access their physical activity data and the information held about their knee replacement surgery in the National Joint Registry.\n<br />\n<button variant='contained' href='study/paprka/resources/paprka_protocol.pdf'>Eligibility Full Document</button>"
+            "content": "People living with knee osteoarthritis who had a total or partial knee replacement by the NHS or a private healthcare provider:\n- between January 2017 and December 2023 \n- are over 18 years old and live in England, Wales, Northern Ireland, Isle of Man or Guernsey.\n<br />\n\nPeople must have used a smartphone or fitness tracker to track their activity before and after the knee replacement surgery.\n<br />\n\nThe device they used can be: iPhone, Fitbit, Apple Watch, Garmin and Oura Ring.\n<br />\n\nPeople who can read and understand English or have support from someone who can.\n<br />\n\nPeople must be willing to give us permission to access their physical activity data and the information held about their knee replacement surgery in the National Joint Registry.\n<br />\nAs a thank you for taking part, you can opt into the study’s prize draw when you fill in our consent form. This will give you a chance to win one of ten £25 Amazon gift cards.\n"
           },
           {
             "blockType": "column",
@@ -49,7 +49,7 @@
             "noCard": true,
             "title": "More Information", 
             "blockBackground": "white",
-            "content": "We understand that you may have questions about our research, what your involvement may be, how your data will be used, who has access to your data, how we will keep your data safe, and much more. We created our Participant Information Sheet to provide you with these answers.\n\nIf you have any further questions, please contact us using the details below.\n<br />\n<button variant='contained' href='study/paprka/resources/paprka_pis.pdf'>Participant Information Sheet</button>"
+            "content": "We understand that you may have questions about our research, what your involvement may be, how your data will be used, who has access to your data, how we will keep your data safe, and much more. We created our Participant Information Sheet to provide you with these answers.\n<br />\n<button variant='contained' href='study/paprka/resources/paprka_pis.pdf'>Participant Information Sheet</button>\n<br /><br /> \nIf you have any further questions, please contact us using the details below.\n"
           },
           {
             "blockType": "carousel",
@@ -61,6 +61,21 @@
               {"imgSrc": "/study/paprka/resources/profiles_sabine.png", "title": "Sabine Van der veer", "content": "Senior Lecturer in Health Informatics"},
               {"imgSrc": "/study/paprka/resources/profiles_david_wong.png", "title": "David Wong", "content": "A/Prof Health Informatics and Health Data Science"},
               {"imgSrc": "/study/paprka/resources/profiles_shuai.png", "title": "Shuai Shao", "content": "Research Associate"}
+            ]
+          },
+          {
+            "blockType": "accordion",
+            "noCard": true,
+            "title": "Frequently Asked Questions",
+            "items": [
+              {
+                "title": "Question 1 ...",
+                "content": "Answer to a frequently asked question"
+              },
+              {
+                "title": "Question 2 ...",
+                "content": "Answer to a frequently asked question"
+              }
             ]
           }
     ]

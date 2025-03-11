@@ -6,7 +6,6 @@ import { cookies } from "next/headers"
 import { OrySession } from "@/app/_lib/auth/ory/types"
 import { redirect } from "next/navigation"
 
-
 async function getUserSession() {
   const userResponse = await whoAmI()
 
@@ -17,10 +16,13 @@ async function getUserSession() {
 
 }
 
+
 export default async function Page({
+  params,
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+  params: Promise<{}>
+  searchParams: Promise<{ flow?: string, code?: string, flowId?: string }>
 }) {
   const userSession: OrySession | undefined = await getUserSession()
   if (userSession == undefined) {
@@ -29,12 +31,12 @@ export default async function Page({
 
   const cookieJar = cookies()
   const csrfToken = cookieJar.getAll().find((c) => c.name.startsWith('csrf_token_'))
-  const flowId = (await searchParams).flowId
-
+  const sp = await searchParams
+  const flowId = sp.flowId ?? sp.flow
   if (userSession.identity.traits.projects.length > 0) {
     let redirectUri = `/${userSession.identity.traits.projects[0].id}/verification`
     if (flowId) {
-      redirectUri = redirectUri + '?flow=' + flowId
+      redirect(`${redirectUri}?flow=${flowId}`)
     }
     redirect(redirectUri)
   }

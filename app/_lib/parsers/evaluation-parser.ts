@@ -35,27 +35,27 @@ interface Answers {
  */
 export function parseAndEvalLogic(logic: string, answers: Answers): boolean {
     const parser = new Parser();
+    // logic = logic.replace(/[\[\]]/g, '')
+    //     .replace(/\(([^()]+)\)/g, '[$1]')
+    //     .replace(/ or /g, ' || ')
+    //     .replace(/ and /g, ' && ')
+    //     .replace(/ = /g, ' == ');
 
-    logic = logic.replace(/[\[\]]/g, '')
-        .replace(/\(([^()]+)\)/g, '[$1]')
-        .replace(/ or /g, ' || ')
-        .replace(/ and /g, ' && ')
-        .replace(/ = /g, ' == ');
+    // logic = logic.replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\b/g, (match) => {
+    //     const value = answers[match];
+    //     // Return the JSON representation of the value if found, otherwise return the original match
+    //     return value !== undefined ? JSON.stringify(value) : match;
+    // });
 
-    logic = logic.replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\b/g, (match) => {
-        const value = answers[match];
-        // Return the JSON representation of the value if found, otherwise return the original match
-        return value !== undefined ? JSON.stringify(value) : match;
-    });
+    // console.log("Started evaluating 2: ", logic);
 
-    console.log("Started evaluating 2: ", logic);
-
-    const caseReplacement = logic.replace(/lower\[['"]([^'"]+)['"]]/gi, (_, s) => {
-        return `'${s.toLowerCase()}'`;
-    })
-        .replace(/upper\[['"]([^'"]+)['"]]/gi, (_, s) => {
-            return `'${s.toUpperCase()}'`;
-        });
-
-    return parser.parse(caseReplacement).eval();
+    // const caseReplacement = logic.replace(/lower\[['"]([^'"]+)['"]]/gi, (_, s) => {
+    //     return `'${s.toLowerCase()}'`;
+    // })
+    //     .replace(/upper\[['"]([^'"]+)['"]]/gi, (_, s) => {
+    //         return `'${s.toUpperCase()}'`;
+    //     });
+    // const val = parser.parse(caseReplacement).eval();
+    let results = {results: answers}
+    return parser.parseAndEval(logic,results)
 }

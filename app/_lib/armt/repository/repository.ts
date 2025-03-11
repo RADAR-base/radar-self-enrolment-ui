@@ -7,6 +7,7 @@ import { promises as fs } from 'fs';
 
 
 export async function getDefinition(armtProtocol: ArmtProtocol) {
+  /* TODO: Use ArmtDefinition*/
   let items: ArmtItem[] = []
   let definition: ArmtDefinition
   switch (armtProtocol.metadata.type) {
@@ -25,7 +26,7 @@ export async function getDefinition(armtProtocol: ArmtProtocol) {
 
 export class ArmtDefinitionRepository implements StudyArmtRepository {
   studyProtocol: StudyProtocol;
-  armtProtocols: {[key: string]: ArmtProtocol} = {};
+  armtProtocols: {[key: string]: ArmtProtocol | undefined} = {};
 
   constructor(studyProtocol: StudyProtocol) {
     this.studyProtocol = studyProtocol
@@ -41,7 +42,12 @@ export class ArmtDefinitionRepository implements StudyArmtRepository {
   }
 
   async getDefinition(armtId: string): Promise<RadarRedcapDefinition | undefined> {
-    return getDefinition(this.armtProtocols[armtId])
+    if (armtId in this.armtProtocols) {
+      const armtProtocol = this.armtProtocols[armtId]
+      if (armtProtocol != undefined) {
+        return getDefinition(armtProtocol)
+      }
+    }
   }
 
 }

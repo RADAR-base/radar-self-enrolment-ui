@@ -71,7 +71,7 @@
   "enrolment": {
     "version": "0.1",
     "eligibility": {
-      "title": "Check Your Eligibility",
+      "title": "Who Can Take Part",
       "description": "We can only accept people onto our study if they answer Yes to the following questions.",
       "items": [
         {
@@ -87,18 +87,18 @@
         {
           "fieldType": "yesno",
           "id": "criteria3",
-          "description": "Did you use a smartphone app or fitness tracker to track your activity before your surgery? An iPhone automatically collects activity data."
+          "description": "Did you use a smartphone app or fitness tracker to track your activity six months before your surgery? An iPhone automatically collects activity data."
         },
         {
           "fieldType": "yesno",
           "id": "criteria4",
-          "description": "Did you use a smartphone app or fitness tracker to track your activity after your surgery? An iPhone automatically collects activity data."
+          "description": "Did you use a smartphone app or fitness tracker to track your activity one year after your surgery? An iPhone automatically collects activity data."
         }
       ]
     },
     "consent": {
       "title": "Consent",
-      "description": "Before you can take part in this study, we need your consent to access activity data from your iPhone, fitness tracker or smartphone app, and your National Join Registry knee replacement surgery record.\n<br />\nWe also need you to create an account, using an email and password, so you can log back into the PAPrKA research study portal. You may want to do this to update your personal information or if you decide to leave the study.\n<br />\nYour data will be managed by the PAPRKA research team and will not be shared with any other parties. You can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)",
+      "description": "Before you can take part in this study, we need your consent to access activity data from your iPhone, fitness tracker or smartphone app, and your National Joint Registry knee replacement surgery record.\n<br />\nWe also need you to create an account, using an email and password, so you can log back into the PAPrKA research study portal. You may want to do this to update your personal information or if you decide to leave the study.\n<br />\nYour data will be managed by the PAPRKA research team and will not be shared with any other parties. You can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095).\n",
       "requiredItems": [
         {
           "fieldType": "yesno",
@@ -187,21 +187,7 @@
           "field_name": "paprka_additional_heading",
           "form_name": "paprka_additional",
           "field_type": "descriptive",
-          "field_label": "You need an account to give us your information and connect your fitness tracker or smartphone app.\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
-        },
-        {
-          "field_name": "paprka_additional_first_name",
-          "form_name": "paprka_additional",
-          "field_type": "text",
-          "field_label": "First name",
-          "required_field": "true"
-        },
-        {
-          "field_name": "paprka_additional_last_name",
-          "form_name": "paprka_additional",
-          "field_type": "text",
-          "field_label": "Last name",
-          "required_field": "true"
+          "field_label": "You need an account to give us your information and connect your fitness tracker or smartphone app.\n<br />\nPlease fill out this information as accurately as possible so we can successfully link your activity data to your knee replacement data from the National Joint Registry. \n<br />\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
         },
         {
           "field_name": "paprka_surgery_satisfaction",
@@ -251,7 +237,7 @@
     },
     "account": {
       "title": "Register Account Continued",
-      "description": "You need an account to give us your information and connect your fitness tracker or smartphone app.\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
+      "description": "You need an account to give us your information and connect your fitness tracker or smartphone app.\n<br />\nPlease fill out this information as accurately as possible so we can successfully link your activity data to your knee replacement data from the National Joint Registry. \n<br />\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
     }
   },
   "studyUiConfig": {
@@ -281,7 +267,7 @@
         },
         "h4": {
           "fontSize": "1rem",
-          "fontWeight": "700"
+          "fontWeight": "600"
         },
         "button": {
           "textTransform": "none",
@@ -386,10 +372,6 @@
               "href": "/paprka/about"
             },
             {
-              "text": "Subscribe",
-              "href": "#"
-            },
-            {
               "text": "LinkedIn",
               "href": "https://www.linkedin.com/company/health-research-from-home"
             },
@@ -403,8 +385,8 @@
           "title": "Contact Us",
           "items": [
             {
-              "text": "hrfh@manchester.ac.uk",
-              "href": "mailto:hrfh@manchester.ac.uk"
+              "text": "paprka@manchester.ac.uk",
+              "href": "mailto:paprka@manchester.ac.uk"
             }
           ]
         },

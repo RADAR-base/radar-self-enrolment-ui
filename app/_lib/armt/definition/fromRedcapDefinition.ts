@@ -105,7 +105,7 @@ function FieldFromRedcap(field: RadarRedcapFieldDefinition): ArmtItem {
           title: field.section_header,
           description: field.field_note,
           label: field.field_label,
-          views: (field.select_choices_or_calculations ? field.select_choices_or_calculations.map((e) => e.code) : ['year', 'month', 'day'])
+          views: (field.select_choices_or_calculations ? field.select_choices_or_calculations.map((e) => e.code) : ['year', 'month', 'day']) as ('year' | 'month' | 'day')[]
         }
         validation = getTextSchema(field)
       } else {
@@ -138,7 +138,7 @@ function FieldFromRedcap(field: RadarRedcapFieldDefinition): ArmtItem {
   return {
     content: content,
     validation: validation,
-    branchingLogic: undefined
+    branchingLogic: field.evaluated_logic
   }
 }
 

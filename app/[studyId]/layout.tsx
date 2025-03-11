@@ -1,5 +1,5 @@
 import React from 'react';
-import { redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { Box, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 
 import NavBar from "@/app/_ui/components/navbar/navbar";
@@ -30,10 +30,9 @@ function makeRelativePaths(links: FooterItem[], studyId: string): FooterItem[] {
 }
 
 export async function generateMetadata({params}: {params: {studyId: string}}) {
-  var registery: StudyProtocolRepository = new ProtocolRepository()
-  var protocol: StudyProtocol;
-  protocol = await registery.getStudyProtocol(params.studyId)
-  if (protocol == undefined){ return }
+  const registery: StudyProtocolRepository = new ProtocolRepository()
+  const protocol = await registery.getStudyProtocol(params.studyId)
+  if (protocol == undefined) { return }
   return {
     title: protocol.name + ' Study',
     icons: [
@@ -48,17 +47,13 @@ export async function generateMetadata({params}: {params: {studyId: string}}) {
 export default async function StudyLayout({children, params}: Readonly<{children: React.ReactNode, params: {studyId: string}}>) {
   const cookieStore = cookies()
   const cookieChoice = cookieStore.get("cookieChoice")
-  var registery: StudyProtocolRepository = new ProtocolRepository()
-  var protocol: StudyProtocol
-  try {
-    protocol = await registery.getStudyProtocol(params.studyId)
-  } catch {
-    redirect('/')
+  const registery: StudyProtocolRepository = new ProtocolRepository()
+  const protocol = await registery.getStudyProtocol(params.studyId)
+  if (protocol == undefined) {
+    notFound()
   }
 
   const themeObject = protocol.studyUiConfig.materialTheme
-  
-
   const gaEnabled = (protocol.studyUiConfig.analytics?.gaId != undefined) && (cookieChoice != undefined) && (cookieChoice.value == "all")
 
   return (

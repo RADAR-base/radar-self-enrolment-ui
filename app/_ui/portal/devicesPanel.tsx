@@ -38,7 +38,7 @@ const TEMP_CONTENT: {[key: string]: any} = {
   },
 }
 
-const DEFAULT_DEVICES = ['fitbit', 'apple_health', 'garmin', 'oura']
+const DEFAULT_DEVICES = ['radar_armt']
 
 export function DevicesPanel() {
   const [submitting, setSubmitting] = useState<boolean>(false)

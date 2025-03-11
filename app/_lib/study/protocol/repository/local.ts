@@ -4,7 +4,7 @@ import { promises as fs } from 'fs';
 
 export class LocalProtocolRepository implements StudyProtocolRepository {
 
-  async getStudyProtocol(studyId: string): Promise<StudyProtocol> {
+  async getStudyProtocol(studyId: string): Promise<StudyProtocol | undefined> {
     var protocol: StudyProtocol
     try {
       const file = await fs.readFile(process.cwd() + '/public/study/' + studyId + '/protocol.json', 'utf-8')
@@ -13,7 +13,6 @@ export class LocalProtocolRepository implements StudyProtocolRepository {
     } catch (err) {
       console.log(err)
     }
-    throw new Error('Can not load study protocol for studyId: ' + studyId)
   }
   async getStudies(): Promise<string[]> {
     return await (fs.readdir(process.cwd() + '/public/study/').then(l => l.filter(item => !/(^|\/)\.[^/.]/g.test(item))))
