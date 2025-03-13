@@ -199,7 +199,7 @@ export class GithubService {
       )
       .reduce((map: Map<string, string>, node: TreeNode) => {
         const fileName = node.path.split("/").pop()
-        if (fileName) {
+        if (fileName && node.url) {
           map.set(fileName, node.url)
         }
         return map
