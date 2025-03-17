@@ -125,22 +125,123 @@ export function HealthKitPage() {
           <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
             {armtAuthUrl && <QRCodeSVG value={armtAuthUrl} size={200} />}
             <NextButton href={`/connect/armt?return_to=/${pathname}`}>Generate QR Code</NextButton>
-            <Button></Button>
           </Box>
         </Grid>
+
+
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 5: Complete the Apple Health task</Typography>
+          <Typography variant="h3">Step 5: Continue through the setup</Typography>
+          <Typography variant="body1">Continue to click through the setup steps</Typography>
+        </Grid>
+        <Grid size={{xs: 12, sm: 6}}>
+        <Image 
+            src={withBasePath('/radar/app/app_setup_registration.png')}
+            width={280}
+            height={500}
+            alt='An image showing the RADAR App registration step'
+            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
+          />
+        </Grid>
+
+        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
+          <Typography variant="h3"></Typography>
           <Typography variant="body1"></Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
-          Image
+        <Image 
+            src={withBasePath('/radar/app/app_setup_complete.png')}
+            width={280}
+            height={500}
+            alt='An image showing the RADAR App setup complete step'
+            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
+          />
         </Grid>
+
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 6: Done</Typography>
+          <Typography variant="h3">Step 6: Press the Start button</Typography>
+          <Typography variant="body1"></Typography>
+        </Grid>
+        <Grid size={{xs: 12, sm: 6}}>
+        <Image 
+            src={withBasePath('/radar/app/app_homepage.png')}
+            width={230}
+            height={500}
+            alt='An image showing the RADAR App homepage'
+            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
+          />
+        </Grid>
+
+        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
+          <Typography variant="h3">Step 7: Allow Health Access</Typography>
+          <Typography variant="body1"></Typography>
+        </Grid>
+        <Grid size={{xs: 12, sm: 6}}>
+        <Image 
+            src={withBasePath('/radar/app/app_healthkit_scopes_unselected.png')}
+            width={230}
+            height={500}
+            alt='An image showing the RADAR App homepage'
+            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
+          />
+        </Grid>
+
+        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
+          <Typography variant="h3"></Typography>
+          <Typography variant="body1"></Typography>
+        </Grid>
+        <Grid size={{xs: 12, sm: 6}}>
+        <Image 
+            src={withBasePath('/radar/app/app_healthkit_scopes.png')}
+            width={230}
+            height={500}
+            alt='An image showing the RADAR App homepage'
+            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
+          />
+        </Grid>
+
+        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
+          <Typography variant="h3">Step 8: Press Start</Typography>
+          <Typography variant="body1">Press the Start button to begin sharing your data</Typography>
+        </Grid>
+        <Grid size={{xs: 12, sm: 6}}>
+        <Image 
+            src={withBasePath('/radar/app/app_healthkit_start.png')}
+            width={230}
+            height={500}
+            alt='An image showing the RADAR App homepage'
+            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
+          />
+        </Grid>
+
+        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
+          <Typography variant="h3">Step 9: Press Finish</Typography>
+          <Typography variant="body1">Press the Finish button in the bottom right of your screen</Typography>
+        </Grid>
+        <Grid size={{xs: 12, sm: 6}}>
+        <Image 
+            src={withBasePath('/radar/app/app_healthkit_collection.png')}
+            width={230}
+            height={500}
+            alt='An image showing the RADAR App homepage'
+            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
+          />
+        </Grid>
+
+        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
+          <Typography variant="h3">Step 10: Done</Typography>
           <Typography variant="body1">Once the app has finished, you can continue with this website's tasks. Press the following 'Finish' button to continue</Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
-          <Button variant={'contained'} fullWidth sx={{maxWidth: 200}} onClick={() => router.push('./')}>
+        <Image 
+            src={withBasePath('/radar/app/app_healthkit_finished.png')}
+            width={230}
+            height={500}
+            alt='An image showing the RADAR App homepage'
+            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
+          />
+        </Grid>
+        <Grid size={{xs: 12, sm: 12}}>
+          <Button variant={'contained'} fullWidth style={{maxWidth: 200}} onClick={() => router.push(`/${studyId}/portal/connect?success=apple_health`)}>
             Finish
           </Button>
         </Grid>

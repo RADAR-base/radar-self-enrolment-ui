@@ -54,6 +54,36 @@ export function OuraPage() {
         <Grid size={{xs: 12, sm: 6}}>
           <Button href={linkUrl} variant="contained" disabled={linkUrl == undefined}>Link Oura</Button>
         </Grid>
+
+
+        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
+          <Typography variant="h3">Step 2: Log in</Typography>
+          <Typography variant="body1">If you are not already logged in to your Oura account, you will be redirected to a sign in page. Please log in with your Oura account.</Typography>
+        </Grid>
+        <Grid size={{xs: 12, sm: 6}}>
+          <Image 
+              src={withBasePath('/devices/oura/oura_login.png')}
+              width={240}
+              height={320}
+              alt='An image showing the Oura login page'
+              style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
+            />
+        </Grid>
+
+        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
+          <Typography variant="h3">Step 3: Select the data you want to share</Typography>
+          <Typography variant="body1">You will be presented with a list of data to share. We would like you to select all to be able to complete the study.</Typography>
+        </Grid>
+        <Grid size={{xs: 12, sm: 6}}>
+          <Image 
+              src={withBasePath('/devices/oura/oura_scopes.png')}
+              width={224}
+              height={400}
+              alt='An image showing the Oura OAuth Scope page'
+              style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
+            />
+        </Grid>
+
       </Grid>
     </RadarCard>
   </Container>
