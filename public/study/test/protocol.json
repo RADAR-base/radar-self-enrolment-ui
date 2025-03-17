@@ -1,0 +1,107 @@
+{
+    "name": "Test study",
+    "studyId": "test",
+    "onboarding": {
+        "metadata": {},
+        "steps": []
+    },
+    "enrolment": {
+        "studyInformation": {
+            "title": "Study Info",
+            "content": "## Hello World\n### h3\n#### h4\n##### subtitle1\n###### subtitle2\n\n---\n\nAn example link [Duck Duck Go](https://duckduckgo.com).\n\n![A wiki image](https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png)\n\nA list:\n- One\n- Two\n- Three\n\n<br />\n<button name=\"button\" href=\"https://google.com\" variant=\"contained\" fullWidth>Click me</button>\n\n<br /><br />\n<iframe width=\"100%\" height=\"500\" src=\"http://www.youtube.com/embed/N4xV2RIlMi4?rel=0&amp;controls=0&amp;showinfo=0\" frameborder=\"1\"></iframe>\n"
+        },
+        "eligibility": {
+            "title": "Eligibility Crit",
+            "items": [
+                {
+                    "fieldType": "yesno",
+                    "id": "criteria1",
+                    "label": "Eligibility item 1",
+                    "description": "Eligibility item description",
+                    "errorText": "This study requires such and such"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "criteria2",
+                    "label": "Eligibility item 2",
+                    "description": "Eligibility item description"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "criteria3",
+                    "label": "Eligibility item 3",
+                    "description": "Eligibility item description"
+                  }
+            ]
+        },
+        "consent": {
+            "title": "Consent Content",
+            "requiredItems": [
+                {
+                    "fieldType": "yesno",
+                    "id": "required1",
+                    "label": "Eligibility item 1",
+                    "description": "Eligibility item description"
+                  },
+                  {
+                    "fieldType": "yesno",
+                    "id": "required2",
+                    "label": "Eligibility item 1",
+                    "description": "Eligibility item description"
+                  }
+            ],
+            "optionalItems": [
+                {
+                    "fieldType": "yesno",
+                    "id": "optional1",
+                    "label": "Optional  1",
+                    "description": "Eligibility item description"
+                  }
+            ]
+        },
+        "additional": {
+            "title": "Additional..."
+        },
+        "account": {
+            "title": "Create Account"
+        }
+    },
+    "protocols": [],
+    "studyUiConfig": {
+        "materialTheme": {},
+        "studyIconSrc": "https://avatars.githubusercontent.com/u/22225205",
+        "navbarLinks": [
+            {"text": "RADAR", "href": "/"},
+            {"text": "Home", "href": "/study/test"},
+            {"text": "Enrol", "href": "/study/test/enrol"},
+            {"text": "Portal", "href": "/study/test/portal"}
+          ],
+        "footer": {
+            "columns": [
+                {
+                    "title": "Study Links",
+                    "items": [
+                        {"text": "Home", "href": "#"},
+                        {"text": "RADAR", "href": "/"}
+                    ]
+                },
+                {
+                    "title": "Contact Us",
+                    "items": [
+                        {"text": "test@hrfh.com", "href": "mailto:test@hrfh.com"},
+                        {"text": "01000000000"}
+                    ]
+                },
+                {
+                    "title": "Legal Links",
+                    "items": [
+                        {"text": "Privacy Policy", "href": "privacy"},
+                        {"text": "Cookie Policy", "href": "cookies"}
+                    ]
+                }
+            ],
+            "copyrightText": "© 2024 RADAR"
+
+        }
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "blocks": [
+          {
+            "blockType": "markdown",
+            "noCard": true,
+            "blockBackground": "white",
+            "content": "# PAPrKA Project: How active are people after Knee Replacement surgery?"
+          },
+          {
+            "blockType": "markdown",
+            "noCard": false,
+            "title": "What is the research about?", 
+            "content": "Knee Osteoarthritis (OA) is a disease of the knee joint that causes it to lose function and work less well. It affects around 250 million in the world and around 1 in 5 people over the age of 50 in the UK.\n<br />\nPeople living with this disease tell us that it causes a lot of pain and affects how well they can walk. Having a knee replacement can help with these problems.\n<br />\nPeople having surgery want to know how long their recovery will take and when their mobility will improve.\n<br />\nThe Physical Activity Patterns after Knee Arthroplasty (PAPrKA) study, led by the University of Manchester, will answer those questions using the information and data people will share with us from their smartphones and wearable fitness devices.\n<br />\nWe want to:\n- Understand how people with knee osteoarthritis recover and get back to physical activity.\n- Understand the reasons why some people recover better than others.\n- Link the information that people share with us from their smartphones and wearables with their NHS records. This will lead to a better understanding of people’s symptoms and experiences.\n- Share our experiences on working with people and the data they share for research.\n"
+          },
+          {
+            "blockType": "markdown",
+            "title": "Who can take part in the PAPrKA research?", 
+            "content": "People living with knee osteoarthritis who had a full, or part knee replacement:\n- between January 2017 and December 2023\n- are over 18 years old and live in England, Wales, Northern Ireland, Isle of Man or Guernsey.\n\n<br /> \nPeople also have to have used a smartphone or wearable device to track their activity and steps before their knee replacement and after their surgery. The device they used can be:\n- a smart phone application (which can be any of the following: Google Fit, Strava or Apple health)\n- a wearable (which can be any of the following: Fitbit, Apple watch, Polar, Garmin, or Oura)\n\n<br />\nPeople who can read and understand English or have support from someone who can.\n<br />\nPeople must be willing to give us permission to look at their physical activity data and the information held about their knee replacement surgery in the National Joint Registry."
+          },
+          {
+            "blockType": "markdown",
+            "title": "Who is running this study?", 
+            "content": "The PAPrKA research study is run by [Health Research from Home](https://sites.manchester.ac.uk/health-research-from-home/) which is led by the University of Manchester.\nHealth Research from Home received funding from the UK Research and Innovation Medical Research Council (UKRI MRC) to carry out our important work. Our partnership will run until December 2026.\n"
+          }
+    ]
+}

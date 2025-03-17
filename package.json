@@ -1,0 +1,48 @@
+{
+  "name": "radar-webportal",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.13.1",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@fontsource/roboto": "^5.1.1",
+    "@mui/icons-material": "^6.0.2",
+    "@mui/material": "^6.0.2",
+    "@mui/material-nextjs": "^6.0.2",
+    "@mui/x-date-pickers": "^7.19.0",
+    "@next/third-parties": "^15.0.3",
+    "dayjs": "^1.11.13",
+    "formik": "^2.4.6",
+    "glob": "^11.0.0",
+    "jwt-decode": "^4.0.0",
+    "morph-expressions": "^1.1.1",
+    "mui-markdown": "^1.2.2",
+    "next": "^14.2.5",
+    "qrcode.react": "^4.2.0",
+    "react": "^18",
+    "react-device-detect": "^2.2.3",
+    "react-dom": "^18",
+    "react-signature-canvas": "^1.0.6",
+    "react-signature-pad-wrapper": "^4.0.4",
+    "sharp": "^0.33.5",
+    "swiper": "^11.1.15",
+    "yup": "^1.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/react-signature-canvas": "^1.0.6",
+    "@types/react-slick": "^0.23.13",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5",
+    "typescript": "^5"
+  }
+}

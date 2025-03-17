@@ -1,0 +1,31 @@
+[
+    {
+        "field_name": "paprka_nhs_heading",
+        "form_name": "paprka_nhs",
+        "section_header": "",
+        "field_type": "descriptive",
+        "field_label": "##NHS Number\n\nYour NHS number is unique to you. It helps healthcare staff and service providers identify you correctly and match your details to your health records. Your NHS number is a 10 digit number, like 485 777 3456.\n\n\nWe need your NHS number to access your NHS record. You can find this number by:\n- Using NHS Find Your NHS Number webpage - https://www.nhs.uk/nhs-services/online-services/find-nhs-number/\n- You can find your NHS number in any documents or letters sent to you by the NHS, such as your prescriptions, test results, hospital referral letters or appointment letters.\n- You can find it by logging in to the NHS App (you'll need to register if you have not used it before) or some GP online services.\n- You can also call your GP surgery and ask them for your NHS number.\n\n<br />\nYou can find out more information about the way we use personal information and the rights individuals have to control and manage their data by reading our privacy policy.\n",
+        "select_choices_or_calculations": [],
+        "field_note": "",
+        "text_validation_type_or_show_slider_number": "",
+        "text_validation_min": "",
+        "text_validation_max": "",
+        "identifier": "",
+        "branching_logic": "",
+        "required_field": "",
+        "custom_alignment": "",
+        "question_number": "",
+        "matrix_group_name": "",
+        "matrix_ranking": "",
+        "field_annotation": "",
+        "evaluated_logic": ""
+    },
+    {
+        "field_name": "paprka_nhs_number",
+        "form_name": "paprka_nhs",
+        "field_type": "text",
+        "field_label": "NHS Number",
+        "required_field": "true",
+        "text_validation_type_or_show_slider_number": "nhs_number"
+    }
+]

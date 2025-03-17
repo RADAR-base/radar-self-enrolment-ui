@@ -1,0 +1,240 @@
+[
+    {
+        "field_name": "paprka_surgery_heading",
+        "form_name": "paprka_surgery",
+        "field_type": "descriptive",
+        "section_header": "",
+        "field_label": "##Tell us about your surgery\n\nInformation about your surgery is vital to us understanding how people recover from a knee replacement.\nYou can find out more information about the way we use personal information and the rights individuals have to control and manage their data by reading our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
+    },
+    {
+        "field_name": "paprka_surgery_date",
+        "form_name": "paprka_surgery",
+        "section_header": "",
+        "field_type": "text",
+        "field_label": "Most Recent Surgery",
+        "select_choices_or_calculations": [
+            {
+                "code": "year",
+                "label": ""
+            },
+            {
+                "code": "month",
+                "label": ""
+            }
+        ],
+        "field_note": "",
+        "text_validation_type_or_show_slider_number": "datetime_dmy",
+        "text_validation_min": "01/01/2016",
+        "text_validation_max": "01/01/2024",
+        "identifier": "",
+        "branching_logic": "",
+        "required_field": "true",
+        "custom_alignment": "",
+        "question_number": "",
+        "matrix_group_name": "",
+        "matrix_ranking": "",
+        "field_annotation": "",
+        "evaluated_logic": ""
+    },
+    {
+        "field_name": "paprka_surgery_side",
+        "form_name": "paprka_surgery",
+        "section_header": "What side knee was the surgery performed on?",
+        "field_type": "dropdown",
+        "field_label": "",
+        "select_choices_or_calculations": [
+            {
+                "code": "left",
+                "label": "Left"
+            },
+            {
+                "code": "right",
+                "label": "Right"
+            }
+        ],
+        "required_field": "true"
+    },
+    {
+        "field_name": "paprka_surgery_text1",
+        "form_name": "paprka_surgery",
+        "field_type": "descriptive",
+        "field_label": "We would like to ask about your current satisfaction level with the knee replacement surgery you had, either total or partial.  If you have had more than one knee replacement between 2016 and 2022, please complete these questions with respect to the more recent knee replacement in that time period."
+    },
+    {
+        "field_name": "paprka_surgery_satisfaction",
+        "form_name": "paprka_surgery",
+        "section_header": "How satisfied are you with the results of your surgery?",
+        "field_type": "dropdown",
+        "field_label": "",
+        "select_choices_or_calculations": [
+            {
+                "code": "0",
+                "label": "Very satisfied"
+            },
+            {
+                "code": "1",
+                "label": "Somewhat satisfied"
+            },
+            {
+                "code": "2",
+                "label": "Somewhat dissatisfied"
+            },
+            {
+                "code": "3",
+                "label": "Very dissatisfied"
+            }
+        ],
+        "required_field": "true"
+    },
+    {
+        "field_name": "paprka_surgery_text2",
+        "form_name": "paprka_surgery",
+        "field_type": "descriptive",
+        "field_label": "This part is intended to gather additional information that will assist in gaining a better understanding of patterns of physical activity in different people.\n"
+    },
+    {
+        "field_name": "paprka_surgery_education",
+        "form_name": "paprka_surgery",
+        "section_header": "What is your highest level of education?",
+        "field_type": "dropdown",
+        "field_label": "",
+        "select_choices_or_calculations": [
+            {
+                "code": "0",
+                "label": "No formal qualifications"
+            },
+            {
+                "code": "1",
+                "label": "1-4 GCSE passes (grade A* to C or grade 4 and above) and any other GCSEs at other grades, or equivalent qualifications"
+            },
+            {
+                "code": "2",
+                "label": "5 or more GCSE passes (grade A* to C or grade 4 and above) or equivalent qualifications"
+            },
+            {
+                "code": "3",
+                "label": "Apprenticeships"
+            },
+            {
+                "code": "4",
+                "label": "2 or more A Levels or equivalent qualifications"
+            },
+            {
+                "code": "5",
+                "label": "Higher National Certificate (HNC), Higher National Diploma (HND), Bachelor's degree, or post-graduate qualifications"
+            },
+            {
+                "code": "6",
+                "label": "Other qualifications, of unknown level"
+            }
+        ],
+        "field_note": "We ask for this because it will help us understand the association between people’s physical activity and education.",
+        "text_validation_type_or_show_slider_number": "",
+        "text_validation_min": "",
+        "text_validation_max": "",
+        "identifier": "",
+        "branching_logic": "",
+        "required_field": "true",
+        "custom_alignment": "",
+        "question_number": "",
+        "matrix_group_name": "",
+        "matrix_ranking": "",
+        "field_annotation": "",
+        "evaluated_logic": ""
+    },
+    {
+        "field_name": "paprka_surgery_work",
+        "form_name": "paprka_surgery",
+        "section_header": "What is your current work status?",
+        "field_type": "dropdown",
+        "field_label": "",
+        "select_choices_or_calculations": [
+            {
+                "code": "0",
+                "label": "Working full-time"
+            },
+            {
+                "code": "1",
+                "label": "Working part-time (less than 25 hours per week)"
+            },
+            {
+                "code": "2",
+                "label": "Retired"
+            },
+            {
+                "code": "3",
+                "label": "Out of work because of the knee osteoarthritis."
+            },
+            {
+                "code": "4",
+                "label": "Out of work but not because of the knee osteoarthritis"
+            },
+            {
+                "code": "5",
+                "label": "Other"
+            }
+        ],
+        "field_note": "We ask for this because it will help us understand the association between people’s physical activity and work.",
+        "text_validation_type_or_show_slider_number": "",
+        "text_validation_min": "",
+        "text_validation_max": "",
+        "identifier": "",
+        "branching_logic": "",
+        "required_field": "true",
+        "custom_alignment": "",
+        "question_number": "",
+        "matrix_group_name": "",
+        "matrix_ranking": "",
+        "field_annotation": "",
+        "evaluated_logic": ""
+    },
+    {
+        "field_name": "paprka_surgery_has_second_surgery",
+        "form_name": "paprka_surgery",
+        "section_header": "Have you had a second knee surgery?",
+        "field_type": "yesno",
+        "required_field": "true"
+    },
+    {
+        "field_name": "paprka_surgery_date_2",
+        "form_name": "paprka_surgery",
+        "section_header": "Second Surgery Date",
+        "field_type": "text",
+        "field_label": "",
+        "select_choices_or_calculations": [
+            {
+                "code": "year",
+                "label": ""
+            },
+            {
+                "code": "month",
+                "label": ""
+            }
+        ],
+        "field_note": "",
+        "text_validation_type_or_show_slider_number": "datetime_dmy",
+        "text_validation_min": "01/01/2016",
+        "text_validation_max": "01/01/2024",
+        "required_field": "",
+        "evaluated_logic": "results['paprka_surgery_has_second_surgery'] == true"
+    },
+    {
+        "field_name": "paprka_surgery_side_2",
+        "form_name": "paprka_surgery",
+        "section_header": "What side knee was the surgery performed on?",
+        "field_type": "dropdown",
+        "field_label": "",
+        "select_choices_or_calculations": [
+            {
+                "code": "left",
+                "label": "Left"
+            },
+            {
+                "code": "right",
+                "label": "Right"
+            }
+        ],
+        "evaluated_logic": "results['paprka_surgery_has_second_surgery'] == true"
+
+    }
+]
