@@ -3,16 +3,12 @@ import { Button, Container, Typography } from "@mui/material"
 import Grid from '@mui/material/Grid2';
 import React, { useContext, useEffect, useState } from "react";
 import { withBasePath } from "@/app/_lib/util/links";
-import { useRouter, useSearchParams } from "next/navigation";
 import { RadarCard } from "../base/card";
 import Image from 'next/image'
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
-import { ParticipantContext } from "@/app/_lib/auth/provider.client";
 
 export function FitbitPage() {
   const protocol = useContext(ProtocolContext);
-  const participant = useContext(ParticipantContext);
-  const router = useRouter()
   const [linkUrl, setLinkUrl] = useState<string | undefined>(undefined)
   const redirect_uri = encodeURIComponent(`/${protocol.studyId}/portal/connect?success=fitbit`)
 
@@ -61,21 +57,21 @@ export function FitbitPage() {
               src={withBasePath('/devices/fitbit/fitbit_login.png')}
               width={240}
               height={400}
-              alt='A placeholder image which should show the opening screen of the RADAR app'
+              alt='An image showing the Fitbit login page'
               style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
             />
         </Grid>
 
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 3: Select the data you want to share</Typography>
-          <Typography variant="body1">So that we can learn as much as possible, we would appreciate it if you were able to allow all of the requested data.</Typography>
+          <Typography variant="body1">You will be presented with a list of data to share. We would like you to select all to be able to complete the study.</Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Image 
               src={withBasePath('/devices/fitbit/fitbit_scopes.png')}
-              width={320}
-              height={400}
-              alt='A placeholder image which should show the opening screen of the RADAR app'
+              width={316}
+              height={320}
+              alt='An image showing the Fitbit OAuth scopes page'
               style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
             />
         </Grid>

@@ -45,6 +45,10 @@ export function DevicesPanel() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const deviceConnected = searchParams.get('success')
+  let deviceConnectedName: string = ""
+  if (deviceConnected) {
+    deviceConnectedName = TEMP_CONTENT[deviceConnected].title ?? deviceConnected
+  }
   const protocol = useContext(ProtocolContext)
   const projectId = protocol.studyId
   const devices = ((protocol.protocols
@@ -68,10 +72,10 @@ export function DevicesPanel() {
     }
     setSubmitting(false)
   }
-
+  
   return (
   <Container maxWidth="lg" disableGutters>
-  {(deviceConnected != undefined) ? <DeviceConnectedBanner device={deviceConnected} onFinish={onSubmit}></DeviceConnectedBanner> : null}
+  {(deviceConnected != undefined) ? <DeviceConnectedBanner device={deviceConnectedName} onFinish={onSubmit} /> : null}
   <Grid container spacing={2} gridAutoColumns={'3lf'} gridAutoFlow={"column"}>
     <Grid size={12}>
       <RadarCard>

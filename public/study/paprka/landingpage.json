@@ -47,6 +47,13 @@
           {
             "blockType": "markdown",
             "noCard": true,
+            "title": "How to Join the Study: A Step-by-Step Guide", 
+            "blockBackground": "white",
+            "content": "Our simple guide walks you through everything you need to do to join the PAPrKA study. In this document, you'll find clear instructions on how to confirm if you can take part, register your account, provide the necessary information, and connect your fitness tracker data. Follow these steps to help us uncover vital insights into recovery and mobility after knee replacement surgery.\n<br /><button variant='contained' href='study/paprka/resources/landingpage/participant_user_guide.docx'>Step-by-Step Guide</button>\n"
+          },
+          {
+            "blockType": "markdown",
+            "noCard": true,
             "title": "More Information", 
             "blockBackground": "white",
             "content": "We understand that you may have questions about our research, what your involvement may be, how your data will be used, who has access to your data, how we will keep your data safe, and much more. We created our Participant Information Sheet to provide you with these answers.\n<br />\n<button variant='contained' href='study/paprka/resources/paprka_pis.pdf'>Participant Information Sheet</button>\n<br /><br /> \nIf you have any further questions, please contact us using the details at the end of this page.\n"
