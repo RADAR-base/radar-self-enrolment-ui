@@ -1,13 +1,6 @@
 import PageRepository from "@/app/_lib/study/siteContent/repository";
 import { BlockPage } from "@/app/_ui/components/blocks/blockPage";
 
-// export const dynamicParams = true
-
-// export async function generateStaticParams() {
-//   const registery = new ProtocolRepository()
-//   return await (registery.getStudies().then(studies => studies.map((id) => {studyId: id})))
-// }
-
 export default async function Page({ params }: { params: { studyId: string } }) {
   
   var pageRegistry: PageRepository = new PageRepository()
