@@ -5,7 +5,7 @@ import { EnrolmentContent } from '@/app/_ui/enrolment/enrolment.component';
 import { Box, Container } from '@mui/material';
 
 import Auth from '@/app/_lib/auth'
-import { redirect, usePathname } from 'next/navigation'
+import { notFound, redirect, usePathname } from 'next/navigation'
 import { withBasePath } from '@/app/_lib/util/links';
 
 export default async function Page({ params }: { params: { studyId: string } }) {
@@ -14,6 +14,9 @@ export default async function Page({ params }: { params: { studyId: string } }) 
   if (loggedIn) {redirect(withBasePath('portal'))}
   var registery: StudyProtocolRepository = new StudyProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)
+  if (protocol == undefined) {
+    notFound()
+  }
   return (
     <main>
       <Box sx={{ flexGrow: 1, margin: {xs: 0, sm: 2}}} 

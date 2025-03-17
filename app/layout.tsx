@@ -9,17 +9,11 @@ import ParticipantProvider, { Participant } from "./_lib/auth/provider.client";
 import { whoAmI } from "./_lib/auth/ory/kratos";
 import { cookies } from "next/headers";
 import { GetCSRF } from "./_ui/auth/getCSRF";
-import { Montserrat, Roboto } from "next/font/google";
+import { Montserrat } from "next/font/google";
 
 const msrt_font = Montserrat({
   subsets: ['latin'],
   variable: '--font-montserrat'
-})
-
-const roboto_font = Roboto({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-roboto'
 })
 
 
@@ -61,7 +55,7 @@ export default async function RootLayout({
     <html lang="en">
       {/* <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /> */}
       <meta name="viewport" content="initial-scale=1, width=device-width" />
-      <body className={[msrt_font.variable, roboto_font.variable].join(' ')}>
+      <body className={[msrt_font.variable].join(' ')}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={defaultTheme}>
           <CssBaseline />

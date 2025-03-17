@@ -7,47 +7,59 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { RadarCard } from "../base/card";
 import {QRCodeSVG} from 'qrcode.react'
 import Image from 'next/image'
-import { getAccessTokenFromCode, getAuthLink } from "@/app/_lib/radar/questionnaire_app/service";
 import NextButton from "../base/nextButton";
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
+import { getAuthLink } from "@/app/_lib/connect/armt/authLink";
+import { isMobile, isTablet } from 'react-device-detect';
+
+function MobileContent({armtAuthUrl}: {armtAuthUrl: string}) {
+  return <React.Fragment>
+    <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
+      <Typography variant="h3">Using your phone now?</Typography>
+      <Typography variant="body1">Once the RADAR app is installed, if you are using the same phone to view this website, press the following button to enter the app now and skip to Step 5</Typography>
+    </Grid>
+    <Grid size={{xs: 12, sm: 6}}>
+      <Button href={armtAuthUrl} variant={"contained"}>Open Study App</Button>
+    </Grid>
+  </React.Fragment>
+}
+
 
 export function HealthKitPage() {
   const protocol = useContext(ProtocolContext);
-
   const studyId = protocol.studyId
   const router = useRouter()
   const pathname = usePathname()
   const code = useSearchParams().get('code')
   const [isFetchingToken, setIsFetchingToken] = useState(false)
-  const [tokenHandled, setTokenHandled] = useState<boolean>(false)
-  const [qrCode, setQrCode] = useState<any>(undefined)
+  const [armtAuthUrl, setArmtAuthUrl] = useState<any>(undefined)
 
-
-  if ((code == undefined) && (qrCode == undefined) && (isFetchingToken == false)) {
-    window.location.replace(withBasePath(`/connect/armt?return_to=/${studyId}/portal/connect/apple_health`))
+  if ((code == undefined) && (armtAuthUrl == undefined) && (isFetchingToken == false)) {
+    router.replace(`/connect/armt?return_to=/${studyId}/portal/connect/apple_health`)
   }
   
   useEffect(() => {
     const handleToken = async () => {
-      if (isFetchingToken || tokenHandled) return
-      if (code) {
-        setIsFetchingToken(true)
-        const tokenResponse = await getAccessTokenFromCode(code)
-        if (tokenResponse?.access_token && tokenResponse?.expires_in) {
-          tokenResponse['iat'] =  Math.floor(Date.now() / 1000)
+      if (isFetchingToken || (armtAuthUrl != undefined) || (code == undefined)) return
+      setIsFetchingToken(true)
+      const tokenResponse = await fetch(withBasePath('/api/connect/armt/token?code=' + code))
+      if (tokenResponse.ok) {
+        let token = await tokenResponse.json()
+        if (token?.access_token && token?.expires_in) {
+          token['iat'] =  Math.floor(Date.now() / 1000)
           const shortToken = { 
-            iat: tokenResponse.iat, 
-            expires_in: tokenResponse.expires_in, 
-            refresh_token: tokenResponse.refresh_token, 
-            scope: tokenResponse.scope, 
-            token_type: tokenResponse.token_type 
+            iat: token.iat, 
+            expires_in: token.expires_in, 
+            refresh_token: token.refresh_token, 
+            scope: token.scope, 
+            token_type: token.token_type 
           }
-          const url = await getAuthLink(shortToken, studyId)
-          setQrCode(url)
-          setTokenHandled(true)
-          router.replace(pathname)
+          const url = await getAuthLink(shortToken)
+          setArmtAuthUrl(url)
         }
       }
+      // setIsFetchingToken(false)
+      router.replace(pathname)
     }
     handleToken()
   }, [code, isFetchingToken])
@@ -60,8 +72,7 @@ export function HealthKitPage() {
           <div>
             <Typography variant="h2">Connect to Apple Health</Typography>
             <Typography variant="body1">
-              {"Apple Health is the app which collects all Apple devices use to organise your health and fitness data. All your Apple Watch and iPhone data relating to health is stored there. That information can only be accessed from apps installed on an iOS device. Please follow the steps below to link your Apple Health data to our study.\n\nIt is also possible to connect other, non-Apple, devices to Apple Health. If you have already done so, you can share that data with us by following the same steps below.\n"
-              }
+              {"Apple Health is the app which collects all Apple devices use to organise your health and fitness data. All your Apple Watch and iPhone data relating to health is stored there. That information can only be accessed from apps installed on an iOS device. Please follow the steps below to link your Apple Health data to our study.\n\nIt is also possible to connect other, non-Apple, devices to Apple Health. If you have already done so, you can share that data with us by following the same steps below.\n"}
             </Typography>
           </div>
         </Grid>
@@ -77,9 +88,9 @@ export function HealthKitPage() {
             width={200}
             alt={"Download the RADAR App on the App Store"}
             /> 
-          </a>   
-      
+          </a>
         </Grid>
+        {(isMobile || isTablet) && <MobileContent armtAuthUrl={armtAuthUrl} />}
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 2: Open the app</Typography>
           <Typography variant="body1">Once the app is opened, you will see the following screen. Press the 'Start' button.</Typography>
@@ -112,37 +123,28 @@ export function HealthKitPage() {
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
-            {qrCode && <QRCodeSVG value={qrCode} size={200} />}
-            <NextButton href={`/connect/armt?return_to=/${studyId}/portal/connect/apple_health`}>Generate QR Code</NextButton>
+            {armtAuthUrl && <QRCodeSVG value={armtAuthUrl} size={200} />}
+            <NextButton href={`/connect/armt?return_to=/${pathname}`}>Generate QR Code</NextButton>
+            <Button></Button>
           </Box>
         </Grid>
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 5: Log in</Typography>
-          <Typography variant="body1">Enter the account details you created for this study to log in to the app</Typography>
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-          Image
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 6: Complete the Apple Health task</Typography>
+          <Typography variant="h3">Step 5: Complete the Apple Health task</Typography>
           <Typography variant="body1"></Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           Image
         </Grid>
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 7: Done</Typography>
+          <Typography variant="h3">Step 6: Done</Typography>
           <Typography variant="body1">Once the app has finished, you can continue with this website's tasks. Press the following 'Finish' button to continue</Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
-          <Button variant={'contained'} fullWidth sx={{maxWidth: 200}}
-            onClick={() => router.push('./')}
-          >
+          <Button variant={'contained'} fullWidth sx={{maxWidth: 200}} onClick={() => router.push('./')}>
             Finish
           </Button>
         </Grid>
       </Grid>
-      
     </RadarCard>
   </Container>
   )

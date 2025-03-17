@@ -4,9 +4,7 @@ import { Box, Button, IconButton, Link, Menu, MenuItem, Typography } from '@mui/
 import { withBasePath } from '@/app/_lib/util/links'
 import { ProtocolContext } from '@/app/_lib/study/protocol/provider.client'
 import { ParticipantContext } from '@/app/_lib/auth/provider.client'
-import { AccountCircleOutlined, AccountCircleRounded } from '@mui/icons-material'
-import NextLink from 'next/link'
-import NextButton from '../base/nextButton'
+import { AccountCircleRounded } from '@mui/icons-material'
 import { useRouter } from 'next/navigation'
 
 interface LoggedInButtonsProps {

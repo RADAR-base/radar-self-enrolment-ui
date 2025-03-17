@@ -9,15 +9,20 @@ import { YesNoField } from "../fields/yesno";
 import { ArmtDateField } from "../fields/date";
 import { ArmtDropdownField } from "../fields/dropdown";
 import { ArmtSliderField } from "../fields/slider";
+import { parseAndEvalLogic } from "@/app/_lib/parsers/evaluation-parser";
 
 interface ArmtFieldProps {
   item: ArmtItem
   value: any
   setFieldValue: (id: string, value: any) => void
   errorText?: string
+  showItem?: boolean
 }
 
-export function ArmtField({ item, value, setFieldValue, errorText }: ArmtFieldProps): React.ReactNode {
+export function ArmtField({ item, value, setFieldValue, errorText, showItem }: ArmtFieldProps): React.ReactNode {
+  if (showItem == false) {
+    return <></>
+  }
   switch(item.content.fieldType) {
     case "descriptive": {
       return <ArmtDescriptiveField {...item.content} />
@@ -29,7 +34,7 @@ export function ArmtField({ item, value, setFieldValue, errorText }: ArmtFieldPr
       return <ArmtTextField {...item.content} value={value} setFieldValue={setFieldValue}  errorText={errorText} />
     }
     case "yesno": {
-      return <YesNoField {...item.content} value={value} />
+      return <YesNoField {...item.content} value={value}  setFieldValue={setFieldValue}/>
     }
     case "date": {
       return <ArmtDateField {...item.content} value={value} setFieldValue={setFieldValue}  errorText={errorText} />
@@ -58,11 +63,17 @@ export function ArmtForm({ title, definition, values, setFieldValue, errors }: A
       {definition.items.map(
         (item) => {
           let errorText = errors ? errors[item.content.id] : undefined
+          let showItem: boolean = true;
+          if (item.branchingLogic) {
+            showItem = parseAndEvalLogic(item.branchingLogic, values)
+          }
           return (<ArmtField item={item} 
                               setFieldValue={setFieldValue}
                               value={values[item.content.id]}
                               key={item.content.id}
-                              errorText={errorText} />)
+                              errorText={errorText} 
+                              showItem={showItem}
+                              />)
         })
       }
     </Box>

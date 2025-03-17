@@ -11,7 +11,7 @@ export interface IMarkdownBlock {
 
 export function MarkdownBlock({title, subtitle, content, ...props}: IMarkdownBlock, ref: ForwardedRef<HTMLDivElement>) {
   return (
-      <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
+      <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1}>
         <Typography variant="h2">{title}</Typography>
         <Typography variant="subtitle1" sx={{whiteSpace: 'pre-wrap', wordBreak: 'break-word'}}>{subtitle}</Typography>
         <MarkdownContainer>{content}</MarkdownContainer>       

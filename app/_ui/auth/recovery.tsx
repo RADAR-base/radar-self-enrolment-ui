@@ -172,8 +172,6 @@ export function RecoveryComponent(props: RecoveryComponentProps): React.ReactEle
   const [content, setContent] = useState<React.ReactElement>(<EnterEmailRecoveryComponent flow={flow} setFlow={setFlow} email={email} setEmail={setEmail} />)
   const flowId = searchParams.get('flow')
 
-  console.log(flow)
-
   useEffect(() => {
     if (flow == undefined) {
       if (flowId == null) {
