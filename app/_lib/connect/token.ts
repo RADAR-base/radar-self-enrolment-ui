@@ -16,15 +16,17 @@ export default async function getAccessToken(
   const bodyParams = new URLSearchParams({
     grant_type: GRANT_TYPE,
     code,
-    redirect_uri: redirectUri,
-    client_id: clientId,
-    client_secret: clientSecret,
+    redirect_uri: redirectUri
   })
 
   try {
+    const auth = Buffer.from(`${clientId}:${clientSecret}`).toString("base64")
     const response = await fetch(`${AUTH_BASE_URL}/token`, {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": `Basic ${auth}`
+      },
       body: bodyParams,
     })
 
