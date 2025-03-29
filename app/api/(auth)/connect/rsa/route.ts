@@ -29,7 +29,6 @@ async function makeRestSourceUser(
         startDate: new Date().toISOString(),
       }),
     })
-
     if (!response.ok) {
       const data = await response.json()
       if (response.status === 409 && data.user) {
