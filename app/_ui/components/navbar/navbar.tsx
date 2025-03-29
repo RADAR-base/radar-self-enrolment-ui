@@ -108,7 +108,6 @@ function NavBar(props: NavBarProps) {
   const study = useContext(ProtocolContext)
   const router = useRouter()
   const onLogoClick = () => {
-    console.log('hi')
     router.push(`/${study.studyId}`)
   }
   return (

@@ -28,7 +28,6 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
     initialValues: {},
     validationSchema: schema,
     onSubmit: async (values) => {
-      console.log(values)
       let resp = await fetch(
         withBasePath('/api/study/' + studyId + '/tasks/' + taskId),
         {
