@@ -98,7 +98,7 @@
     },
     "consent": {
       "title": "Consent",
-      "description": "Before you can take part in this study, we need you to consent to take part. Please read carefully the consent statements and click Yes or No for each statement. ",
+      "description": "_Before you can take part in this study, we need your consent. Please read carefully the consent statements and click Yes or No for each statement._\n<br />\nYou will need to scroll down to sign the consent form.",
       "requiredItems": [
         {
           "fieldType": "yesno",
@@ -178,66 +178,11 @@
           "description": "I agree that the researchers may retain my contact details in order to provide me with a summary of the findings for this study.\n"
         }
       ],
-      "signatureDescription": "**Data Protection**\n\n**The personal information we collect and use to conduct this research will be processed in accordance with data protection law as explained in the Participant Information Sheet and the [Privacy Notice for Research Participants](https://documents.manchester.ac.uk/display.aspx?DocID=37095).**\n\nBy signing this consent form, I declare that I have provided accurate identity details (full name and electronic signature).\n"
-    },
-    "additional": {
-      "title": "Register Account",
-      "items": [
-        {
-          "field_name": "paprka_additional_heading",
-          "form_name": "paprka_additional",
-          "field_type": "descriptive",
-          "field_label": "You need an account to give us your information and connect your fitness tracker or smartphone app.\n<br />\nPlease fill out this information as accurately as possible so we can successfully link your activity data to your knee replacement data from the National Joint Registry. \n<br />\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
-        },
-        {
-          "field_name": "paprka_surgery_satisfaction",
-          "form_name": "paprka_surgery",
-          "section_header": "",
-          "field_type": "dropdown",
-          "field_label": "Gender",
-          "select_choices_or_calculations": [
-            {
-              "code": "0",
-              "label": "Male"
-            },
-            {
-              "code": "1",
-              "label": "Female"
-            },
-            {
-              "code": "2",
-              "label": "Non-binary / Trans / Other"
-            },
-            {
-              "code": "3",
-              "label": "Prefer not to say"
-            }
-          ],
-          "required_field": "true"
-        },
-        {
-          "field_name": "paprka_additional_dob",
-          "form_name": "paprka_additional",
-          "field_type": "text",
-          "field_label": "Date of Birth",
-          "text_validation_type_or_show_slider_number": "datetime_dmy",
-          "text_validation_min": "01/01/1900",
-          "text_validation_max": "01/01/2006",
-          "required_field": "true"
-        },
-        {
-          "field_name": "paprka_additional_postcode",
-          "form_name": "paprka_additional",
-          "field_type": "text",
-          "field_label": "Postcode",
-          "required_field": "true",
-          "text_validation_type_or_show_slider_number": "postcode"
-        }
-      ]
+      "signatureDescription": "Please draw or type your signature in the box below and press the Save button. \n\n_Please note, drawing or typing your signature is the same as signing a paper form with a pen._\n\n_Please check your responses carefully before you submit_\n"
     },
     "account": {
       "title": "Register Account Continued",
-      "description": "You need an account to give us your information and connect your fitness tracker or smartphone app.\n<br />\nPlease fill out this information as accurately as possible so we can successfully link your activity data to your knee replacement data from the National Joint Registry. \n<br />\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
+      "description": "**You need an account to join the PAPrKA study.**\n<br />\nSet up your account by providing an email address and creating a password. You will need to verify your account. **Do not forget to safely store your password.**\n<br />\nPlease note that if you have signed a consent form but choose not to register for an account, we cannot reach out to you."
     },
     "studyInformation": {
       "title": "",
