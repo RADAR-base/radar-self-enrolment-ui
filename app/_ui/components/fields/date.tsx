@@ -55,7 +55,7 @@ export function ArmtDateField({label, description, errorText, ...props}: ArmtDat
           onChange={(value, context) => {
             if (value) {
               try {
-              props.setFieldValue(props.id, value.format(valueFormat))
+                props.setFieldValue(props.id, value.format(valueFormat))
               } catch {
               }
             }

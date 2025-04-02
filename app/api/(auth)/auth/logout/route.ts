@@ -9,5 +9,10 @@ export async function GET(request: NextRequest) {
   if (!flowResponse.ok) { return flowResponse}
   const flow = (await flowResponse.json())
   cookieJar.delete('sep_access_token')
+  for (let c of cookieJar.getAll()) {
+    if (c.name.includes('hydra')) {
+      cookieJar.delete(c.name)
+    }
+  }
   return await updateLogoutFlow(flow['logout_token'])
 }
