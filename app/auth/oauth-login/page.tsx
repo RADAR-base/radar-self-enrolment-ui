@@ -8,6 +8,8 @@ import { withBasePath } from '@/app/_lib/util/links';
 import { getCsrfToken } from "@/app/_lib/auth/ory/util";
 import { LogoutButton } from "@/app/_ui/auth/logout";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import LoginComponent from "@/app/_ui/auth/login";
+import { RadarCard } from "@/app/_ui/components/base/card";
 
 interface LoginFormProps {
   flow?: any
@@ -140,7 +142,11 @@ function userIsParticipant(userSession: any): boolean {
 }
 
 function LoginCard(params: {children: React.ReactElement}) {
-  return <Card><Box display={'flex'} alignItems={'center'} justifyContent={'center'} width={300} height={350}>{params.children}</Box></Card>
+  return <RadarCard>
+          <Box padding={4} maxWidth={600} justifySelf={'center'} width='100%'>
+            {params.children}
+          </Box>
+        </RadarCard>
 }
 
 export default function Page() {
@@ -154,7 +160,7 @@ export default function Page() {
 
   const loginChallenge = searchParams.get('login_challenge') ?? undefined
   if (loginChallenge == undefined) {
-    window.location.replace(withBasePath('/auth/login'))
+    window?.location.replace(withBasePath('/auth/login'))
     return
   }
   let flowId = searchParams.get('flowId')
@@ -165,7 +171,17 @@ export default function Page() {
       if (flow == undefined) {
         createLoginFlow(loginChallenge ?? '', setFlow)
       } else {
-        setContent(<LoginCard><LoginForm flow={flow}></LoginForm></LoginCard>)
+        setContent(<LoginCard>
+          <LoginComponent flow={flow}
+              onLogin={(response?: Response) => {
+                response?.json().then(
+                  (data) => {
+                    router.replace(data['redirect_browser_to'])
+                  }
+                )
+              
+              }}/>  
+        </LoginCard>)
       }
     } else {
       if (userIsParticipant(userSession)) {
