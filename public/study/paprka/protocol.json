@@ -71,28 +71,28 @@
   "enrolment": {
     "version": "0.1",
     "eligibility": {
-      "title": "Who Can Take Part",
-      "description": "We can only accept people onto our study if they answer Yes to the following questions.",
+      "title": "Check You Can Take Part",
+      "description": "_You can join the study if you answer Yes to all **four questions**. Please scroll down to complete all four questions._\n<br />\n_If your answer is No to any of the questions, and you want to leave the page, click the exit button on your left._",
       "items": [
         {
           "fieldType": "yesno",
           "id": "criteria1",
-          "description": "Have you had total, or partial, knee replacement surgery, either through the NHS or a private healthcare provider, between January 2017 and December 2023?"
+          "description": "Have you had knee replacement (total, or partial), either through the NHS or a private healthcare provider, between 1st January 2017 and 31st December 2023?"
         },
         {
           "fieldType": "yesno",
           "id": "criteria2",
-          "description": "Are you over 18 years of age at the time of the surgery?"
+          "description": "Were you over 18 years of age at the time of your knee replacement?"
         },
         {
           "fieldType": "yesno",
           "id": "criteria3",
-          "description": "Did you use a smartphone app or fitness tracker to track your activity six months before your surgery? Click Yes, if you use an iPhone because it automatically collects activity data."
+          "description": "Did you use a Fitbit, iPhone, Apple Watch, Garmin or Oura Ring to track your activity six months or more before your knee replacement? _Click Yes, if you use an iPhone, it automatically collects physical activity data._"
         },
         {
           "fieldType": "yesno",
           "id": "criteria4",
-          "description": "Did you use a smartphone app or fitness tracker to track your activity one year after your surgery? Click Yes, if you use an iPhone because it automatically collects activity data."
+          "description": "Did you use a Fitbit, iPhone, Apple Watch, Garmin or Oura Ring to track your activity one year or more after your knee replacement? _Click Yes, if you use an iPhone, it automatically collects physical activity data._"
         }
       ]
     },
