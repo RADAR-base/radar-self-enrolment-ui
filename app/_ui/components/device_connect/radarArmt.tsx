@@ -37,7 +37,7 @@ export function ArmtPage() {
 
 
   if ((code == undefined) && (armtAuthUrl == undefined) && (isFetchingToken == false)) {
-    router.replace(`/connect/armt?return_to=/${studyId}/portal/connect/apple_health`)
+    router.replace(`/connect/armt?return_to=/${studyId}/portal/connect/radar_armt`)
   }
   
   useEffect(() => {
