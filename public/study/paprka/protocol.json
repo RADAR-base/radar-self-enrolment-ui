@@ -185,8 +185,8 @@
       "description": "**You need an account to join the PAPrKA study.**\n<br />\nSet up your account by providing an email address and creating a password. You will need to verify your account. **Do not forget to safely store your password.**\n<br />\nPlease note that if you have signed a consent form but choose not to register for an account, we cannot reach out to you."
     },
     "studyInformation": {
-      "title": "",
-      "content": "We understand that you may have questions about our research, what your involvement would be and much more. Please read carefully the Participant Information Sheet to find answers to these questions. If you have any questions about what you have read, please feel free to contact the team on <paprka@manchester.ac.uk> and &lt;&lt;teams account&gt;&gt;. In addition, you may wish to talk to a family member or friend about taking part in this study before you go on to sign the consent form.\n<br />\n<object style='min-height:100vh;width:100%' height='fit-content' type='application/pdf' data='/kratos-ui/study/paprka/resources/paprka_pis.pdf'><button variant='contained' href='/kratos-ui/study/paprka/resources/paprka_pis.pdf'>Participant Information Sheet</button></object>"
+      "title": "Study Information",
+      "content": "We understand that you may have questions about our research, what your involvement would be and much more. Please read carefully the Participant Information Sheet to find answers to these questions. If you have any questions about what you have read, please feel free to contact the team on <paprka@manchester.ac.uk> and __teams account__. In addition, you may wish to talk to a family member or friend about taking part in this study before you go on to sign the consent form.\n<br />\n<object style='min-height:100vh;width:100%' height='fit-content' type='application/pdf' data='/kratos-ui/study/paprka/resources/paprka_pis.pdf'></object><button variant='contained' target='_blank' href='/kratos-ui/study/paprka/resources/paprka_pis.pdf'>Download Participant Information</button>"
     }
   },
   "studyUiConfig": {
