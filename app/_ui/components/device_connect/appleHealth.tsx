@@ -25,7 +25,7 @@ const SCOPES = [
   'SOURCETYPE.UPDATE',
   'offline_access'
 ]
-const AUDIENCE = ['res_ManagementPortal', 'res_gateway', 'res_AppServer'].join('%20')
+const AUDIENCE = ['res_ManagementPortal', 'res_gateway', 'res_AppServer'].join(' ')
 
 const REDIRECT_URI = process.env.NEXT_PUBLIC_ARMT_REDIRECT_URI ?? ''
 
