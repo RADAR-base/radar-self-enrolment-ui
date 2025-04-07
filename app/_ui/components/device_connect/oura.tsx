@@ -1,5 +1,5 @@
 "use client"
-import { Button, Container, Typography } from "@mui/material"
+import { Button, Container, Link, Typography } from "@mui/material"
 import Grid from '@mui/material/Grid2';
 import React, { useContext, useEffect, useState } from "react";
 import { withBasePath } from "@/app/_lib/util/links";
@@ -39,20 +39,22 @@ export function OuraPage() {
       <Grid container spacing={2} padding={3} gap={2} rowGap={4}>
         <Grid size={12} textAlign={'left'}>
           <div>
-            <Typography variant="h2">Connect your Oura</Typography>
+            <Typography variant="h2">Connect your Oura Ring</Typography>
             <Typography variant="body1">
-              Please follow the below instructions to connect your Oura account and allow us to access your wearable data stored by Oura.
-              The first step will take you to Oura's website, so it may be useful to look through the steps before starting the process.
+              Please read the three steps before you connect your Oura Ring account. 
+            </Typography>
+            <Typography>
+              The first step will take you to Oura's website. For the second step you need to login to your Oura account. In the third step you will be asked to tick all the 3 boxes in the “Connect with Oura" screen.
             </Typography>
           </div>
         </Grid>
 
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 1: Click the "Link Oura" button</Typography>
-          <Typography variant="body1">This will redirect you away from this page to Oura's website. At the end of the process, you will return here.</Typography>
+          <Typography variant="body1">This will redirect you away from this page to Oura's website.</Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
-          <Button href={linkUrl} variant="contained" disabled={linkUrl == undefined}>Link Oura</Button>
+          <Button component={Link} href={linkUrl} variant="contained" target='_blank' disabled={linkUrl == undefined}>Link Oura</Button>
         </Grid>
 
 
@@ -72,7 +74,9 @@ export function OuraPage() {
 
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 3: Select the data you want to share</Typography>
-          <Typography variant="body1">You will be presented with a list of data to share. We would like you to select all to be able to complete the study.</Typography>
+          <Typography variant="body1" mt={2}>Once you have logged in to your Oura account you will see a screen called “Connect with Oura”.  Tick the 3 boxes, and then click “Accept” at the bottom to share your physical activity information with the study.</Typography>
+          <Typography variant="body1" fontStyle={'italic'} mt={2}>These 3 boxes capture your physical activity information such as time doing activities, distance travelled, step count, and heart rate which is needed for the study. Any information that we do not need such as sleep will be deleted at the end of the study.</Typography>
+          <Typography variant="body1" mt={2}>Once you have completed the 3 steps, you will receive a thank you message that will ask you if you want to link another device or if you are done. Click done, if you are not linking any other device.</Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Image 

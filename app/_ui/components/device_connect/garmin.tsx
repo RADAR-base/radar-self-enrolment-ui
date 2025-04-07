@@ -1,5 +1,5 @@
 "use client"
-import { Button, Container, Typography } from "@mui/material"
+import { Button, Container, Link, Typography } from "@mui/material"
 import Grid from '@mui/material/Grid2';
 import React, { useContext, useEffect, useState } from "react";
 import { withBasePath } from "@/app/_lib/util/links";
@@ -46,13 +46,11 @@ export function GarminPage() {
 
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 1: Click the "Link Garmin" button</Typography>
-          <Typography variant="body1">This will redirect you away from this page to Garmin's website. At the end of the process, you will return here.</Typography>
+          <Typography variant="body1">If you are not already logged in to your Garmin account, you will be redirected to a sign in page. Please log in with your Garmin account.</Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
-          <Button href={linkUrl} variant="contained" disabled={linkUrl == undefined}>Link Garmin</Button>
+          <Button component={Link} href={linkUrl} variant="contained" target='_blank' disabled={linkUrl == undefined}>Link Garmin</Button>
         </Grid>
-
-
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 2: Log in</Typography>
           <Typography variant="body1">If you are not already logged in to your Garmin account, you will be redirected to a sign in page. Please log in with your Garmin account.</Typography>
@@ -69,7 +67,9 @@ export function GarminPage() {
 
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 3: Select the data you want to share</Typography>
-          <Typography variant="body1">You will be presented with a list of data to share. We would like you to select all to be able to complete the study.</Typography>
+          <Typography variant="body1" mt={2}>Once you have logged in to your Garmin account you will see a screen called “Control the information you share”.  Click both buttons (Activities and Daily Health Stats), and then click “Save” at the bottom to share your physical activity information with the study.</Typography>
+          <Typography variant="body1" fontStyle={"italic"} mt={2}>These 2 boxes captures your physical activity information such as time doing activities, distance travelled, step count, and heart rate which is needed for the study. Any information that we do not need will be deleted at the end of the study</Typography>
+          <Typography variant="body1" mt={2}>Once you have completed the 3 steps, you will receive a thank you message that will ask you if you want to link another device or if you are done. Click done, if you are not linking any other device.</Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Image 
