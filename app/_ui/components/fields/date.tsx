@@ -37,7 +37,7 @@ export function ArmtDateField({label, description, errorText, ...props}: ArmtDat
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'en-gb'}>
       <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
         <Typography variant="h4" component={'span'}>{props.title}</Typography>
-        <Typography variant="body1" component={'span'}>{description}</Typography>
+        <Typography variant="body1" component={'span'} fontStyle={'italic'}>{description}</Typography>
         <DatePicker 
           sx={{
             pt: 1,

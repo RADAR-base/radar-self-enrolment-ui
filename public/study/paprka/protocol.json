@@ -21,7 +21,7 @@
       }
     },
     {
-      "id": "paprka_nhs",
+      "id": "paprka_about",
       "appearance": {},
       "schedule": {},
       "metadata": {
@@ -30,7 +30,7 @@
         "description": "4 quick questions.",
         "optional": false,
         "type": "redcap_local",
-        "path": "/public/study/paprka/resources/paprka_nhs.json"
+        "path": "/public/study/paprka/resources/paprka_about.json"
       }
     },
     {

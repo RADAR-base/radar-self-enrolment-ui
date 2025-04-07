@@ -4,12 +4,13 @@
         "form_name": "paprka_surgery",
         "field_type": "descriptive",
         "section_header": "",
-        "field_label": "##Tell us about your surgery\n\nInformation about your surgery is vital to us understanding how people recover from a knee replacement.\nYou can find out more information about the way we use personal information and the rights individuals have to control and manage their data by reading our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
+        "field_label": "##ABOUT MY KNEE REPLACEMENT\n\nThe following questions are about your knee replacement surgery. Answering them is important to our understanding of how people’s physical activity recovers after the surgery.\n*Please provide response that most accurately answer each question.*"
     },
     {
         "field_name": "paprka_surgery_date",
         "form_name": "paprka_surgery",
-        "section_header": "What is your most recent knee replacement surgery date?",
+        "section_header": "When was your most recent knee replacement surgery?",
+        "field_note": "Select the month and the year.",
         "field_type": "text",
         "field_label": "",
         "select_choices_or_calculations": [
@@ -22,7 +23,6 @@
                 "label": ""
             }
         ],
-        "field_note": "",
         "text_validation_type_or_show_slider_number": "datetime_dmy",
         "text_validation_min": "2017-01-01",
         "text_validation_max": "2023-12-31",
@@ -39,7 +39,7 @@
     {
         "field_name": "paprka_surgery_side",
         "form_name": "paprka_surgery",
-        "section_header": "What side of the knee was the surgery performed on? ",
+        "section_header": "Which knee was the knee replacement surgery performed on?",
         "field_type": "dropdown",
         "field_label": "",
         "select_choices_or_calculations": [
@@ -55,6 +55,13 @@
         "required_field": "true"
     },
     {
+        "field_name": "paprka_surgery_multiple_single_knee",
+        "form_name": "paprka_surgery",
+        "section_header": "Have you had more than one knee replacement surgery on this knee?",
+        "field_type": "yesno",
+        "required_field": "true"
+    },
+    {
         "field_name": "paprka_surgery_text1",
         "form_name": "paprka_surgery",
         "field_type": "descriptive",
@@ -63,7 +70,7 @@
     {
         "field_name": "paprka_surgery_satisfaction",
         "form_name": "paprka_surgery",
-        "section_header": "How satisfied are you with the results of your surgery?",
+        "section_header": "How satisfied are you with the results of your most recent knee replacement surgery?",
         "field_type": "dropdown",
         "field_label": "",
         "select_choices_or_calculations": [
@@ -89,14 +96,14 @@
     {
         "field_name": "paprka_surgery_has_second_surgery",
         "form_name": "paprka_surgery",
-        "section_header": "Have you had a knee replacement surgery on your other knee?",
+        "section_header": "Have you had a knee replacement surgery on your other (opposite) knee?",
         "field_type": "yesno",
         "required_field": "true"
     },
     {
         "field_name": "paprka_surgery_date_2",
         "form_name": "paprka_surgery",
-        "section_header": "What is the surgery date for the knee replacement on your other knee? ",
+        "section_header": "When was your knee replacement surgery on your other (opposite) knee?",
         "field_type": "text",
         "field_label": "",
         "select_choices_or_calculations": [
@@ -109,7 +116,7 @@
                 "label": ""
             }
         ],
-        "field_note": "",
+        "field_note": "Select the month and the year.",
         "text_validation_type_or_show_slider_number": "datetime_dmy",
         "text_validation_min": "2017-01-01",
         "text_validation_max": "2023-12-31",
@@ -120,7 +127,7 @@
         "field_name": "paprka_surgery_text2",
         "form_name": "paprka_surgery",
         "field_type": "descriptive",
-        "field_label": "## Tell us about your education and work status\nThis part is intended to gather additional information that will assist in gaining a better understanding of patterns of physical activity in different people.\n"
+        "field_label": "## Tell us about your education and work status\nAnswering the following questions will help us understand how different people recover from a knee replacement.\n"
     },
     {
         "field_name": "paprka_surgery_education",
@@ -130,31 +137,27 @@
         "field_label": "",
         "select_choices_or_calculations": [
             {
-                "code": "0",
-                "label": "No formal qualifications"
+                "code": "1_4_gcse",
+                "label": "1-4 GCSE/O’levels passes (grade A* to C or grade 4 and above) and any other GCSEs at other grades, or equivalent qualifications   "
             },
             {
-                "code": "1",
-                "label": "1-4 GCSE passes (grade A* to C or grade 4 and above) and any other GCSEs at other grades, or equivalent qualifications"
+                "code": "5p_gcse",
+                "label": "5 or more GCSE/O’levels passes (grade A* to C or grade 4 and above) or equivalent qualifications"
             },
             {
-                "code": "2",
-                "label": "5 or more GCSE passes (grade A* to C or grade 4 and above) or equivalent qualifications"
-            },
-            {
-                "code": "3",
+                "code": "apprenticeship",
                 "label": "Apprenticeships"
             },
             {
-                "code": "4",
+                "code": "2p_alevel",
                 "label": "2 or more A Levels or equivalent qualifications"
             },
             {
-                "code": "5",
+                "code": "hnc_hnd_bsc",
                 "label": "Higher National Certificate (HNC), Higher National Diploma (HND), Bachelor's degree, or post-graduate qualifications"
             },
             {
-                "code": "6",
+                "code": "other",
                 "label": "Other qualifications, of unknown level"
             }
         ],
@@ -180,28 +183,40 @@
         "field_label": "",
         "select_choices_or_calculations": [
             {
-                "code": "0",
+                "code": "ft",
                 "label": "Working full-time"
             },
             {
-                "code": "1",
+                "code": "pt",
                 "label": "Working part-time (less than 25 hours per week)"
             },
             {
-                "code": "2",
+                "code": "employed_sick",
+                "label": "Employed but currently on sick leave because of knee replacement"
+            },    
+            {
+                "code": "student",
+                "label": "Student"
+            },
+            {
+                "code": "retired",
                 "label": "Retired"
             },
             {
-                "code": "3",
+                "code": "oow_knee",
                 "label": "Out of work because of the knee osteoarthritis."
             },
             {
-                "code": "4",
+                "code": "oow_other",
                 "label": "Out of work but not because of the knee osteoarthritis"
             },
             {
-                "code": "5",
-                "label": "Other"
+                "code": "caring",
+                "label": "Caring responsibilities"
+            },
+            {
+                "code": "other",
+                "label": "Other (Please Specify)"
             }
         ],
         "field_note": "We ask for this because it will help us understand the association between people’s physical activity and work.",
@@ -217,5 +232,14 @@
         "matrix_ranking": "",
         "field_annotation": "",
         "evaluated_logic": ""
+    },
+    {
+        "field_name": "paprka_surgery_work_other",
+        "form_name": "paprka_surgery",
+        "field_type": "text",
+        "field_label": "Work Status (other)",
+        "required_field": "false",
+        "text_validation_type_or_show_slider_number": "",
+        "evaluated_logic": "results['paprka_surgery_work'] == 'other'"
     }
 ]
