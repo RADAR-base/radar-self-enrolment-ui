@@ -30,7 +30,7 @@ export default async function getAccessToken(
     "Content-Type": "application/x-www-form-urlencoded",
   }
 
-  if (clientId !== "aRMT") {
+  if (clientId !== ARMT_CLIENT_ID) {
     const auth = Buffer.from(`${clientId}:${clientSecret}`).toString("base64")
     headers["Authorization"] = `Basic ${auth}`
   }
