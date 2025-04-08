@@ -18,13 +18,8 @@ export default async function getAccessToken(
   const bodyParams = new URLSearchParams({
     grant_type: GRANT_TYPE,
     code,
-    redirect_uri: redirectUri,
-    client_id: clientId
+    redirect_uri: redirectUri
   })
-
-  if (clientId !== ARMT_CLIENT_ID) {
-    bodyParams.append("client_secret", clientSecret)
-  }
 
   const headers: Record<string, string> = {
     "Content-Type": "application/x-www-form-urlencoded",
