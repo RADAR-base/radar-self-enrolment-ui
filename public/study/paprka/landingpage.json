@@ -4,11 +4,11 @@
             "blockType": "column",
             "noCard": true,
             "blockBackground": "white",
-            "title": "",
+            "title": "PAPrKA: How Active are People After Knee Surgery?",
             "content": {
               "block1": {
                 "blockType": "markdown",
-                "content": "#PAPrKA: How Active are People After Knee Surgery?\n<br />\nThe Physical Activity Patterns after Knee Arthroplasty (PAPrKA) study will discover how long it takes to recover from knee surgery and how quickly people can expect to get their mobility back.\n<br />\nLed by the University of Manchester, we will ask people who have had surgery via the NHS or through a private healthcare provider, to share past data from their fitness tracker and smartphone applications and link it to their National Joint Registry record, so we can find answers to these questions.\n<br/>\n<button variant='contained' href='paprka/enrol'>**Join Study**</button>"
+                "content": "The **P**hysical **A**ctivity **P**atterns after **K**nee **A**rthroplasty (PAPrKA) study seeks to learn more about people's recovery after knee replacement. With your contribution, through our research we can help patients and doctors in future make better informed decisions about knee replacement surgery.\n<br />\nTo learn more about recovery after knee replacement, we will bring together with your consent 3 bits of information:\n\n<ol><li>Information you provide in a survey.</li><li>A one-time collection of your physical activity information from either iPhone, Fitbit, Apple Watch, Garmin or Oura Ring. Physical activity can include things such as gardening, walking to the shops, doing housework etc.</li><li>Access to your knee replacement surgery information (from the UK National Joint Registry, for the duration of the study).</li></ol>The University of Manchester is leading the PAPrKA research study in collaboration with King's College London and with support from the National Joint Registry. This website is hosted by King's College London on its secure health research platform called 'RADAR-base'.\n<br />\nThe PAPrKA study is part of the Health Research from Home (HRfH) programme, led by the University of Manchester: . The HRfH programme received funding from the UK Research and Innovation Medical Research Council (UKRI MRC) to carry out our important work."
               },
               "block2": {
                 "blockType": "video",
