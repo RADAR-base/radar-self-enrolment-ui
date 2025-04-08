@@ -246,7 +246,6 @@ function StepByStepContent(): React.ReactNode {
             width={230}
             height={500}
             alt='An image showing the RADAR App homepage'
-            alt='An image showing the RADAR App homepage'
             style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
           />
         </Grid>
