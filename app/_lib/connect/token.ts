@@ -28,6 +28,7 @@ export default async function getAccessToken(
   if (clientId !== ARMT_CLIENT_ID) {
     const auth = Buffer.from(`${clientId}:${clientSecret}`).toString("base64")
     headers["Authorization"] = `Basic ${auth}`
+    bodyParams.append('client_id', clientId)
   }
 
   try {
