@@ -80,7 +80,6 @@ export function GarminPage() {
               style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
             />
         </Grid>
-
       </Grid>
     </RadarCard>
   </Container>

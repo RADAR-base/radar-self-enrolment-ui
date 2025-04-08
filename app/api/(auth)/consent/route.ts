@@ -13,7 +13,9 @@ const extractSession = (identity: any, grantScope: string[]) => {
       sources: identity.metadata_public.sources,
       user_name: identity.metadata_public.mp_login,
     },
-    id_token: {},
+    id_token: {
+      email: identity.traits.email
+    },
   }
   return session
 }
@@ -37,19 +39,19 @@ function getConsentRequest(consentChallenge: string) {
 }
 
 export async function GET(
-  request: NextRequest, 
+  request: NextRequest,
   { params }: { params: Promise<{ consent_challenge: string }> }
 ) {
   const consentChallenge = request.nextUrl.searchParams.get('consent_challenge') ?? undefined
   if (consentChallenge == undefined) {
-    return NextResponse.json({'error': 'No consent_challenge param provided'}, {status: 401})
+    return NextResponse.json({ 'error': 'No consent_challenge param provided' }, { status: 401 })
   }
 
   return getConsentRequest(consentChallenge)
 }
 
 export async function POST(
-  request: NextRequest, 
+  request: NextRequest,
   { params }: { params: Promise<{ consent_challenge: string }> }
 ) {
   let oryUser: any
@@ -58,18 +60,18 @@ export async function POST(
   try {
     const resp = await whoAmI()
     if (resp.status != 200) {
-      return NextResponse.json({error: {type: 'authentication', content: {message: "No user session"}}}, {status: 403})
+      return NextResponse.json({ error: { type: 'authentication', content: { message: "No user session" } } }, { status: 403 })
     }
     oryUser = await resp.json()
     userId = getUserId(oryUser)
     identity = oryUser['identity']
   } catch {
-    return NextResponse.json({error: {type: 'authentication', content: {message: "Error decoding user session"}}}, {status: 403})
+    return NextResponse.json({ error: { type: 'authentication', content: { message: "Error decoding user session" } } }, { status: 403 })
   }
 
   const consentChallenge = request.nextUrl.searchParams.get('consent_challenge') ?? undefined
   if (consentChallenge == undefined) {
-    return NextResponse.json({'error': 'No consent_challenge param provided'}, {status: 401})
+    return NextResponse.json({ 'error': 'No consent_challenge param provided' }, { status: 401 })
   }
   const { consentAction, grantScope, remember } = await request.json()
 
@@ -80,7 +82,7 @@ export async function POST(
   const grant_access_token_audience = consentBody.requested_access_token_audience
 
   if (!consentChallenge || !consentAction) {
-    return NextResponse.json({error: 'Missing required parameters'}, {status: 401})
+    return NextResponse.json({ error: 'Missing required parameters' }, { status: 401 })
   }
 
   if (consentAction == "accept") {
@@ -95,7 +97,7 @@ export async function POST(
     }
     const acceptResponse = await fetch(url, {
       method: 'PUT',
-      headers: { 
+      headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',
       },

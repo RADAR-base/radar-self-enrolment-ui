@@ -25,7 +25,7 @@ const SCOPES = [
   'SOURCETYPE.UPDATE',
   'offline_access'
 ]
-const AUDIENCE = ['res_ManagementPortal', 'res_gateway', 'res_AppServer'].join('%20')
+const AUDIENCE = ['res_ManagementPortal', 'res_gateway', 'res_AppServer'].join(' ')
 
 const REDIRECT_URI = process.env.NEXT_PUBLIC_ARMT_REDIRECT_URI ?? ''
 
@@ -221,6 +221,7 @@ function StepByStepContent(): React.ReactNode {
           />
         </Grid>
 
+
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3"></Typography>
           <Typography variant="body1"></Typography>
@@ -245,9 +246,11 @@ function StepByStepContent(): React.ReactNode {
             width={230}
             height={500}
             alt='An image showing the RADAR App homepage'
+            alt='An image showing the RADAR App homepage'
             style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
           />
         </Grid>
+
 
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 7: Allow Health Access</Typography>

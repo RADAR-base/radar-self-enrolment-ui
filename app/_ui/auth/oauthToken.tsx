@@ -1,26 +1,37 @@
 "use client"
-import authRequestLink from "@/app/_lib/connect/authRequest"
 import { withBasePath } from "@/app/_lib/util/links"
 import { Box, CircularProgress } from "@mui/material"
 import { useState, useEffect } from "react"
-
 
 async function getAuthUrl(
   clientId: string,
   scopes: string[],
   audience: string,
-  redirectUri: string,
-) {
-  return authRequestLink({
-    audience: audience ?? 'res_restAuthorizer',
-    clientId: clientId ?? 'SEP',
-    scopes: scopes,
-    responseType: 'code',
-    redirectUri: redirectUri ?? window.location.href,
-    state: crypto.randomUUID()
-  })
-}
+  redirectUri: string
+): Promise<string> {
+  const state = crypto.randomUUID()
 
+  const params = new URLSearchParams({
+    clientId: clientId ?? 'SEP',
+    responseType: 'code',
+    audience: audience ?? 'res_restAuthorizer',
+    redirectUri: redirectUri ?? window.location.href,
+    state,
+  })
+
+  if (scopes?.length) {
+    params.append('scopes', scopes.join(','))
+  }
+
+  const res = await fetch(withBasePath(`/api/auth/request?${params.toString()}`))
+
+  if (!res.ok) {
+    throw new Error('Failed to get auth URL')
+  }
+
+  const data = await res.json()
+  return data.authUrl
+}
 
 async function getLoginChallenge(
   authUrl: string
