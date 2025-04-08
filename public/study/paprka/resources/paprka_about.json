@@ -3,7 +3,7 @@
       "field_name": "paprka_about_description",
       "form_name": "paprka_about",
       "field_type": "descriptive",
-      "field_label": "##About You\n*We ask for this information to help us find your record in the National Joint Registry.*\n*In addition, in our research we will use year of birth, sex, and information about the areas people live in.*\n"
+      "field_label": "##ABOUT YOU\n*We ask for this information to help us find your record in the National Joint Registry.*\n*In addition, in our research we will use year of birth, sex, and information about the areas people live in.*\n"
     },
     {
         "field_name": "paprka_about_dob",
