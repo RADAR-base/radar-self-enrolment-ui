@@ -120,7 +120,7 @@
         "text_validation_type_or_show_slider_number": "datetime_dmy",
         "text_validation_min": "2017-01-01",
         "text_validation_max": "2023-12-31",
-        "required_field": "",
+        "required_field": false,
         "evaluated_logic": "results['paprka_surgery_has_second_surgery'] == true"
     },
     {
@@ -238,7 +238,7 @@
         "form_name": "paprka_surgery",
         "field_type": "text",
         "field_label": "Work Status (other)",
-        "required_field": "false",
+        "required_field": false,
         "text_validation_type_or_show_slider_number": "",
         "evaluated_logic": "results['paprka_surgery_work'] == 'other'"
     }

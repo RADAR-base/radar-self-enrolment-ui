@@ -351,7 +351,7 @@
         "form_name": "paprka_feedback",
         "field_type": "text",
         "field_label": "Referrer (other)",
-        "required_field": "false",
+        "required_field": false,
         "text_validation_type_or_show_slider_number": "",
         "evaluated_logic": "results['paprka_feedback_referrer'] == 'other'"
     },
