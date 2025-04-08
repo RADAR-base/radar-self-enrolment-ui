@@ -45,11 +45,29 @@
         "type": "inbuilt",
         "inbuiltId": "connect",
         "options": {
+          "title": "CONNECT MY DEVICE(S)",
+          "description": "<p>Click on the connect button for your device.</p><p>The study team will collect past physical activity data, if available, from 1st July 2016 until 31st December 2024.</p>",
           "devices": [
-            "fitbit",
-            "apple_health",
-            "garmin",
-            "oura"
+            {
+              "id": "fitbit",
+              "title": "Fitbit",
+              "description": "Follow the step-by-step instructions [link TBC] or watch a video [link TBC] to see how to share your Fitbit's physical activity information with the PAPrKA study team."
+            },
+            {
+              "id": "garmin",
+              "title": "Garmin",
+              "description": "Follow the step-by-step instructions [link TBC] or watch a video [link TBC] to see how to share your Garmin's physical activity information with the PAPrKA study team."
+            },
+            {
+              "id": "oura",
+              "title": "Oura",
+              "description": "Follow the step-by-step instructions [link TBC] or watch a video [link TBC] to see how to share your Oura Ring's physical activity information with the PAPrKA study team."
+            },
+            {
+              "id": "apple_health",
+              "title": "Apple Health",
+              "description": "Follow the step-by-step instructions [link TBC] or watch a video [link TBC] to see how to share your iPhone or Apple Watch’s physical activity information with the PAPrKA study."
+            }
           ]
         }
       }
