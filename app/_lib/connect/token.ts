@@ -28,6 +28,7 @@ export default async function getAccessToken(
   if (clientId !== ARMT_CLIENT_ID) {
     const auth = Buffer.from(`${clientId}:${clientSecret}`).toString("base64")
     headers["Authorization"] = `Basic ${auth}`
+  } else {
     bodyParams.append('client_id', clientId)
   }
 
@@ -39,6 +40,7 @@ export default async function getAccessToken(
     })
 
     if (!response.ok) {
+      console.error(await response.text())
       throw new Error(
         `Failed to retrieve access token: ${response.statusText}`,
       )
