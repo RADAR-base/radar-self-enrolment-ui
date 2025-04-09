@@ -64,9 +64,6 @@ export default function Page() {
 
   const consentChallenge = searchParams.get('consent_challenge') ?? ""
 
-  async function acceptSkipConsent() {
-  }
-
   function accept() {
     const body = {
       consentAction: 'accept',
@@ -140,7 +137,9 @@ export default function Page() {
       // Set error content
     }
     if ((scopes.length > 0) && (userSession != undefined)) {
-      if (userIsParticipant(userSession)) {
+      if (userIsParticipant(userSession) && 
+        (consent?.client?.client_id == 'SEP') || 
+        (consent?.client?.client_id == 'aRMT')) {
         accept()
       } else {
         setIsLoading(false)
@@ -148,9 +147,9 @@ export default function Page() {
     }
   }, [consent, userSession])
 
-  // if ((!!consent?.client?.skip_consent) && (!!userSession)) {
-  //   accept()
-  // }
+  if ((!!consent?.client?.skip_consent) && (!!userSession)) {
+    accept()
+  }
 
   return isLoading ? 
               <div></div>
