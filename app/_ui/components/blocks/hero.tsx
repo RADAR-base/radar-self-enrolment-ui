@@ -57,7 +57,7 @@ export function HeroBlock(props: IHeroBlock, ref: ForwardedRef<HTMLDivElement>) 
       minHeight={"40vh"}
     >
       <Box display={"flex"} flexDirection={"column"} justifyContent={'center'} textAlign={{xs: "center", sm: "left"}} flexShrink={1} flex={flex} gap={1}>
-        {props.title.children ? <Typography variant="h1" {...props.title}></Typography> : <Typography variant="h1">{props.title}</Typography> }
+        {props.title?.children ? <Typography variant="h1" {...props.title}></Typography> : <Typography variant="h1">{props.title}</Typography> }
         <MarkdownContainer>{props.subtitle}</MarkdownContainer>
         {CTAButtons(props.cta, props.cta2)}
       </Box>

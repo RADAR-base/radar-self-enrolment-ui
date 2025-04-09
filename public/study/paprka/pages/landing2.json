@@ -24,7 +24,7 @@
             "noCard": true,
             "title": "About the study", 
             "blockBackground": "white",
-            "content": "<div id='more'></div>To learn more about recovery after knee replacement, we will bring together with your consent 3 bits of information:\n\n<ol><li>Information you provide in a survey.</li><li>A one-time collection of your physical activity information from either iPhone, Fitbit, Apple Watch, Garmin or Oura Ring. Physical activity can include things such as gardening, walking to the shops, doing housework etc.</li><li>Access to your knee replacement surgery information (from the UK National Joint Registry, for the duration of the study).</li></ol><br />The University of Manchester is leading the PAPrKA research study in collaboration with King's College London and with support from the National Joint Registry. This website is hosted by King's College London on its secure health research platform called 'RADAR-base'.\n<br />\nThe PAPrKA study is part of the Health Research from Home (HRfH) programme, led by the University of Manchester. The HRfH programme received funding from the UK Research and Innovation Medical Research Council (UKRI MRC) to carry out our important work."
+            "content": "<div id='more'></div>To learn more about recovery after knee replacement, we will bring together with your consent 3 bits of information:\n\n<ol><li>Information you provide in a survey.</li><li>A one-time collection of your physical activity information from either iPhone, Fitbit, Apple Watch, Garmin or Oura Ring. Physical activity can include things such as gardening, walking to the shops, doing housework etc.</li><li>Access to your knee replacement surgery information (from the UK National Joint Registry, for the duration of the study).</li></ol><br />The University of Manchester is leading the PAPrKA research study in collaboration with King's College London and with support from the National Joint Registry."
           },
           {
             "blockType": "video",
@@ -51,7 +51,7 @@
                 {
                     "blockType": "markdown",
                     "title": "What do I need?",
-                    "content": "1. Know your Month and year of your knee replacement surgery.\n2. Know if you have Fitbit, iPhone, Apple watch, Garmin, or Oura Ring.  You can find out what device you have by checking the logo on the front or back of your device or logging to your device account.\n"
+                    "content": "1. Know your Month and year of your knee replacement surgery.\n2. Know if you have Fitbit, iPhone, Apple watch, Garmin, or Oura Ring.  You can find out what device you have by checking the logo on the front or back of your device or logging to your device account.\n\n<br />## What will I have to do?\n<br />\n1. Check that you are eligible to take part.\n2. Sign an electronic consent form\n3. Set up a study account.\n4. Complete up to 4 tasks.\n\nCompleting all 4 should take approximately 50 minutes."
                   }
             ]
           },
@@ -98,6 +98,12 @@
             ]
           },
           {
+            "blockType": "hero",
+            "noCard": true,
+            "blockBackground": "center / cover no-repeat url('/kratos-ui/study/paprka/resources/landingpage/connect_your_device.jpg'), #fff",
+            "subtitle": "<div style='background:rgba(255, 255, 255, 0.9);border-radius:24px;padding:24px;'>The PAPrKA study is part of the Health Research from Home (HRfH) programme, led by the University of Manchester. The HRfH programme received funding from the UK Research and Innovation Medical Research Council (UKRI MRC) to carry out our important work.</div>"
+          },
+          {
             "blockType": "column",
             "noCard": true,
             "blockBackground": "white",
@@ -105,7 +111,7 @@
             "content": [
               {
                 "blockType": "markdown",
-                "content": "The PAPrKA study is run on the RADAR-base platform"
+                "content": "This website is hosted by King's College London on its secure health research platform called 'RADAR-base'."
               },
               {
                 "blockType": "markdown",

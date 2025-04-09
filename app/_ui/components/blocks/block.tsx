@@ -101,7 +101,7 @@ export function Block(props: IBlock): React.ReactNode {
     <BlockContainer props={props}>
         {
           props.noCard ? (
-            <Box sx={{width: "100%", maxWidth: "lg", textJustify: "right", textAlign: 'right', padding: 4}} >
+            <Box sx={{width: "100%", maxWidth: "lg", textJustify: "right", textAlign: 'right', paddingLeft: {xs: 2, sm: 4}, paddingRight: {xs: 2, sm: 4}, paddingTop: 1, paddingBottom: 1}} >
               {blockContent}
             </Box>
           ) : (
