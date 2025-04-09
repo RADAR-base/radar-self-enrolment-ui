@@ -1,11 +1,10 @@
 "use client";
-import { Box, Button, Card, CircularProgress, Stack, Typography } from "@mui/material";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { Box, Button, Card, Stack, Typography } from "@mui/material";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { OrySession } from "@/app/_lib/auth/ory/types";
 import { withBasePath } from "@/app/_lib/util/links";
-import { acceptConsentRequest } from "@/app/_lib/auth/ory/hydra";
+import { RadarCard } from "@/app/_ui/components/base/card";
 
 function userIsParticipant(userSession: any): boolean {
   return userSession?.identity?.schema_id == "subject"
@@ -122,10 +121,13 @@ export default function Page() {
     }
   }, [consent, userSession])
 
+  console.log('consent: ', consent)
+  console.log('scopes: ', scopes)
+
   if ((!!consent?.client?.skip_consent) && (!!userSession)) {
     accept()
   }
   return isLoading ? 
               <div></div>
-            : <ConsentCard><ConsentForm accept={accept} userSession={userSession} scopes={scopes} /></ConsentCard>
+            : <RadarCard><ConsentForm accept={accept} userSession={userSession} scopes={scopes} /></RadarCard>
 }

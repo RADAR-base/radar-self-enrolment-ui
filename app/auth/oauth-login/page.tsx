@@ -11,73 +11,6 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import LoginComponent from "@/app/_ui/auth/login";
 import { RadarCard } from "@/app/_ui/components/base/card";
 
-interface LoginFormProps {
-  flow?: any
-}
-
-function LoginForm({flow: flow}: LoginFormProps) {
-  const router = useRouter()    
-  const formik = useFormik({
-    initialValues: {
-        email: '',
-        password: '',
-    },
-    onSubmit: async (values: {email: string, password: string}) => 
-    {
-      const body = {
-        email: values.email,
-        password: values.password,
-        csrf_token: getCsrfToken(flow),      
-      } 
-      if (flow == undefined) { return }
-      let resp = await fetch(withBasePath('/api/ory/login?flow=' + flow.id), 
-        {method: 'POST', body: JSON.stringify(body)})
-      if (resp.status == 422) {
-        let {redirect_browser_to: url} = await resp.json()
-        router.replace(url)
-      } else {
-        console.log('Other error')
-      }
-    }
-  });
-  return (      
-    <Box 
-      display="flex"
-      alignItems="center"
-      alignContent="center"
-      height={'100%'}
-      p={4}>
-      <form onSubmit={formik.handleSubmit}>
-          <Stack spacing={2} alignItems="center">
-          <Typography variant="h2">Login</Typography>
-          <TextField
-              id="email"
-              name="email"
-              label="Email"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.email && Boolean(formik.errors.email)}
-              helperText={formik.errors.email}
-              
-              />
-          <TextField
-              id="password"
-              name="password"
-              label="Password"
-              type="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.password && Boolean(formik.errors.password)}/>
-          <Button color="primary" variant="contained" type="submit" disabled={formik.isSubmitting}>
-              Login
-          </Button>
-          </Stack>
-      </form>
-    </Box>)
-}
-
 function LoginWithCurrentAccountForm(props: {userSession: any, loginChallenge: string}) {
   const router = useRouter()
   return (      
@@ -164,6 +97,9 @@ export default function Page() {
     return
   }
   let flowId = searchParams.get('flowId')
+
+  console.log('oauth login flow: ', JSON.stringify(flow))
+
   useEffect(() => {
     if (userSession === undefined) {
       getUserSession(setUserSession)
