@@ -40,17 +40,13 @@ function getConsentRequest(consentChallenge: string,
   )
 }
 
-function ConsentCard(params: {children: React.ReactElement}) {
-  return <Card><Box display={'flex'} alignItems={'center'} justifyContent={'center'} width={300} height={350}>{params.children}</Box></Card>
-}
-
-function ConsentForm(props: {accept: (scopes: string[]) => void, userSession: any, scopes: string[]}) {
+function ConsentForm(props: {accept: (scopes: string[]) => void, reject: () => void, userSession: any, scopes: string[]}) {
   return   <Stack padding={2}>
               {props.userSession && props.userSession['identity']['traits']['email']}
               <Typography variant='subtitle1'>Requested Scopes</Typography>
               {props.scopes && props.scopes.map((s, i) => <Typography key={i}>{s}</Typography>)}
               <Box display='flex' flexDirection={'row'} justifyContent={'space-between'}>
-                <Button>Reject</Button>
+                <Button onClick={() => props.reject()}>Reject</Button>
                 <Button onClick={() => props.accept(props.scopes)}>Accept</Button>
               </Box>
             </Stack>
@@ -94,10 +90,41 @@ export default function Page() {
           )
         } else {
           console.log(r)
+          setAccepted(false)
         }
       }
     )
   }
+
+
+  function reject() {
+    const body = {
+      consentAction: 'reject',
+      grantScope: scopes,
+      remember: 'true',
+    }
+    fetch(withBasePath('/api/consent?' + new URLSearchParams({
+      consent_challenge: consentChallenge
+    })), {
+      method: 'POST',
+      body: JSON.stringify(body)
+    }).then(
+      (r) => {
+        if (r.ok) {
+          r.json().then(
+            (d) => {
+              console.log(d)
+              window.location.replace(d.redirect_to)
+            }
+          )
+        } else {
+          console.log(r)
+          setAccepted(false)
+        }
+      }
+    )
+  }
+
   useEffect(() => {
     if (consentChallenge == "") {
       router.replace('/')
@@ -121,13 +148,11 @@ export default function Page() {
     }
   }, [consent, userSession])
 
-  console.log('consent: ', consent)
-  console.log('scopes: ', scopes)
+  // if ((!!consent?.client?.skip_consent) && (!!userSession)) {
+  //   accept()
+  // }
 
-  if ((!!consent?.client?.skip_consent) && (!!userSession)) {
-    accept()
-  }
   return isLoading ? 
               <div></div>
-            : <RadarCard><ConsentForm accept={accept} userSession={userSession} scopes={scopes} /></RadarCard>
+            : <RadarCard><ConsentForm accept={accept} reject={reject} userSession={userSession} scopes={scopes} /></RadarCard>
 }

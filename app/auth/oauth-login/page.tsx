@@ -98,8 +98,6 @@ export default function Page() {
   }
   let flowId = searchParams.get('flowId')
 
-  console.log('oauth login flow: ', JSON.stringify(flow))
-
   useEffect(() => {
     if (userSession === undefined) {
       getUserSession(setUserSession)

@@ -373,7 +373,7 @@ export function HealthKitPage() {
   const router = useRouter()
   const pathname = usePathname()
   const [isFetchingToken, setIsFetchingToken] = useState(false)
-  const [armtAuthUrl, setArmtAuthUrl] = useState<any>("a")
+  const [armtAuthUrl, setArmtAuthUrl] = useState<any>(undefined)
   const [stepIdx, setStepIdx] = useState<number>(0)
 
   const [code, setCode] = useState<string>()

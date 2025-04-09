@@ -74,9 +74,7 @@ export async function POST(
     return NextResponse.json({ 'error': 'No consent_challenge param provided' }, { status: 401 })
   }
   const { consentAction, grantScope, remember } = await request.json()
-
   const session = extractSession(identity, grantScope)
-
   const consentRequest = await getConsentRequest(consentChallenge)
   const consentBody = await consentRequest.json()
   const grant_access_token_audience = consentBody.requested_access_token_audience
@@ -85,25 +83,33 @@ export async function POST(
     return NextResponse.json({ error: 'Missing required parameters' }, { status: 401 })
   }
 
+  let url: URL
+  let body: any
+
   if (consentAction == "accept") {
-    let url = new URL(`${baseURL}/oauth2/auth/requests/consent/accept`)
+    url = new URL(`${baseURL}/oauth2/auth/requests/consent/accept`)
     url.search = new URLSearchParams([['consent_challenge', consentChallenge]]).toString()
-    const body = {
+    body = {
       grant_scope: grantScope,
       grant_access_token_audience: grant_access_token_audience,
       session,
       remember: Boolean(remember),
       remember_for: 3600
     }
-    const acceptResponse = await fetch(url, {
-      method: 'PUT',
-      headers: {
-        'accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body)
-    })
-    const acceptBody = await acceptResponse.json()
-    return NextResponse.json(acceptBody)
+  } else {
+    url = new URL(`${baseURL}/oauth2/auth/requests/consent/accept`)
+    url.search = new URLSearchParams([['consent_challenge', consentChallenge]]).toString()
+    body = {
+      error: "request_denied",
+    }
   }
+  const response = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body)
+  })
+  return NextResponse.json(await response.json())
 }
