@@ -316,6 +316,10 @@
         {
           "text": "About",
           "href": "/paprka/about"
+        },
+        {
+          "text": "FAQs",
+          "href": "/paprka/faqs"
         }
       ],
       "logoSrc": "/study/paprka/resources/uom.png"
@@ -374,7 +378,7 @@
     },
     "finishContent": {
       "title": "Thank you for completing the PAPrKA study tasks.",
-      "content": "Thank you for taking part in our study.\n<br />Because of your contribution, through our research we can help patients and doctors in future make better informed decisions about knee replacement surgery.\n<br />\nNow that you have submitted the study tasks, you will be able to view (but not change) your responses by logging back into your study account.  "
+      "content": "Thank you for taking part in our study.\n<br />Because of your contribution, through our research we can help patients and doctors in future make better informed decisions about knee replacement surgery.\n<br />\nNow that you have submitted the study tasks, you will be able to view (but not change) your responses by logging back into your study account."
     },
     "analytics": {
       "gaId": "G-LTRMSY2PNR"

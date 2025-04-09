@@ -3,12 +3,12 @@
           {
             "blockType": "hero",
             "noCard": true,
-            "blockBackground": "linear-gradient(to left, rgba(0, 18, 24, 0.1), rgba(0, 18, 24, 0.7)), right / cover no-repeat url('/kratos-ui/study/paprka/resources/knee.png'), #002e3d",
+            "blockBackground": "linear-gradient(to bottom left, rgba(0, 18, 24, 0.2), rgba(0, 18, 24, 0.7)), right / cover no-repeat url('/kratos-ui/study/paprka/resources/knee.png'), #002e3d",
             "title": {
                 "children": "PAPrKA: How Active are People After Knee Surgery?",
                 "sx": {"color":"white"}
             },
-            "subtitle": "The **P**hysical **A**ctivity **P**atterns after **K**nee **A**rthroplasty (PAPrKA) study seeks to learn more about people's recovery after knee replacement. With your contribution, through our research we can help patients and doctors in future make better informed decisions about knee replacement surgery.",
+            "subtitle": "The **P**hysical **A**ctivity **P**atterns after **K**nee **A**rthroplasty (**PAPrKA**) study seeks to learn more about people's recovery after knee replacement. With your contribution, through our research we can help patients and doctors in future make better informed decisions about knee replacement surgery.",
             "sx": {"color": "white"},
             "cta": {
                 "text": "Learn More",

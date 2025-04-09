@@ -14,6 +14,7 @@ import StepperProgress from "../base/stepperProgress";
 import { ArrowDropDownIcon } from "@mui/x-date-pickers";
 import { BorderLeft } from "@mui/icons-material";
 import { GetOauthToken } from "../../auth/oauthToken";
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 const SCOPES = [
   'SOURCETYPE.READ',
@@ -87,39 +88,57 @@ function AppStoreDownloadModalContent() {
 function StepIntroContent(): React.ReactNode {
   return (
     <React.Fragment>
-      <Grid size={{ xs: 12, sm: 8 }} textAlign={'left'}>
-        <div>
-          <Typography variant="h2">Connect to Apple Health</Typography>
-          <Typography variant="body1">
-            Apple Health collects your Apple health and fitness data. All your Apple Watch and iPhone data relating to health is stored there. That information can only be accessed from apps installed on an iOS device. Please complete the following steps to link your Apple Health data to our study.
-            <br />
-            <br />
-            It is also possible to connect other, non-Apple, devices to Apple Health. If you have already done so, you can share that data with us by following the same steps below.
-          </Typography>
-        </div>
-      </Grid>
-      <Grid size={{ xs: 12, sm: 4 }} alignContent={'center'}>
-        <Image
-          src={withBasePath('/devices/radar_armt.png')}
-          width={120}
-          height={120}
-          alt={"RADAR Active RMT app icon"}
-          style={{ borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)' }}
-        />
+      <Grid size={12} textAlign={'left'}>
+        <Typography variant="h2">Connect your iPhone or iPhone and Apple Watch</Typography>
+        <Typography paddingTop={2}  variant="body1">
+        To allow us to access your physical activity information from your 
+        iPhone you will need to download the study app, we will tell you how 
+        to do this in 3 easy steps.
+        <strong> Please read each of the 3 steps before you start.</strong> 
+        </Typography>
+        <Typography paddingTop={2}  variant="h3">Step 1: Download the study app</Typography>
+        <Typography  variant="body1">
+          The study app is called RADAR active RMT.
+          <br />
+          <strong>To download the study app, you will need your iPhone. </strong>
+        </Typography>
       </Grid>
       <Grid size={{ xs: 12, sm: 8 }} textAlign={'left'}>
-        <Typography variant="h3">Step 1: Download the app</Typography>
         <Typography variant="body1">
-          This study uses the RADAR active RMT app to access Apple Health data.
-          <br />
-          To share your Apple Health data with us, you will need to download the app on your iOS device.
-          <br />
-          <strong>Once installed, please return here to log in to the app</strong>
+        If <strong>you are</strong> logged into the study website on your phone 
+        <ul>
+          <li>Press app store icon to take you to the study app </li>
+
+          <li>Press Get next to RADAR active RMT app</li>
+
+          <li>Press Open</li>
+        </ul>
+
+        You should now see the study app ‘Welcome page’. 
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, sm: 4 }} alignContent={'center'}>
         <AppStoreDownloadModalContent />
       </Grid>
+      <Grid size={{ xs: 12, sm: 8 }} textAlign={'left'}>
+        <Typography variant="body1">
+        If you <strong>are not</strong> logged into the study website on your phone  
+        <ul>
+          <li>From your phone, go to the app store. </li>
+          <li>Search for RADAR active RMT. It looks like this</li>
+        </ul>
+        </Typography>
+      </Grid>
+      <Grid size={{ xs: 12, sm: 4 }} alignContent={'center'}>
+        <Image
+          src={withBasePath('/radar/app_store_armt.png')}
+          width={254}
+          height={291}
+          alt={"RADAR Active RMT app in app store"}
+          style={{ borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)' }}
+        />
+      </Grid>
+
     </React.Fragment>
 )}
 
@@ -128,47 +147,45 @@ interface StepLoginContentProps {
 }
 
 function StepLoginContent({armtAuthUrl}: StepLoginContentProps): React.ReactNode {
+  const protocol = useContext(ProtocolContext)
   const theme = useTheme()
   return (
     <React.Fragment>
       <Grid size={12} textAlign={'left'}>
         <div>
-          <Typography variant="h2">Connect to Apple Health</Typography>
+          <Typography variant="h2">Connect your iPhone or iPhone and Apple Watch</Typography>
           <br />
-          <Typography variant="h3">Step 2: Log in</Typography>
+          <Typography variant="h3">Step 2: Chose a way of logging into the study app</Typography>
           <Typography variant="body1">
-            You can log in to the app by scanning the following QR code{isMobile ? ", clicking the login button below if you are currently using your iOS device, " : " "} 
-            or logging in with your email and password.
+          You can log in to the study app in 2 ways:
           </Typography>
         </div>
       </Grid>
       <Grid size={{xs: 12, sm: 5.5}} textAlign={'left'} >
-        {isMobile ? <MobileContent armtAuthUrl={armtAuthUrl ?? ""} /> : <QRContent armtAuthUrl={armtAuthUrl ?? ""} />}
+        <QRContent armtAuthUrl={armtAuthUrl ?? ""} />
       </Grid>
       <Grid size={{xs: 12, sm: 1}} >
         <Divider orientation={useMediaQuery(theme.breakpoints.down("sm")) ? "horizontal" : "vertical"}>OR</Divider>
       </Grid>
       <Grid size={{xs: 12, sm: 5.5}} textAlign={'left'}>
         <div>
-          <Typography variant="h3">Log in with your email</Typography>
+          <Typography variant="h3">Or typing into the app</Typography>
           <List sx={{listStyle: 'decimal'}}>
             <ListItem sx={{display: 'list-item'}}>
-              Open the RADAR Active RMT App
+              <Typography>Study name:
+                <Button color="inherit" variant="text" endIcon={<ContentCopyIcon />}
+                        onClick={() =>navigator.clipboard.writeText(protocol.studyId)}
+                        sx={{userSelect: 'text'}}
+                        >
+                    <Typography>{protocol.studyId}</Typography>
+                </Button>
+                </Typography>
             </ListItem>
             <ListItem sx={{display: 'list-item'}}>
-              Press <strong>Start</strong>
+              <Typography>The <strong>email address</strong> you used to set up your study account.</Typography>
             </ListItem>
             <ListItem sx={{display: 'list-item'}}>
-              Press <strong>Enrol</strong>
-            </ListItem>
-            <ListItem sx={{display: 'list-item'}}>
-              Press <strong>Enter Study ID</strong>
-            </ListItem>
-            <ListItem sx={{display: 'list-item'}}>
-              Enter <strong>paprka</strong> in the study ID text box
-            </ListItem>
-            <ListItem sx={{display: 'list-item'}}>
-              Sign in with the email and password you used for this site
+              <Typography>The <strong>password</strong> you used to set up your study account.</Typography>
             </ListItem>
           </List>
         </div>
@@ -176,51 +193,96 @@ function StepLoginContent({armtAuthUrl}: StepLoginContentProps): React.ReactNode
   </React.Fragment>)
 }
 
-function MobileContent({armtAuthUrl}: {armtAuthUrl: string}): React.ReactNode {
-  return (
-    <Box display={'flex'} flexDirection={'column'} gap={2}>
-      <Typography variant="h3">On your iPhone now?</Typography>
-      <Typography variant="body1">Once the RADAR app is installed, click the following button to log in.</Typography>
-      <Button href={armtAuthUrl} variant={"contained"}
-              style={{minHeight: 80, borderRadius: 40, minWidth: 180}}>
-        <strong>Click to Log In</strong>
-      </Button>
-      <br />
-      <QRContent armtAuthUrl={armtAuthUrl} />
-    </Box>
-  )
-}
-
 function QRContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
   return (
     <Box display={'flex'} flexDirection={'column'} gap={2}>
-      {isMobile ? 
-        <Typography variant="h3">Otherwise, scan the QR code:</Typography>
-        :
-        <Typography variant="h3">Scan the QR code</Typography>}
+      <Typography variant="h3">Scanning this QR code</Typography>
       <Box margin={'auto'} textAlign={'center'}>
           <QRCodeSVG value={armtAuthUrl ?? ''} size={200} />
       </Box>
+      <Typography variant="body1" fontStyle={'italic'}>To use the QR code you must be looking at it on a computer screen/iPad, scan the code using your phone.</Typography>
     </Box>
   )
 }
 
 function StepByStepContent(): React.ReactNode {
+  const protocol = useContext(ProtocolContext);
+
   return <React.Fragment>
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 5: Continue through the setup</Typography>
-          <Typography variant="body1">Continue to click through the setup steps</Typography>
+          <Typography variant="h3">1. Press Start</Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
         <Image 
-            src={withBasePath('/radar/app/app_setup_registration.png')}
+            src={''}
             width={280}
             height={500}
-            alt='An image showing the RADAR App registration step'
+            alt='An image showing the RADAR App Welcome page'
             style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
           />
         </Grid>
 
+
+        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
+          <Typography variant="h3">2. Press Enrol</Typography>
+        </Grid>
+        <Grid size={{xs: 12, sm: 6}}>
+        <Image 
+            src={withBasePath('')}
+            width={280}
+            height={500}
+            alt='An image showing the RADAR App Enrol page'
+            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
+          />
+        </Grid>
+
+        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
+          <Typography variant="h3">3. Scan QR code or Press Enter Study ID</Typography>
+          <Typography variant="body1">
+            If scanning QR code:
+            <br />
+            Press scan, enable camera and scan the code.
+            <br />
+            Press login.
+          </Typography>
+          <Typography variant="body1" paddingTop={2}>
+            If entering Study ID: Enter 
+            <Button color="inherit" variant="text" endIcon={<ContentCopyIcon />}
+                        onClick={() =>navigator.clipboard.writeText(protocol.studyId)}
+                        sx={{userSelect: 'text'}}>
+              <Typography>
+                {protocol.studyId}
+              </Typography>
+            </Button>
+            <br />
+            Press login.
+            <br />
+            Enter your email and password you used for the study site </Typography>
+        </Grid>
+        <Grid size={{xs: 12, sm: 6}}>
+        <Image 
+            src={withBasePath('')}
+            width={230}
+            height={500}
+            alt='An image showing the RADAR App login options'
+            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
+          />
+        </Grid>
+
+
+        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
+          <Typography variant="h3">Press Next - on Registration page</Typography>
+          <Typography variant="body1"></Typography>
+        </Grid>
+        <Grid size={{xs: 12, sm: 6}}>
+        <Image 
+            src={withBasePath('')}
+            width={230}
+            height={500}
+            alt='An image showing the RADAR App registration page'
+            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
+          />
+        </Grid>
 
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3"></Typography>
@@ -228,95 +290,10 @@ function StepByStepContent(): React.ReactNode {
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
         <Image 
-            src={withBasePath('/radar/app/app_setup_complete.png')}
-            width={280}
-            height={500}
-            alt='An image showing the RADAR App setup complete step'
-            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
-          />
-        </Grid>
-
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 6: Press the Start button</Typography>
-          <Typography variant="body1"></Typography>
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-        <Image 
-            src={withBasePath('/radar/app/app_homepage.png')}
+            src={withBasePath('')}
             width={230}
             height={500}
-            alt='An image showing the RADAR App homepage'
-            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
-          />
-        </Grid>
-
-
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 7: Allow Health Access</Typography>
-          <Typography variant="body1"></Typography>
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-        <Image 
-            src={withBasePath('/radar/app/app_healthkit_scopes_unselected.png')}
-            width={230}
-            height={500}
-            alt='An image showing the RADAR App homepage'
-            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
-          />
-        </Grid>
-
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3"></Typography>
-          <Typography variant="body1"></Typography>
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-        <Image 
-            src={withBasePath('/radar/app/app_healthkit_scopes.png')}
-            width={230}
-            height={500}
-            alt='An image showing the RADAR App homepage'
-            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
-          />
-        </Grid>
-
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 8: Press Start</Typography>
-          <Typography variant="body1">Press the Start button to begin sharing your data</Typography>
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-        <Image 
-            src={withBasePath('/radar/app/app_healthkit_start.png')}
-            width={230}
-            height={500}
-            alt='An image showing the RADAR App homepage'
-            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
-          />
-        </Grid>
-
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 9: Press Finish</Typography>
-          <Typography variant="body1">Press the Finish button in the bottom right of your screen</Typography>
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-        <Image 
-            src={withBasePath('/radar/app/app_healthkit_collection.png')}
-            width={230}
-            height={500}
-            alt='An image showing the RADAR App homepage'
-            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
-          />
-        </Grid>
-
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 10: Done</Typography>
-          <Typography variant="body1">Once the app has finished, you can continue with this website's tasks. Press the following 'Finish' button to continue</Typography>
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-        <Image 
-            src={withBasePath('/radar/app/app_healthkit_finished.png')}
-            width={230}
-            height={500}
-            alt='An image showing the RADAR App homepage'
+            alt='An image showing the RADAR App registration complete page'
             style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
           />
         </Grid>
@@ -328,33 +305,13 @@ function StepCompleteContent(): React.ReactNode {
     <React.Fragment>
       <Grid size={12} textAlign={'left'}>
         <div>
-          <Typography variant="h2">Connect to Apple Health</Typography>
+          <Typography variant="h2">Connect your iPhone or iPhone and Apple Watch</Typography>
           <br />
-          <Typography variant="h3">Step 3: Link your data in the app</Typography>
-          <Typography variant="body1">
-          <p>Please complete the Apple Health task in the RADAR Active RMT app to share your Apple health data with us.</p>
-          If you get lost, you can view the step-by-step guide below.
-          <p>Once you are done, press the <strong>Complete</strong> button below.</p>
-          </Typography>
+          <Typography variant="h3">Step 3: How to log into the study app</Typography>
+          <Typography variant="body1">From the study app ‘Welcome page’</Typography>
         </div>
       </Grid>
-    <Grid size={12}>
-      <Accordion>
-        <AccordionSummary
-            aria-controls="step-by-step-content"
-            id="step-by-step-header"
-            expandIcon={<ArrowDropDownIcon />}
-          >
-          <Typography component="span">Step-by-step guide</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-        <Grid container spacing={2} gap={2} rowGap={4}>
-
-          <StepByStepContent />
-          </Grid>
-        </AccordionDetails>
-      </Accordion>
-    </Grid>
+      <StepByStepContent />
   </React.Fragment>
 )}
 
@@ -416,7 +373,7 @@ export function HealthKitPage() {
   const router = useRouter()
   const pathname = usePathname()
   const [isFetchingToken, setIsFetchingToken] = useState(false)
-  const [armtAuthUrl, setArmtAuthUrl] = useState<any>(undefined)
+  const [armtAuthUrl, setArmtAuthUrl] = useState<any>("a")
   const [stepIdx, setStepIdx] = useState<number>(0)
 
   const [code, setCode] = useState<string>()
