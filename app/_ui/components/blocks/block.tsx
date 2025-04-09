@@ -17,21 +17,21 @@ export interface IColumnBlock {
 blockType: 'column'
 title?: string
 subtitle?: string
-content: {block1: IBlockContent, block2: IBlockContent}
+sx?: any
+content: IBlockContent[]
 }
 
 export function ColumnBlock({title, subtitle, content, ...props}: IColumnBlock, ref: ForwardedRef<HTMLDivElement>) {
   return (
-      <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
+      <Box display={"flex"} flexDirection={"column"} textAlign={"left"} sx={props.sx}>
         <Typography variant="h2">{title}</Typography>
         <Typography variant="subtitle1">{subtitle}</Typography>
         <Grid container spacing={2}>
-          <Grid size={{xs: 12, md: 6}}>
-            {getBlockContent(content.block1)}
-          </Grid>
-          <Grid size={{xs: 12, md: 6}}>
-            {getBlockContent(content.block2)}
-          </Grid>
+          {content.map(block => 
+            <Grid className={'test'} marginLeft={'auto'} marginRight={'auto'} size={{sm: 12, md: (12/content.length)}}>
+              {getBlockContent(block)}
+            </Grid>)
+          }
         </Grid>
       </Box>
   )
@@ -41,6 +41,7 @@ interface BlockProps {
   blockBackground?: string
   blockPadding?: number | {[key: string]: number}
   noCard?: boolean
+  sx?: any
 }
 
 export type IBlock = (BlockProps & IMarkdownBlock) |
@@ -62,6 +63,7 @@ function BlockContainer({children, props}: {children: React.ReactNode, props: Bl
       alignItems="center"
       display="flex"
       style={{background: props.blockBackground}}
+      sx={props.sx}
       >
         {children}
       </Box>)
