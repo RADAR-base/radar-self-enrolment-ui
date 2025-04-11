@@ -45,13 +45,8 @@ export function DevicesPanel() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const deviceConnected = searchParams.get('success')
-  const protocol = useContext(ProtocolContext)
-  const projectId = protocol.studyId
-  const devices = ((protocol.protocols
-                          .find((p) => ((p.metadata.type == 'inbuilt') && (p.metadata.inbuiltId == 'connect')))
-                          ?.metadata as ArmtMetadataInbuilt)?.options.devices as string[] 
-                  ?? DEFAULT_DEVICES)
 
+  
   async function onSubmit() {
     setSubmitting(true)
     let resp = await fetch(
@@ -69,9 +64,25 @@ export function DevicesPanel() {
     setSubmitting(false)
   }
 
+
+  const protocol = useContext(ProtocolContext)
+  const projectId = protocol.studyId
+  const task = (protocol.protocols
+    .find((p) => ((p.metadata.type == 'inbuilt') && (p.metadata.inbuiltId == 'connect')))
+    ?.metadata as ArmtMetadataInbuilt)
+  let devices = task.options.devices as {id: string, title: string, logo_src: string, description: string}[]
+
+  let deviceConnectedName: string = ""
+  if (deviceConnected) {
+    deviceConnectedName = devices.find(d => d.id == deviceConnected)?.title ?? deviceConnected
+  }
+
+  const title: string = task.options.title ?? "Connect Your Device"
+  const description: string = task.options.description ?? "Please click on the device below which you would like to connect"
+  
   return (
   <Container maxWidth="lg" disableGutters>
-  {(deviceConnected != undefined) ? <DeviceConnectedBanner device={deviceConnected} onFinish={onSubmit}></DeviceConnectedBanner> : null}
+  {(deviceConnected != undefined) ? <DeviceConnectedBanner device={deviceConnectedName} onFinish={onSubmit} /> : null}
   <Grid container spacing={2} gridAutoColumns={'3lf'} gridAutoFlow={"column"}>
     <Grid size={12}>
       <RadarCard>
@@ -79,10 +90,8 @@ export function DevicesPanel() {
             textAlign={'left'} alignContent={'flex-start'}
             alignItems={'flex-start'}
             padding={3}>
-          <Typography variant="h2">Connect Your iPhone, Fitness Tracker or Smartphone App</Typography>
-          <MarkdownContainer>
-          {"By sharing your activity data with us we gain valuable insights into recovery and mobility after knee replacement surgery.\n<br />\nFollow the step-by-step instructions [link TBC] or watch a video [link TBC] to show you how to connect your iPhone, fitness tracker or smartphone app.\n<br />\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data by reading our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n<br />\n**How do I Identify my device?**\n\nCheck the logo on your fitness tracker or smartphone application to find your device or app below."}
-          </MarkdownContainer>
+          <Typography variant="h2">{title}</Typography>
+          <MarkdownContainer>{description}</MarkdownContainer>
           <Box display='flex' flexDirection='row' justifyContent={'space-between'} width={'100%'} paddingTop={2}>
             <NextButton href={`/${projectId}/portal`} variant='contained'>Back</NextButton>
             <Button variant="contained" onClick={onSubmit} disabled={submitting}>
@@ -92,9 +101,9 @@ export function DevicesPanel() {
         </Box>
       </RadarCard>
     </Grid>
-    {devices.map((deviceId, i) => (
+    {devices.map((device, i) => (
       <Grid size={{xs: 12, sm: 6, md: 4}} key={'task.'+i}>
-        <RadarDeviceCard deviceId={deviceId} title={TEMP_CONTENT[deviceId].title} description={TEMP_CONTENT[deviceId].description} ></RadarDeviceCard>
+        <RadarDeviceCard deviceId={device.id} title={device.title} description={device.description} ></RadarDeviceCard>
       </Grid>
     ))}
   </Grid>

@@ -42,7 +42,9 @@ export function EnrolmentEligibility(props: EnrolmentEligibilityProps) {
               setFieldValue={props.setFieldValue}
               id={'eligibility.' + props.items[i].id}
               errorText={(props.values[props.items[i].id] != null) ? props.errors[props.items[i].id] : ""}
-              key={'eligibility.' + props.items[i].id}/>
+              key={'eligibility.' + props.items[i].id}
+              autoFocus
+              />
               </Box>
           </Collapse>
       )

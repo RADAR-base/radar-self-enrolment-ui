@@ -5,6 +5,9 @@ import { promises as fs } from 'fs';
 export class LocalProtocolRepository implements StudyProtocolRepository {
 
   async getStudyProtocol(studyId: string): Promise<StudyProtocol | undefined> {
+    if (!(await this.getStudies()).includes(studyId)) {
+      return undefined
+    }
     var protocol: StudyProtocol
     try {
       const file = await fs.readFile(process.cwd() + '/public/study/' + studyId + '/protocol.json', 'utf-8')

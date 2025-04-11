@@ -8,6 +8,7 @@ import { getCsrfToken } from '@/app/_lib/auth/ory/util';
 import { useFormik } from 'formik';
 import Yup from '@/app/_lib/armt/validation/yup'
 import { ProtocolContext } from '@/app/_lib/study/protocol/provider.client';
+import { IOryVerificationFlow } from '@/app/_lib/auth/ory/flows.interface';
 
 interface EmailSentComponentProps {
   flow: IOryVerificationFlow
@@ -65,7 +66,7 @@ function EmailSentComponent(props: EmailSentComponentProps): React.ReactElement 
     <form onSubmit={formik.handleSubmit}>
     <Box display={'flex'} flexDirection={'column'} gap={4}>
       {errorText && <Typography variant='overline' color='error'>{errorText}</Typography>}
-      <Typography>An email has been sent containing a verification code. Please enter it in the box below</Typography>
+      <Typography>An email has been sent to you containing a verification code. Please enter it in the box below. If you cannot find it, please look in your email’s junk/spam folder. Please note, this code expires after 1 hour.</Typography>
       <TextField
               fullWidth
               id="code"

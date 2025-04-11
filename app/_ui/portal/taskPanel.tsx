@@ -24,7 +24,7 @@ function FinishModal(props: {disabled: boolean, allComplete: boolean}) {
   }
   return (
     <div>
-      <Button onClick={props.allComplete ? finishStudy : handleOpen} disabled={props.disabled} variant='contained'>Finish</Button>
+      <Button onClick={handleOpen} disabled={props.disabled} variant='contained'>Finish</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -47,8 +47,12 @@ function FinishModal(props: {disabled: boolean, allComplete: boolean}) {
             Study complete
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {"There are still optional tasks available.\nIf you would like to complete them, please press 'Back' and click on the cards still marked with 'Todo'. If not, please press 'Finish' to end the study."}
+            Are you sure you want to finish?
           </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            {!props.allComplete && "There are still optional tasks available.\nIf you would like to complete them, please press 'Back' and click on the cards still marked with 'Todo'. If not, please press 'Finish' to end the study."}
+          </Typography>
+
           <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} paddingTop={2}> 
             <Button onClick={handleClose} variant="contained">Back</Button>
             <Button onClick={finishStudy} variant="contained">Finish</Button>
@@ -101,7 +105,9 @@ export function TaskPanel(props: TaskPanel) {
   const numRequiredTasks = armtProtocols.filter((x) => (x.metadata.optional != true)).length
 
   return (
-    <Box sx={{ flexGrow: 1, margin: 2}} 
+    <Box 
+      flexGrow={1}
+      m={{xs: 0, sm: 2}}
       display="flex"
       justifyContent="center"
       alignItems="center">
@@ -109,25 +115,24 @@ export function TaskPanel(props: TaskPanel) {
       <Grid container spacing={2} gridAutoColumns={'3lf'} gridAutoFlow={"column"}>
         <Grid size={12}>
           <RadarCard>
-            <Box display={'flex'}
-                justifyContent={'space-between'}
-                textAlign={'left'} alignContent={'center'}
-                alignItems={'flex-start'}
-                padding={3}
-                gap={2}>
-              <Box display='flex' flexDirection='column'>
-                <Typography variant="h2">{protocol.studyUiConfig.portal.title}</Typography>
+            <Grid container padding={3} rowGap={2} >
+              <Grid size={{xs: 10, sm: 10}} textAlign={'left'}>
+                <Typography variant="h2" pr={2}>{protocol.studyUiConfig.portal.title}</Typography>
+              </Grid>
+              <Grid size={{xs: 2, sm: 2}}  justifyItems={'flex-end'}>
+                <Box display={'flex'} gap={2} alignItems={'center'} flexDirection={'column'}>
+                  <CircularProgressWithLabel thickness={2} size={80} variant='determinate' value={(numRequiredTasksComplete/numRequiredTasks) * 100}>
+                    <Typography variant='subtitle2' textOverflow={'clip'}>{numRequiredTasksComplete} / {numRequiredTasks}</Typography>
+                  </CircularProgressWithLabel>
+                  <FinishModal disabled={numRequiredTasksComplete < numRequiredTasks} allComplete={numTasksComplete == numTasks}></FinishModal>
+                </Box>
+              </Grid>
+              <Grid size={12} textAlign={'left'}>               
                 <MarkdownContainer>
                   {protocol.studyUiConfig.portal.content}
                 </MarkdownContainer>
-              </Box>
-              <Box display={'flex'} gap={2} alignItems={'center'} flexDirection={'column'}>
-                <CircularProgressWithLabel thickness={2} size={80} variant='determinate' value={(numRequiredTasksComplete/numRequiredTasks) * 100}>
-                  <Typography variant='subtitle2'>{numRequiredTasksComplete} / {numRequiredTasks}</Typography>
-                </CircularProgressWithLabel>
-                <FinishModal disabled={numRequiredTasksComplete < numRequiredTasks} allComplete={numTasksComplete == numTasks}></FinishModal>
-              </Box>
-            </Box>
+              </Grid>
+            </Grid>
           </RadarCard>
         </Grid>
         {items.map((card, i) => (

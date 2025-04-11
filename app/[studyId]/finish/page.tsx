@@ -13,10 +13,12 @@ export default async function Page({ params }: { params: { studyId: string, task
   if (protocol == undefined) { notFound() }
   return (
     <main>
-       <Box sx={{ flexGrow: 1, margin: 2}} 
-      display="flex"
-      justifyContent="center"
-      alignItems="center">
+      <Box
+        m={{xs: 0, sm: 2}}
+        flexGrow={1}
+        display="flex"
+        justifyContent="center"
+        alignItems="center">
       <Container maxWidth="lg" disableGutters>
       <Grid container spacing={2} gridAutoColumns={'3lf'} gridAutoFlow={"column"}>
         <Grid size={12}>

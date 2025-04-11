@@ -34,6 +34,9 @@ export function MarkdownContainer({children, ...props }: MarkdownContainerProps)
         },
         button: {
           component: Button,
+          props: {
+            'fullWidth': false
+          }
         },
         h5: {
           component: Typography,
