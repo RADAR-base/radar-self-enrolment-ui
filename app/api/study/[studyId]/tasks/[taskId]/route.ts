@@ -3,7 +3,6 @@ import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
 import { ArmtDefinitionRepository, getDefinition } from '@/app/_lib/armt/repository/repository';
 import { schemaFromDefinition } from "@/app/_lib/armt/validation/parser";
 import fromRedcapDefinition from "@/app/_lib/armt/definition/fromRedcapDefinition";
-import { StudyProtocol } from "@/app/_lib/study/protocol";
 import { whoAmI } from "@/app/_lib/auth/ory/kratos";
 import { ActiveTaskResponse } from "@/app/_lib/armt/response/response.interface";
 

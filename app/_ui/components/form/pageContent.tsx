@@ -1,5 +1,5 @@
 "use client"
-import { Box, Button, Container, Divider, Stack } from "@mui/material";
+import { Box, Button, Container, Divider, Stack, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { useRouter } from 'next/navigation'
 import { ArmtForm } from "@/app/_ui/components/form/form";
@@ -10,6 +10,40 @@ import fromRedcapDefinition from "@/app/_lib/armt/definition/fromRedcapDefinitio
 import { withBasePath } from "@/app/_lib/util/links";
 import { sendGAEvent } from "@next/third-parties/google";
 import { useEffect } from "react";
+import { InView } from 'react-intersection-observer';
+
+function ControlButtons(props: {submitDisabled: boolean}) {
+const router = useRouter()
+
+return (
+  <InView threshold={[1]}>
+    {({ inView, ref, entry }) => (
+      <Box 
+      ref={ref}
+      width={"100%"}
+      position={'sticky'}
+      bottom={-1}
+      zIndex={1000}>
+        <Divider />
+        <Box
+          paddingTop={4}
+          paddingBottom={4}
+          display={"flex"}
+          alignItems={'center'}
+          sx={{ 
+            justifyContent: 'space-between', 
+            background: 'white'
+          }}
+          >
+            <Button variant="contained" onClick={() => router.back()}>Back</Button>
+            { (entry?.intersectionRatio ?? 1) < 1 ? "Scroll down" : "" }
+            <Button variant="contained" type={"submit"} disabled={props.submitDisabled}>Submit</Button>
+        </Box>
+      </Box>
+    )}
+  </InView>
+  )
+}
 
 interface ArmtContentProps {
   studyId: string
@@ -21,6 +55,7 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
   const armtDef: ArmtDefinition = fromRedcapDefinition(redcapDef)
   const schema = schemaFromDefinition(armtDef)
   const router = useRouter()
+  
   const formik = useFormik({
     validateOnChange: true,
     validateOnMount: true,
@@ -63,28 +98,31 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
     })
   }, [])
 
-  const ControlButtons = (
-    <Box 
-      width={"100%"}
-      position={'sticky'}
-      bottom={0}
-      zIndex={1000}>
-      <Divider />
-      <Box
-        paddingTop={4}
-        paddingBottom={4}
-        display={"flex"}
-        alignItems={'center'}
-        sx={{ 
-          justifyContent: 'space-between', 
-          background: 'white'
-        }}
-        >
-          <Button variant="contained" onClick={router.back}>Back</Button>
-          <Button variant="contained" type={"submit"} disabled={(!formik.isValid) || formik.isSubmitting}>Submit</Button>
-      </Box>
-    </Box>
-  )
+  // const ControlButtons = (
+  //   <Box 
+  //     width={"100%"}
+  //     position={'sticky'}
+  //     bottom={-1}
+  //     zIndex={1000}
+  //     ref={ref}>
+  //     <Divider />
+  //     <Box
+  //       paddingTop={4}
+  //       paddingBottom={4}
+  //       display={"flex"}
+  //       alignItems={'center'}
+  //       sx={{ 
+  //         justifyContent: 'space-between', 
+  //         background: 'white'
+  //       }}
+  //       >
+  //         <Button variant="contained" onClick={router.back}>Back</Button>
+  //         <Typography>In view: {inView}</Typography>
+  //         <Button variant="contained" type={"submit"} disabled={(!formik.isValid) || formik.isSubmitting}>Submit</Button>
+  //     </Box>
+  //   </Box>
+  // )
+
   return (
     <Container sx={{
       paddingRight: 4,
@@ -94,7 +132,7 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
       <form onSubmit={formik.handleSubmit}>
         <Stack gap={4} margin={"auto"}>
           <ArmtForm definition={armtDef} values={formik.values} setFieldValue={formik.setFieldValue} errors={formik.errors}></ArmtForm>
-          {ControlButtons}
+          <ControlButtons submitDisabled={(!formik.isValid) || formik.isSubmitting} />
         </Stack>
       </form>
     </Container>

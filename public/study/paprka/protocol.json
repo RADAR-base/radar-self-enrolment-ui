@@ -267,9 +267,22 @@
       "components": {
         "MuiButton": {
           "defaultProps": {
-            "disableElevation": true,
-            "sx": {
-              "borderRadius": 3
+            "disableElevation": true
+          },
+          "styleOverrides": {
+            "root": {
+              "variants": [
+                {
+                  "props": { "variant": "text"},
+                  "style": {
+                    ":hover": {
+                      "background-color": "#0297A7",
+                      "color": "#FFFFFF"
+                    }
+                  }
+                }
+              ],
+              "borderRadius": 16
             }
           }
         },

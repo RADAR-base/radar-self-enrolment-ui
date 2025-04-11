@@ -105,16 +105,17 @@ function StepIntroContent(): React.ReactNode {
       </Grid>
       <Grid size={{ xs: 12, sm: 8 }} textAlign={'left'}>
         <Typography variant="body1">
-        If <strong>you are</strong> logged into the study website on your phone 
-        <ul>
-          <li>Press app store icon to take you to the study app </li>
+            If <strong>you are</strong> logged into the study website on your phone
+            <div>
+              <ul>
+                <li>Press app store icon to take you to the study app </li>
 
-          <li>Press Get next to RADAR active RMT app</li>
+                <li>Press Get next to RADAR active RMT app</li>
 
-          <li>Press Open</li>
-        </ul>
-
-        You should now see the study app ‘Welcome page’. 
+                <li>Press Open</li>
+              </ul>
+            </div>
+            You should now see the study app ‘Welcome page’. 
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, sm: 4 }} alignContent={'center'}>
@@ -122,11 +123,13 @@ function StepIntroContent(): React.ReactNode {
       </Grid>
       <Grid size={{ xs: 12, sm: 8 }} textAlign={'left'}>
         <Typography variant="body1">
-        If you <strong>are not</strong> logged into the study website on your phone  
-        <ul>
-          <li>From your phone, go to the app store. </li>
-          <li>Search for RADAR active RMT. It looks like this</li>
-        </ul>
+          If you <strong>are not</strong> logged into the study website on your phone  
+          <div>
+            <ul>
+              <li>From your phone, go to the app store. </li>
+              <li>Search for RADAR active RMT. It looks like this</li>
+            </ul>
+          </div>
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, sm: 4 }} alignContent={'center'}>
@@ -135,7 +138,7 @@ function StepIntroContent(): React.ReactNode {
           width={254}
           height={291}
           alt={"RADAR Active RMT app in app store"}
-          style={{ borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)' }}
+          style={{ borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)', alignSelf: 'center' }}
         />
       </Grid>
 
@@ -209,44 +212,25 @@ function StepByStepContent(): React.ReactNode {
   const protocol = useContext(ProtocolContext);
 
   return <React.Fragment>
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">1. Press Start</Typography>
+        <Grid size={12} textAlign={'left'}>
+          <Typography variant="body1">1. Press <strong>Start</strong></Typography>
         </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-        <Image 
-            src={''}
-            width={280}
-            height={500}
-            alt='An image showing the RADAR App Welcome page'
-            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
-          />
+        <Grid size={12} textAlign={'left'}>
+          <Typography variant="body1">2. Press <strong>Enrol</strong></Typography>
         </Grid>
-
-
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">2. Press Enrol</Typography>
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-        <Image 
-            src={withBasePath('')}
-            width={280}
-            height={500}
-            alt='An image showing the RADAR App Enrol page'
-            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
-          />
-        </Grid>
-
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">3. Scan QR code or Press Enter Study ID</Typography>
+        <Grid size={12} textAlign={'left'}>
+          <Typography variant="body1">3. <strong>Scan QR code</strong> or Press <strong>Enter Study ID</strong></Typography>
           <Typography variant="body1">
-            If scanning QR code:
+            <em>If scanning QR code:</em>
             <br />
             Press scan, enable camera and scan the code.
             <br />
             Press login.
           </Typography>
           <Typography variant="body1" paddingTop={2}>
-            If entering Study ID: Enter 
+          <em>If entering Study ID:</em>
+          <br />
+          Enter 
             <Button color="inherit" variant="text" endIcon={<ContentCopyIcon />}
                         onClick={() =>navigator.clipboard.writeText(protocol.studyId)}
                         sx={{userSelect: 'text'}}>
@@ -259,43 +243,29 @@ function StepByStepContent(): React.ReactNode {
             <br />
             Enter your email and password you used for the study site </Typography>
         </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-        <Image 
-            src={withBasePath('')}
-            width={230}
-            height={500}
-            alt='An image showing the RADAR App login options'
-            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
-          />
+        <Grid size={12} textAlign={'left'}>
+          <Typography variant="body1">4. Press <strong>Next</strong> - on Registration page</Typography>
         </Grid>
-
-
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Press Next - on Registration page</Typography>
-          <Typography variant="body1"></Typography>
+        <Grid size={12} textAlign={'left'}>
+          <Typography variant="body1">5. Press <strong>Start</strong> on Registration Complete page</Typography>
         </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-        <Image 
-            src={withBasePath('')}
-            width={230}
-            height={500}
-            alt='An image showing the RADAR App registration page'
-            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
-          />
+        <Grid size={12} textAlign={'left'}>
+          <Typography variant="body1">6. Press <strong>Start</strong> on Today page</Typography>
         </Grid>
-
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3"></Typography>
-          <Typography variant="body1"></Typography>
+        <Grid size={12} textAlign={'left'}>
+          <Typography variant="body1">7. Press <strong>turn on all</strong> or click all the boxes <strong>but</strong> blood glucose, resting energy, sleep and weight.</Typography>
         </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-        <Image 
-            src={withBasePath('')}
-            width={230}
-            height={500}
-            alt='An image showing the RADAR App registration complete page'
-            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
-          />
+        <Grid size={12} textAlign={'left'}>
+          <Typography variant="body1">8. Press <strong>allow</strong> in upper right corner.</Typography>
+        </Grid>
+        <Grid size={12} textAlign={'left'}>
+          <Typography variant="body1">9. Press <strong>Begin</strong> on HealthKit page.</Typography>
+        </Grid>
+        <Grid size={12} textAlign={'left'}>
+          <Typography variant="body1">10. Press <strong>finish</strong>, wait to see the <strong>Done</strong> button and press it.</Typography>
+        </Grid>
+        <Grid size={12} textAlign={'left'}>
+          <Typography variant="body1">11. Press <strong>back to study</strong> to return to the study website.</Typography>
         </Grid>
   </React.Fragment>
 }
@@ -373,7 +343,7 @@ export function HealthKitPage() {
   const router = useRouter()
   const pathname = usePathname()
   const [isFetchingToken, setIsFetchingToken] = useState(false)
-  const [armtAuthUrl, setArmtAuthUrl] = useState<any>(undefined)
+  const [armtAuthUrl, setArmtAuthUrl] = useState<any>("undefined")
   const [stepIdx, setStepIdx] = useState<number>(0)
 
   const [code, setCode] = useState<string>()
@@ -424,8 +394,7 @@ export function HealthKitPage() {
       zIndex={1000}>
       <Divider />
       <Box
-        paddingTop={4}
-        paddingBottom={4}
+        padding={4}
         display={"flex"}
         alignItems={'center'}
         sx={{ 
@@ -455,10 +424,10 @@ export function HealthKitPage() {
               {stepContent[stepIdx]}
             </Grid>
             <br />
-            {ControlButtons}
           </Box>)
         }
       </Container>
+      {ControlButtons}
     </RadarCard>
   </Container>
   )

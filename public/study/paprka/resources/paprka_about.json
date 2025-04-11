@@ -47,8 +47,8 @@
       "text_validation_type_or_show_slider_number": "postcode"
     },
     {
-        "field_name": "paprka_nhs_heading",
-        "form_name": "paprka_nhs",
+        "field_name": "paprka_about_nhs_heading",
+        "form_name": "paprka_about",
         "section_header": "",
         "field_type": "descriptive",
         "field_label": "###NHS Number\n\nYour NHS number is unique to you. It helps healthcare staff and service providers identify you correctly and match your details to your health records. Your NHS number is a 10 digit number, like 485 777 3456.\n\n\nWe need your NHS number to access your NHS record. You can find this number by:\n- Using NHS Find Your NHS Number webpage - https://www.nhs.uk/nhs-services/online-services/find-nhs-number/\n- You can find your NHS number in any documents or letters sent to you by the NHS, such as your prescriptions, test results, hospital referral letters or appointment letters.\n- You can find it by logging in to the NHS App (you'll need to register if you have not used it before) or some GP online services.\n- You can also call your GP surgery and ask them for your NHS number.\n",
@@ -68,8 +68,8 @@
         "evaluated_logic": ""
     },
     {
-        "field_name": "paprka_nhs_number",
-        "form_name": "paprka_nhs",
+        "field_name": "paprka_about_nhs_number",
+        "form_name": "paprka_about",
         "field_type": "text",
         "field_label": "",
         "required_field": "true",
