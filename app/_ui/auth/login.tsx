@@ -6,24 +6,24 @@ import { useFormik } from "formik"
 import { withBasePath } from "@/app/_lib/util/links"
 import { getCsrfToken } from '@/app/_lib/auth/ory/util'
 import { ParticipantContext } from '@/app/_lib/auth/provider.client'
+import { IOryLoginFlow } from '@/app/_lib/auth/ory/flows.interface'
 
 interface LoginProps {
-    onLogin?: () => void
+    onLogin?: (response?: Response) => void
     redirectTo?: string
     loginChallenge?: string
     flow?: IOryLoginFlow
 }
 
 export function LoginComponent(props: LoginProps) {
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
   const router = useRouter()
-
   const participant = useContext(ParticipantContext)
   if (participant?.loggedIn) {
     router.back()
   }
 
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
   let [errorText, setErrorText] = useState<string>('');
   let [flow, setFlow] = useState<IOryLoginFlow | undefined>(props.flow);
 
@@ -67,7 +67,7 @@ export function LoginComponent(props: LoginProps) {
 
   const displayErrors = (flow: IOryLoginFlow) => {
     if (flow) {
-      if (flow.ui.messages.length > 0) {
+      if (flow.ui.messages?.length > 0) {
         setErrorText(flow.ui.messages[0].text)
       }
       flow.ui.nodes.filter(node => node.messages.length > 0).forEach(
@@ -87,7 +87,8 @@ export function LoginComponent(props: LoginProps) {
   }, [flow])
 
   const onLogin = props.onLogin ? props.onLogin : () => {
-    window.location.replace(props.redirectTo ?? '/')
+    router.replace(props.redirectTo ?? '/')
+    router.refresh()
   }
 
   const formik = useFormik({
@@ -99,13 +100,19 @@ export function LoginComponent(props: LoginProps) {
         {
         const res = await login(values.identifier, values.password)
         if (res.ok) {
-          onLogin()
+          onLogin(res)
         } else {
-          const data = await res.json()
-          displayErrors(data)
-          setFlow(data)
+          if (res.status == 422) {
+            const data = await res.json()
+            const url = data['redirect_browser_to']
+            if (url) {router.replace(url)}
+          } else {
+            const data = await res.json() as IOryLoginFlow
+            displayErrors(data)
+            setFlow(data)
         }
       }
+    }
   });
 
   return (

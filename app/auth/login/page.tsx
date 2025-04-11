@@ -7,6 +7,7 @@ import { redirect  } from 'next/navigation'
 import { withBasePath } from '@/app/_lib/util/links';
 import { createLoginFlow } from '@/app/_lib/auth/ory/kratos';
 import { cookies } from 'next/headers';
+import { IOryLoginFlow } from '@/app/_lib/auth/ory/flows.interface';
 
 
 export default async function Page({

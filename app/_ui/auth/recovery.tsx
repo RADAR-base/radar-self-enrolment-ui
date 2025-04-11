@@ -2,11 +2,18 @@
 import { Box, Button, CircularProgress, Container, Link, Stack, TextField, Typography } from '@mui/material';
 import { RadarCard } from '@/app/_ui/components/base/card';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { withBasePath } from '@/app/_lib/util/links';
 import { getCsrfToken } from '@/app/_lib/auth/ory/util';
 import { useFormik } from 'formik';
 import Yup from '@/app/_lib/armt/validation/yup'
+import { ParticipantContext } from '@/app/_lib/auth/provider.client';
+import { IOryErrorFlow, IOryRecoveryFlow } from '@/app/_lib/auth/ory/flows.interface';
+
+
+function ErrorComponent(props: {}) {
+  return <div></div>
+}
 
 interface EnterEmailRecoveryComponentProps {
   flow?: IOryRecoveryFlow
@@ -97,6 +104,7 @@ interface EmailSentComponentProps {
 }
 
 function EmailSentComponent(props: EmailSentComponentProps) {
+  const router = useRouter()
   const [errorText, setErrorText] = useState<string>()
   async function submit(code: string) {
     const body = {
@@ -114,6 +122,8 @@ function EmailSentComponent(props: EmailSentComponentProps) {
       if (res.status == 422) {
         const data = await res.json()
         const redirUri = new URL(data.redirect_browser_to)
+        router.push('account/settings' + redirUri.search)
+        router.refresh()
       } else {
         const data = await res.json()
         props.setFlow(data)
@@ -145,7 +155,7 @@ function EmailSentComponent(props: EmailSentComponentProps) {
               error={(formik.errors.code != undefined)}
               />
       <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} width={'100%'}>
-        <Button color="primary" variant="contained" onClick={() => {}}>
+        <Button color="primary" variant="contained" onClick={() => {router.refresh()}}>
           Back
         </Button>
         <Button color="primary" variant="contained" onClick={() => {}}>
@@ -166,13 +176,22 @@ interface RecoveryComponentProps {
 }
 
 export function RecoveryComponent(props: RecoveryComponentProps): React.ReactElement {
+  const router = useRouter()
   const searchParams = useSearchParams()
-  const [flow, setFlow] = useState<IOryRecoveryFlow | undefined>(props.flow)
+  const [flow, setFlow] = useState<IOryRecoveryFlow | IOryErrorFlow | undefined>(props.flow)
   const [email, setEmail] = useState<string>()
-  const [content, setContent] = useState<React.ReactElement>(<EnterEmailRecoveryComponent flow={flow} setFlow={setFlow} email={email} setEmail={setEmail} />)
+  const [content, setContent] = useState<React.ReactElement>((flow && "state" in flow) ? 
+      <EnterEmailRecoveryComponent flow={flow} setFlow={setFlow} email={email} setEmail={setEmail} /> :
+      <CircularProgress style={{alignSelf: 'center'}}/>)
   const flowId = searchParams.get('flow')
+  const userSession = useContext(ParticipantContext)
+
 
   useEffect(() => {
+    if (userSession?.loggedIn) {
+      router.replace('./')
+      router.refresh()
+    }
     if (flow == undefined) {
       if (flowId == null) {
         fetch(withBasePath('/api/ory/recovery/browser')).then(
@@ -202,16 +221,26 @@ export function RecoveryComponent(props: RecoveryComponentProps): React.ReactEle
     }
 
   if (flow) {
-    switch (flow.state) {
-      case 'choose_method':
-        setContent(<EnterEmailRecoveryComponent flow={flow} setFlow={setFlow} email={email} setEmail={setEmail} />)
-        break
-      case 'sent_email':
-        setContent(<EmailSentComponent flow={flow} setFlow={setFlow} />)
-        break
-      default:
-        setContent(<CircularProgress style={{alignSelf: 'center'}}/>)
-        break
+    if ("state" in flow) {
+      switch (flow.state) {
+        case 'choose_method':
+          setContent(<EnterEmailRecoveryComponent flow={flow} setFlow={setFlow} email={email} setEmail={setEmail} />)
+          break
+        case 'sent_email':
+          setContent(<EmailSentComponent flow={flow} setFlow={setFlow} />)
+          break
+        default:
+          setContent(<CircularProgress style={{alignSelf: 'center'}}/>)
+          break
+      }
+    } else {
+      switch (flow.error.id) {
+        case 'session_already_available':
+          break
+        default:
+          setContent(<ErrorComponent />)
+          break
+      }
     }
   }
 

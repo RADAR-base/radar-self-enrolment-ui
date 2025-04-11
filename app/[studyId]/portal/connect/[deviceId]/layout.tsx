@@ -11,7 +11,7 @@ export default async function PageLayout({children, params}: Readonly<{children:
   if (connectTask == undefined) {
     notFound()
   }
-  if  (!(connectTask.metadata.options.devices as string[]).some(d => d == params.deviceId)) {
+  if  (!(connectTask.metadata.options.devices as {id: string, title: string, logo_src: string, description: string}[]).some(d => d.id == params.deviceId)) {
     notFound()
   }
   return <React.Fragment>{children}</React.Fragment>

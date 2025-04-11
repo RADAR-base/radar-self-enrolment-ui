@@ -1,11 +1,10 @@
 "use client";
-import { Box, Button, Card, CircularProgress, Stack, Typography } from "@mui/material";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { Box, Button, Card, Stack, Typography } from "@mui/material";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { OrySession } from "@/app/_lib/auth/ory/types";
 import { withBasePath } from "@/app/_lib/util/links";
-import { acceptConsentRequest } from "@/app/_lib/auth/ory/hydra";
+import { RadarCard } from "@/app/_ui/components/base/card";
 
 function userIsParticipant(userSession: any): boolean {
   return userSession?.identity?.schema_id == "subject"
@@ -41,17 +40,13 @@ function getConsentRequest(consentChallenge: string,
   )
 }
 
-function ConsentCard(params: {children: React.ReactElement}) {
-  return <Card><Box display={'flex'} alignItems={'center'} justifyContent={'center'} width={300} height={350}>{params.children}</Box></Card>
-}
-
-function ConsentForm(props: {accept: (scopes: string[]) => void, userSession: any, scopes: string[]}) {
+function ConsentForm(props: {accept: (scopes: string[]) => void, reject: () => void, userSession: any, scopes: string[]}) {
   return   <Stack padding={2}>
               {props.userSession && props.userSession['identity']['traits']['email']}
               <Typography variant='subtitle1'>Requested Scopes</Typography>
               {props.scopes && props.scopes.map((s, i) => <Typography key={i}>{s}</Typography>)}
               <Box display='flex' flexDirection={'row'} justifyContent={'space-between'}>
-                <Button>Reject</Button>
+                <Button onClick={() => props.reject()}>Reject</Button>
                 <Button onClick={() => props.accept(props.scopes)}>Accept</Button>
               </Box>
             </Stack>
@@ -68,9 +63,6 @@ export default function Page() {
   const [accepted, setAccepted] = useState<boolean>(false)
 
   const consentChallenge = searchParams.get('consent_challenge') ?? ""
-
-  async function acceptSkipConsent() {
-  }
 
   function accept() {
     const body = {
@@ -95,10 +87,41 @@ export default function Page() {
           )
         } else {
           console.log(r)
+          setAccepted(false)
         }
       }
     )
   }
+
+
+  function reject() {
+    const body = {
+      consentAction: 'reject',
+      grantScope: scopes,
+      remember: 'true',
+    }
+    fetch(withBasePath('/api/consent?' + new URLSearchParams({
+      consent_challenge: consentChallenge
+    })), {
+      method: 'POST',
+      body: JSON.stringify(body)
+    }).then(
+      (r) => {
+        if (r.ok) {
+          r.json().then(
+            (d) => {
+              console.log(d)
+              window.location.replace(d.redirect_to)
+            }
+          )
+        } else {
+          console.log(r)
+          setAccepted(false)
+        }
+      }
+    )
+  }
+
   useEffect(() => {
     if (consentChallenge == "") {
       router.replace('/')
@@ -114,7 +137,9 @@ export default function Page() {
       // Set error content
     }
     if ((scopes.length > 0) && (userSession != undefined)) {
-      if (userIsParticipant(userSession)) {
+      if (userIsParticipant(userSession) && 
+        (consent?.client?.client_id == 'SEP') || 
+        (consent?.client?.client_id == 'aRMT')) {
         accept()
       } else {
         setIsLoading(false)
@@ -125,7 +150,8 @@ export default function Page() {
   if ((!!consent?.client?.skip_consent) && (!!userSession)) {
     accept()
   }
+
   return isLoading ? 
               <div></div>
-            : <ConsentCard><ConsentForm accept={accept} userSession={userSession} scopes={scopes} /></ConsentCard>
+            : <RadarCard><ConsentForm accept={accept} reject={reject} userSession={userSession} scopes={scopes} /></RadarCard>
 }

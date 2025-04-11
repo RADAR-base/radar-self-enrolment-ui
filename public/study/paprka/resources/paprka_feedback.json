@@ -4,12 +4,228 @@
         "form_name": "paprka_feedback",
         "field_type": "descriptive",
         "section_header": "",
-        "field_label": "##Give us your views\n\nYour experience is important to us. If you think we can improve the way you sign up to be a part of our study, please let us know."
+        "field_label": "##TELL US WHAT YOU THINK\n\nYour experience is important to us. Help us learn to improve our study process."
     },
     {
         "field_name": "paprka_feedback_data_collection",
         "form_name": "paprka_feedback",
-        "section_header": "How easy did you find the data collection process?",
+        "section_header": "How easy did you find the data collection process? did you find joining the PAPrKA study (for example completing consent form, registering for a task) ?",
+        "field_type": "dropdown",
+        "field_label": "",
+        "select_choices_or_calculations": [
+            {
+                "code": "0",
+                "label": "0 - Very difficult"
+            },
+            {
+                "code": "1",
+                "label": "1"
+            },
+            {
+                "code": "2",
+                "label": "2"
+            },
+            {
+                "code": "3",
+                "label": "3"
+            },
+            {
+                "code": "4",
+                "label": "4"
+            },
+            {
+                "code": "5",
+                "label": "5"
+            },
+            {
+                "code": "6",
+                "label": "6"
+            },
+            {
+                "code": "7",
+                "label": "7"
+            },
+            {
+                "code": "8",
+                "label": "8"
+            },
+            {
+                "code": "9",
+                "label": "9"
+            },
+            {
+                "code": "10",
+                "label": "10 - Very easy"
+            }
+        ],
+        "required_field": "true"
+    },
+    {
+        "field_name": "paprka_feedback_task_1",
+        "form_name": "paprka_feedback",
+        "section_header": "How did you find doing Task 1?",
+        "field_type": "dropdown",
+        "field_label": "",
+        "select_choices_or_calculations": [
+            {
+                "code": "0",
+                "label": "0 - Very difficult"
+            },
+            {
+                "code": "1",
+                "label": "1"
+            },
+            {
+                "code": "2",
+                "label": "2"
+            },
+            {
+                "code": "3",
+                "label": "3"
+            },
+            {
+                "code": "4",
+                "label": "4"
+            },
+            {
+                "code": "5",
+                "label": "5"
+            },
+            {
+                "code": "6",
+                "label": "6"
+            },
+            {
+                "code": "7",
+                "label": "7"
+            },
+            {
+                "code": "8",
+                "label": "8"
+            },
+            {
+                "code": "9",
+                "label": "9"
+            },
+            {
+                "code": "10",
+                "label": "10 - Very easy"
+            }
+        ],
+        "required_field": "true"
+    },
+    {
+        "field_name": "paprka_feedback_task_2",
+        "form_name": "paprka_feedback",
+        "section_header": "How did you find doing Task 2?",
+        "field_type": "dropdown",
+        "field_label": "",
+        "select_choices_or_calculations": [
+            {
+                "code": "0",
+                "label": "0 - Very difficult"
+            },
+            {
+                "code": "1",
+                "label": "1"
+            },
+            {
+                "code": "2",
+                "label": "2"
+            },
+            {
+                "code": "3",
+                "label": "3"
+            },
+            {
+                "code": "4",
+                "label": "4"
+            },
+            {
+                "code": "5",
+                "label": "5"
+            },
+            {
+                "code": "6",
+                "label": "6"
+            },
+            {
+                "code": "7",
+                "label": "7"
+            },
+            {
+                "code": "8",
+                "label": "8"
+            },
+            {
+                "code": "9",
+                "label": "9"
+            },
+            {
+                "code": "10",
+                "label": "10 - Very easy"
+            }
+        ],
+        "required_field": "true"
+    },
+    {
+        "field_name": "paprka_feedback_task_3",
+        "form_name": "paprka_feedback",
+        "section_header": "How did you find doing Task 3?",
+        "field_type": "dropdown",
+        "field_label": "",
+        "select_choices_or_calculations": [
+            {
+                "code": "0",
+                "label": "0 - Very difficult"
+            },
+            {
+                "code": "1",
+                "label": "1"
+            },
+            {
+                "code": "2",
+                "label": "2"
+            },
+            {
+                "code": "3",
+                "label": "3"
+            },
+            {
+                "code": "4",
+                "label": "4"
+            },
+            {
+                "code": "5",
+                "label": "5"
+            },
+            {
+                "code": "6",
+                "label": "6"
+            },
+            {
+                "code": "7",
+                "label": "7"
+            },
+            {
+                "code": "8",
+                "label": "8"
+            },
+            {
+                "code": "9",
+                "label": "9"
+            },
+            {
+                "code": "10",
+                "label": "10 - Very easy"
+            }
+        ],
+        "required_field": "true"
+    },
+    {
+        "field_name": "paprka_feedback_task_4",
+        "form_name": "paprka_feedback",
+        "section_header": "How did you find doing Task 4?",
         "field_type": "dropdown",
         "field_label": "",
         "select_choices_or_calculations": [
@@ -63,7 +279,7 @@
     {
         "field_name": "paprka_feedback_referrer",
         "form_name": "paprka_feedback",
-        "section_header": "Where did you hear about this study?",
+        "section_header": "Where did you hear about PAPrKA study?",
         "field_type": "dropdown",
         "field_label": "",
         "select_choices_or_calculations": [
@@ -78,41 +294,72 @@
             {
                 "code": "facebook",
                 "label": "Facebook"
-            },            {
+            },
+            {
                 "code": "x",
                 "label": "X (formerly Twitter)"
-            },            {
+            },
+            {
                 "code": "youtube",
                 "label": "YouTube"
-            },            {
+            },
+            {
                 "code": "instagram",
                 "label": "Instagram"
-            },            {
+            },
+            {
                 "code": "linkedin",
                 "label": "LinkedIn"
-            },            {
+            },
+            {
                 "code": "wearable_manufacturer",
                 "label": "Through advertisement by my fitness tracker manufacturer"
-            },            {
+            },
+            {
                 "code": "njr",
                 "label": "Through the National Joint Registry"
-            },            {
+            },
+            {
                 "code": "friend",
                 "label": "Through a friend"
-            },            {
+            },
+            {
                 "code": "poster",
                 "label": "Through a poster"
-            },            {
+            },
+            {
                 "code": "patient_group",
                 "label": "Through a patient group"
+            },
+            {
+                "code": "versus_arthritis",
+                "label": "Versus Arthritis"
+            },
+            {
+                "code": "escape_pain",
+                "label": "ESCAPE-pain"
+            },
+            {
+                "code": "other",
+                "label": "Others (please specify where)"
             }
         ],
         "required_field": "true"
     },
     {
+        "field_name": "paprka_feedback_referrer_other",
+        "form_name": "paprka_feedback",
+        "field_type": "text",
+        "field_label": "Referrer (other)",
+        "required_field": false,
+        "text_validation_type_or_show_slider_number": "",
+        "evaluated_logic": "results['paprka_feedback_referrer'] == 'other'"
+    },
+    {
         "field_name": "paprka_feedback_additional",
         "form_name": "paprka_feedback",
-        "section_header": "Please provide any additional feedback, comments, suggestions, or areas for improvement, if you have any.",
+        "section_header": "Please provide any additional feedback, comments, suggestions, or areas for improvement.",
+        "field_note": "Kindly write it.",
         "field_type": "notes"
     }
 ]

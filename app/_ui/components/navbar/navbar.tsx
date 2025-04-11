@@ -30,7 +30,9 @@ function SmallMenu(props: MenuProps) {
          alignItems='center'
          justifyContent='flex-end'
          display='flex'>
+      {(props.loggedIn && props.studyId) && <NextButton href={`/${props.studyId}/portal`}>Portal</NextButton>}
       <AccountButton />
+      
       <IconButton
         size="large"
         aria-label="account of current user"
@@ -104,6 +106,10 @@ function NavBar(props: NavBarProps) {
   const matches = useMediaQuery(theme.breakpoints.down('sm'));
   const participant = useContext(ParticipantContext);
   const study = useContext(ProtocolContext)
+  const router = useRouter()
+  const onLogoClick = () => {
+    router.push(`/${study.studyId}`)
+  }
   return (
   <AppBar color='inherit' sx={{'overflowX': 'auto'}}>
     <Container maxWidth='lg' sx={{padding: 2}}> 
@@ -115,8 +121,20 @@ function NavBar(props: NavBarProps) {
               alignItems='center'
               gap={2}
               paddingRight={4}>
-          {props.logo_src &&<Box height={"3rem"}><img src={withBasePath(props.logo_src)} alt='Study logo' height={"100%"}></img></Box>}
-          <Typography display={{'xs': 'none', 'md': 'block'}} variant="h1" align="center">{props.title}</Typography>
+          <Box onClick={onLogoClick} style={{cursor: 'pointer'}} display={'flex'}
+               flexDirection={'row'} flexWrap={'nowrap'}
+               alignItems={'center'} gap={1}>
+            {props.logo_src &&
+              <Box height={"3rem"}>
+                <img src={withBasePath(props.logo_src)}
+                    alt='Study logo' height={"100%"}>
+                </img>
+              </Box>
+            }
+            <Typography display={{'xs': 'none', 'md': 'block'}} variant="h1" align="center" style={{userSelect: 'none'}}>
+              {props.title}
+            </Typography>
+          </Box>
         </Box>
         {matches ? <SmallMenu links={props.links} loggedIn={participant?.loggedIn ?? false} studyId={study.studyId} /> : <LargeMenu links={props.links} loggedIn={participant?.loggedIn ?? false} studyId={study.studyId} />}
       </Toolbar>

@@ -105,7 +105,9 @@ function FieldFromRedcap(field: RadarRedcapFieldDefinition): ArmtItem {
           title: field.section_header,
           description: field.field_note,
           label: field.field_label,
-          views: (field.select_choices_or_calculations ? field.select_choices_or_calculations.map((e) => e.code) : ['year', 'month', 'day']) as ('year' | 'month' | 'day')[]
+          views: (field.select_choices_or_calculations ? field.select_choices_or_calculations.map((e) => e.code) : ['year', 'month', 'day']) as ('year' | 'month' | 'day')[],
+          minDate: field.text_validation_min,
+          maxDate: field.text_validation_max
         }
         validation = getTextSchema(field)
       } else {

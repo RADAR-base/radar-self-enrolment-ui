@@ -3,6 +3,7 @@ import { withBasePath } from "@/app/_lib/util/links";
 import { Box, Button, Container, Typography, useTheme } from "@mui/material";
 import Image from "next/image";
 import { ForwardedRef } from "react";
+import { MarkdownContainer } from "../base/markdown";
 
 
 interface ICallToAction {
@@ -39,7 +40,7 @@ function CTAButtons(cta?: ICallToAction, cta2?: ICallToAction) {
 
 export interface IHeroBlock {
   blockType: 'hero'
-  title?: string
+  title?: any
   subtitle?: string
   heroImage?: IHeroImage
   cta?: ICallToAction
@@ -47,16 +48,17 @@ export interface IHeroBlock {
 }
 
 export function HeroBlock(props: IHeroBlock, ref: ForwardedRef<HTMLDivElement>) {
-  const flex = props.heroImage ? 0.6 : 1.2
+  const flex = props.heroImage ? 0.6 : 0.6
   return (
     <Box 
       display={"flex"} 
       flexDirection={{xs: "column-reverse", sm: "row"}}
+      justifyContent={'flex-start'}
       minHeight={"40vh"}
     >
-      <Box display={"flex"} flexDirection={"column"} textAlign={{xs: "center", sm: "left"}} flexShrink={1} flex={flex} margin="auto" gap={1}>
-        <Typography variant="h1">{props.title}</Typography>
-        <Typography variant="subtitle1">{props.subtitle}</Typography>
+      <Box display={"flex"} flexDirection={"column"} justifyContent={'center'} textAlign={{xs: "center", sm: "left"}} flexShrink={1} flex={flex} gap={1}>
+        {props.title?.children ? <Typography variant="h1" {...props.title}></Typography> : <Typography variant="h1">{props.title}</Typography> }
+        <MarkdownContainer>{props.subtitle}</MarkdownContainer>
         {CTAButtons(props.cta, props.cta2)}
       </Box>
       {props.heroImage && <Box flex={1}>

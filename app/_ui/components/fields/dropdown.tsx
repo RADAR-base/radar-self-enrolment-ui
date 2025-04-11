@@ -30,7 +30,7 @@ export function ArmtDropdownField(props: ArmtDropdownFieldProps, ref: ForwardedR
           label={props.label}
         >
           {props.choices.map((choice) => (
-            <MenuItem value={choice.code} key={props.id + '.' + choice.code}>{choice.label}</MenuItem>
+            <MenuItem sx={{whiteSpace: 'normal'}} value={choice.code} key={props.id + '.' + choice.code}>{choice.label}</MenuItem>
           ))}          
         </TextField>
   </Box>

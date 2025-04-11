@@ -41,11 +41,12 @@ interface YesNoFieldProps extends YesNoButtonProps {
   description?: string
   errorText?: string
   setFieldValue: (id: string, value: boolean) => void
+  autoFocus?: boolean
 }
 
 export function YesNoField({label, description, errorText, setFieldValue, ...props}: YesNoFieldProps, ref: ForwardedRef<HTMLDivElement>) {
   return (
-    <FormControl sx={{width: '100%'}}>
+    <FormControl sx={{width: '100%'}} autoFocus={props.autoFocus ?? false}>
       <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1}>
       {props.title && <Typography variant="h4" component={'span'}>{props.title}</Typography>}
         <Box display={"flex"} flexDirection={{xs: "column", sm: "row"}} justifyContent={"space-between"} alignItems={{xs: "normal", sm: "center"}} gap={{xs: 1, sm: 4}}>
@@ -54,7 +55,7 @@ export function YesNoField({label, description, errorText, setFieldValue, ...pro
               <Typography variant="h4">{label}</Typography>
               <MarkdownContainer>{description}</MarkdownContainer>
             </Box>}
-          <YesNoButton {...props} onChange={getYesNoOnChangeHandler(setFieldValue)}/>
+          <YesNoButton {...props} onChange={getYesNoOnChangeHandler(setFieldValue)} />
         </Box>
         <Typography variant="overline"  color="error">{errorText}</Typography>
       </Box>
