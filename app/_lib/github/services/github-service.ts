@@ -6,8 +6,8 @@ import { NoContentError } from "../utils/errors/NoContentError"
 import githubClient from "./github-client"
 
 const options: DataCacheOptions = {
-  cacheDuration: GITHUB_CONFIG.CACHE_DURATION, // 3 minutes
-  maxSize: GITHUB_CONFIG.CACHE_SIZE, // 50
+  cacheDuration: GITHUB_CONFIG.CACHE_DURATION,
+  maxSize: GITHUB_CONFIG.CACHE_SIZE,
 }
 
 interface TreeNode {
@@ -90,9 +90,7 @@ export class GithubService {
     const treeResponse = JSON.parse(JSON.stringify(content)) as TreeResponse
     return this.extractFileUrlMap(
       treeResponse,
-      projectName,
-      definitionsFor,
-      version,
+      projectName
     )
   }
 
@@ -132,15 +130,6 @@ export class GithubService {
    */
   async fetchDataWithoutCache(url: string): Promise<string> {
     return githubClient.getData(url)
-  }
-
-  buildDefinitionFileName(
-    projectName: string,
-    page: string,
-    version: string,
-    fileExtension: string,
-  ): string {
-    return `${projectName}_${page}_${version}.${fileExtension}`
   }
 
   private findPathTo(
@@ -188,8 +177,6 @@ export class GithubService {
   private extractFileUrlMap = (
     data: TreeResponse,
     projectName: string,
-    definitionsFor: string,
-    version: string,
   ): Map<string, string> => {
     return data.tree
       .filter(

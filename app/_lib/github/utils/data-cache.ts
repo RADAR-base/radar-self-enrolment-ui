@@ -42,7 +42,6 @@ export class DataCache<K, V> {
                 result = new CachedValue(data, this.cacheDuration)
                 this.dataMap.set(key, result)
                 this.refreshSize()
-            } else {
             }
         } catch (error) {
             result = new CachedValue<V>(undefined, 0, error as Error)
