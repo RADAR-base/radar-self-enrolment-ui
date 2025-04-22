@@ -3,10 +3,13 @@ import { withBasePath } from "@/app/_lib/util/links"
 import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 
-const RSA_BACKEND_URL = process.env.RSA_BACKEND_URL // 'https://dev.radarbasedev.co.uk/rest-sources/backend'
-const RSA_FRONTEND_URL = 'https://dev.radarbasedev.co.uk/rest-sources/authorizer'
-const RSA_REDIRECT_URL = 'https://dev.radarbasedev.co.uk/kratos-ui/'
+// const RSA_BACKEND_URL = process.env.RSA_BACKEND_URL // 'https://dev.radarbasedev.co.uk/rest-sources/backend'
+// const RSA_FRONTEND_URL = 'https://dev.radarbasedev.co.uk/rest-sources/authorizer'
+// const RSA_REDIRECT_URL = 'https://dev.radarbasedev.co.uk/kratos-ui/'
 
+const RSA_URL = process.env.RSA_URL
+const RSA_BACKEND_URL = RSA_URL + '/backend'
+const RSA_FRONTEND_URL = RSA_URL + '/authorizer'
 
 async function makeRestSourceUser(
   accessToken: string,
@@ -86,7 +89,6 @@ async function getRestSourceAuthLink(
 }
 
 export async function GET(request: NextRequest) {
-  const redirect_uri  = withBasePath(request.nextUrl.searchParams.get('redirect_uri') ?? RSA_REDIRECT_URL)
   const sourceType  = request.nextUrl.searchParams.get('device')
   if (sourceType == undefined) {
     return new NextResponse('A device search parameter must be specified', {status: 400})
@@ -105,6 +107,8 @@ export async function GET(request: NextRequest) {
   if (rsaUserId == null) {
     return new NextResponse('Could not create or get Rest Source Auth user', {status: 500})
   }
+
+  const redirect_uri  = withBasePath(request.nextUrl.searchParams.get('redirect_uri') ?? `/${studyId}/portal/connect/success=${sourceType}`)
   const authLink = await getRestSourceAuthLink(token.value, rsaUserId, redirect_uri)
   return new NextResponse(authLink)
 }
