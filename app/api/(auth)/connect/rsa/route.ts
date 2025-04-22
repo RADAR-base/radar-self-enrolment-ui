@@ -34,9 +34,12 @@ async function makeRestSourceUser(
         console.warn("User already exists:", data.message)
         return data.user.id
       } else {
-        console.log(`backend url: ${RSA_BACKEND_URL}`)
-        console.log(`frontend url: ${RSA_FRONTEND_URL}`)
-        console.log(response.body)
+        console.log(`url: ${RSA_BACKEND_URL}/users`)
+        console.log(`user: ${userId}`)
+        console.log(`study: ${projectId}`)
+        console.log(`source: ${sourceType}`)
+
+        console.log(data)
         throw new Error(
           `Failed to create user: ${data.message || response.statusText}`,
         )
