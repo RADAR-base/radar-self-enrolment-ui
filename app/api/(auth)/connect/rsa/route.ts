@@ -7,9 +7,8 @@ import { NextRequest, NextResponse } from "next/server"
 // const RSA_FRONTEND_URL = 'https://dev.radarbasedev.co.uk/rest-sources/authorizer'
 // const RSA_REDIRECT_URL = 'https://dev.radarbasedev.co.uk/kratos-ui/'
 
-const RSA_URL = process.env.RSA_URL
-const RSA_BACKEND_URL = RSA_URL + '/backend'
-const RSA_FRONTEND_URL = RSA_URL + '/authorizer'
+const RSA_BACKEND_URL = process.env.RSA_BACKEND_URL
+const RSA_FRONTEND_URL = process.env.RSA_FRONTEND_URL
 
 async function makeRestSourceUser(
   accessToken: string,
