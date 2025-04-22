@@ -15,18 +15,20 @@ async function makeRestSourceUser(
 ): Promise<string | null> {
   try {
     if (RSA_BACKEND_URL == undefined) {return null}
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`
+    }
+    const body = JSON.stringify({
+      userId: userId,
+      projectId: projectId,
+      sourceType: sourceType,
+      startDate: new Date().toISOString(),
+    })
     const response = await fetch(`${RSA_BACKEND_URL}/users`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({
-        userId: userId,
-        projectId: projectId,
-        sourceType: sourceType,
-        startDate: new Date().toISOString(),
-      }),
+      headers: headers,
+      body: body
     })
     if (!response.ok) {
       const data = await response.json()
@@ -34,12 +36,6 @@ async function makeRestSourceUser(
         console.warn("User already exists:", data.message)
         return data.user.id
       } else {
-        console.log(`url: ${RSA_BACKEND_URL}/users`)
-        console.log(`user: ${userId}`)
-        console.log(`study: ${projectId}`)
-        console.log(`source: ${sourceType}`)
-
-        console.log(data)
         throw new Error(
           `Failed to create user: ${data.message || response.statusText}`,
         )
