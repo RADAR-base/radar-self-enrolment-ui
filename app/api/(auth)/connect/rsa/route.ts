@@ -31,13 +31,14 @@ async function makeRestSourceUser(
       body: body
     })
     if (!response.ok) {
-      const data = await response.json()
-      if (response.status === 409 && data.user) {
-        console.warn("User already exists:", data.message)
+      
+      if (response.status === 409) {
+        const data = await response.json()
         return data.user.id
       } else {
+        const data = await response.text()
         throw new Error(
-          `Failed to create user: ${data.message || response.statusText}`,
+          `Failed to create user: ${data || response.statusText}`,
         )
       }
     }
