@@ -15,18 +15,20 @@ async function makeRestSourceUser(
 ): Promise<string | null> {
   try {
     if (RSA_BACKEND_URL == undefined) {return null}
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`
+    }
+    const body = JSON.stringify({
+      userId: userId,
+      projectId: projectId,
+      sourceType: sourceType,
+      startDate: new Date().toISOString(),
+    })
     const response = await fetch(`${RSA_BACKEND_URL}/users`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({
-        userId: userId,
-        projectId: projectId,
-        sourceType: sourceType,
-        startDate: new Date().toISOString(),
-      }),
+      headers: headers,
+      body: body
     })
     if (!response.ok) {
       const data = await response.json()
