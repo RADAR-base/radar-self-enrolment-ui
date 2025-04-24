@@ -6,7 +6,6 @@ import { NextRequest, NextResponse } from "next/server"
 const RSA_BACKEND_URL = process.env.RSA_BACKEND_URL
 const RSA_FRONTEND_URL = process.env.RSA_FRONTEND_URL
 
-
 async function makeRestSourceUser(
   accessToken: string,
   userId: string,
@@ -31,7 +30,6 @@ async function makeRestSourceUser(
       body: body
     })
     if (!response.ok) {
-      
       if (response.status === 409) {
         const data = await response.json()
         return data.user.id

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-const AUTH_BASE_URL = process.env.HYDRA_PUBLIC_URL + '/oauth2'
+const AUTH_BASE_URL = process.env.NEXT_PUBLIC_HYDRA_PUBLIC_URL + '/oauth2'
 const SEP_REDIRECT_URI = process.env.NEXT_PUBLIC_SEP_REDIRECT_URI ?? ''
 const ARMT_REDIRECT_URI = process.env.NEXT_PUBLIC_ARMT_REDIRECT_URI ?? ''
 const ARMT_CLIENT_ID = process.env.ARMT_CLIENT_ID ?? 'aRMT'
