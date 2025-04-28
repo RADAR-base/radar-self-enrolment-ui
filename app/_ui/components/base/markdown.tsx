@@ -1,4 +1,4 @@
-import { Button, Typography, Link } from '@mui/material'
+import { Button, Typography, Link, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material'
 import { getOverrides, MuiMarkdown } from 'mui-markdown'
 import Image from 'next/image'
 import HoverPopover from './hoverPopover'
@@ -58,6 +58,21 @@ export function MarkdownContainer({children, ...props }: MarkdownContainerProps)
             target: '_blank'
           }
         },
+        table: {
+          component: Table
+        },
+        tHead: {
+          component: TableHead
+        },
+        tr: {
+          component: TableRow
+        },
+        td: {
+          component: TableCell
+        },
+        tbody: {
+          component: TableBody
+        }
       }}
       {...props}>
       {children}
