@@ -12,9 +12,9 @@
       "appearance": {},
       "schedule": {},
       "metadata": {
-        "title": "ABOUT MY KNEE REPLACEMENT",
+        "title": "TASK 1: About my knee replacement",
         "order": 0,
-        "description": "8 quick questions.",
+        "description": "Eight quick questions.\n<em>Tip: You will need the month and year of your knee replacement surgery</em>",
         "optional": false,
         "type": "redcap_local",
         "path": "/public/study/paprka/resources/paprka_surgery.json"
@@ -25,9 +25,9 @@
       "appearance": {},
       "schedule": {},
       "metadata": {
-        "title": "ABOUT YOU",
+        "title": "TASK 2: About You",
         "order": 1,
-        "description": "4 quick questions.",
+        "description": "Four quick questions.\n<em>Tip: You will need your NHS number</em>",
         "optional": false,
         "type": "redcap_local",
         "path": "/public/study/paprka/resources/paprka_about.json"
@@ -38,9 +38,9 @@
       "appearance": {},
       "schedule": {},
       "metadata": {
-        "title": "CONNECT MY DEVICES",
+        "title": "TASK 3: Connect my devices",
         "order": 2,
-        "description": "Connect your Fitbit, Garmin, Oura Ring, iPhone or Apple Watch through a simple process.",
+        "description": "Connect one or more devices\n<em>Tip (for Garmin, Fitbit & Oura ring etc): You will need login details for your device\nTip (for Apple): You need to enter the study name PAPrKA; use the email and password from your PAPrKA account; best completed using a WiFi</em>",
         "optional": false,
         "type": "inbuilt",
         "inbuiltId": "connect",
@@ -77,7 +77,7 @@
       "appearance": {},
       "schedule": {},
       "metadata": {
-        "title": "TELL US WHAT YOU THINK",
+        "title": "TASK 4: Give us your feedback",
         "order": 3,
         "description": "7 quick questions about joining the study",
         "optional": true,
@@ -389,7 +389,7 @@
     },
     "portal": {
       "title": "What You Need to Complete PAPrKA Study Tasks",
-      "content": "<table cellspacing=\"0\" cellpadding=\"0\" class=\"t1\">\n  <tbody>\n    <tr>\n      <td valign=\"top\" class=\"td1\">\n        <p class=\"p2\"><span class=\"s1\"><b>Task 1</b></span></p>\n      </td>\n      <td valign=\"top\" class=\"td2\">\n        <p class=\"p3\"><span class=\"s1\">Month and Year of knee replacement surgery</span></p>\n      </td>\n    </tr>\n    <tr>\n      <td valign=\"top\" class=\"td3\">\n        <p class=\"p2\"><span class=\"s1\"><b>Task 2</b></span></p>\n      </td>\n      <td valign=\"top\" class=\"td4\">\n        <p class=\"p3\"><span class=\"s1\">NHS number</span></p>\n        <p class=\"p3\"><span class=\"s1\">You can find your NHS number here: <a href=\"https://www.nhs.uk/nhs-services/online-services/find-nhs-number/\"><span class=\"s3\">https://www.nhs.uk/nhs-services/online-services/find-nhs-number/</span></a> or sign into your NHS App or check any letter from your GP.</span></p>\n      </td>\n    </tr>\n    <tr>\n      <td valign=\"top\" class=\"td3\">\n        <p class=\"p2\"><span class=\"s1\"><b>Task 3 (for Fitbit, Garmin or Oura Ring users)</b></span></p>\n      </td>\n      <td valign=\"top\" class=\"td4\">\n        <p class=\"p3\"><span class=\"s1\">Login details for your Fitbit or Garmin or Oura Ring.</span></p>\n        <p class=\"p4\"><span class=\"s1\">\u00a0</span></p>\n      </td>\n    </tr>\n    <tr>\n      <td valign=\"top\" class=\"td3\">\n        <p class=\"p2\"><span class=\"s1\"><b>Task 3 (for iPhone or Apple watch users)</b></span></p>\n      </td>\n      <td valign=\"top\" class=\"td4\">\n        <p class=\"p3\"><span class=\"s1\">To login you will need, you may want to write it down</span></p>\n        <p class=\"p5\"><span class=\"s1\">1.</span><span class=\"s2\">\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 </span><span class=\"s1\">Study Name: <b>PAPrKA</b>\u00a0</span></p>\n        <p class=\"p5\"><span class=\"s1\">2.</span><span class=\"s2\">\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 </span><span class=\"s1\">Email address</span></p>\n        <p class=\"p5\"><span class=\"s1\">3.</span><span class=\"s2\">\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 </span><span class=\"s1\">Password and you used to set up your PAPrKA account.</span></p>\n        <p class=\"p6\"><span class=\"s1\">Preferably be connected to a WIFI</span></p>\n      </td>\n    </tr>\n    <tr>\n      <td valign=\"top\" class=\"td3\">\n        <p class=\"p2\"><span class=\"s1\"><b>Task 4</b></span></p>\n      </td>\n      <td valign=\"top\" class=\"td4\">\n        <p class=\"p6\"><span class=\"s1\">Your views on joining the study</span></p>\n      </td>\n    </tr>\n  </tbody>\n</table>\n<p>*When you have completed the task, click the \"Finished\" button on the top right.*</p>"
+      "content": "Please complete up to four tasks. The first three are necessary to take part, while ‘Give us your feedback’ is optional\n<em>When you have completed all tasks, click the \"Finished\" button.</em>\n<em>Once you click the finish button you will not be able to change your responses, but you will be able to see them.</em>"
     },
     "finishContent": {
       "title": "Thank you for completing the PAPrKA study tasks.",
