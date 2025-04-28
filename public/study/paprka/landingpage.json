@@ -12,11 +12,11 @@
             "sx": {"color": "white"},
             "cta": {
                 "text": "FAQs",
-                "href": "faqs"
+                "href": "paprka/faqs"
             },
             "cta2": {
                 "text" :"Join Study",
-                "href": "enrol"
+                "href": "paprka/enrol"
             }
           },
           {

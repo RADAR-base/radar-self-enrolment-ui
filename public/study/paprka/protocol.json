@@ -105,12 +105,12 @@
         {
           "fieldType": "yesno",
           "id": "criteria3",
-          "description": "Did you use a Fitbit, iPhone*, Apple Watch*, Garmin or Oura Ring to track your activity six months or more before your knee replacement? _*If you used an iPhone or Apple Watch, it automatically collects physical activity data so please select YES._\n"
+          "description": "Did you use a Fitbit, iPhone*, Apple Watch*, Garmin or Oura Ring to track your activity six months or more before your knee replacement?\n_*If you used an iPhone or Apple Watch, it automatically collects physical activity data so please select YES._\n"
         },
         {
           "fieldType": "yesno",
           "id": "criteria4",
-          "description": "Did you use a Fitbit, iPhone, Apple Watch, Garmin or Oura Ring to track your activity one year or more after your knee replacement? _*If you used an iPhone or Apple Watch, it automatically collects physical activity data so please select YES._\n"
+          "description": "Did you use a Fitbit, iPhone, Apple Watch, Garmin or Oura Ring to track your activity one year or more after your knee replacement?\n_*If you used an iPhone or Apple Watch, it automatically collects physical activity data so please select YES._\n"
         }
       ]
     },
