@@ -38,9 +38,9 @@ export function CookieBanner() {
           right: { sm: '5%', xs: '0' },
           // transform: 'translate(-50%, -50%)',
           minWidth: 300,
-          maxWidth: 600,
+          maxWidth: 800,
           bgcolor: 'background.paper',
-          borderRadius: 2,
+          borderRadius: {xs: 0, sm: 2},
           // border: '2px solid #000',
           boxShadow: 16,
           p: 4
@@ -49,10 +49,16 @@ export function CookieBanner() {
             Cookie consent
           </Typography>
           <Typography sx={{ mt: 2, mb: 1 }}>
-            {"We use functional cookies to keep you logged in between visits.\nIf you accept all cookies we will also use analytic cookies, which we use to help us understand how people interact with the study."}
+            {"Cookies are files saved on our phone, tablet or computer when a person visits a website. As a key part of our research, we are using cookies to help us understand people’s experience of using the website.\n"}
+          </Typography>
+          <Typography sx={{ mt: 2, mb: 1 }}>
+
+            {"By clicking ‘Accept All’, we will be able to study how people use the website. We hope this will help us improve how research is done in the future.\n"}   
+            {"By clicking ‘Essential Only’, the website will remember your account details allowing you to log in easily. It will not allow us to study how you use the website\n"}
+            {"By clicking ‘Reject All’, the website will not remember your account details and we will not be able to study how you use the website."}
           </Typography>
           <Typography>
-            For more information, view our <NextLink href={cookiePolicyLink}>cookie policy</NextLink>.
+            For more information, view our <NextLink href={cookiePolicyLink}>cookie statement</NextLink>.
           </Typography>
           <Box display={'flex'} flexDirection={'row'} justifyContent={'flex-end'} marginTop={2} gap={1}>
             <Button onClick={handleReject} variant="outlined">Reject All</Button>
