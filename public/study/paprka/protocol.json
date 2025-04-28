@@ -89,13 +89,13 @@
   "enrolment": {
     "version": "0.1",
     "eligibility": {
-      "title": "Check You Can Take Part",
+      "title": "Check you can take part",
       "description": "_You can join the study if you answer Yes to all **four questions**. Please scroll down to complete all four questions._\n<br />\n_If your answer is No to any of the questions, and you want to leave the page, click the exit button on your left._",
       "items": [
         {
           "fieldType": "yesno",
           "id": "criteria1",
-          "description": "Have you had knee replacement (total, or partial), either through the NHS or a private healthcare provider, between 1st January 2017 and 31st December 2023?\n"
+          "description": "Have you had knee replacement (total, or partial), either through the NHS or a private healthcare provider, between 1<sup>st</sup> January 2017 and 31<sup>st</sup> December 2023?\n"
         },
         {
           "fieldType": "yesno",
@@ -105,12 +105,12 @@
         {
           "fieldType": "yesno",
           "id": "criteria3",
-          "description": "Did you use a Fitbit, iPhone, Apple Watch, Garmin or Oura Ring to track your activity six months or more before your knee replacement? _Click Yes, if you use an iPhone, it automatically collects physical activity data._\n"
+          "description": "Did you use a Fitbit, iPhone*, Apple Watch*, Garmin or Oura Ring to track your activity six months or more before your knee replacement? _*If you used an iPhone or Apple Watch, it automatically collects physical activity data so please select YES._\n"
         },
         {
           "fieldType": "yesno",
           "id": "criteria4",
-          "description": "Did you use a Fitbit, iPhone, Apple Watch, Garmin or Oura Ring to track your activity one year or more after your knee replacement? _Click Yes, if you use an iPhone, it automatically collects physical activity data._\n"
+          "description": "Did you use a Fitbit, iPhone, Apple Watch, Garmin or Oura Ring to track your activity one year or more after your knee replacement? _*If you used an iPhone or Apple Watch, it automatically collects physical activity data so please select YES._\n"
         }
       ]
     },
