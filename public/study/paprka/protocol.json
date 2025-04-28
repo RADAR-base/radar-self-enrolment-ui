@@ -343,16 +343,12 @@
           "title": "More Information",
           "items": [
             {
-              "text": "Home",
-              "href": "/paprka"
-            },
-            {
               "text": "About the study",
               "href": "/paprka/about"
             },
             {
-              "text": "LinkedIn",
-              "href": "https://www.linkedin.com/company/health-research-from-home"
+              "text": "paprka@manchester.ac.uk",
+              "href": "mailto:paprka@manchester.ac.uk"
             },
             {
               "text": "RADAR",
@@ -361,24 +357,19 @@
           ]
         },
         {
-          "title": "Contact Us",
-          "items": [
-            {
-              "text": "paprka@manchester.ac.uk",
-              "href": "mailto:paprka@manchester.ac.uk"
-            }
-          ]
-        },
-        {
           "title": "Legal",
           "items": [
             {
-              "text": "Privacy Policy",
-              "href": "/paprka/privacy"
+              "text": "University of Manchester Privacy Policy",
+              "href": "https://documents.manchester.ac.uk/display.aspx?DocID=37095"
             },
             {
-              "text": "Cookie Policy",
+              "text": "PAPrKA Cookie Policy",
               "href": "/paprka/cookies"
+            },
+            {
+              "text": "Privacy Policy",
+              "href": "/paprka/privacy"
             }
           ]
         }

@@ -1,60 +1,80 @@
 {
     "blocks": [
           {
+            "blockType": "hero",
+            "noCard": true,
+            "blockBackground": "linear-gradient(to bottom left, rgba(0, 18, 24, 0.2), rgba(0, 18, 24, 0.7)), right / cover no-repeat url('/kratos-ui/study/paprka/resources/knee.png'), #002e3d",
+            "title": {
+                "children": "PAPrKA: How active are people after knee replacement surgery?",
+                "sx": {"color":"white"}
+            },
+            "subtitle": "The **P**hysical **A**ctivity **P**atterns after **K**nee **A**rthroplasty (**PAPrKA**) study seeks to learn more about people's recovery after knee replacement. With your help, and through our research, we can support patients and doctors in the future make better informed decisions about knee replacement surgery.",
+            "sx": {"color": "white"},
+            "cta": {
+                "text": "FAQs",
+                "href": "faqs"
+            },
+            "cta2": {
+                "text" :"Join Study",
+                "href": "enrol"
+            }
+          },
+          {
+            "blockType": "markdown",
+            "noCard": true,
+            "title": "About the study", 
+            "blockBackground": "white",
+            "content": "<div id='more'></div>To learn more about recovery after knee replacement, we will bring together with your consent 3 bits of information:\n\n<ol><li>Information you provide in a survey.</li><li>A one-time collection of your physical activity information from either iPhone, Fitbit, Apple Watch, Garmin or Oura Ring. Physical activity can include things such as steps you take daily, walking, numbers of flights of stairs you climb etc.</li><li>Access to your knee replacement surgery information (from the UK National Joint Registry, for the duration of the study).</li></ol><br />The University of Manchester is leading the PAPrKA research study in collaboration with King's College London and with support from the National Joint Registry."
+          },
+          {
+            "blockType": "video",
+            "noCard": true,
+            "blockBackground": "white",
+            "video": {
+              "src": "/file_example_MP4_480_1_5MG.mp4",
+              "type": "video/mp4",
+              "width": "100%",
+              "params": {"controls": true, "muted": false, "autoPlay": false, "playsInline": true}
+            }
+          },
+          {
             "blockType": "column",
             "noCard": true,
             "blockBackground": "white",
-            "title": "PAPrKA: How Active are People After Knee Surgery?",
+            "title": "",
             "content": [
-              {
-                "blockType": "markdown",
-                "content": "The **P**hysical **A**ctivity **P**atterns after **K**nee **A**rthroplasty (PAPrKA) study seeks to learn more about people's recovery after knee replacement. With your contribution, through our research we can help patients and doctors in future make better informed decisions about knee replacement surgery.\n<br />\nTo learn more about recovery after knee replacement, we will bring together with your consent 3 bits of information:\n\n<ol><li>Information you provide in a survey.</li><li>A one-time collection of your physical activity information from either iPhone, Fitbit, Apple Watch, Garmin or Oura Ring. Physical activity can include things such as gardening, walking to the shops, doing housework etc.</li><li>Access to your knee replacement surgery information (from the UK National Joint Registry, for the duration of the study).</li></ol>The University of Manchester is leading the PAPrKA research study in collaboration with King's College London and with support from the National Joint Registry. This website is hosted by King's College London on its secure health research platform called 'RADAR-base'.\n<br />\nThe PAPrKA study is part of the Health Research from Home (HRfH) programme, led by the University of Manchester: . The HRfH programme received funding from the UK Research and Innovation Medical Research Council (UKRI MRC) to carry out our important work."
-              },
-              {
-                "blockType": "video",
-                "video": {
-                  "src": "/file_example_MP4_480_1_5MG.mp4",
-                  "type": "video/mp4",
-                  "width": "100%",
-                  "params": {"controls": true, "muted": false, "autoPlay": false, "playsInline": true}
-                }
-              }
+                {
+                    "blockType": "markdown",
+                    "title": "Who can take part?",
+                    "content": "<div>You must answer yes to all 6 questions   to take part in the PAPrKA study. Have you\n<ol><li>People living with knee osteoarthritis who had a total or partial knee replacement by the NHS or a private healthcare provider:\n<ol type='a'><li>between 1st January 2017 and 31st December 2023</li><li>are over 18 years old and live in England, Wales, Northern Ireland, Isle of Man or Guernsey at the time of the surgery</li></ol></li><li>Used an **iPhone, Fitbit, Apple Watch, Garmin or Oura Ring** to track your physical activity at least six months before and one year after your knee replacement surgery.</li><li>People who can read and understand English or have support from someone who can.</li><li>People must be willing to give us permission to access their physical activity data and link it to their knee replacement information in the National Joint Registry.</li></ol></div>"
+                },              
+                {
+                    "blockType": "markdown",
+                    "title": "What do I need?",
+                    "content": "1. Know your Month and year of your knee replacement surgery.\n2. Know if you have Fitbit, iPhone, Apple watch, Garmin, or Oura Ring. You can find out what device you have by checking the logo on the front or back of your device or logging to your device account.\n\n<br />## What will I have to do?\n<br />\n1. Check you can take part in the study.\n2. Sign an electronic consent form.\n3. Set up a study account.\n4. Complete up to 4 tasks.\n\nCompleting all 4 should take approximately 35 minutes."
+                  }
             ]
           },
           {
-            "blockType": "markdown",
+            "blockType": "column",
             "noCard": true,
-            "title": "What do I need to answer, “can I take part questions?”", 
-            "blockBackground": "white",
-            "content": "1. Know your Month and year of your knee replacement surgery.\n2. Know if you have Fitbit, iPhone, Apple watch, Garmin, or Oura Ring.  You can find out what device you have by checking the logo on the front or back of your device or logging to your device account.\n"
-          },
-          {
-            "blockType": "markdown",
-            "noCard": true,
-            "title": "Who Can Take Part? ", 
-            "blockBackground": "white",
-            "content": "<div>You must meet all 4 criteria to take part in the PAPrKA study\n<ol><li>People living with knee osteoarthritis who had a total or partial knee replacement by the NHS or a private healthcare provider:\n<ol type='a'><li>between 1st January 2017 and 31st December 2023</li><li>are over 18 years old and live in England, Wales, Northern Ireland, Isle of Man or Guernsey at the time of the surgery</li></ol></li><li>People must have used iPhone, Fitbit, Apple Watch, Garmin or Oura Ring to track their physical activity before and after the knee replacement surgery.</li><li>People who can read and understand English or have support from someone who can.</li><li>People must be willing to give us permission to access their physical activity data and link it to their knee replacement information in the National Joint Registry.</li></ol></div>"
-          },
-          {
-            "blockType": "markdown",
-            "noCard": true,
-            "title": "What am I being asked to Do?",
-            "blockBackground": "white", 
-            "content": "1. Check that you are eligible to take part.\n2. Sign an electronic consent form\n3. Set up a study account.\n4. Complete up to 4 tasks.\n\nCompleting all 4 should take approximately 50 minutes.\n<br />\n<button variant='contained' href='paprka/enrol'>Join Study</button>\n<br /><br />\nWhen you join the study there is a chance to win an Amazon gift card."
-          },
-          {
-            "blockType": "markdown",
-            "noCard": true,
-            "title": "How to Join the Study: A Step-by-Step Guide", 
-            "blockBackground": "white",
-            "content": "You can read our step-by-step guide to walk you through everything you need to do to join the PAPrKA study.\n<br /><button variant='contained' href='study/paprka/resources/landingpage/participant_user_guide.docx'>Step-by-Step Guide</button>\n"
-          },
-          {
-            "blockType": "markdown",
-            "noCard": true,
-            "title": "More Information", 
-            "blockBackground": "white",
-            "content": "We understand that you may have questions about our research, for example, what your involvement may be, and how your data will be used.  Please see PAPrKA’s  Participant Information Sheet to find answers to your questions.\n<br />\n<button variant='contained' target='_blank' href='study/paprka/resources/paprka_pis.pdf'>Participant Information Sheet</button>\n<br /><br /> \nIf you have any further questions, please contact us on PAPrKA@manchester.ac.uk\n"
+            "blockBackground": "#002e3d",
+            "title": "",
+            "sx": {"color": "white"},
+            "content": [
+              {
+                "blockType": "markdown",
+                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'>_Interested in taking part?_<div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/kratos-ui/paprka/enrol'>Join Study</button></div></div>"
+              },
+              {
+                "blockType": "markdown",
+                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'><div>_Need more help?_\nView our step-by-step guide</div><div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/kratos-ui/study/paprka/resources/landingpage/participant_user_guide.docx'>Step-by-Step Guide</button></div></div>"
+              },
+              {
+                "blockType": "markdown",
+                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'><div>_More Information_\nFor full details, see our participant information sheet</div><div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/kratos-ui/study/paprka/resources/paprka_pis.pdf' target='_blank'>Information Sheet</button></div></div>"
+              }
+            ]
           },
           {
             "blockType": "carousel",
@@ -78,17 +98,24 @@
             ]
           },
           {
-            "blockType": "accordion",
+            "blockType": "hero",
             "noCard": true,
-            "title": "Frequently Asked Questions",
-            "items": [
+            "blockBackground": "center / cover no-repeat url('/kratos-ui/study/paprka/resources/landingpage/connect_your_device.jpg'), #fff",
+            "subtitle": "<div style='background:rgba(255, 255, 255, 0.75);border-radius:24px;padding:24px; backdrop-filter: blur(10px);'>The PAPrKA study is part of the Health Research from Home (HRfH) programme, led by the University of Manchester. The HRfH programme received funding from the UK Research and Innovation Medical Research Council (UKRI MRC) to carry out our important work.</div>"
+          },
+          {
+            "blockType": "column",
+            "noCard": true,
+            "blockBackground": "white",
+            "title": "Powered by RADAR-base",
+            "content": [
               {
-                "title": "I want to participate but have a limited command of English. Can I have someone do it on my behalf?",
-                "content": "With your consent, you may complete the study process with someone. However, remember that we ask questions that require you to give your consent, enter personal information, confirm your identity, authenticate with your fitness tracker, and enter some research data for the study.  If you can access support on your own for all these, then you can take part in the study."
+                "blockType": "markdown",
+                "content": "This website is hosted by King's College London on its secure health research platform called 'RADAR-base'."
               },
               {
-                "title": "I need help. I do not know how to get my NHS number or fitness tracker logins.",
-                "content": "Information on how to retrieve your NHS number or fitness tracker password is described below.\n&nbsp;\n_Retrieve the NHS number:_\n&nbsp;\nYou can find your National Health Service (NHS) number by following the instructions here: <https://www.nhs.uk/nhs-services/online-services/find-nhs-number/>\n&nbsp;\n_Find login details to the fitness tracking device:_\n&nbsp;\nYour fitness tracker login is the username and password you use to login and view all your recorded activity summaries on your fitness tracker. If you do not remember your login details, follow the device connection instructions provided within the study. During this process, select the “Forgot your password?” to reset your credentials and regain access to your account when you try to link your fitness tracker."
+                "blockType": "markdown",
+                "content": "<div style='margin:auto'><Image src='/kratos-ui/radar/rb-logo-hq2.png' alt={'RADAR-base logo'} width={200} height={200} /></div>"
               }
             ]
           }

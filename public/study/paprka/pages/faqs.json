@@ -1,0 +1,19 @@
+{
+    "blocks": [
+      {
+        "blockType": "accordion",
+        "noCard": true,
+        "title": "Frequently Asked Questions",
+        "items": [
+          {
+            "title": "I want to participate but have a limited command of English. Can I have someone do it on my behalf?",
+            "content": "With your consent, you may complete the study process with someone. However, remember that we ask questions that require you to give your consent, enter personal information, confirm your identity, authenticate with your fitness tracker, and enter some research data for the study.  If you can access support on your own for all these, then you can take part in the study."
+          },
+          {
+            "title": "I need help. I do not know how to get my NHS number or fitness tracker logins.",
+            "content": "Information on how to retrieve your NHS number or fitness tracker password is described below.\n&nbsp;\n_Retrieve the NHS number:_\n&nbsp;\nYou can find your National Health Service (NHS) number by following the instructions here: <https://www.nhs.uk/nhs-services/online-services/find-nhs-number/>\n&nbsp;\n_Find login details to the fitness tracking device:_\n&nbsp;\nYour fitness tracker login is the username and password you use to login and view all your recorded activity summaries on your fitness tracker. If you do not remember your login details, follow the device connection instructions provided within the study. During this process, select the “Forgot your password?” to reset your credentials and regain access to your account when you try to link your fitness tracker."
+          }
+        ]
+      }
+    ]
+}
