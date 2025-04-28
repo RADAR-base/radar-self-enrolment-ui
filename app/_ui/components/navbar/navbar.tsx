@@ -30,7 +30,7 @@ function SmallMenu(props: MenuProps) {
          alignItems='center'
          justifyContent='flex-end'
          display='flex'>
-      {(props.loggedIn && props.studyId) && <NextButton href={`/${props.studyId}/portal`}>Portal</NextButton>}
+      {(props.loggedIn && props.studyId) && <NextButton href={`/${props.studyId}/portal`}>Tasks</NextButton>}
       <AccountButton />
       
       <IconButton
@@ -74,7 +74,7 @@ function SmallMenu(props: MenuProps) {
               router.push(`/${props.studyId}/portal`)
             }
         }>
-          Portal
+          Tasks
         </MenuItem>
         }
       </Menu>
@@ -87,7 +87,7 @@ function LargeMenu(props: MenuProps) {
     <Box flexGrow={1} flexDirection='row' alignItems='center' justifyContent='flex-end'
          gap={2} display='flex'>
       {props.links?.map((link, i) => <NextButton href={link.href} key={i}>{link.text}</NextButton>)}
-      {(props.loggedIn && props.studyId) && <NextButton href={`/${props.studyId}/portal`}>Portal</NextButton>}
+      {(props.loggedIn && props.studyId) && <NextButton href={`/${props.studyId}/portal`}>Tasks</NextButton>}
       <AccountButton />
     </Box>
   )
