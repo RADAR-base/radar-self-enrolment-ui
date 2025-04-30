@@ -355,7 +355,7 @@
         "field_name": "paprka_feedback_additional",
         "form_name": "paprka_feedback",
         "section_header": "Please provide any additional feedback, comments, suggestions, or areas for improvement.",
-        "field_note": "Kindly write it.",
+        "field_note": "",
         "field_type": "notes"
     }
 ]
