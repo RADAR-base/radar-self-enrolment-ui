@@ -50,20 +50,6 @@ export const defaultTheme = createTheme({
   },
   components: {
     MuiButton: {
-      styleOverrides: {
-        root: {
-          variants: [
-            {
-              props: { variant: 'text'},
-              style: {
-                ":hover": {
-                  "background-color": '#000000'
-                }
-              }
-            }
-          ]
-        }
-      },
       defaultProps: {
         disableElevation: true,
       }

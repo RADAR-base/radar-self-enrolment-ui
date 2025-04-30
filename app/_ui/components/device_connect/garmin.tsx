@@ -38,15 +38,17 @@ export function GarminPage() {
           <div>
             <Typography variant="h2">Connect your Garmin</Typography>
             <Typography variant="body1">
-              Please follow the below instructions to connect your Garmin account and allow us to access your wearable data stored by Garmin.
-              The first step will take you to Garmin's website, so it may be useful to look through the steps before starting the process.
+            Please read the three steps before you connect your Garmin account.
+            </Typography>
+            <Typography variant="body1">
+            The first step will take you to Garmin's website. For the second step <strong>you need to login to your Garmin account.</strong> In the third step you will be asked to click the buttons in the “Control the information you share” screen. 
             </Typography>
           </div>
         </Grid>
 
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 1: Click the "Link Garmin" button</Typography>
-          <Typography variant="body1">If you are not already logged in to your Garmin account, you will be redirected to a sign in page. Please log in with your Garmin account.</Typography>
+          <Typography variant="body1">This will redirect you away from this page to Garmin's website.</Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Button component={Link} href={linkUrl} variant="contained" target='_blank' disabled={linkUrl == undefined}>Link Garmin</Button>
@@ -67,9 +69,10 @@ export function GarminPage() {
 
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 3: Select the data you want to share</Typography>
-          <Typography variant="body1" mt={2}>Once you have logged in to your Garmin account you will see a screen called “Control the information you share”.  Click both buttons (Activities and Daily Health Stats), and then click “Save” at the bottom to share your physical activity information with the study.</Typography>
-          <Typography variant="body1" fontStyle={"italic"} mt={2}>These 2 boxes captures your physical activity information such as time doing activities, distance travelled, step count, and heart rate which is needed for the study. Any information that we do not need will be deleted at the end of the study</Typography>
-          <Typography variant="body1" mt={2}>Once you have completed the 3 steps, you will receive a thank you message that will ask you if you want to link another device or if you are done. Click done, if you are not linking any other device.</Typography>
+          <Typography mt={2} variant="body1">Once you have logged in to your Garmin account you will see a screen called “Control the information you share”.  Click both buttons (Activities and Daily Health Stats), and then click “Save” at the bottom to share your physical activity information with the study.</Typography>
+          <Typography mt={2} variant="body1" fontStyle={'italic'}>These 2 boxes captures your physical activity information such as time doing activities, distance travelled, step count, and heart rate which is needed for the study. Any information that we do not need will be deleted at the end of the study</Typography>
+          <Typography mt={2} variant="body1">Once you have completed the 3 steps, you will receive a thank you message that will ask you if you want to link another device or if you are done. Click done, if you are not linking any other device.</Typography>
+          <Typography mt={2} variant="body1">If you have any questions about the information we ask for, please contact us on <a href="mailto:paprka@manchester.ac.uk">paprka@manchester.ac.uk</a></Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Image 
