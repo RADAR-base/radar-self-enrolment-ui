@@ -51,22 +51,22 @@
             {
               "id": "fitbit",
               "title": "Fitbit Tab",
-              "description": "Before clicking Connect, you can read step-by-step instructions [link TBC] or watch a video [link TBC] to see how to share your Fitbit physical activity data."
+              "description": "Before clicking Connect, you can read [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_Fitbit.docx) or watch a video [link TBC] to see how to share your Fitbit physical activity data.\n"
             },
             {
               "id": "garmin",
               "title": "Garmin Tab",
-              "description": "Before clicking Connect, you can read step-by-step instructions [link TBC] or watch a video [link TBC] to see how to share your Garmin physical activity data."
+              "description": "Before clicking Connect, you can read [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_Garmin.docx) or watch a video [link TBC] to see how to share your Garmin physical activity data.\n"
             },
             {
               "id": "oura",
               "title": "Oura Ring Tab",
-              "description": "Before clicking Connect, you can read step-by-step instructions [link TBC] or watch a video [link TBC] to see how to share your Oura Ring physical activity data."
+              "description": "Before clicking Connect, you can read [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_Oura.docx) or watch a video [link TBC] to see how to share your Oura Ring physical activity data.\n"
             },
             {
               "id": "apple_health",
               "title": "Apple Health",
-              "description": "Before clicking Connect, you can read step-by-step instructions [link TBC] or watch a video [link TBC] to see how to share your iPhone or Apple Watch physical activity data."
+              "description": "Before clicking Connect, you can [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_iPhone.docx) or watch a video[link TBC] to see how to share your iPhone or Apple Watch physical activity data.\n"
             }
           ]
         }
@@ -121,7 +121,7 @@
         {
           "fieldType": "yesno",
           "id": "M-Confirmed read",
-          "description": "I confirm that I have read the [Participant Information Sheet (PIS) (Version xx, Date xx/xx/xx)](/kratos-ui/study/paprka/resources/paprka_pis.pdf) for the above study and have had the opportunity to consider the information and ask questions and had these answered satisfactorily.\n"
+          "description": "I confirm that I have read the [Participant Information Sheet (PIS) (Version xx, Date xx/xx/xx)](/study/paprka/resources/paprka_pis.pdf) for the above study and have had the opportunity to consider the information and ask questions and had these answered satisfactorily.\n"
         },
         {
           "fieldType": "yesno",

@@ -2,6 +2,7 @@ import { Button, Typography, Link, Table, TableHead, TableRow, TableCell, TableB
 import { getOverrides, MuiMarkdown } from 'mui-markdown'
 import Image from 'next/image'
 import HoverPopover from './hoverPopover'
+import NextLink from 'next/link'
 
 interface MarkdownContainerProps {
   children?: string
@@ -55,7 +56,8 @@ export function MarkdownContainer({children, ...props }: MarkdownContainerProps)
           props: {
             underline: 'always',
             rel: 'noreferrer',
-            target: '_blank'
+            target: '_blank',
+            component: NextLink
           }
         },
         table: {
@@ -72,7 +74,7 @@ export function MarkdownContainer({children, ...props }: MarkdownContainerProps)
         },
         tbody: {
           component: TableBody
-        }
+        },
       }}
       {...props}>
       {children}
