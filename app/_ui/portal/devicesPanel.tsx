@@ -15,31 +15,6 @@ import NextButton from "../components/base/nextButton";
 import { DeviceConnectedBanner } from "../components/device_connect/successBanner";
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 
-const TEMP_CONTENT: {[key: string]: any} = {
-  'fitbit': {
-    title: 'Fitbit',
-    description: 'Wearable fitness tracker'
-  },
-  'radar_armt': {
-    title: 'RADAR Questionnaire',
-    description: 'Apple iPhone or Android phone'
-  },  
-  'apple_health': {
-    title: 'Apple Health',
-    description: 'Apple Watch or iPhone'
-  },  
-  'garmin': {
-    title: 'Garmin',
-    description: 'Wearable fitness tracker'
-  },
-  'oura': {
-    title: 'Oura',
-    description: 'Wearable fitness tracker'
-  },
-}
-
-const DEFAULT_DEVICES = ['radar_armt']
-
 export function DevicesPanel() {
   const [submitting, setSubmitting] = useState<boolean>(false)
   const router = useRouter()
@@ -95,7 +70,7 @@ export function DevicesPanel() {
           <Box display='flex' flexDirection='row' justifyContent={'space-between'} width={'100%'} paddingTop={2}>
             <NextButton href={`/${projectId}/portal`} variant='contained'>Back</NextButton>
             <Button variant="contained" onClick={onSubmit} disabled={submitting}>
-                Submit
+                Mark as complete
             </Button>
           </Box>
         </Box>

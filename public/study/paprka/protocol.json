@@ -45,28 +45,28 @@
         "type": "inbuilt",
         "inbuiltId": "connect",
         "options": {
-          "title": "CONNECT MY DEVICE(S)",
-          "description": "<p>Click on the connect button for your device.</p><p>The study team will collect past physical activity data, if available, from 1st July 2016 until 31st December 2024.</p>",
+          "title": "TASK 3: Connect my device(s)",
+          "description": "<p>Click on the connect button for your device.</p><p>The study team will collect past physical activity data, if available, from 1st July 2016 until 31st December 2024. This will be a one-off transfer of data. We will not collect any activity data beyond the 31st December 2024.</p>",
           "devices": [
             {
               "id": "fitbit",
-              "title": "Fitbit",
-              "description": "Follow the step-by-step instructions [link TBC] or watch a video [link TBC] to see how to share your Fitbit's physical activity information with the PAPrKA study team."
+              "title": "Fitbit Tab",
+              "description": "Before clicking Connect, you can read step-by-step instructions [link TBC] or watch a video [link TBC] to see how to share your Fitbit physical activity data."
             },
             {
               "id": "garmin",
-              "title": "Garmin",
-              "description": "Follow the step-by-step instructions [link TBC] or watch a video [link TBC] to see how to share your Garmin's physical activity information with the PAPrKA study team."
+              "title": "Garmin Tab",
+              "description": "Before clicking Connect, you can read step-by-step instructions [link TBC] or watch a video [link TBC] to see how to share your Garmin physical activity data."
             },
             {
               "id": "oura",
-              "title": "Oura",
-              "description": "Follow the step-by-step instructions [link TBC] or watch a video [link TBC] to see how to share your Oura Ring's physical activity information with the PAPrKA study team."
+              "title": "Oura Ring Tab",
+              "description": "Before clicking Connect, you can read step-by-step instructions [link TBC] or watch a video [link TBC] to see how to share your Oura Ring physical activity data."
             },
             {
               "id": "apple_health",
               "title": "Apple Health",
-              "description": "Follow the step-by-step instructions [link TBC] or watch a video [link TBC] to see how to share your iPhone or Apple Watch’s physical activity information with the PAPrKA study."
+              "description": "Before clicking Connect, you can read step-by-step instructions [link TBC] or watch a video [link TBC] to see how to share your iPhone or Apple Watch physical activity data."
             }
           ]
         }
@@ -287,7 +287,7 @@
                   "props": { "variant": "text"},
                   "style": {
                     ":hover": {
-                      "background-color": "#0297A7",
+                      "backgroundColor": "#0297A7",
                       "color": "#FFFFFF"
                     }
                   }
