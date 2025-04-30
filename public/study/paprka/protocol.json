@@ -125,12 +125,12 @@
         },
         {
           "fieldType": "yesno",
-          "id": "M-Ack. vol. involvement",
+          "id": "M-Ack vol involvement",
           "description": "I understand that my participation in the study is voluntary and that I am free to withdraw at any time without giving a reason and without detriment to myself.\n<br />\nI understand that it will not be possible to remove my data from the project dataset once the key that links my name and contact information with my participant ID has been broken.\n<br />\nI agree to take part on this basis.\n"
         },
         {
           "fieldType": "yesno",
-          "id": "M-Ack. understand involvement",
+          "id": "M-Ack understand involvement",
           "description": "I understand my involvement in this study involves:\n- Setting up a study account on the PAPrKA website.\n- Completing up to 4 tasks in the PAPrKA Website.\n"
         },
         {
@@ -155,7 +155,7 @@
         },
         {
           "fieldType": "yesno",
-          "id": "M-Ack. regulatory access",
+          "id": "M-Ack regulatory access",
           "description": "I understand that data collected during the study may be looked at by individuals from the University of Manchester or regulatory authorities, where it is relevant to my taking part in this research. I give permission for these individuals to have access to my data.\n"
         },
         {
