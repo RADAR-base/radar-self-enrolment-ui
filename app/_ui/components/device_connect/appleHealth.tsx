@@ -242,7 +242,7 @@ function createShortToken(token: any) {
 
 export function HealthKitPage() {
   const [isFetchingToken, setIsFetchingToken] = useState(false)
-  const [armtAuthUrl, setArmtAuthUrl] = useState<any>("asd")
+  const [armtAuthUrl, setArmtAuthUrl] = useState<any>(undefined)
 
   const [code, setCode] = useState<string>()
   
