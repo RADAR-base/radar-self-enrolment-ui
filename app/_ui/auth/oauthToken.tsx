@@ -178,7 +178,7 @@ export function GetOauthToken(props: OauthTokenProps): React.ReactNode {
 
   const audience = props.audience ?? 'res_restAuthorizer'
 
-  const redirectUri = props.redirectUri ?? 'https://dev.radarbasedev.co.uk/kratos-ui/connect/sep' // window.location.href
+  const redirectUri = props.redirectUri ?? window.location.href
 
   const codeFunc = props.codeFunc ?? ((code) => {getToken(code)})
 

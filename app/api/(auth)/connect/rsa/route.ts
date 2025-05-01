@@ -6,7 +6,6 @@ import { NextRequest, NextResponse } from "next/server"
 const RSA_BACKEND_URL = process.env.RSA_BACKEND_URL
 const RSA_FRONTEND_URL = process.env.RSA_FRONTEND_URL
 
-
 async function makeRestSourceUser(
   accessToken: string,
   userId: string,
@@ -23,7 +22,7 @@ async function makeRestSourceUser(
       userId: userId,
       projectId: projectId,
       sourceType: sourceType,
-      startDate: new Date().toISOString(),
+      startDate: new Date(2016, 0).toISOString(),
     })
     const response = await fetch(`${RSA_BACKEND_URL}/users`, {
       method: "POST",
@@ -31,13 +30,13 @@ async function makeRestSourceUser(
       body: body
     })
     if (!response.ok) {
-      const data = await response.json()
-      if (response.status === 409 && data.user) {
-        console.warn("User already exists:", data.message)
+      if (response.status === 409) {
+        const data = await response.json()
         return data.user.id
       } else {
+        const data = await response.text()
         throw new Error(
-          `Failed to create user: ${data.message || response.statusText}`,
+          `Failed to create user: ${data || response.statusText}`,
         )
       }
     }

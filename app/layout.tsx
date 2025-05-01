@@ -10,6 +10,7 @@ import { whoAmI } from "./_lib/auth/ory/kratos";
 import { cookies } from "next/headers";
 import { GetCSRF } from "./_ui/auth/getCSRF";
 import { Montserrat } from "next/font/google";
+import { withBasePath } from "./_lib/util/links";
 
 const msrt_font = Montserrat({
   subsets: ['latin'],
@@ -22,8 +23,8 @@ export const metadata: Metadata = {
   description: "Webportal for RADAR-base remote monitoring research studies",
   icons: [
     {
-      href: '/kratos-ui/radar/icon.png',
-      url: '/kratos-ui/radar/icon.png'
+      href: withBasePath('/radar/icon.png'),
+      url: withBasePath('/radar/icon.png')
     }
   ]
 };
