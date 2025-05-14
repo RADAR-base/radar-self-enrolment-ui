@@ -2,6 +2,7 @@
 import { withBasePath } from "@/app/_lib/util/links"
 import { Box, CircularProgress } from "@mui/material"
 import { useState, useEffect } from "react"
+import pRetry from 'p-retry';
 
 async function getAuthUrl(
   clientId: string,
@@ -122,32 +123,27 @@ async function completeFullFlow(
   
   const loginChallenge = await getLoginChallenge(authUrl)
   if (loginChallenge == null) {
-    console.error('Error retrieving login challenge')
-    return null
+    throw new Error('Error retrieving login challenge')
   }
 
   const loginHydraRedirUrl = await acceptOauthLogin(loginChallenge)
   if (loginHydraRedirUrl == null) {
-    console.error('Error accepting OAuth Login')
-    return null
+    throw new Error('Error accepting OAuth Login')
   }
 
   const consentChallenge = await getConsentChallenge(loginHydraRedirUrl)
   if (consentChallenge == null) {
-    console.error('Error retrieving consent challenge')
-    return null
+    throw new Error('Error retrieving consent challenge')
   }
 
   const getCodeUrl = await acceptConsent(consentChallenge, scopes)
   if (getCodeUrl == null) {
-    console.error('Error retrieving get code URL')
-    return null
+    throw new Error('Error retrieving get code URL')
   }
 
   const code = await getCode(getCodeUrl)
   if (code == null) {
-    console.error('Error retrieving code')
-    return null
+    throw new Error('Error retrieving code')
   }
   return code
 }
@@ -185,20 +181,20 @@ export function GetOauthToken(props: OauthTokenProps): React.ReactNode {
   useEffect(() => {
     if (!loggingIn) {
       setLoggingIn(true)
-      completeFullFlow(clientId, scopes, audience, redirectUri).then(
-        (code) => {
-          if (code) {
-            codeFunc(code)
-          } else {
-            console.warn('A problem occured when retrieving the OAuth Token Code')
+      pRetry(() => completeFullFlow(clientId, scopes, audience, redirectUri), {
+        retries: 12,
+        maxRetryTime: 30000
+      })
+        .then((code) => {
+            if (code) { codeFunc(code) } 
+            else { console.warn('A problem occured when retrieving the OAuth Token Code')}
           }
-        }
-      )
+        )
     }
   }
   , [])
 
   return <Box sx={{alignSelf: 'center', margin: 'auto', pt: 16, pb: 16}}>
     <CircularProgress />
-      </Box>
+  </Box>
 }

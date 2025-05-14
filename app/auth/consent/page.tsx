@@ -86,7 +86,6 @@ export default function Page() {
             }
           )
         } else {
-          console.log(r)
           setAccepted(false)
         }
       }
@@ -110,12 +109,10 @@ export default function Page() {
         if (r.ok) {
           r.json().then(
             (d) => {
-              console.log(d)
               window.location.replace(d.redirect_to)
             }
           )
         } else {
-          console.log(r)
           setAccepted(false)
         }
       }
