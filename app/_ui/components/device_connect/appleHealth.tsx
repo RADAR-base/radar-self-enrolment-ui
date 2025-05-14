@@ -9,7 +9,6 @@ import {QRCodeSVG} from 'qrcode.react'
 import Image from 'next/image'
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 import { getAuthLink } from "@/app/_lib/connect/armt/authLink";
-import { isIOS } from 'react-device-detect';
 import { GetOauthToken } from "../../auth/oauthToken";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import NextLink from 'next/link'
@@ -30,15 +29,6 @@ const REDIRECT_URI = process.env.NEXT_PUBLIC_ARMT_REDIRECT_URI ?? ''
 
 function AppStoreDownloadModalContent() {
   const link = 'https://apps.apple.com/us/app/radar-active-rmt/id1483953055?itscg=30200&itsct=apps_box_badge&mttnsubad=1483953055'
-  const router = useRouter()
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => {
-    setOpen(true)
-  }
-  const handleClose = () => {
-    setOpen(false)
-  }
-
   return (
     <React.Fragment>
       <a href={link} target='_blank'>
@@ -50,36 +40,6 @@ function AppStoreDownloadModalContent() {
           style={{cursor: 'pointer'}}
         />
     </a>
-    {/* <Modal
-      open={open}
-      onClose={handleClose}
-      >
-      <Box sx={{
-        marginInline: 'auto',
-        position: 'absolute',
-        top: '30%',
-        left: '50%',
-        transform: 'translate(-50%, -30%)',
-        minWidth: 400,
-        maxWidth: 600,
-        bgcolor: 'background.paper',
-        borderRadius: 2,
-        boxShadow: 16,
-        p: 4}}>
-        <Typography id="modal-modal-title" variant="h3">
-          Download app
-        </Typography>
-        <Typography sx={{ mt: 2 }}>
-          Please click download to install the RADAR aRMT App from the App Store.
-          <br />
-          Once you have installed the app, <strong>please return to this website to log in</strong>
-        </Typography>
-        <Box display={'flex'} flexDirection={'row'} justifyContent={'flex-end'} marginTop={2} gap={1}> 
-          <Button onClick={handleClose} variant="outlined">Cancel</Button>
-          <Button href={link} onClick={handleClose} variant="outlined" target="_blank">Download</Button>
-        </Box>
-      </Box>
-    </Modal> */}
     </React.Fragment>
   )
 }
@@ -97,7 +57,6 @@ function QRContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
 }
 
 function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
-  const [device, setDevice] = useState<boolean>(isIOS)
   const protocol = useContext(ProtocolContext);
   const theme = useTheme()
 
@@ -108,10 +67,15 @@ function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNod
         <Typography>
           Please read the three steps before you connect your iPhone and or Apple Watch account.
         </Typography>
+        <Typography>
+          Read our <Link component={NextLink} href={'/study/paprka/resources/guides/PAPrKA_Study_Guide_iPhone.docx'}>Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to share your Apple Health data.  
+        </Typography>
+      </Grid>
+      <Grid size={12} textAlign={'left'}>
         <Typography variant="h3">
           Connect your iPhone or Apple Watch
         </Typography>
-        <Typography paddingTop={2} variant="body1">
+        <Typography variant="body1">
           You can take part if you have an iPhone or if you have an iPhone and Apple Watch. 
           To allow us to access your physical activity information you will need to download the 
           study app onto your iPhone and sign into it.
@@ -119,7 +83,7 @@ function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNod
         </Typography>
       </Grid>
       <Grid size={12} textAlign={'left'}>
-      <Typography paddingTop={2}  variant="h3">Step 1: About the study app</Typography>
+      <Typography variant="h3">Step 1: About the study app</Typography>
         <Typography  variant="body1">
           The study app is called <Typography fontWeight={700} color="primary" display={'inline'} component={'span'}>RADAR active RMT</Typography>.
           <br />
@@ -195,11 +159,6 @@ function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNod
       </Grid>
       <Grid size={{ xs: 12, sm: 6 }} alignContent={'center'}>
         <AppStoreDownloadModalContent />
-      </Grid>
-      <Grid size={12} textAlign={'left'}>
-        <Typography>
-          Read our <Link component={NextLink} href={'/study/paprka/resources/guides/PAPrKA_Study_Guide_iPhone.docx'}>Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to share your Apple Health data.  
-        </Typography>
       </Grid>
       <Grid size={12}>
         <SubmitButton disabled={armtAuthUrl == undefined} />

@@ -68,7 +68,7 @@
               },
               {
                 "blockType": "markdown",
-                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'><div>_Need more help?_\nView our step-by-step guide</div><div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/kratos-ui/study/paprka/resources/landingpage/participant_user_guide.docx'>Step-by-Step Guide</button></div></div>"
+                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'><div>_Need more help?_\nView our step-by-step guide</div><div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/kratos-ui/study/paprka/resources/guides/PAPrKA_Study_Guide.docx'>Step-by-Step Guide</button></div></div>"
               },
               {
                 "blockType": "markdown",
