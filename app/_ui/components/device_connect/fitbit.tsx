@@ -6,6 +6,8 @@ import { withBasePath } from "@/app/_lib/util/links";
 import { RadarCard } from "../base/card";
 import Image from 'next/image'
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
+import NextLink from 'next/link'
+
 
 export function FitbitPage() {
   const protocol = useContext(ProtocolContext);
@@ -39,6 +41,9 @@ export function FitbitPage() {
             <Typography variant="body1">
               The first step will take you to Fitbit's website. For the second step <strong>you need to login to your Fitbit account.</strong> In the third step you will be asked to tick all the boxes in the Fitbit screen.
             </Typography>
+            <Typography>
+              Read our <Link component={NextLink} href={'/study/paprka/resources/guides/PAPrKA_Study_Guide_Fitbit.docx'}>Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to share your Fitbit data.  
+            </Typography>
           </div>
         </Grid>
 
@@ -71,7 +76,7 @@ export function FitbitPage() {
           <Typography display={'inline'} mt={2} variant="body1" fontWeight={600}>*Your profile will be accessed only for the purpose of understanding the measures used for each physical activity information.</Typography>
           <Typography display={'inline'} variant="body1"> Any information that we do not need will be deleted at the end of the study.</Typography>
           <Typography mt={2} variant="body1">Once you have completed the three steps, you will receive a thank you message that will ask you if you want to link another device or if you are done. Click done, if you are not linking any other device.</Typography>
-          <Typography mt={2} variant="body1">If you have any questions about the information we ask for, please contact us on <a href="mailto:paprka@manchester.ac.uk">paprka@manchester.ac.uk</a></Typography>
+          <Typography mt={2} variant="body1">If you have any questions about the information we ask for, please contact us on <Link href="mailto:paprka@manchester.ac.uk">paprka@manchester.ac.uk</Link></Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Image 

@@ -40,6 +40,7 @@ export async function createLoginFlow(params?: { login_challenge?: string, refre
       'accept': 'application/json',
       Cookie: cookieString,
     },
+    cache: 'no-store'
   }) as NextResponse
   setCookies(res)
   return res
@@ -63,7 +64,7 @@ export async function submitLoginFlow(email: string, password: string, csrf_toke
       identifier: email,
       password: password,
       csrf_token: csrf_token,
-    })
+    }),
   }) as NextResponse
   setCookies(res)
   return res
@@ -78,6 +79,7 @@ export async function getLoginFlow(flowId: string): Promise<Response> {
   url.search = params.toString()
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -91,6 +93,7 @@ export async function createLogoutFlow(): Promise<Response> {
   var url = new URL(BASEURL + '/self-service/logout/browser')
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       Cookie: cookieString,
@@ -107,6 +110,7 @@ export async function updateLogoutFlow(logout_token: string): Promise<Response> 
   url.search = params.toString()
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       Cookie: cookieString,
@@ -119,6 +123,7 @@ export async function createRegistrationFlow(): Promise<Response> {
   var url = new URL(BASEURL + '/self-service/registration/browser')
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       Cookie: cookieString,
@@ -135,6 +140,7 @@ export async function getRegistrationFlow(flowId: string): Promise<Response> {
   url.search = params.toString()
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -158,6 +164,7 @@ export async function updateRegistrationFlow(flowId: string, data: IUpdateRegist
   url.search = params.toString();
   return await fetch(url, {
     method: 'POST',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -188,6 +195,7 @@ export async function getRecoveryFlow(flowId: string): Promise<Response> {
   url.search = params.toString()
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -220,6 +228,7 @@ export async function updateRecoveryFlow(flowId: string, data: IUpdateRecoveryFl
   url.search = params.toString();
   return await fetch(url, {
     method: 'POST',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -239,6 +248,7 @@ export async function getVerificationFlow(flowId: string): Promise<Response> {
   url.search = params.toString()
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -252,6 +262,7 @@ export async function createVerificationFlow(return_to?: string): Promise<Respon
   var url = new URL(BASEURL + '/self-service/verification/browser')
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       Cookie: cookieString,
@@ -269,6 +280,7 @@ export async function completeVerificationFlow(flowId: string, data: IUpdateReco
   url.search = params.toString();
   return await fetch(url, {
     method: 'POST',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -288,6 +300,7 @@ export async function getSettingsFlow(flowId: string): Promise<Response> {
   url.search = params.toString()
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -301,6 +314,7 @@ export async function createSettingsFlow(return_to?: string): Promise<Response> 
   var url = new URL(BASEURL + '/self-service/settings/browser')
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       Cookie: cookieString,
@@ -330,6 +344,7 @@ export async function completeSettingsFlow(flowId: string, data: IUpdateSettings
   }
   return await fetch(url, {
     method: 'POST',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -344,6 +359,7 @@ export async function whoAmI(): Promise<Response> {
   const url = new URL(BASEURL + "/sessions/whoami")
   const res = await fetch(url,
     {
+      cache: 'no-store',
       headers: {
         'accept': 'application/json',
         Cookie: cookieString,

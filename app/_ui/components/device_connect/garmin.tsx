@@ -8,6 +8,7 @@ import { RadarCard } from "../base/card";
 import Image from 'next/image'
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 import { ParticipantContext } from "@/app/_lib/auth/provider.client";
+import NextLink from 'next/link'
 
 export function GarminPage() {
   const protocol = useContext(ProtocolContext);
@@ -43,6 +44,9 @@ export function GarminPage() {
             <Typography variant="body1">
             The first step will take you to Garmin's website. For the second step <strong>you need to login to your Garmin account.</strong> In the third step you will be asked to click the buttons in the “Control the information you share” screen. 
             </Typography>
+            <Typography>
+              Read our <Link component={NextLink} href={'/study/paprka/resources/guides/PAPrKA_Study_Guide_Garmin.docx'}>Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to share your Garmin data.  
+            </Typography>
           </div>
         </Grid>
 
@@ -72,7 +76,7 @@ export function GarminPage() {
           <Typography mt={2} variant="body1">Once you have logged in to your Garmin account you will see a screen called “Control the information you share”.  Click both buttons (Activities and Daily Health Stats), and then click “Save” at the bottom to share your physical activity information with the study.</Typography>
           <Typography mt={2} variant="body1" fontStyle={'italic'}>These 2 boxes captures your physical activity information such as time doing activities, distance travelled, step count, and heart rate which is needed for the study. Any information that we do not need will be deleted at the end of the study</Typography>
           <Typography mt={2} variant="body1">Once you have completed the 3 steps, you will receive a thank you message that will ask you if you want to link another device or if you are done. Click done, if you are not linking any other device.</Typography>
-          <Typography mt={2} variant="body1">If you have any questions about the information we ask for, please contact us on <a href="mailto:paprka@manchester.ac.uk">paprka@manchester.ac.uk</a></Typography>
+          <Typography mt={2} variant="body1">If you have any questions about the information we ask for, please contact us on <Link href="mailto:paprka@manchester.ac.uk">paprka@manchester.ac.uk</Link></Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Image 
