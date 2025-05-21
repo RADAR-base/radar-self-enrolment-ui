@@ -60,7 +60,6 @@ export default async function RootLayout({
         <AppRouterCacheProvider>
           <ThemeProvider theme={defaultTheme}>
           <CssBaseline />
-
             <ParticipantProvider participant={participant}>
             {csrfToken == undefined ? <GetCSRF></GetCSRF> : null}
             <div>{children}</div>

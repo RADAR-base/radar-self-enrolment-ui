@@ -74,7 +74,6 @@ export async function POST(
     return NextResponse.json({ 'error': 'No consent_challenge param provided' }, { status: 401 })
   }
   const { consentAction, grantScope, remember } = await request.json()
-  const session = extractSession(identity, grantScope)
   const consentRequest = await getConsentRequest(consentChallenge)
   const consentBody = await consentRequest.json()
   const grant_access_token_audience = consentBody.requested_access_token_audience
@@ -83,8 +82,17 @@ export async function POST(
     return NextResponse.json({ error: 'Missing required parameters' }, { status: 401 })
   }
 
+
   let url: URL
   let body: any
+  let session: any
+
+  try {
+    session = extractSession(identity, grantScope)
+  } catch (e) {
+    console.log(e)
+    return NextResponse.json({error: {type: 'session', content: { message: "User session could not be converted into token, may not have required role"}}}, {status: 403})
+  }
 
   if (consentAction == "accept") {
     url = new URL(`${baseURL}/oauth2/auth/requests/consent/accept`)

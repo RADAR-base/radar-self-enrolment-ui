@@ -9,6 +9,7 @@ import { useFormik } from 'formik';
 import Yup from '@/app/_lib/armt/validation/yup'
 import { ParticipantContext } from '@/app/_lib/auth/provider.client';
 import { IOryErrorFlow, IOryRecoveryFlow } from '@/app/_lib/auth/ory/flows.interface';
+import { ProtocolContext } from '@/app/_lib/study/protocol/provider.client';
 
 
 function ErrorComponent(props: {}) {
@@ -106,6 +107,7 @@ interface EmailSentComponentProps {
 function EmailSentComponent(props: EmailSentComponentProps) {
   const router = useRouter()
   const [errorText, setErrorText] = useState<string>()
+  const study = useContext(ProtocolContext)
   async function submit(code: string) {
     const body = {
       code: code,
@@ -122,7 +124,11 @@ function EmailSentComponent(props: EmailSentComponentProps) {
       if (res.status == 422) {
         const data = await res.json()
         const redirUri = new URL(data.redirect_browser_to)
-        router.push('account/settings' + redirUri.search)
+        if (study.studyId != undefined) {
+          router.push('/' + study.studyId + '/account/settings' + redirUri.search)
+        } else {
+          router.push('/account/settings' + redirUri.search)
+        }
         router.refresh()
       } else {
         const data = await res.json()

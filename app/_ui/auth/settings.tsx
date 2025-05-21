@@ -67,7 +67,7 @@ export default function SettingsComponent(props: SettingsProps) {
 
   const onComplete = props.onComplete ? props.onComplete : 
       () => {
-        router.push(props.redirectTo ?? '/')
+        props.redirectTo && router.push(props.redirectTo)
         router.refresh()
       }
 
