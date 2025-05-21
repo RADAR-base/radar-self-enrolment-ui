@@ -6,6 +6,14 @@
       "field_label": "## TASK 2: About you\n<em>This information is to help us find your record in the National Joint Registry, as well as to study whether differences following knee replacement relate to age, sex or where you live.</em>\n"
     },
     {
+      "field_name": "paprka_about_nhs_number",
+      "form_name": "paprka_about",
+      "field_type": "text",
+      "field_label": "",
+      "required_field": "true",
+      "text_validation_type_or_show_slider_number": "nhs_number"
+    },
+    {
         "field_name": "paprka_about_dob",
         "form_name": "paprka_about",
         "field_type": "text",
@@ -66,13 +74,5 @@
         "matrix_ranking": "",
         "field_annotation": "",
         "evaluated_logic": ""
-    },
-    {
-        "field_name": "paprka_about_nhs_number",
-        "form_name": "paprka_about",
-        "field_type": "text",
-        "field_label": "",
-        "required_field": "true",
-        "text_validation_type_or_show_slider_number": "nhs_number"
     }
 ]
