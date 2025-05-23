@@ -391,10 +391,6 @@
       "title": "What You Need to Complete PAPrKA Study Tasks",
       "content": "Please complete up to four tasks. The first three are necessary to take part, while ‘Give us your feedback’ is optional\n<em>When you have completed all tasks, click the \"Finished\" button.</em>\n<em>Once you click the finish button you will not be able to change your responses, but you will be able to see them.</em>"
     },
-    "finishContent": {
-      "title": "Thank you for completing the PAPrKA study tasks.",
-      "content": "Thank you for taking part in our study.\n<br />Because of your contribution, through our research we can help patients and doctors in future make better informed decisions about knee replacement surgery.\n<br />\nNow that you have submitted the study tasks, you will be able to view (but not change) your responses by logging back into your study account."
-    },
     "analytics": {
       "gaId": "G-LTRMSY2PNR"
     }
