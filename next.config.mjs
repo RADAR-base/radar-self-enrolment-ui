@@ -23,7 +23,20 @@ const nextConfig = {
      
       },
       experimental: { missingSuspenseWithCSRBailout: false, },
-      output: "standalone"
+      output: "standalone",
+      headers: async () => {
+        return [
+          {
+            source: '/:path*',
+            headers: [
+              {
+                key: 'X-Frame-Options',
+                value: 'SAMEORIGIN'
+              }
+            ]
+          }
+        ]
+      } 
 };
 
 export default nextConfig;
