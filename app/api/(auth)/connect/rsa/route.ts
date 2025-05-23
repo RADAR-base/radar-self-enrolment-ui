@@ -22,7 +22,8 @@ async function makeRestSourceUser(
       userId: userId,
       projectId: projectId,
       sourceType: sourceType,
-      startDate: new Date(2016, 0).toISOString(),
+      startDate: new Date(2016, 5).toISOString(),
+      endDate: new Date(2025, 0).toISOString()
     })
     const response = await fetch(`${RSA_BACKEND_URL}/users`, {
       method: "POST",
