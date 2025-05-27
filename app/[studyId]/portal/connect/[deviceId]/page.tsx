@@ -1,6 +1,7 @@
 "use server"
 import { whoAmI } from '@/app/_lib/auth/ory/kratos';
 import { getRestSourceAuthLink, makeRestSourceUser } from '@/app/_lib/connect/rsa/authorizer';
+import { withBasePath } from '@/app/_lib/util/links';
 import { HealthKitPage } from '@/app/_ui/components/device_connect/appleHealth';
 import { FitbitPage } from '@/app/_ui/components/device_connect/fitbit';
 import { GarminPage } from '@/app/_ui/components/device_connect/garmin';
@@ -27,7 +28,7 @@ async function getRsaLink(deviceId: string, redirect_uri?: string) {
   const rsaUserId = await makeRestSourceUser(token.value, userId, studyId, sourceType)
   if (rsaUserId == null) { return null }
   const authLink = await getRestSourceAuthLink(token.value, rsaUserId, 
-                                               redirect_uri ?? `/${studyId}/portal/connect/success=${sourceType}`)
+                                               redirect_uri ?? withBasePath(`/${studyId}/portal/connect&success=${deviceId}`))
   return authLink
 }
 
