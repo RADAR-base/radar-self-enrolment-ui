@@ -69,10 +69,9 @@ export async function PUT(request: NextRequest,
     return NextResponse.json({error: {type: 'request', content: 'No such task'}} , {status: 400})
   }
 
-  var previousValues = (await getCurrentValue(studyId, userId, taskId)) ?? {}
-  var newValues = (await request.json())
-  const values = Object.assign({}, newValues, previousValues)
-
+  const previousValues = (await getCurrentValue(studyId, userId, taskId)) ?? {}
+  const newValues = (await request.json())
+  const values = Object.assign({}, previousValues, newValues)
 
   if (taskProtocol.metadata.type == "redcap_local") {
     const redcapDef = await armtRepo.getDefinition(taskId)
