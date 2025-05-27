@@ -26,8 +26,7 @@ async function getCurrentValue(studyId: string, userId: string, taskId: string) 
   if (resp.ok) {
     try {
       const userData = await resp.json()
-      const currentValue = userData['metadata_admin']['study'][studyId][taskId]
-      console.log('curr val: ', currentValue)
+      const currentValue = userData['metadata_admin']['study'][studyId][taskId]['answers']
       return currentValue
     } catch {
       return null
