@@ -32,7 +32,8 @@ RUN addgroup -g 1001 nextjs \
   && adduser -D -u 1001 -G nextjs nextjs
 
 # Copy built app from builder
-COPY --from=builder /app/ ./
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 
 # Fix permissions
 RUN mkdir -p /app/.next/cache/images \
