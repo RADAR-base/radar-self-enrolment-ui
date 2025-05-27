@@ -1,37 +1,14 @@
-"use client"
 import { Button, Container, Typography, Link } from "@mui/material"
 import Grid from '@mui/material/Grid2';
 import React, { useContext, useEffect, useState } from "react";
 import { withBasePath } from "@/app/_lib/util/links";
 import { RadarCard } from "../base/card";
 import Image from 'next/image'
-import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 import NextLink from 'next/link'
 
-interface FitbitPageProps {
-  authLink: string | null
-}
 
-export function FitbitPage(props: FitbitPageProps) {
-
-  const protocol = useContext(ProtocolContext);
-  const [linkUrl, setLinkUrl] = useState<string | undefined>(props.authLink ?? undefined)
-  const redirect_uri = encodeURIComponent(`/${protocol.studyId}/portal/connect?success=fitbit`)
-
-  useEffect(() => {
-    if (linkUrl == undefined) {
-      fetch(withBasePath('/api/connect/rsa?device=FitBit&redirect_uri=' + redirect_uri)).then(
-        (resp) => {
-          if (resp.ok) {
-            resp.text().then(
-              (link) => setLinkUrl(link)
-            )
-          }
-        }
-      )
-    }
-  })
-
+export function FitbitPage() {
+  const linkUrl = withBasePath('/api/connect/rsa?device=FitBit')
   return (
   <Container maxWidth="lg" disableGutters>
     <RadarCard>

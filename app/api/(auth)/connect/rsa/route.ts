@@ -22,7 +22,10 @@ export async function GET(request: NextRequest) {
   if (rsaUserId == null) {
     return new NextResponse('Could not create or get Rest Source Auth user', {status: 500})
   }
-  const redirect_uri  = withBasePath(request.nextUrl.searchParams.get('redirect_uri') ?? `/${studyId}/portal/connect/success=${sourceType}`)
+  const redirect_uri  = withBasePath(request.nextUrl.searchParams.get('redirect_uri') ?? withBasePath(`/${studyId}/portal/connect/success=${sourceType}`))
   const authLink = await getRestSourceAuthLink(token.value, rsaUserId, redirect_uri)
-  return new NextResponse(authLink)
+  if (authLink) {
+    return NextResponse.redirect(new URL(authLink))
+  }
+  return NextResponse.error()
 }
