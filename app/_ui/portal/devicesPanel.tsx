@@ -3,9 +3,9 @@ import { Box, Button, Container, Typography } from "@mui/material"
 import Grid from '@mui/material/Grid2';
 import { ArmtMetadataInbuilt, StudyProtocol } from "@/app/_lib/study/protocol";
 import NextLink from 'next/link'
-import { useSearchParams } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { RadarDeviceCard } from "@/app/_ui/components/portal/deviceCard";
 import { RadarCard } from "../components/base/card";
 import { MarkdownContainer } from "../components/base/markdown";
@@ -20,25 +20,48 @@ export function DevicesPanel() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const deviceConnected = searchParams.get('success')
+  const [device, setDevice] = useState<string | undefined>(deviceConnected ?? undefined)
+  const pathname = usePathname()
 
-  
-  async function onSubmit() {
-    setSubmitting(true)
+
+  useEffect(() => {
+    if (deviceConnected) {
+      setDevice(deviceConnected)
+      markDeviceConnected(deviceConnected).then(
+        () => {
+          router.replace(pathname)
+        }
+      )
+    }
+  })
+
+  async function markDeviceConnected(device_id?: string) {
+    var body;
+    if (device_id) {
+      body = {[device_id]: true}
+    } else {
+      body = {}
+    }
     let resp = await fetch(
       withBasePath('/api/study/' + protocol.studyId + '/tasks/connect'),
       {
-        method: 'POST',
+        method: 'PUT',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({})
+        body: JSON.stringify(body)
       }
     )
-    if (resp.ok) {
-      router.push('/' + protocol.studyId + '/portal') 
-    } else {
-    }
-    setSubmitting(false)
+    return resp
   }
 
+  async function onSubmit() {
+    setSubmitting(true)
+    markDeviceConnected('').then(
+      () => {
+        router.push('/' + protocol.studyId + '/portal')
+      }
+    )
+  }
+  
 
   const protocol = useContext(ProtocolContext)
   const projectId = protocol.studyId
@@ -48,8 +71,8 @@ export function DevicesPanel() {
   let devices = task.options.devices as {id: string, title: string, logo_src: string, description: string}[]
 
   let deviceConnectedName: string = ""
-  if (deviceConnected) {
-    deviceConnectedName = devices.find(d => d.id == deviceConnected)?.title ?? deviceConnected
+  if (device) {
+    deviceConnectedName = devices.find(d => d.id == device)?.title ?? device
   }
 
   const title: string = task.options.title ?? "Connect Your Device"
@@ -57,7 +80,7 @@ export function DevicesPanel() {
   
   return (
   <Container maxWidth="lg" disableGutters>
-  {(deviceConnected != undefined) ? <DeviceConnectedBanner device={deviceConnectedName} onFinish={onSubmit} /> : null}
+  {(device != undefined) ? <DeviceConnectedBanner device={deviceConnectedName} onFinish={onSubmit} /> : null}
   <Grid container spacing={2} gridAutoColumns={'3lf'} gridAutoFlow={"column"}>
     <Grid size={12}>
       <RadarCard>
@@ -76,9 +99,9 @@ export function DevicesPanel() {
         </Box>
       </RadarCard>
     </Grid>
-    {devices.map((device, i) => (
+    {devices.map((d, i) => (
       <Grid size={{xs: 12, sm: 6, md: 4}} key={'task.'+i}>
-        <RadarDeviceCard deviceId={device.id} title={device.title} description={device.description} ></RadarDeviceCard>
+        <RadarDeviceCard deviceId={d.id} title={d.title} description={d.description} ></RadarDeviceCard>
       </Grid>
     ))}
   </Grid>
