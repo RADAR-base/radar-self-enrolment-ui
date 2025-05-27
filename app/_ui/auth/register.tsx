@@ -110,6 +110,7 @@ const Register: React.FC<{onRegister?: () => void}> = (props: {onRegister?: () =
             helperText={formik.touched.email && formik.errors.email}
             hidden={true}
             fullWidth
+            autoComplete="email"
             />
           <CustomTextField
             id="password"
@@ -122,6 +123,7 @@ const Register: React.FC<{onRegister?: () => void}> = (props: {onRegister?: () =
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
             fullWidth
+            autoComplete="new-password"
             />
           <Button color="primary" variant="contained" type="submit" disabled={(formik.isValid == null) ? false : (!formik.isValid)}>
             Sign Up

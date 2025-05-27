@@ -159,6 +159,7 @@ function EmailSentComponent(props: EmailSentComponentProps) {
               slotProps={{htmlInput: {'inputMode': 'numeric'}, input: {inputMode: 'numeric'}}}
               helperText={<Typography variant="overline" component={'span'} color="error">{formik.errors.code?.toString()}</Typography>}
               error={(formik.errors.code != undefined)}
+              autoComplete='one-time-code'
               />
       <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} width={'100%'}>
         <Button color="primary" variant="contained" onClick={() => {router.refresh()}}>

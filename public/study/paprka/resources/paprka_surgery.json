@@ -78,7 +78,7 @@
     {
         "field_name": "paprka_surgery_satisfaction",
         "form_name": "paprka_surgery",
-        "section_header": "How satisfied are you with the results of your <strong>most recent</strong> knee replacement surgery? ",
+        "section_header": "How satisfied are you with the results of your most recent knee replacement surgery? ",
         "field_type": "dropdown",
         "field_label": "",
         "select_choices_or_calculations": [

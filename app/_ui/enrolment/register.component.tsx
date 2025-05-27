@@ -26,6 +26,7 @@ export function EnrolmentRegister({setFieldValue, values, errors, ...props}: Enr
           error={(errors.email != undefined) && (errors.email.length > 0)}
           helperText={<Typography variant="overline"  color="error">{errors.email}</Typography>}
           fullWidth
+          autoComplete="email"
           />
 
         <TextField
@@ -38,6 +39,7 @@ export function EnrolmentRegister({setFieldValue, values, errors, ...props}: Enr
           error={(errors.password != undefined) && (errors.password.length > 0)}
           helperText={<Typography variant="overline"  color="error">{errors.password}</Typography>}
           fullWidth
+          autoComplete="new-password"
           />
     </Box>
 )}

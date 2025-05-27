@@ -10,9 +10,14 @@ import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 import { ParticipantContext } from "@/app/_lib/auth/provider.client";
 import NextLink from 'next/link'
 
-export function OuraPage() {
+interface OuraPageProps {
+  authLink: string | null
+}
+
+
+export function OuraPage(props: OuraPageProps) {
   const protocol = useContext(ProtocolContext);
-  const [linkUrl, setLinkUrl] = useState<string | undefined>(undefined)
+  const [linkUrl, setLinkUrl] = useState<string | undefined>(props.authLink ?? undefined)
   const redirect_uri = encodeURIComponent(`/${protocol.studyId}/portal/connect?success=oura`)
 
   useEffect(() => {

@@ -8,10 +8,14 @@ import Image from 'next/image'
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 import NextLink from 'next/link'
 
+interface FitbitPageProps {
+  authLink: string | null
+}
 
-export function FitbitPage() {
+export function FitbitPage(props: FitbitPageProps) {
+
   const protocol = useContext(ProtocolContext);
-  const [linkUrl, setLinkUrl] = useState<string | undefined>(undefined)
+  const [linkUrl, setLinkUrl] = useState<string | undefined>(props.authLink ?? undefined)
   const redirect_uri = encodeURIComponent(`/${protocol.studyId}/portal/connect?success=fitbit`)
 
   useEffect(() => {
