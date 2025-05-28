@@ -15,7 +15,12 @@ import NextButton from "../components/base/nextButton";
 import { DeviceConnectedBanner } from "../components/device_connect/successBanner";
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 
-export function DevicesPanel() {
+
+interface DevicePanelProps {
+  deviceStatuses?: { [key: string]: boolean }
+}
+
+export function DevicesPanel(props: DevicePanelProps) {
   const [submitting, setSubmitting] = useState<boolean>(false)
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -23,17 +28,16 @@ export function DevicesPanel() {
   const [device, setDevice] = useState<string | undefined>(deviceConnected ?? undefined)
   const pathname = usePathname()
 
-
   useEffect(() => {
     if (deviceConnected) {
       setDevice(deviceConnected)
-      markDeviceConnected(deviceConnected).then(
+      markDeviceConnected(deviceConnected.toLowerCase()).then(
         () => {
           router.replace(pathname)
         }
       )
     }
-  })
+  }, [])
 
   async function markDeviceConnected(device_id?: string) {
     var body;
@@ -61,7 +65,6 @@ export function DevicesPanel() {
       }
     )
   }
-  
 
   const protocol = useContext(ProtocolContext)
   const projectId = protocol.studyId
@@ -79,31 +82,42 @@ export function DevicesPanel() {
   const description: string = task.options.description ?? "Please click on the device below which you would like to connect"
   
   return (
-  <Container maxWidth="lg" disableGutters>
-  {(device != undefined) ? <DeviceConnectedBanner device={deviceConnectedName} onFinish={onSubmit} /> : null}
-  <Grid container spacing={2} gridAutoColumns={'3lf'} gridAutoFlow={"column"}>
-    <Grid size={12}>
-      <RadarCard>
-        <Box display={'flex'} flexDirection={'column'}
-            textAlign={'left'} alignContent={'flex-start'}
-            alignItems={'flex-start'}
-            padding={3}>
-          <Typography variant="h2">{title}</Typography>
-          <MarkdownContainer>{description}</MarkdownContainer>
-          <Box display='flex' flexDirection='row' justifyContent={'space-between'} width={'100%'} paddingTop={2}>
-            <NextButton href={`/${projectId}/portal`} variant='contained'>Back</NextButton>
-            <Button variant="contained" onClick={onSubmit} disabled={submitting}>
-                Mark as complete
-            </Button>
+    <Container maxWidth="lg" disableGutters>
+    {(device != undefined) ? <DeviceConnectedBanner device={deviceConnectedName} onFinish={onSubmit} /> : null}
+    <Grid container spacing={2} gridAutoColumns={'3lf'} gridAutoFlow={"column"}>
+      <Grid size={12}>
+        <RadarCard>
+          <Box display={'flex'} flexDirection={'column'}
+              textAlign={'left'} alignContent={'flex-start'}
+              alignItems={'flex-start'}
+              padding={3}>
+            <Typography variant="h2">{title}</Typography>
+            <MarkdownContainer>{description}</MarkdownContainer>
+            <Box display='flex' flexDirection='row' justifyContent={'space-between'} width={'100%'} paddingTop={2}>
+              <NextButton href={`/${projectId}/portal`} variant='contained'>Back</NextButton>
+              <Button variant="contained" onClick={onSubmit} disabled={submitting}>
+                  Mark as complete
+              </Button>
+            </Box>
           </Box>
-        </Box>
-      </RadarCard>
-    </Grid>
-    {devices.map((d, i) => (
-      <Grid size={{xs: 12, sm: 6, md: 4}} key={'task.'+i}>
-        <RadarDeviceCard deviceId={d.id} title={d.title} description={d.description} ></RadarDeviceCard>
+        </RadarCard>
       </Grid>
-    ))}
-  </Grid>
-  </Container>)
+      {devices.map((d, i) => {
+        var status;
+        if (props.deviceStatuses) {
+          if (props.deviceStatuses[d.id]) {
+            status = "done" as const
+          } else {
+            status = "todo" as const
+          }
+        } else {
+          status = "todo" as const
+        }
+        return  <Grid size={{xs: 12, sm: 6, md: 4}} key={'task.'+i}>
+                  <RadarDeviceCard deviceId={d.id} title={d.title} description={d.description} status={status}/>
+                </Grid>
+      })
+    }
+    </Grid>
+    </Container>)
 }

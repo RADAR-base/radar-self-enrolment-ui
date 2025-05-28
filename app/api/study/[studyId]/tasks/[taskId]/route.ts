@@ -21,6 +21,20 @@ async function sendTaskResponse(studyId: string, userId: string, taskData: Activ
   })
 }
 
+async function getTask(studyId:string, userId: string, taskId: string) {
+  const resp = await fetch(process.env.KRATOS_ADMIN_URL + '/identities/' + userId)
+  if (resp.ok) {
+    try {
+      const userData = await resp.json()
+      const currentValue = userData['metadata_admin']['study'][studyId][taskId]
+      return currentValue
+    } catch {
+      return null
+    }
+  }
+  return null
+}
+
 async function getCurrentValue(studyId: string, userId: string, taskId: string) {
   const resp = await fetch(process.env.KRATOS_ADMIN_URL + '/identities/' + userId)
   if (resp.ok) {
@@ -32,9 +46,7 @@ async function getCurrentValue(studyId: string, userId: string, taskId: string) 
       return null
     }
   }
-
   return null
-
 }
 
 export async function PUT(request: NextRequest,
@@ -168,4 +180,32 @@ export async function POST(
   }
   await sendTaskResponse(studyId, userId, taskData)
   return new NextResponse(null, {status: 200})
+}
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ studyId: string, taskId: string }> }
+) {
+  const {studyId, taskId}  = (await params)
+  let oryUser: any
+  let userId: string
+
+  const registery: StudyProtocolRepository = new StudyProtocolRepository()  
+  const protocol = await registery.getStudyProtocol(studyId)
+  if (protocol == undefined) {
+    return NextResponse.json({error: {type: 'request', content: 'No such study exists'}}, {status: 400})
+  }
+
+  try {
+    const resp = await whoAmI()
+    if (resp.status != 200) {
+      return NextResponse.json({error: {type: 'authentication', content: {message: "No user session"}}}, {status: 403})
+    }
+    oryUser = await resp.json()
+    userId = oryUser['identity']['id']
+  } catch {
+    return NextResponse.json({error: {type: 'authentication', content: {message: "Error decoding user session"}}}, {status: 403})
+  }
+  const task = getTask(studyId, userId, taskId)
+  return NextResponse.json(task)
 }
