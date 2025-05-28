@@ -93,12 +93,6 @@ export function DevicesPanel(props: DevicePanelProps) {
               padding={3}>
             <Typography variant="h2">{title}</Typography>
             <MarkdownContainer>{description}</MarkdownContainer>
-            <Box display='flex' flexDirection='row' justifyContent={'space-between'} width={'100%'} paddingTop={2}>
-              <NextButton href={`/${projectId}/portal`} variant='contained'>Back</NextButton>
-              <Button variant="contained" onClick={onSubmit} disabled={submitting}>
-                  Mark as complete
-              </Button>
-            </Box>
           </Box>
         </RadarCard>
       </Grid>
