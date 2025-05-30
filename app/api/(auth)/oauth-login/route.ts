@@ -1,7 +1,7 @@
 import { whoAmI } from "@/app/_lib/auth/ory/kratos"
 import { NextRequest, NextResponse } from "next/server"
 
-const baseURL = process.env.HYDRA_ADMIN_URL
+const OAUTH_BASE_URL = process.env.HYDRA_ADMIN_URL
 
 function userIsParticipant(userSession: any): boolean {
   return userSession?.identity?.schema_id == "subject"
@@ -40,7 +40,7 @@ export async function POST(
   const { remember } = await request.json()
   try {
     const response = await fetch(
-      `${baseURL}/oauth2/auth/requests/login/accept?login_challenge=${loginChallenge}`,
+      `${OAUTH_BASE_URL}/oauth2/auth/requests/login/accept?login_challenge=${loginChallenge}`,
       {
         method: 'PUT',
         body: JSON.stringify({
