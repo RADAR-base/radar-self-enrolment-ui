@@ -227,7 +227,7 @@ export function HealthKitPage() {
     <RadarCard>
       <Container sx={{ pl: 4, pr: 4}}>
         {armtAuthUrl == undefined ? 
-          (<GetOauthToken clientId="aRMT" scopes={SCOPES} audience={AUDIENCE} codeFunc={setCode} redirectUri={REDIRECT_URI} />) : 
+          (<GetOauthToken clientId="aRMT" scopes={SCOPES} audience={AUDIENCE} codeFunc={async (code:string) => setCode(code)} redirectUri={REDIRECT_URI} />) : 
           (<Box display={'inline'} gap={2} aria-live="polite" paddingLeft={4}>
             <Grid container spacing={2} gap={2} rowGap={4}>
               <HealthKitContent armtAuthUrl={armtAuthUrl} />

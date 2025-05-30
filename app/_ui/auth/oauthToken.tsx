@@ -124,7 +124,7 @@ async function completeFullFlow(
   const loginChallenge = await pRetry(
     () => getLoginChallenge(authUrl), 
     {
-      retries: 1,
+      retries: 4,
       minTimeout: 1000,
       maxTimeout: 30000
     }
@@ -136,7 +136,7 @@ async function completeFullFlow(
   const loginHydraRedirUrl = await pRetry(
     () => acceptOauthLogin(loginChallenge), 
     {
-      retries: 1,
+      retries: 4,
       minTimeout: 1000,
       maxTimeout: 30000
     }
@@ -148,7 +148,7 @@ async function completeFullFlow(
   const consentChallenge = await pRetry(
     () => getConsentChallenge(loginHydraRedirUrl), 
     {
-      retries: 1,
+      retries: 4,
       minTimeout: 1000,
       maxTimeout: 30000
     }
@@ -160,7 +160,7 @@ async function completeFullFlow(
   const getCodeUrl = await pRetry(
     () => acceptConsent(consentChallenge, scopes), 
     {
-      retries: 1,
+      retries: 4,
       minTimeout: 1000,
       maxTimeout: 30000
     }
@@ -172,7 +172,7 @@ async function completeFullFlow(
   const code = await pRetry(
     () => getCode(getCodeUrl), 
     {
-      retries: 1,
+      retries: 4,
       minTimeout: 1000,
       maxTimeout: 30000
     }
@@ -232,7 +232,7 @@ export function GetOauthToken(props: OauthTokenProps): React.ReactNode {
           minTimeout: 1000,
           maxTimeout: 30000,
           onFailedAttempt: async (attempt) => {
-            if (attempt.attemptNumber > 0) {
+            if (attempt.attemptNumber > 1) {
               await clearCookies()
             }
             console.log(attempt.message)
