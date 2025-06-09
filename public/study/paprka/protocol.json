@@ -313,7 +313,7 @@
         },
         "MuiTextField": {
           "defaultProps": {
-            "variant": "standard"
+            "variant": "outlined"
           }
         },
         "MuiInputLabel": {
