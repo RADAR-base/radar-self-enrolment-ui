@@ -9,12 +9,15 @@ import { RadarRedcapDefinition } from "@/app/_lib/armt/definition/redcap.types";
 import fromRedcapDefinition from "@/app/_lib/armt/definition/fromRedcapDefinition";
 import { withBasePath } from "@/app/_lib/util/links";
 import { sendGAEvent } from "@next/third-parties/google";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { InView } from 'react-intersection-observer';
+import { TaskConfirmDialog } from "./confirmDialog";
 
-function ControlButtons(props: {submitDisabled: boolean}) {
+function ControlButtons(props: {
+  submitDisabled: boolean
+  onSubmit: () => void
+}) {
 const router = useRouter()
-
 return (
   <InView threshold={[1]}>
     {({ inView, ref, entry }) => (
@@ -37,7 +40,7 @@ return (
           >
             <Button variant="contained" onClick={() => router.back()}>Back</Button>
             { (entry?.intersectionRatio ?? 1) < 1 ? "Scroll down" : "" }
-            <Button variant="contained" type={"submit"} disabled={props.submitDisabled}>Submit</Button>
+            <Button variant="contained" onClick={props.onSubmit} disabled={props.submitDisabled}>Submit</Button>
         </Box>
       </Box>
     )}
@@ -55,7 +58,9 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
   const armtDef: ArmtDefinition = fromRedcapDefinition(redcapDef)
   const schema = schemaFromDefinition(armtDef)
   const router = useRouter()
-  
+  const [submitDialogOpen, setSubmitDialogOpen] = useState<boolean>(false);
+  const [backDialogOpen, setBackDialogOpen] = useState<boolean>(false);
+
   const formik = useFormik({
     validateOnChange: true,
     validateOnMount: true,
@@ -96,45 +101,63 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
       'task_id': taskId,
       'task_status': 'start'
     })
+
+    if (history.state) {
+      formik.setValues({...formik.values, ...history.state['task_answers']})
+    }
+
+    return () => {
+      // window.removeEventListener('popstate', onPopState);
+      // window.removeEventListener('beforeunload', handleBeforeUnload);
+
+    };
   }, [])
 
-  // const ControlButtons = (
-  //   <Box 
-  //     width={"100%"}
-  //     position={'sticky'}
-  //     bottom={-1}
-  //     zIndex={1000}
-  //     ref={ref}>
-  //     <Divider />
-  //     <Box
-  //       paddingTop={4}
-  //       paddingBottom={4}
-  //       display={"flex"}
-  //       alignItems={'center'}
-  //       sx={{ 
-  //         justifyContent: 'space-between', 
-  //         background: 'white'
-  //       }}
-  //       >
-  //         <Button variant="contained" onClick={router.back}>Back</Button>
-  //         <Typography>In view: {inView}</Typography>
-  //         <Button variant="contained" type={"submit"} disabled={(!formik.isValid) || formik.isSubmitting}>Submit</Button>
-  //     </Box>
-  //   </Box>
-  // )
+  const setValue = (field: string, value: any, shouldValidate?: boolean) => {
+    formik.setFieldValue(field, value, shouldValidate)
+    if (history) {
+      var task_answers = {...history.state['task_answers'], [field]: value}
+      history.replaceState({...history.state, 'task_answers': task_answers}, '')
+    }
+  }
 
   return (
-    <Container sx={{
-      paddingRight: 4,
-      paddingLeft: 4,
-      paddingTop: 3
-    }}>
-      <form onSubmit={formik.handleSubmit}>
-        <Stack gap={4} margin={"auto"}>
-          <ArmtForm definition={armtDef} values={formik.values} setFieldValue={formik.setFieldValue} errors={formik.errors}></ArmtForm>
-          <ControlButtons submitDisabled={(!formik.isValid) || formik.isSubmitting} />
-        </Stack>
-      </form>
-    </Container>
+    <React.Fragment>
+      <Container sx={{
+        paddingRight: 4,
+        paddingLeft: 4,
+        paddingTop: 3
+      }}>
+        <form onSubmit={formik.handleSubmit}>
+          <Stack gap={4} margin={"auto"}>
+            <ArmtForm definition={armtDef} values={formik.values} setFieldValue={setValue} errors={formik.errors}></ArmtForm>
+            <ControlButtons 
+              onSubmit={() => {setSubmitDialogOpen(true)}}
+              submitDisabled={(!formik.isValid) || formik.isSubmitting} 
+            />
+          </Stack>
+        </form>
+      </Container>
+      <TaskConfirmDialog 
+        title="Submit form"
+        onConfirm={() => {
+          setSubmitDialogOpen(false)
+          formik.submitForm()
+        }} 
+        onReject={() => {
+          setSubmitDialogOpen(false)
+        }}
+        open={submitDialogOpen}
+      >
+        <React.Fragment>
+          <Typography>
+            Are you sure you want to submit your answers?
+          </Typography>
+          <Typography>
+            You will not be able to edit
+          </Typography>
+        </React.Fragment>
+      </TaskConfirmDialog>
+    </React.Fragment>
   )
 }

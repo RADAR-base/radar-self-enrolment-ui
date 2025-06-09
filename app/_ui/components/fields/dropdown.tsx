@@ -26,7 +26,7 @@ export function ArmtDropdownField(props: ArmtDropdownFieldProps, ref: ForwardedR
           id={props.id}
           value={props.value ?? ""}
           onChange={(event) => {props.setFieldValue(props.id, event.target.value)}}
-          variant="standard"
+          variant="outlined"
           label={props.label}
         >
           {props.choices.map((choice) => (

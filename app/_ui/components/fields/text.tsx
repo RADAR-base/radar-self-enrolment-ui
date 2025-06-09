@@ -4,14 +4,17 @@ import { ITextItem } from "../../../_lib/armt/definition/field.interfaces";
 
 interface ArmtTextFieldProps extends ITextItem {
   setFieldValue: (id: string, value: string) => void
-  value?: boolean,
+  value?: string,
   disabled?: boolean,
   key?: string,
   color? : 'primary' | 'secondary' | 'standard' | 'error' | 'info' | 'success' | 'warning'
 }
 
 function handleChange(setFieldValue: (id: string, value: string) => void) {
-  return (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setFieldValue(event.target.id, event.target.value)
+  return (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    console.log("onChange: ", event.target.value)
+    setFieldValue(event.target.id, event.target.value)
+  }
 }
 
 export function ArmtTextField({label, description, errorText, type, ...props}: ArmtTextFieldProps, ref: ForwardedRef<HTMLDivElement>) {
@@ -25,16 +28,16 @@ export function ArmtTextField({label, description, errorText, type, ...props}: A
           sx={{mt: mt}}
           type={type}
           id={props.id}
-          label={labelComponent}
+          label={label} // {labelComponent}
           key={props.key}
           value={props.value ?? ""}
           disabled={props.disabled}
           onChange={handleChange(props.setFieldValue)}
           helperText={<Typography variant="overline" component={'span'} color="error">{errorText}</Typography>}
           multiline={props.multiline}
-          minRows={props.multiline ? 3 : undefined}
-          maxRows={20}
-          variant={props.multiline ? "outlined" : "standard"}
+          minRows={3}
+          maxRows={16}
+          variant={"outlined"}
         />
       </Box>
   )

@@ -316,15 +316,27 @@
             "variant": "outlined"
           }
         },
+        "MuiOutlinedInput": {
+          "styleOverrides": {
+            "notchedOutline": {
+              "& legend": {
+                "display": "none"
+              }
+            }
+          }
+        },
         "MuiInputLabel": {
           "styleOverrides": {
+            "root": {
+              "backgroundColor": "transparent"
+            },
             "standard": {
               "fontSize": "1rem"
             },
             "shrink": {
               "fontSize": "1rem",
               "fontWeight": "700",
-              "transform": "translate(0, -10px)"
+              "transform": "translate(0, -2rem)"
             }
           }
         }

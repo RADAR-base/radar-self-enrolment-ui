@@ -142,7 +142,7 @@ export async function POST(
   } catch {
     return NextResponse.json({error: {type: 'authentication', content: {message: "Error decoding user session"}}}, {status: 403})
   }
-  const values = (await request.json())
+  var values = (await request.json())
   const armtRepo = new ArmtDefinitionRepository(protocol)
   const taskProtocol = (protocol.protocols.find((e) => e.id == taskId))
   
@@ -162,6 +162,8 @@ export async function POST(
     } catch (error) {
       return NextResponse.json({error: {type: 'validation', content: error}} , {status: 400})
     }
+    values = Object.fromEntries(armtDef.items.filter(item => item.content.fieldType != 'descriptive')
+                                             .map(item => [item.content.id, values[item.content.id]]))
     taskData = {
       'id': armtDef.id,
       'name': armtDef.name,

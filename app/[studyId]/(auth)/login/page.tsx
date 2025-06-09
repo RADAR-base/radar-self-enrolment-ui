@@ -5,6 +5,7 @@ import LoginComponent from '@/app/_ui/auth/login';
 import { createLoginFlow } from '@/app/_lib/auth/ory/kratos';
 import { cookies } from 'next/headers';
 import { IOryLoginFlow } from '@/app/_lib/auth/ory/flows.interface';
+import { useSearchParams } from 'next/navigation';
 
 
 export default async function Page({
@@ -16,8 +17,10 @@ export default async function Page({
 }) {  
   const studyId = (await params).studyId
   const flowId = (await searchParams).flowId
+  const redirectTo = (await searchParams).redirectTo?.toString() ?? ('/' + studyId + '/portal')
   const cookieJar = cookies()
   const csrfToken = cookieJar.getAll().find((c) => c.name.startsWith('csrf_token_'))
+
   let flow: IOryLoginFlow | undefined
   if ((flowId == undefined) && (csrfToken != undefined)) {
     try {
@@ -33,7 +36,7 @@ export default async function Page({
         <Box marginTop={2} marginBottom={2} marginRight={"auto"} marginLeft={"auto"} maxWidth={600} justifySelf={'center'} width='100%'>
           <RadarCard>
             <Box padding={4}>
-              <LoginComponent redirectTo={'/' + studyId + '/portal'} flow={flow} />
+              <LoginComponent redirectTo={redirectTo} flow={flow} />
             </Box>
           </RadarCard>
       </Box>

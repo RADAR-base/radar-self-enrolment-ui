@@ -130,12 +130,12 @@ export function LoginComponent(props: LoginProps) {
             onBlur={formik.handleBlur}
             error={formik.touched.identifier && Boolean(formik.errors.identifier)}
             autoComplete='email'
-            />
+          />
         <TextField
             fullWidth
             id="password"
             name="password"
-            label="Password"
+            label={<Box>{"Password"}</Box>}
             type="password"
             value={formik.values.password}
             onChange={formik.handleChange}

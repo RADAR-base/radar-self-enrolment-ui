@@ -162,10 +162,10 @@ function EmailSentComponent(props: EmailSentComponentProps) {
               autoComplete='one-time-code'
               />
       <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} width={'100%'}>
-        <Button color="primary" variant="contained" onClick={() => {router.refresh()}}>
+        <Button color="primary" variant="contained" onClick={() => {router.back()}}>
           Back
         </Button>
-        <Button color="primary" variant="contained" onClick={() => {}}>
+        <Button color="primary" variant="contained" onClick={() => {router.refresh()}}>
           Resend Code
         </Button>
         <Button color="primary" variant="contained" type="submit" disabled={formik.isSubmitting}>
