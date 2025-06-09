@@ -1,5 +1,5 @@
 import { whoAmI } from '@/app/_lib/auth/ory/kratos';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { redirect, usePathname } from 'next/navigation';
 import { jwtDecode } from "jwt-decode";
 import React from 'react';
@@ -33,7 +33,7 @@ function token_matches_session(token: string, session: any, studyId: string): bo
 export default async function StudyLayout({children, params}: Readonly<{children: React.ReactNode, params: {studyId: string}}>) {
   const cookieStore = cookies()
   const kratos_cookie = cookieStore.get('ory_kratos_session')
-  if (kratos_cookie == undefined) {redirect(`/${params.studyId}`)}
+  if (kratos_cookie == undefined) {redirect(`/${params.studyId}/login`)}
   const userSessionResponse = await whoAmI()
   if (!userSessionResponse.ok) { redirect(`/${params.studyId}/login`)}
   const userSession = (await userSessionResponse.json()) as OrySessionResponse
@@ -43,11 +43,7 @@ export default async function StudyLayout({children, params}: Readonly<{children
         redirect(`/${params.studyId}/verification`)
       }
   }
-
   const accessToken = (cookieStore.get('sep_access_token'))
-
   const hasAccess = ((accessToken != undefined) && (token_matches_session(accessToken.value, userSession, params.studyId)))
-
   return <React.Fragment>{hasAccess ? <React.Fragment>{children}</React.Fragment> : <GetOauthToken />}</React.Fragment>
-  
 }

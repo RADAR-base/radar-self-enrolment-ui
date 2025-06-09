@@ -3,7 +3,7 @@ import { Box, Container } from '@mui/material';
 import { RadarCard } from '@/app/_ui/components/base/card';
 import LoginComponent from '@/app/_ui/auth/login';
 import { createLoginFlow } from '@/app/_lib/auth/ory/kratos';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { IOryLoginFlow } from '@/app/_lib/auth/ory/flows.interface';
 import { useSearchParams } from 'next/navigation';
 
@@ -30,6 +30,12 @@ export default async function Page({
       console.log(e)
     }
   }
+
+  const headerList = await headers();
+  const referer = headerList.get('referer')
+
+  console.log('referer: ', referer)
+
   return (
     <main>
       <Container maxWidth="lg" disableGutters>

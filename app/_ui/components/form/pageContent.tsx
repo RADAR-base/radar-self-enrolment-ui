@@ -139,7 +139,7 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
         </form>
       </Container>
       <TaskConfirmDialog 
-        title="Submit form"
+        title={"Are you sure you want to complete this task?"}
         onConfirm={() => {
           setSubmitDialogOpen(false)
           formik.submitForm()
@@ -151,10 +151,10 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
       >
         <React.Fragment>
           <Typography>
-            Are you sure you want to submit your answers?
+            Are you sure you want to send in your answers as they are?
           </Typography>
           <Typography>
-            You will not be able to edit
+            Once submitted, you will not be able to change them.
           </Typography>
         </React.Fragment>
       </TaskConfirmDialog>
