@@ -5,8 +5,9 @@ import { whoAmI } from '@/app/_lib/auth/ory/kratos';
 import { allTaskStatus, getExistingTasks } from '@/app/_lib/study/tasks/status';
 
 
-export default async function Page({ params }: { params: { studyId: string} }) {
-  
+export default async function Page(props: { params: Promise<{ studyId: string}> }) {
+  const params = await props.params;
+
   async function fetchDeviceStatus(studyId: string): Promise<{[key: string]: boolean} | undefined> {
     const resp = await whoAmI()
     if (resp.status == 200) {
@@ -21,7 +22,7 @@ export default async function Page({ params }: { params: { studyId: string} }) {
     }
     return undefined
   }
-  
+
   const deviceStatuses = await fetchDeviceStatus(params.studyId)
 
   return (
@@ -36,4 +37,5 @@ export default async function Page({ params }: { params: { studyId: string} }) {
         </Container>
       </Box>
     </main>
-  )}
+  )
+}

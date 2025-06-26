@@ -20,7 +20,7 @@ export interface ICarouselBlock {
   items: { imgSrc: string, title?: string, content?: string, href?: string}[]
 }
 
-export function CarouselBlock({ title, subtitle, items, ...props }: ICarouselBlock, ref: ForwardedRef<HTMLDivElement>) {
+export function CarouselBlock({ title, subtitle, items, blockType }: ICarouselBlock) {
   const router = useRouter()
   return (
     <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1}>

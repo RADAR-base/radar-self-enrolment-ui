@@ -1,7 +1,7 @@
 "use client"
 import { withBasePath } from "@/app/_lib/util/links"
 import { Box, CircularProgress, Link, Stack, Typography } from "@mui/material"
-import { useState, useEffect } from "react"
+import { useState, useEffect, type JSX } from "react";
 import pRetry from 'p-retry';
 
 async function getAuthUrl(

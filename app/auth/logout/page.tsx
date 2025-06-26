@@ -18,7 +18,11 @@ async function logout(): Promise<Response> {
 }
 
 
-export default function Page({ params }: { params: { studyId: string } }) {
+export default function Page({ 
+  params 
+}: { 
+  params: Promise<{ studyId: string }>
+}) {
   const router = useRouter()
   const redirect_uri = '/'
   logout().then(

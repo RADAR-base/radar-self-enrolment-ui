@@ -18,7 +18,7 @@ export default async function Page({
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {  
   const flowId = (await searchParams).flowId
-  const cookieJar = cookies()
+  const cookieJar = await cookies()
   const csrfToken = cookieJar.getAll().find((c) => c.name.startsWith('csrf_token_'))
   let flow: IOryLoginFlow | undefined
   if ((flowId == undefined) && (csrfToken != undefined)) {

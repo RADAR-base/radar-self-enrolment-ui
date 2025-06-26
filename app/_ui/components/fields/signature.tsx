@@ -14,7 +14,7 @@ interface ArmtSignatureFieldProps extends ISignatureItem {
   color? : 'primary' | 'secondary' | 'standard' | 'error' | 'info' | 'success' | 'warning'
 }
 
-export function ArmtSignatureField({label, description, errorText, ...props}: ArmtSignatureFieldProps, ref: ForwardedRef<HTMLDivElement>) {
+export function ArmtSignatureField({label, description, errorText, ...props}: ArmtSignatureFieldProps) {
   const signCanvas = React.useRef<SignatureCanvas>(null) 
   const [open, setOpen] = React.useState(false);
   const [isTypeEntrySignature, setIsTypeEntrySignature] = React.useState<boolean>(false)

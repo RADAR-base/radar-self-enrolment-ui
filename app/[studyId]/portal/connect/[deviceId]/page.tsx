@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import { whoAmI } from '@/app/_lib/auth/ory/kratos';
 import { getRestSourceAuthLink, makeRestSourceUser } from '@/app/_lib/connect/rsa/authorizer';
 import { withBasePath } from '@/app/_lib/util/links';
@@ -11,7 +11,10 @@ import { Box } from '@mui/material';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 
-export default async function Page({ params }: { params: { studyId: string, deviceId: string} }) {
+import type { JSX } from "react";
+
+export default async function Page(props: { params: Promise<{ studyId: string, deviceId: string}> }) {
+  const params = await props.params;
   var content: JSX.Element
 
   switch (params.deviceId) {

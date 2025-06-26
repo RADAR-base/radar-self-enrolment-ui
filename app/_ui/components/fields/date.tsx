@@ -30,13 +30,13 @@ interface ArmtDateFieldProps extends IDateItem {
   color? : 'primary' | 'secondary' | 'standard' | 'error' | 'info' | 'success' | 'warning'
 }
 
-export function ArmtDateField({label, description, errorText, ...props}: ArmtDateFieldProps, ref: ForwardedRef<HTMLDivElement>) {
+export function ArmtDateField({title, label, description, errorText, ...props}: ArmtDateFieldProps) {
   const view = (props.views ?? ["year", "month", "day"]) as DateView[]
   const valueFormat = valueFormatFromView(view)
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'en-gb'}>
       <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
-        <Typography variant="h4" component={'span'}>{props.title}</Typography>
+        <Typography variant="h4" component={'span'}>{title}</Typography>
         <Typography variant="body1" component={'span'} fontStyle={'italic'}>{description}</Typography>
         <DatePicker 
           sx={{

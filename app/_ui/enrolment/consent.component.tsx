@@ -24,7 +24,7 @@ export function EnrolmentConsent(props: EnrolmentConsentProps) {
   const title = props.title ? props.title : 'Consent'
   const description = props.description
 
-  var requiredItems: React.ReactElement[] = [];
+  var requiredItems: React.ReactElement<any>[] = [];
   for (let i = 0; i < props.requiredItems.length; i++) {
     requiredItems.push(<Divider key={"divider." + i} />)
     requiredItems.push(
@@ -38,7 +38,7 @@ export function EnrolmentConsent(props: EnrolmentConsentProps) {
       />
     )
   }
-  var optionalItems: React.ReactElement[] = [];
+  var optionalItems: React.ReactElement<any>[] = [];
   if (props.optionalItems) {
     for (let i = 0; i < props.optionalItems.length; i++) {
       optionalItems.push(<Divider key={"divider." + i} />)

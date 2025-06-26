@@ -1,7 +1,7 @@
 "use client"
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { Box, Button, Link, Stack, TextField, Typography } from "@mui/material"
-import React, { useCallback, useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { useFormik } from "formik"
 import { withBasePath } from "@/app/_lib/util/links"
 import { getCsrfToken } from '@/app/_lib/auth/ory/util'
@@ -16,8 +16,7 @@ interface LoginProps {
 }
 
 export function LoginComponent(props: LoginProps) {
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
+  // const searchParams = useSearchParams()
   const router = useRouter()
   const participant = useContext(ParticipantContext)
   if (participant?.loggedIn) {
@@ -27,14 +26,14 @@ export function LoginComponent(props: LoginProps) {
   let [errorText, setErrorText] = useState<string>('');
   let [flow, setFlow] = useState<IOryLoginFlow | undefined>(props.flow);
 
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString())
-      params.set(name, value)
-      return params.toString()
-    },
-    [searchParams]
-  )
+  // const createQueryString = useCallback(
+  //   (name: string, value: string) => {
+  //     const params = new URLSearchParams(searchParams.toString())
+  //     params.set(name, value)
+  //     return params.toString()
+  //   },
+  //   [searchParams]
+  // )
 
   const getFlow = async (setFlow: (v: any) => void) => {
     const response = await fetch(withBasePath('/api/ory/login/browser'))

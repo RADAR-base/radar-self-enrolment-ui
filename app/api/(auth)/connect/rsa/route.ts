@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
   if (sourceType == undefined) {
     return new NextResponse('A device search parameter must be specified', {status: 400})
   }
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const token = cookieStore.get('sep_access_token')
   if (token == undefined) {
     return new NextResponse('Invalid access token', {status: 401})

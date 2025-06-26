@@ -146,7 +146,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   const [stepIdx, setStep] = React.useState(0)
   let [flow, setFlow] = useState<any>();
   let [errorText, setErrorText] = useState<string>('');
-  const contentRef = useRef<HTMLElement>()
+  const contentRef = useRef<HTMLElement>(undefined)
 
   
   const getFlow = async (setFlow: (v: any) => void) => {

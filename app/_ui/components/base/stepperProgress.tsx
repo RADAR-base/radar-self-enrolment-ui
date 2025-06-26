@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { Key } from "react";
+import { Key, type JSX } from "react";
 
 const shapeStyles = { width: '0.5rem', height: '0.5rem' };
 const shapeCircleStyles = { borderRadius: '50%' };
