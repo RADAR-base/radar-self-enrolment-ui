@@ -1,7 +1,7 @@
 "use client"
 import { Button, Modal, Box, Typography, Grow, Backdrop } from "@mui/material";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { type JSX } from "react";
 
 interface TaskConfirmDialogProps {
   open: boolean,
@@ -16,12 +16,13 @@ interface TaskConfirmDialogProps {
 export function TaskConfirmDialog(props: TaskConfirmDialogProps) {
   if (!props.open) return null;
     return (
-    // <Backdrop
-    //   sx={(theme: any) => ({ zIndex: theme.zIndex.drawer + 1 })}
-    //   open={props.open}
-    //   onClick={props.onReject}
-    // >
-        <Modal open={props.open} onClose={props.onReject}>
+      // <Backdrop
+      //   sx={(theme: any) => ({ zIndex: theme.zIndex.drawer + 1 })}
+      //   open={props.open}
+      //   onClick={props.onReject}
+      // >
+      // </Backdrop>
+      <Modal open={props.open} onClose={props.onReject}>
         <Box sx={{
           position: 'absolute',
           marginInline: 'auto',
@@ -44,7 +45,6 @@ export function TaskConfirmDialog(props: TaskConfirmDialogProps) {
             <Button onClick={props.onConfirm} type='submit' variant="outlined">{props.confirmText ?? 'Yes'}</Button>
           </Box>
         </Box>
-        </Modal>
-    // </Backdrop>
-  )
+      </Modal>
+    );
 }

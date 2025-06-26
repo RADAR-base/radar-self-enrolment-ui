@@ -1,8 +1,7 @@
 "use client"
-import { Box, Button, Container, Typography } from "@mui/material"
+import { Box, Container, Typography } from "@mui/material"
 import Grid from '@mui/material/Grid2';
-import { ArmtMetadataInbuilt, StudyProtocol } from "@/app/_lib/study/protocol";
-import NextLink from 'next/link'
+import { ArmtMetadataInbuilt } from "@/app/_lib/study/protocol";
 import { usePathname, useSearchParams } from 'next/navigation'
 
 import React, { useContext, useEffect, useState } from "react";

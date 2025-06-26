@@ -1,5 +1,4 @@
-import { Box, FormControl, TextField, Typography } from "@mui/material";
-import { ForwardedRef } from "react";
+import { Box, FormControl, Typography } from "@mui/material";
 import { IDescriptiveItem } from "@/app/_lib/armt/definition/field.interfaces";
 import { MarkdownContainer } from "@/app/_ui/components/base/markdown";
 
@@ -9,7 +8,7 @@ interface ArmtDescriptiveFieldProps extends IDescriptiveItem {
   color? : 'primary' | 'secondary' | 'standard' | 'error' | 'info' | 'success' | 'warning'
 }
 
-export function ArmtDescriptiveField({title, content, ...props}: ArmtDescriptiveFieldProps, ref: ForwardedRef<HTMLDivElement>) {
+export function ArmtDescriptiveField({title, content}: ArmtDescriptiveFieldProps) {
   return (
     <FormControl>
       <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1}>

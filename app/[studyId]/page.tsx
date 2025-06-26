@@ -10,12 +10,14 @@ export async function generateStaticParams() {
   return (await studies).map((id) => Object({studyId: id}))
 }
 
-export default async function Page({ params }: { params: { studyId: string } }) {
-  
+export default async function Page(props: { params: Promise<{ studyId: string }> }) {
+  const params = await props.params;
+
   var pageRegistry: PageRepository = new PageRepository()
   const pageContent = await pageRegistry.getLandingPage(params.studyId)
   return (
     <main>
       <BlockPage blockParams={pageContent.blocks} ></BlockPage>
     </main>
-  )}
+  )
+}

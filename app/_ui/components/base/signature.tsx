@@ -6,7 +6,7 @@ import SignaturePad from 'react-signature-pad-wrapper';
 import SignatureCanvas from 'react-signature-canvas'
 
 export function SigPad(props: {}) {
-  const signCanvas = React.useRef() as React.MutableRefObject<any>;
+  const signCanvas = React.useRef(undefined) as React.MutableRefObject<any>;
 
   return (
     <Box display={'flex'} flexDirection={'column'} width={"100%"}

@@ -182,12 +182,12 @@ interface RecoveryComponentProps {
   flow?: IOryRecoveryFlow
 }
 
-export function RecoveryComponent(props: RecoveryComponentProps): React.ReactElement {
+export function RecoveryComponent(props: RecoveryComponentProps): React.ReactElement<any> {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [flow, setFlow] = useState<IOryRecoveryFlow | IOryErrorFlow | undefined>(props.flow)
   const [email, setEmail] = useState<string>()
-  const [content, setContent] = useState<React.ReactElement>((flow && "state" in flow) ? 
+  const [content, setContent] = useState<React.ReactElement<any>>((flow && "state" in flow) ? 
       <EnterEmailRecoveryComponent flow={flow} setFlow={setFlow} email={email} setEmail={setEmail} /> :
       <CircularProgress style={{alignSelf: 'center'}}/>)
   const flowId = searchParams.get('flow')

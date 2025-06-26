@@ -3,7 +3,7 @@ import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(request: NextRequest) {
-  const cookieJar = cookies()
+  const cookieJar = await cookies()
 
   const flowResponse = await createLogoutFlow()
   if (!flowResponse.ok) { return flowResponse}

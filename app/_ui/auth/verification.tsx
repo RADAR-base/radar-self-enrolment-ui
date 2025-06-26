@@ -15,7 +15,7 @@ interface EmailSentComponentProps {
   setFlow: (flow: IOryVerificationFlow) => void
 }
 
-function EmailSentComponent(props: EmailSentComponentProps): React.ReactElement {
+function EmailSentComponent(props: EmailSentComponentProps): React.ReactElement<any> {
   const router = useRouter()
   let errorText: string | undefined = undefined
   if (props.flow.ui.messages.length > 0) {
@@ -98,7 +98,7 @@ function EmailSentComponent(props: EmailSentComponentProps): React.ReactElement 
 
 interface PassedChallengeComponentProps {}
 
-function PassedChallengeComponent(props: PassedChallengeComponentProps): React.ReactElement {
+function PassedChallengeComponent(props: PassedChallengeComponentProps): React.ReactElement<any> {
   return (
     <Box display={'flex'} flexDirection={'column'} gap={4}>
       <Typography>Successfully verified account</Typography>
@@ -112,13 +112,11 @@ interface VerificationComponentProps {
 }
 
 
-export function VerificationComponent(props: VerificationComponentProps): React.ReactElement {
-  const searchParams = useSearchParams()
+export function VerificationComponent(props: VerificationComponentProps): React.ReactElement<any> {
   const pathname = usePathname()
-  const flowId = searchParams.get('flow')
   const [flow, setFlow] = useState<IOryVerificationFlow | undefined>(props.flow)
   
-  const [content, setContent] = useState<React.ReactElement>(<CircularProgress style={{alignSelf: 'center'}}/>)
+  const [content, setContent] = useState<React.ReactElement<any>>(<CircularProgress style={{alignSelf: 'center'}}/>)
   const router = useRouter()
   const studyContext = useContext(ProtocolContext)
 

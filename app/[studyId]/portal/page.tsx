@@ -19,10 +19,12 @@ async function fetchTaskStatus(studyId: string): Promise<{[key: string]: ArmtSta
   return null
 }
 
-export default async function Page({ params }: { params: { studyId: string } }) {
+export default async function Page(props: { params: Promise<{ studyId: string }> }) {
+  const params = await props.params;
   const status = await fetchTaskStatus(params.studyId)
   return (
     <main>
       <TaskPanel armtStatuses={status ?? undefined}/>
     </main>
-  )}
+  )
+}

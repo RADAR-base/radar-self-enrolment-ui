@@ -14,15 +14,9 @@ const nextConfig = {
           hostname: 'avatars.githubusercontent.com',
           port: '',
           pathname: '/u/**'
-        },
-        {
-          protocol: 'https',
-          hostname: 'upload.wikimedia.org',
-          pathname: '**',
         }]
      
       },
-      experimental: { missingSuspenseWithCSRBailout: false, },
       output: "standalone",
       headers: async () => {
         return [

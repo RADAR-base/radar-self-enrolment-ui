@@ -2,7 +2,6 @@
 import { withBasePath } from "@/app/_lib/util/links";
 import { Box, Button, Container, Typography, useTheme } from "@mui/material";
 import Image from "next/image";
-import { ForwardedRef } from "react";
 import { MarkdownContainer } from "../base/markdown";
 
 
@@ -47,7 +46,7 @@ export interface IHeroBlock {
   cta2?: ICallToAction
 }
 
-export function HeroBlock(props: IHeroBlock, ref: ForwardedRef<HTMLDivElement>) {
+export function HeroBlock(props: IHeroBlock) {
   const flex = props.heroImage ? 0.6 : 0.6
   return (
     <Box 

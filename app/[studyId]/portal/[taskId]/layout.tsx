@@ -1,16 +1,25 @@
-import { whoAmI } from '@/app/_lib/auth/ory/kratos';
-import { cookies } from 'next/headers';
-import { notFound, redirect } from 'next/navigation';
+
+import { notFound } from 'next/navigation';
 import React from 'react';
 import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
-import { StudyProtocol } from '@/app/_lib/study/protocol';
 
-export default async function PageLayout({children, params}: Readonly<{children: React.ReactNode, params: {studyId: string, taskId: string}}>) {
+
+
+export default async function PageLayout({
+  children,
+  params,
+}: Readonly<{
+  children: React.ReactNode
+  params: Promise<{ studyId: string; taskId: string }>
+}>) {
+  
+  const { studyId, taskId } = await params
+
   const registery: StudyProtocolRepository = new StudyProtocolRepository()
-  const protocol = await registery.getStudyProtocol(params.studyId)
+  const protocol = await registery.getStudyProtocol(studyId)
   if (protocol == undefined) { notFound() }
-  if (!protocol.protocols.some(p => (p.id == params.taskId))) {
+  if (!protocol.protocols.some(p => (p.id == taskId))) {
     notFound()
   }
-  return <React.Fragment>{children}</React.Fragment>
+  return <>{children}</>
 }

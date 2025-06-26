@@ -50,7 +50,7 @@ export default async function RootLayout({
           loggedIn: false
         }
     }
-  const cookieJar = cookies()
+  const cookieJar = await cookies()
   const csrfToken = cookieJar.getAll().find((c) => c.name.startsWith('csrf_token_'))
   return (
     <html lang="en">

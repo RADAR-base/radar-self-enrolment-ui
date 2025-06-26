@@ -29,7 +29,7 @@ export default async function Page({
   if (userSession == undefined) {
     redirect('/' + (await params).studyId)
   }
-  const cookieJar = cookies()
+  const cookieJar = await cookies()
   const csrfToken = cookieJar.getAll().find((c) => c.name.startsWith('csrf_token_'))
   const flowId = (await searchParams).flow
   let flow: IOryVerificationFlow | undefined

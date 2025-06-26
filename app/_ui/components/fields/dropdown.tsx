@@ -10,7 +10,7 @@ interface ArmtDropdownFieldProps extends IDropdownItem {
   setFieldValue: (id: string, value: string) => void
 }
 
-export function ArmtDropdownField(props: ArmtDropdownFieldProps, ref: ForwardedRef<HTMLDivElement>) {
+export function ArmtDropdownField(props: ArmtDropdownFieldProps) {
 
   return (
     <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1} key={props.key}>
