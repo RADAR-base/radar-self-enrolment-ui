@@ -22,6 +22,7 @@ export function ArmtDropdownField(props: ArmtDropdownFieldProps) {
                 margin: 'dense'
               }
           }}
+          disabled={props.disabled}
           select
           id={props.id}
           value={props.value ?? ""}

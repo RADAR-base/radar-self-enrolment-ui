@@ -106,7 +106,6 @@ async function getToken(
   code: string,
 ) {
   const resp = await fetch(withBasePath('/api/connect/sep/token?code=' + code))
-  console.log('token resp status: ', resp.status)
   window.location.reload()
   return
 }
@@ -235,8 +234,6 @@ export function GetOauthToken(props: OauthTokenProps): React.ReactNode {
             if (attempt.attemptNumber > 1) {
               await clearCookies()
             }
-            console.log(attempt.message)
-            console.log(attempt)
             setContent(
               <Stack alignContent={'center'} alignItems={'center'} justifyContent={'center'} justifyItems={'center'} textAlign={'center'} gap={2}>
                 <CircularProgress />

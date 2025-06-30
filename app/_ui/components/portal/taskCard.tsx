@@ -39,16 +39,15 @@ export const RadarTaskCard = React.forwardRef(function RadarBlockCard({armtProto
       </Box>
       <Box display='flex' alignItems={"center"} justifyContent={"space-between"}>
         <Typography variant="subtitle1">{optional ? "Optional" : ""}</Typography>
-        {/* <NextLink href={'portal/' + id} passHref legacyBehavior> */}
           <Button 
             href={'portal/' + id}
             variant="contained"
+            disableRipple={status == "done"}
             color={(status == "done") ? "success" : "warning"}
-            disabled={status == "disabled" || status == "done"}
+            disabled={status == "disabled"}
             >
               {(status == "done") ? "Done" : "To Do"}
           </Button>
-        {/* </NextLink> */}
       </Box>
     </Box>
   </RadarTaskCardRoot>

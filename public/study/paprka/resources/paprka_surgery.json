@@ -28,7 +28,7 @@
         "text_validation_max": "2023-12-31",
         "identifier": "",
         "branching_logic": "",
-        "required_field": "true",
+        "required_field": true,
         "custom_alignment": "",
         "question_number": "",
         "matrix_group_name": "",
@@ -52,7 +52,7 @@
                 "label": "Right"
             }
         ],
-        "required_field": "true"
+        "required_field": false
     },
     {
         "field_name": "paprka_surgery_multiple_single_knee",
@@ -73,7 +73,7 @@
                 "label": "more"
             }
         ],
-        "required_field": "true"
+        "required_field": true
     },
     {
         "field_name": "paprka_surgery_satisfaction",
@@ -110,7 +110,7 @@
         "form_name": "paprka_surgery",
         "section_header": "Have you had a knee replacement surgery on your other (opposite) knee?",
         "field_type": "yesno",
-        "required_field": "true"
+        "required_field": true
     },
     {
         "field_name": "paprka_surgery_date_2",
@@ -178,7 +178,7 @@
         "text_validation_max": "",
         "identifier": "",
         "branching_logic": "",
-        "required_field": "true",
+        "required_field": false,
         "custom_alignment": "",
         "question_number": "",
         "matrix_group_name": "",
@@ -228,7 +228,7 @@
         "text_validation_max": "",
         "identifier": "",
         "branching_logic": "",
-        "required_field": "true",
+        "required_field": false,
         "custom_alignment": "",
         "question_number": "",
         "matrix_group_name": "",

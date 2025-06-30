@@ -319,24 +319,18 @@
         "MuiOutlinedInput": {
           "styleOverrides": {
             "notchedOutline": {
-              "& legend": {
-                "display": "none"
-              }
+              "fontSize": "1.35em"
             }
           }
         },
         "MuiInputLabel": {
           "styleOverrides": {
-            "root": {
-              "backgroundColor": "transparent"
-            },
-            "standard": {
-              "fontSize": "1rem"
-            },
-            "shrink": {
-              "fontSize": "1rem",
-              "fontWeight": "700",
-              "transform": "translate(0, -2rem)"
+            "outlined": {
+              "&.MuiInputLabel-shrink": {
+                "fontSize": "1.5em",
+                "transform": "translate(0.75em, -0.5em) scale(0.75)"
+
+              }
             }
           }
         }

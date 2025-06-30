@@ -29,7 +29,7 @@ export function YesNoButton(props: YesNoButtonProps) {
       onChange={props.onChange}
       exclusive={true}
       disabled={props.disabled}
-      color={color}
+      color={props.disabled ? 'standard' : color}
       size="small"
     >
       <ToggleButton sx={{ minWidth: "6em", width: { xs: "100%", sm: "auto" } }}

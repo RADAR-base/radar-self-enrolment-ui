@@ -135,7 +135,11 @@ function FieldFromRedcap(field: RadarRedcapFieldDefinition): ArmtItem {
       validation = getTextSchema(field)
     }
   if (field.required_field) {
-    validation = validation?.required("")
+    if (field.evaluated_logic) {
+      validation = validation?.required("")
+    } else {
+      validation = validation?.required("")
+    }
   }
   return {
     content: content,
@@ -150,7 +154,6 @@ export default function fromRedcapDefinition(redcap: RadarRedcapDefinition): Arm
     name: first ? first.form_name : "",
     id: first ? first.form_name : "",
     items: redcap.map((field) => FieldFromRedcap(field))
-  } 
-
+  }
   return definition
 }

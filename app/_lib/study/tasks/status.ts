@@ -22,9 +22,11 @@ export async function getExistingTasks(studyId: string, userId: string) {
 }
 
 export async function getExistingTask(studyId: string, userId: string, taskId: string) {
-
+  const allTasks = await getExistingTasks(studyId, userId)
+  if (taskId in allTasks) {
+    return allTasks[taskId]
+  }
 }
-
 
 export async function allTaskStatus(studyId: string, userId: string): Promise<{[key: string]: ArmtStatus} | null> {
   const registery: StudyProtocolRepository = new StudyProtocolRepository()
