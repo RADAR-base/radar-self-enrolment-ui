@@ -62,7 +62,6 @@ function ArmtFormContainer({armtDef, schema, studyId, taskId, disabled, initialV
   const router = useRouter()
   const [submitDialogOpen, setSubmitDialogOpen] = useState<boolean>(false);
   const [backDialogOpen, setBackDialogOpen] = useState<boolean>(false);
-
   const formik = useFormik({
     validateOnChange: true,
     validateOnMount: true,

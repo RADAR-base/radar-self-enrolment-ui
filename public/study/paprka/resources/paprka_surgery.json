@@ -73,7 +73,7 @@
                 "label": "more"
             }
         ],
-        "required_field": true
+        "required_field": false
     },
     {
         "field_name": "paprka_surgery_satisfaction",
@@ -103,7 +103,7 @@
                 "label": "Very dissatisfied"
             }
         ],
-        "required_field": "true"
+        "required_field": false
     },
     {
         "field_name": "paprka_surgery_has_second_surgery",
@@ -131,7 +131,7 @@
         "field_note": "Select the month and the year.",
         "text_validation_type_or_show_slider_number": "datetime_dmy",
         "text_validation_max": "2023-12-31",
-        "required_field": false,
+        "required_field": true,
         "evaluated_logic": "results['paprka_surgery_has_second_surgery'] == true"
     },
     {
