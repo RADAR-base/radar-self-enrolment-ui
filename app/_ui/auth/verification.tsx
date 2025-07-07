@@ -99,8 +99,6 @@ function EmailSentComponent(props: EmailSentComponentProps): React.ReactElement<
 interface PassedChallengeComponentProps {}
 
 function PassedChallengeComponent(props: PassedChallengeComponentProps): React.ReactElement<any> {
- 
- 
   return (
     <Box display={'flex'} flexDirection={'column'} gap={4}>
       <Typography>You have successfully verified your account</Typography>
