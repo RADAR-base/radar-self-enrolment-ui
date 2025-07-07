@@ -139,14 +139,16 @@ async function drawSignature(
   const rectHeight = ry1 - ry0;
 
   // Keep aspect ratio & fit inside the rectangle
-  const scale = Math.min(rectWidth / img.width, rectHeight / img.height);
-  const width = img.width * scale;
-  const height = img.height * scale;
+
+  const width = Math.min(img.width * 0.75, rectWidth)
+  const height = Math.min(img.height * 0.75, rectHeight)
+
+  // const width = img.width * scale;
+  // const height = img.height * scale;
 
   const x = rx0 + (rectWidth - width) / 2;
   const yTopBased = ry0 + (rectHeight - height) / 2;
   const y = adaptY(page, yTopBased + height); // convert to bottom-left
-
   page.drawImage(img, { x, y, width, height });
 }
 
