@@ -3,7 +3,6 @@ import { withBasePath } from "@/app/_lib/util/links"
 import { Box, CircularProgress, Link, Stack, Typography } from "@mui/material"
 import { useState, useEffect, type JSX } from "react";
 import pRetry from 'p-retry';
-import { useRouter } from "next/navigation";
 
 async function getAuthUrl(
   clientId: string,
@@ -99,7 +98,6 @@ async function getCode(
   getCodeUrl: string
 ) {
   const resp = await fetch(getCodeUrl)
-  resp.redirected
   const code = (new URL(resp.url)).searchParams.get('code')
   return code
 }
@@ -108,8 +106,7 @@ async function getToken(
   code: string,
 ) {
   const resp = await fetch(withBasePath('/api/connect/sep/token?code=' + code))
-  const router = useRouter()
-  router.refresh()
+  window.location.reload()
   return
 }
 
@@ -193,6 +190,10 @@ async function clearCookies() {
   await fetch(withBasePath('/api/ory/login/browser'))
 }
 
+function checkAccessCookieExists() {
+  return document.cookie.split(';').some((c) => c.trim().startsWith('sep_access_token'))
+}
+
 interface OauthTokenProps {
   scopes?: string[]
   clientId?: string
@@ -202,7 +203,6 @@ interface OauthTokenProps {
 }
 
 export function GetOauthToken(props: OauthTokenProps): React.ReactNode {
-
   const [loggingIn, setLoggingIn] = useState<boolean>(false)
   const [content, setContent] = useState<JSX.Element>(<CircularProgress />)
   const scopes = (
@@ -225,10 +225,13 @@ export function GetOauthToken(props: OauthTokenProps): React.ReactNode {
   const codeFunc = props.codeFunc ?? getToken
 
   useEffect(() => {
+
     if (!loggingIn) {
       setLoggingIn(true)
       pRetry(
-        () => completeFullFlow(clientId, scopes, audience, redirectUri, codeFunc), 
+        () => {
+          completeFullFlow(clientId, scopes, audience, redirectUri, codeFunc)
+        }, 
         {
           retries: 8,
           minTimeout: 1000,
@@ -236,6 +239,9 @@ export function GetOauthToken(props: OauthTokenProps): React.ReactNode {
           onFailedAttempt: async (attempt) => {
             if (attempt.attemptNumber > 1) {
               await clearCookies()
+            }
+            if (checkAccessCookieExists()) {
+              window.location.reload()
             }
             setContent(
               <Stack alignContent={'center'} alignItems={'center'} justifyContent={'center'} justifyItems={'center'} textAlign={'center'} gap={2}>
