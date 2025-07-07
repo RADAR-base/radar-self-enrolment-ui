@@ -207,20 +207,10 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
         email: register.email,
         password: register.password,
         csrf_token: getCsrfToken(flow),
-        traits: {
-          projects: [
-            {
-              id: studyProtocol.studyId,
-              name: studyProtocol.name,
-              userId: crypto.randomUUID(),
-              ...traits,
-              version: protocol.version
-            }
-          ]
-        }
+        traits: traits,
       }
       sendGAEvent('event', 'study_enrolment', {status: 'submitting'})
-      fetch(withBasePath('/api/ory/registration?' + new URLSearchParams({
+      fetch(withBasePath(`/api/study/${studyProtocol.studyId}/join?` + new URLSearchParams({
         flow: flow.id
       })), {
         method: 'POST',

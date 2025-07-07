@@ -3,7 +3,7 @@
           {
             "blockType": "hero",
             "noCard": true,
-            "blockBackground": "linear-gradient(to bottom left, rgba(0, 18, 24, 0.2), rgba(0, 18, 24, 0.7)), right / cover no-repeat url('/kratos-ui/study/paprka/resources/knee.png'), #002e3d",
+            "blockBackground": "linear-gradient(to bottom left, rgba(0, 18, 24, 0.2), rgba(0, 18, 24, 0.7)), right / cover no-repeat url('/study/study/paprka/resources/knee.png'), #002e3d",
             "title": {
                 "children": "PAPrKA: How active are people after knee replacement surgery?",
                 "sx": {"color":"white"}
@@ -24,7 +24,7 @@
             "noCard": true,
             "title": "About the study", 
             "blockBackground": "white",
-            "content": "<div id='more'></div>To learn more about recovery after knee replacement, we will bring together with your consent 3 bits of information:\n\n<ol><li>Information you provide in a survey.</li><li>A one-time collection of your physical activity information from either iPhone, Fitbit, Apple Watch, Garmin or Oura Ring. Physical activity can include things such as steps you take daily, walking, numbers of flights of stairs you climb etc.</li><li>Access to your knee replacement surgery information (from the UK National Joint Registry, for the duration of the study).</li></ol><br />The University of Manchester is leading the PAPrKA research study in collaboration with King's College London and with support from the National Joint Registry."
+            "content": "<div id='more'></div>To learn more about recovery after knee replacement, we will bring together with your consent 3 bits of information:\n\n<ol><li>Information you provide in a survey.</li><li>A one-time collection of your physical activity information from either iPhone, Fitbit, Apple Watch or Oura Ring. Physical activity can include things such as steps you take daily, walking, numbers of flights of stairs you climb etc.</li><li>Access to your knee replacement surgery information (from the UK National Joint Registry, for the duration of the study).</li></ol><br />The University of Manchester is leading the PAPrKA research study in collaboration with King's College London and with support from the National Joint Registry."
           },
           {
             "blockType": "video",
@@ -46,12 +46,12 @@
                 {
                     "blockType": "markdown",
                     "title": "Who can take part?",
-                    "content": "<div>You must answer yes to all 6 questions   to take part in the PAPrKA study. Have you\n<ol><li>People living with knee osteoarthritis who had a total or partial knee replacement by the NHS or a private healthcare provider:\n<ol type='a'><li>between 1st January 2017 and 31st December 2023</li><li>are over 18 years old and live in England, Wales, Northern Ireland, Isle of Man or Guernsey at the time of the surgery</li></ol></li><li>Used an **iPhone, Fitbit, Apple Watch, Garmin or Oura Ring** to track your physical activity at least six months before and one year after your knee replacement surgery.</li><li>People who can read and understand English or have support from someone who can.</li><li>People must be willing to give us permission to access their physical activity data and link it to their knee replacement information in the National Joint Registry.</li></ol></div>"
+                    "content": "<div>You must answer yes to all 6 questions   to take part in the PAPrKA study. Have you\n<ol><li>People living with knee osteoarthritis who had a total or partial knee replacement by the NHS or a private healthcare provider:\n<ol type='a'><li>between 1st January 2017 and 31st December 2023</li><li>are over 18 years old and live in England, Wales, Northern Ireland, Isle of Man or Guernsey at the time of the surgery</li></ol></li><li>Used an **iPhone (6s and above), Fitbit, Apple Watch or Oura Ring** to track your physical activity at least six months before and one year after your knee replacement surgery.</li><li>People who can read and understand English or have support from someone who can.</li><li>People must be willing to give us permission to access their physical activity data and link it to their knee replacement information in the National Joint Registry.</li></ol></div>"
                 },              
                 {
                     "blockType": "markdown",
                     "title": "What do I need?",
-                    "content": "1. Know your Month and year of your knee replacement surgery.\n2. Know if you have Fitbit, iPhone, Apple watch, Garmin, or Oura Ring. You can find out what device you have by checking the logo on the front or back of your device or logging to your device account.\n\n<br />## What will I have to do?\n<br />\n1. Check you can take part in the study.\n2. Sign an electronic consent form.\n3. Set up a study account.\n4. Complete up to 4 tasks.\n\nCompleting all 4 should take approximately 35 minutes."
+                    "content": "1. Know your Month and year of your knee replacement surgery.\n2. Know if you have Fitbit, iPhone (6s and above), Apple watch or Oura Ring. You can find out what device you have by checking the logo on the front or back of your device or logging to your device account.\n\n<br />## What will I have to do?\n<br />\n1. Check you can take part in the study.\n2. Sign an electronic consent form.\n3. Set up a study account.\n4. Complete up to 4 tasks.\n\nCompleting all 4 should take approximately 35 minutes."
                   }
             ]
           },
@@ -64,15 +64,15 @@
             "content": [
               {
                 "blockType": "markdown",
-                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'>_Interested in taking part?_<div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/kratos-ui/paprka/enrol'>Join Study</button></div></div>"
+                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'>_Interested in taking part?_<div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/study/paprka/enrol'>Join Study</button></div></div>"
               },
               {
                 "blockType": "markdown",
-                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'><div>_Need more help?_\nView our step-by-step guide</div><div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/kratos-ui/study/paprka/resources/guides/PAPrKA_Study_Guide.docx'>Step-by-Step Guide</button></div></div>"
+                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'><div>_Need more help?_\nView our step-by-step guide</div><div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/study/study/paprka/resources/guides/PAPrKA_Study_Guide.docx'>Step-by-Step Guide</button></div></div>"
               },
               {
                 "blockType": "markdown",
-                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'><div>_More Information_\nFor full details, see our participant information sheet</div><div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/kratos-ui/study/paprka/resources/paprka_pis.pdf' target='_blank'>Information Sheet</button></div></div>"
+                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'><div>_More Information_\nFor full details, see our participant information sheet</div><div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/study/study/paprka/resources/paprka_pis.pdf' target='_blank'>Information Sheet</button></div></div>"
               }
             ]
           },
@@ -100,8 +100,8 @@
           {
             "blockType": "hero",
             "noCard": true,
-            "blockBackground": "center / cover no-repeat url('/kratos-ui/study/paprka/resources/landingpage/connect_your_device.jpg'), #fff",
-            "subtitle": "<div style='background:rgba(255, 255, 255, 0.75);border-radius:24px;padding:24px; backdrop-filter: blur(10px);'>The PAPrKA study is part of the Health Research from Home (HRfH) programme, led by the University of Manchester. The HRfH programme received funding from the UK Research and Innovation Medical Research Council (UKRI MRC) to carry out our important work.</div>"
+            "blockBackground": "center / cover no-repeat url('/study/study/paprka/resources/landingpage/connect_your_device.jpg'), #fff",
+            "subtitle": "<div style='background:rgba(255, 255, 255, 0.75);border-radius:24px;padding:24px; backdrop-filter: blur(10px);'>The PAPrKA study is part of the [Health Research from Home (HRfH)](https://sites.manchester.ac.uk/health-research-from-home/) programme, led by the University of Manchester. The HRfH programme received funding from the UK Research and Innovation Medical Research Council (UKRI MRC) to carry out our important work.</div>"
           },
           {
             "blockType": "column",
@@ -115,7 +115,7 @@
               },
               {
                 "blockType": "markdown",
-                "content": "<div style='margin:auto'><Image src='/kratos-ui/radar/rb-logo-hq2.png' alt={'RADAR-base logo'} width={200} height={200} /></div>"
+                "content": "<div style='margin:auto'><Image src='/study/radar/rb-logo-hq2.png' alt={'RADAR-base logo'} width={200} height={200} /></div>"
               }
             ]
           }

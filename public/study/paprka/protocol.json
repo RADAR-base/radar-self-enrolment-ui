@@ -40,7 +40,7 @@
       "metadata": {
         "title": "TASK 3: Connect my devices",
         "order": 2,
-        "description": "Connect one or more devices\n<em>Tip (for Garmin, Fitbit & Oura ring etc): You will need login details for your device\nTip (for Apple): You need to enter the study name PAPrKA; use the email and password from your PAPrKA account; best completed using a WiFi</em>",
+        "description": "Connect one or more devices\n<em>Tip (for Fitbit & Oura ring): You will need login details for your device\nTip (for Apple): You need to enter the study name PAPrKA; use the email and password from your PAPrKA account; best completed using a WiFi</em>",
         "optional": false,
         "type": "inbuilt",
         "inbuiltId": "connect",
@@ -51,22 +51,17 @@
             {
               "id": "fitbit",
               "title": "Fitbit Tab",
-              "description": "Before clicking Connect, you can read [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_Fitbit.docx) or watch a video [link TBC] to see how to share your Fitbit physical activity data.\n"
-            },
-            {
-              "id": "garmin",
-              "title": "Garmin Tab",
-              "description": "Before clicking Connect, you can read [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_Garmin.docx) or watch a video [link TBC] to see how to share your Garmin physical activity data.\n"
+              "description": "Before clicking Connect, you can read [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_Fitbit.docx) or [watch a video](#) to see how to share your Fitbit physical activity data.\n"
             },
             {
               "id": "oura",
               "title": "Oura Ring Tab",
-              "description": "Before clicking Connect, you can read [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_Oura.docx) or watch a video [link TBC] to see how to share your Oura Ring physical activity data.\n"
+              "description": "Before clicking Connect, you can read [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_Oura.docx) or [watch a video](#) to see how to share your Oura Ring physical activity data.\n"
             },
             {
               "id": "apple_health",
               "title": "Apple Health",
-              "description": "Before clicking Connect, you can [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_iPhone.docx) or watch a video[link TBC] to see how to share your iPhone or Apple Watch physical activity data.\n"
+              "description": "Before clicking Connect, you can [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_iPhone.docx) or [watch a video](#) to see how to share your iPhone or Apple Watch physical activity data.\n"
             }
           ]
         }
@@ -105,12 +100,12 @@
         {
           "fieldType": "yesno",
           "id": "criteria3",
-          "description": "Did you use a Fitbit, iPhone*, Apple Watch*, Garmin or Oura Ring to track your activity six months or more before your knee replacement?\n_*If you used an iPhone or Apple Watch, it automatically collects physical activity data so please select YES._\n"
+          "description": "Did you use a Fitbit, iPhone (6s and above)*, Apple Watch* or Oura Ring to track your activity six months or more before your knee replacement?\n_*If you used an iPhone or Apple Watch, it automatically collects physical activity data so please select YES._\n"
         },
         {
           "fieldType": "yesno",
           "id": "criteria4",
-          "description": "Did you use a Fitbit, iPhone, Apple Watch, Garmin or Oura Ring to track your activity one year or more after your knee replacement?\n_*If you used an iPhone or Apple Watch, it automatically collects physical activity data so please select YES._\n"
+          "description": "Did you use a Fitbit, iPhone (6s and above), Apple Watch or Oura Ring to track your activity one year or more after your knee replacement?\n_*If you used an iPhone or Apple Watch, it automatically collects physical activity data so please select YES._\n"
         }
       ]
     },
@@ -136,7 +131,7 @@
         {
           "fieldType": "yesno",
           "id": "M-Permission to collect PGHD",
-          "description": "I give permission for the study team to collect my physical activity data stored with Fitbit, Apple Health, Oura Ring and or Garmin.\n<br />\nThis means the PAPrKA team will collect any data available between 01<sup>st</sup> July 2016 and 31<sup>st</sup> December 2024.\n"
+          "description": "I give permission for the study team to collect my physical activity data stored with Fitbit, Apple Health or Oura Ring.\n<br />\nThis means the PAPrKA team will collect any data available between 01<sup>st</sup> July 2016 and 31<sup>st</sup> December 2024.\n"
         },
         {
           "fieldType": "yesno",
@@ -173,7 +168,7 @@
         {
           "fieldType": "yesno",
           "id": "O-Prize draw",
-          "description": "I would like to take part in the prize draw\n<br />\nI understand that my full name and email address will be passed to the University's Finance team for the sole purpose of sending me the Amazon voucher, If I agree to take part in the prize draw and win.\n"
+          "description": "I would like to take part in the prize draw\n<br />\nI understand that my full name and email address will be passed to the University of Manchester's Finance team for the sole purpose of sending me the Amazon voucher, If I agree to take part in the prize draw and win.\n"
         },
         {
           "fieldType": "yesno",
@@ -395,7 +390,11 @@
     },
     "portal": {
       "title": "What You Need to Complete PAPrKA Study Tasks",
-      "content": "Please complete up to four tasks. The first three are necessary to take part, while ‘Give us your feedback’ is optional\n<em>When you have completed all tasks, click the \"Finished\" button.</em>\n<em>Once you click the finish button you will not be able to change your responses, but you will be able to see them.</em>"
+      "content": "To take part you will need to complete Tasks 1, 2 and 3. Task 4 ‘Give us your feedback’ is optional.\n\nPlease note, when you start a task, you must answer all the questions in one go and press \"submit\" or you will lose your answers"
+    },
+    "finishContent": {
+      "title": "Thank you for completing the PAPrKA study tasks.",
+      "content": "<br />Thank you for taking part in our study.\n\n\nThanks to your contribution, and through our research, we can support patients and doctors to make better informed decisions about knee replacement surgery in the future.\n\n\nNow that you have submitted the study tasks, you will be able to view (but not change) your responses by logging back into your study account."
     },
     "analytics": {
       "gaId": "G-LTRMSY2PNR"

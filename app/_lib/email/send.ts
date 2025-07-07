@@ -7,7 +7,7 @@ const SMTP_HOST = process.env.SMTP_HOST ?? ''
 const SMTP_USER = process.env.SMTP_USER ?? ''
 const SMTP_PASS = process.env.SMTP_PASS ?? ''
 const SMTP_PORT = Number(process.env.SMTP_PORT ?? 587)
-const EMAIL_FROM = process.env.EMAIL_FROM ?? ''
+const EMAIL_FROM = process.env.SMTP_FROM ?? ''
 
 
 export async function sendMail({to, subject, text, html, attachments, fromName}: {
@@ -17,7 +17,8 @@ export async function sendMail({to, subject, text, html, attachments, fromName}:
   html?: string,
   attachments?: Attachment[],
   fromName?: string
-}) { 
+}) {
+  console.log('sending mail')
   const transporter = nodemailer.createTransport({
     host: SMTP_HOST,
     port: SMTP_PORT,
@@ -37,8 +38,8 @@ export async function sendMail({to, subject, text, html, attachments, fromName}:
     attachments: attachments
   },
   (err, info) => {
-    console.error(err)
-    console.log(info)
+    err && console.error(err)
+    info && console.log(info)
   })
 
 }

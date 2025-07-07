@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { whoAmI } from "@/app/_lib/auth/ory/kratos";
 
-async function getStatus(studyId:string, userId: string) {
+async function getStatus(studyId: string, userId: string) {
   const resp = await fetch(process.env.KRATOS_ADMIN_URL + '/identities/' + userId)
   if (resp.ok) {
     try {
@@ -17,9 +17,9 @@ async function getStatus(studyId:string, userId: string) {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ studyId: string, taskId: string }> }
+  { params }: { params: Promise<{ studyId: string }> }
 ) {
-  const {studyId, taskId}  = (await params)
+  const { studyId }  = (await params)
   let oryUser: any
   let userId: string
 

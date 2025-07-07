@@ -59,13 +59,13 @@ export function OuraPage() {
             <Typography mt={2} variant="body1">If you have any questions about the information we ask for, please contact us on <Link href="mailto:paprka@manchester.ac.uk">paprka@manchester.ac.uk</Link></Typography>
           </Grid>
           <Grid size={{xs: 12, sm: 6}}>
-            <Image 
+            {/* <Image 
                 src={withBasePath('/devices/oura/oura_scopes.png')}
                 width={224}
                 height={400}
                 alt='An image showing the Oura OAuth Scope page'
                 style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
-              />
+              /> */}
           </Grid>
         </Grid>
       </RadarCard>
