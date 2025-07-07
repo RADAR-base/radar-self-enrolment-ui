@@ -80,7 +80,7 @@ const finishHtmlContent = `<p>Hello,</p>
 <li><u>A one-time</u> collection of your <strong>physical activity information</strong></li>
 <li>Your <strong>knee replacement information</strong></li>
 </ol>
-<p>The research team will work on the joined information within the secure research environment of the National Joint Registry. Read more about our research on the <a href="https://sep.radar-base.net/kratos-ui/paprka">PAPrKA website</a></p>
+<p>The research team will work on the joined information within the secure research environment of the National Joint Registry. Read more about our research on the <a href="https://sep.radar-base.net/study/paprka">PAPrKA website</a></p>
 <p><strong>What happens next?</strong></p>
 <p>No further action is required, and no additional data will be collected from you in the future.</p>
 <p>If we are not able to include your information in our research, you will be notified by email.</p>

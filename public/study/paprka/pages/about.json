@@ -15,12 +15,12 @@
           {
             "blockType": "markdown",
             "title": "What is the research about?", 
-            "content": "You are being invited to take part in the Physical Activity Patterns after Knee Arthroplasty (PAPrKA) study which aims to:\n1. Learn more about people’s recovery after knee replacement so that in the future patients and doctors can make better informed decisions about knee replacement surgery.\n2. Improve people’s experience of taking part in studies like PAPrKA.\n\n<br />\nFind out more about [our research](/kratos-ui/paprka)\n"
+            "content": "You are being invited to take part in the Physical Activity Patterns after Knee Arthroplasty (PAPrKA) study which aims to:\n1. Learn more about people’s recovery after knee replacement so that in the future patients and doctors can make better informed decisions about knee replacement surgery.\n2. Improve people’s experience of taking part in studies like PAPrKA.\n\n<br />\nFind out more about [our research](/study/paprka)\n"
           },
           {
             "blockType": "markdown",
             "title": "What will I be asked to do if I decide to join the study?", 
-            "content": "1. Check you can take part.\n2. Sign an electronic consent form.\n3. Set up a study account.\n4. Complete up to 4 tasks (3 you must complete, 1 is optional).\n\n\n<br />\nCompleting all 4 should take approximately 35 minutes.\n\n<br />\n<button variant='contained' href='/kratos-ui/paprka/enrol'>Join Study</button>"
+            "content": "1. Check you can take part.\n2. Sign an electronic consent form.\n3. Set up a study account.\n4. Complete up to 4 tasks (3 you must complete, 1 is optional).\n\n\n<br />\nCompleting all 4 should take approximately 35 minutes.\n\n<br />\n<button variant='contained' href='enrol'>Join Study</button>"
           }
     ]
 }
