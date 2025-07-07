@@ -18,7 +18,6 @@ export async function sendMail({to, subject, text, html, attachments, fromName}:
   attachments?: Attachment[],
   fromName?: string
 }) {
-  console.log('sending mail')
   const transporter = nodemailer.createTransport({
     host: SMTP_HOST,
     port: SMTP_PORT,

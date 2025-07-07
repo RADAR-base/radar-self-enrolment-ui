@@ -3,7 +3,7 @@
           {
             "blockType": "hero",
             "noCard": true,
-            "blockBackground": "linear-gradient(to bottom left, rgba(0, 18, 24, 0.2), rgba(0, 18, 24, 0.7)), right / cover no-repeat url('/study/study/paprka/resources/knee.png'), #002e3d",
+            "blockBackground": "linear-gradient(to bottom left, rgba(0, 18, 24, 0.2), rgba(0, 18, 24, 0.7)), right / cover no-repeat url('/kratos-ui/study/paprka/resources/knee.png'), #002e3d",
             "title": {
                 "children": "PAPrKA: How active are people after knee replacement surgery?",
                 "sx": {"color":"white"}
@@ -31,10 +31,7 @@
             "noCard": true,
             "blockBackground": "white",
             "video": {
-              "src": "/study/paprka/resources/landingpage/intro.mp4",
-              "type": "video/mp4",
-              "width": "100%",
-              "params": {"controls": true, "muted": false, "autoPlay": false, "playsInline": true}
+              "youtubeId": "P3h7jcoiD9M"
             }
           },
           {
@@ -64,15 +61,15 @@
             "content": [
               {
                 "blockType": "markdown",
-                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'>_Interested in taking part?_<div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/study/paprka/enrol'>Join Study</button></div></div>"
+                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'>_Interested in taking part?_<div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/kratos-ui/paprka/enrol'>Join Study</button></div></div>"
               },
               {
                 "blockType": "markdown",
-                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'><div>_Need more help?_\nView our step-by-step guide</div><div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/study/study/paprka/resources/guides/PAPrKA_Study_Guide.docx'>Step-by-Step Guide</button></div></div>"
+                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'><div>_Need more help?_\nView our step-by-step guide</div><div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/kratos-ui/study/paprka/resources/guides/PAPrKA_Study_Guide.docx'>Step-by-Step Guide</button></div></div>"
               },
               {
                 "blockType": "markdown",
-                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'><div>_More Information_\nFor full details, see our participant information sheet</div><div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/study/study/paprka/resources/paprka_pis.pdf' target='_blank'>Information Sheet</button></div></div>"
+                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'><div>_More Information_\nFor full details, see our participant information sheet</div><div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/kratos-ui/study/paprka/resources/paprka_pis.pdf' target='_blank'>Information Sheet</button></div></div>"
               }
             ]
           },
@@ -100,7 +97,7 @@
           {
             "blockType": "hero",
             "noCard": true,
-            "blockBackground": "center / cover no-repeat url('/study/study/paprka/resources/landingpage/connect_your_device.jpg'), #fff",
+            "blockBackground": "center / cover no-repeat url('/kratos-ui/study/paprka/resources/landingpage/connect_your_device.jpg'), #fff",
             "subtitle": "<div style='background:rgba(255, 255, 255, 0.75);border-radius:24px;padding:24px; backdrop-filter: blur(10px);'>The PAPrKA study is part of the [Health Research from Home (HRfH)](https://sites.manchester.ac.uk/health-research-from-home/) programme, led by the University of Manchester. The HRfH programme received funding from the UK Research and Innovation Medical Research Council (UKRI MRC) to carry out our important work.</div>"
           },
           {
@@ -115,7 +112,7 @@
               },
               {
                 "blockType": "markdown",
-                "content": "<div style='margin:auto'><Image src='/study/radar/rb-logo-hq2.png' alt={'RADAR-base logo'} width={200} height={200} /></div>"
+                "content": "<div style='margin:auto'><Image src='/kratos-ui/radar/rb-logo-hq2.png' alt={'RADAR-base logo'} width={200} height={200} /></div>"
               }
             ]
           }

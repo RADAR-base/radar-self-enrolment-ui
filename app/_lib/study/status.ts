@@ -21,7 +21,6 @@ export async function getStudyStatus(studyId: string, userId: string) {
 }
 
 export async function setStudyStatus(studyId: string, userId: string, status: StudyStatus) {
-  console.log('setting status:', status)
   return await fetch(process.env.KRATOS_ADMIN_URL + '/identities/' + userId, {
     method: 'PATCH',
     headers: {
