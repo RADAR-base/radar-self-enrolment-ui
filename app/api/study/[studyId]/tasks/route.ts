@@ -1,8 +1,5 @@
 import ProtocolRepository, { StudyProtocolRepository } from "@/app/_lib/study/protocol/repository";
-import { StudyProtocol } from '@/app/_lib/study/protocol';
-import { NextRequest, NextResponse } from "next/server"
-import { headers } from 'next/headers'
-import { redirect } from "next/navigation";
+import { NextResponse } from "next/server"
 
 export async function GET(
   request: Request,

@@ -47,7 +47,7 @@
           },
           {
             "title": "Q11: What fitness tracking devices can I connect and does their version matter?",
-            "content": "You can connect Fitbit, Apple, Oura and Garmin devices.  version of the Fitbit, Oura and Garmin do not matter. However, only Apple versions higher than <insert the versions> can join the study."
+            "content": "You can connect Fitbit, Apple, Oura and Garmin devices. The version of the Fitbit, Oura and Garmin do not matter. However, only Apple versions higher than &lt;insert the versions&gt; can join the study."
           },
           {
             "title": "Q12: Can I connect apple devices without downloading the RADAR aRMT app from my app store?",

@@ -4,11 +4,9 @@ import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
 import { ArmtDefinitionRepository } from '@/app/_lib/armt/repository/repository';
 import { ArmtContent } from '@/app/_ui/components/form/pageContent';
 import { RadarCard } from '@/app/_ui/components/base/card';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { whoAmI } from '@/app/_lib/auth/ory/kratos';
-import { allTaskStatus, getExistingTask } from '@/app/_lib/study/tasks/status';
-import { ArmtStatus } from '@/app/api/study/[studyId]/tasks/status/route';
-import { withBasePath } from '@/app/_lib/util/links';
+import { getExistingTask } from '@/app/_lib/study/tasks/status';
 
 
 // export const dynamicParams = false
@@ -26,20 +24,6 @@ import { withBasePath } from '@/app/_lib/util/links';
 //   }
 //   return params
 // }
-
-async function isTaskDue(taskId: string, studyId: string): Promise<boolean | undefined> {
-  const resp = await whoAmI()
-  if (resp.status == 200) {
-    const oryUser = await resp.json()
-    const userId = oryUser['identity']['id']
-    if (userId) {
-      const statuses = await allTaskStatus(studyId, userId)
-      if (statuses != null) { 
-      return statuses[taskId]?.due
-      }
-    }
-  }
-}
 
 async function getTask(studyId: string, taskId: string) {
   const resp = await whoAmI()
