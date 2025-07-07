@@ -3,6 +3,7 @@ import { withBasePath } from "@/app/_lib/util/links"
 import { Box, CircularProgress, Link, Stack, Typography } from "@mui/material"
 import { useState, useEffect, type JSX } from "react";
 import pRetry from 'p-retry';
+import { useRouter } from "next/navigation";
 
 async function getAuthUrl(
   clientId: string,
@@ -98,6 +99,7 @@ async function getCode(
   getCodeUrl: string
 ) {
   const resp = await fetch(getCodeUrl)
+  resp.redirected
   const code = (new URL(resp.url)).searchParams.get('code')
   return code
 }
@@ -106,7 +108,8 @@ async function getToken(
   code: string,
 ) {
   const resp = await fetch(withBasePath('/api/connect/sep/token?code=' + code))
-  window.location.reload()
+  const router = useRouter()
+  router.refresh()
   return
 }
 

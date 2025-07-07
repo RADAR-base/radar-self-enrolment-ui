@@ -7,32 +7,29 @@ import { getStudyStatus, setStudyStatus } from '@/app/_lib/study/status';
 import { paprkaEmailOnEnrol, paprkaEmailOnFinish } from '@/app/_lib/email/paprka';
 import { FinishBanner } from '@/app/_ui/components/portal/finishBanner';
 import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
+import { OrySession } from '@/app/_lib/auth/ory/types';
 
 async function getOryUser() {
   const resp = await whoAmI()
   if (resp.status == 200) {
-    const oryUser = await resp.json()
+    const oryUser = (await resp.json()) as OrySession
     return oryUser
   }
 }
 
-async function fetchTaskStatus(studyId: string, oryUser: any): Promise<{[key: string]: ArmtStatus} | null> {
-  const userId = oryUser['identity']['id']
-  if (userId) {
-    return await allTaskStatus(studyId, userId)
+async function fetchTaskStatus(studyId: string, oryUser: any): Promise<{[key: string]: ArmtStatus} | undefined> {
+  if (oryUser) {
+    return (await allTaskStatus(studyId, oryUser.identity.id)) ?? undefined
   }
-  return null
 }
 
-async function fetchStudyStatus(studyId: string, oryUser: any) {
-  const userId = oryUser['identity']['id']
-  if (userId) {
-    return await getStudyStatus(studyId, userId)
+async function fetchStudyStatus(studyId: string, oryUser?: OrySession) {
+  if (oryUser) {
+    return await getStudyStatus(studyId, oryUser.identity.id)
   }
-  return null
 }
 
-async function paprkaEmails(studyId: string, oryUser: any, status: {[key:string]: ArmtStatus} | null) {
+async function paprkaEmails(studyId: string, oryUser: any, status?: {[key:string]: ArmtStatus} | null) {
   const studyStatus = await fetchStudyStatus(studyId, oryUser)
     if (studyStatus == 'enrolled') {
       await setStudyStatus('paprka', oryUser['identity']['id'], 'active')
@@ -53,7 +50,6 @@ async function paprkaEmails(studyId: string, oryUser: any, status: {[key:string]
 }
 
 export default async function Page(props: { params: Promise<{ studyId: string }> }) {
-
   var showFinishBanner: boolean = false
   const params = await props.params;
   const oryUser = await getOryUser()
@@ -67,7 +63,7 @@ export default async function Page(props: { params: Promise<{ studyId: string }>
   }
   return (
     <main>
-      <TaskPanel armtStatuses={status ?? undefined} />
+      <TaskPanel armtStatuses={status} />
       {showFinishBanner && <FinishBanner title={finishTitle} content={finishContent} />}
     </main>
   )

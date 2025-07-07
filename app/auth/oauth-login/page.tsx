@@ -64,7 +64,7 @@ async function acceptWithCurrentAccount(loginChallenge: string, router: AppRoute
   )
   if (response.ok) {
     const data = await response.json()
-    window.location.replace(data.redirect_to)
+    router.replace(data.redirect_to)
   }
 }
 
@@ -90,7 +90,7 @@ export default function Page() {
 
   const loginChallenge = searchParams.get('login_challenge') ?? undefined
   if (loginChallenge == undefined) {
-    window?.location.replace(withBasePath('/auth/login'))
+    router.replace('auth/login')
     return
   }
 

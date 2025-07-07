@@ -82,7 +82,8 @@ export default function Page() {
         if (r.ok) {
           r.json().then(
             (d) => {
-              window.location.replace(d.redirect_to)
+              router.replace(d.redirect_to)
+              router.refresh()
             }
           )
         } else {
@@ -109,7 +110,8 @@ export default function Page() {
         if (r.ok) {
           r.json().then(
             (d) => {
-              window.location.replace(d.redirect_to)
+              router.replace(d.redirect_to)
+              router.refresh()
             }
           )
         } else {
