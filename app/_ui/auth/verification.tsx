@@ -118,6 +118,7 @@ export function VerificationComponent(props: VerificationComponentProps): React.
   const router = useRouter()
   const [content, setContent] = useState<React.ReactElement<any>>(<CircularProgress style={{alignSelf: 'center'}}/>)
   const studyContext = useContext(ProtocolContext)
+  console.log(studyContext)
 
   useEffect(() => {
     if (flow) {
@@ -130,12 +131,13 @@ export function VerificationComponent(props: VerificationComponentProps): React.
           setContent(<EmailSentComponent flow={flow} setFlow={setFlow} />)
           break
         case 'passed_challenge':
+          console.log('passed challenge')
           if (studyContext) {
-            router.push(`/${studyContext.studyId}/portal`)
-            router.refresh()
+            window.location.replace(withBasePath(`/${studyContext.studyId}/portal`))
+            window.location.reload()
           } else {
-            router.push('/')
-            router.refresh()
+            window.location.replace(withBasePath('/'))
+            window.location.reload()
           }
           setContent(<PassedChallengeComponent />)
           break

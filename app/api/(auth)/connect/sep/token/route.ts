@@ -18,9 +18,9 @@ export async function GET(request: NextRequest) {
     code: code,
     redirectUri: REDIRECT_URI
   })
-  cookieStore.set('sep_access_token', token['access_token'])
   if (token == null) {
     return NextResponse.json({error: 'Unknown error retrieving token'}, {status: 500})
   }
+  cookieStore.set('sep_access_token', token['access_token'])
   return NextResponse.json(token)
 }

@@ -217,10 +217,12 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
         body: JSON.stringify(body)
       }).then(
         (res) => {
+          console.log(res)
           if (res.ok) {
             sendGAEvent('event', 'study_enrolment', {status: 'joined'})
             res.json().then(
               (data) => {
+                console.log('resp data: ', data)
                 const verificationFlow = data.continue_with[0].flow.id
                 if (verificationFlow) {
                   router.push(`/${studyProtocol.studyId}/verification?flow=${verificationFlow}`)
