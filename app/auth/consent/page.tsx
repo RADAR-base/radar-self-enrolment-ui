@@ -84,8 +84,7 @@ export default function Page() {
           r.json().then(
             (d) => {
               consentAction(d.redirect_to)
-              router.replace(d.redirect_to)
-              router.refresh()
+              window.location.replace(d.redirect_to)
             }
           )
         } else {
@@ -112,8 +111,7 @@ export default function Page() {
         if (r.ok) {
           r.json().then(
             (d) => {
-              router.replace(d.redirect_to)
-              router.refresh()
+              window.location.replace(d.redirect_to)
             }
           )
         } else {
@@ -137,6 +135,9 @@ export default function Page() {
     if (consent == null) {
       // Set error content
     }
+    if ((!!consent?.client?.skip_consent) && (!!userSession)) {
+      accept()
+    }
     if ((scopes.length > 0) && (userSession != undefined)) {
       if (userIsParticipant(userSession) && 
         (consent?.client?.client_id == 'SEP') || 
@@ -148,9 +149,6 @@ export default function Page() {
     }
   }, [consent, userSession])
 
-  if ((!!consent?.client?.skip_consent) && (!!userSession)) {
-    accept()
-  }
 
   return isLoading ? 
               <div></div>

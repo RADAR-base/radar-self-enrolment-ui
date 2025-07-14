@@ -6,7 +6,6 @@ import { useState, useEffect, type JSX } from 'react';
 import { withBasePath } from '@/app/_lib/util/links';
 import { LogoutButton } from "@/app/_ui/auth/logout";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import LoginComponent from "@/app/_ui/auth/login";
 import { RadarCard } from "@/app/_ui/components/base/card";
 
 function LoginWithCurrentAccountForm(props: {userSession: any, loginChallenge: string}) {
@@ -64,7 +63,7 @@ async function acceptWithCurrentAccount(loginChallenge: string, router: AppRoute
   )
   if (response.ok) {
     const data = await response.json()
-    router.replace(data.redirect_to)
+    window.location.replace(data.redirect_to)
   }
 }
 
@@ -93,13 +92,13 @@ export default function Page() {
 
   useEffect(() => {
     if (loginChallenge == undefined) {
-      router.replace('/auth/login')
+      window.location.replace(withBasePath('/auth/login'))
       return
     }
     if (userSession === undefined) {
       getUserSession(setUserSession)
     } else if (userSession === null) {
-      router.replace(`/auth/login?redirect_to=${"/auth/oauth-login?" + searchParams.toString()}`)
+      window.location.replace(withBasePath(`/auth/login?redirect_to=${"/auth/oauth-login?" + searchParams.toString()}`))
       // if (flow == undefined) {
       //   createLoginFlow(loginChallenge ?? '', setFlow)
       // } else {
