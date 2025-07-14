@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { withBasePath } from "@/app/_lib/util/links";
 import { RadarCard } from "@/app/_ui/components/base/card";
+import { consentAction } from "./action";
 
 function userIsParticipant(userSession: any): boolean {
   return userSession?.identity?.schema_id == "subject"
@@ -71,6 +72,7 @@ export default function Page() {
     }
     if (accepted) { return }
     setAccepted(true)
+    console.log('Attempt to accept consent')
     fetch(withBasePath('/api/consent?' + new URLSearchParams({
       consent_challenge: consentChallenge
     })), {
@@ -81,6 +83,7 @@ export default function Page() {
         if (r.ok) {
           r.json().then(
             (d) => {
+              consentAction(d.redirect_to)
               router.replace(d.redirect_to)
               router.refresh()
             }
