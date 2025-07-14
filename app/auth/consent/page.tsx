@@ -1,10 +1,13 @@
 "use client";
-import { Box, Button, Card, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, CircularProgress, Divider, Fade, IconButton, ListItem, ListItemText, Stack, Typography } from "@mui/material";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { withBasePath } from "@/app/_lib/util/links";
 import { RadarCard } from "@/app/_ui/components/base/card";
+import Checkbox from '@mui/material/Checkbox';
+
+
 function userIsParticipant(userSession: any): boolean {
   return userSession?.identity?.schema_id == "subject"
 }
@@ -38,17 +41,58 @@ function getConsentRequest(consentChallenge: string,
   )
 }
 
-function ConsentForm(props: {accept: (grantScopes?: string[]) => void, reject: () => void, userSession: any, scopes: string[]}) {
-  return   <Stack padding={2}>
-              {props.userSession && props.userSession['identity']['traits']['email']}
-              <Typography variant='subtitle1'>Requested Scopes</Typography>
-              {props.scopes && props.scopes.map((s, i) => <Typography key={i}>{s}</Typography>)}
-              <Box display='flex' flexDirection={'row'} justifyContent={'space-between'}>
-                <Button onClick={() => props.reject()}>Reject</Button>
-                <Button onClick={() => props.accept(props.scopes)}>Accept</Button>
-              </Box>
-            </Stack>
+interface ConsentFormProps {
+  accept: (grantScopes?: string[]) => void
+  reject: () => void
+  scopes: string[]
 }
+
+function ConsentForm(props: ConsentFormProps) {
+  const [grantedScopes, setGrantedScopes] = useState<{[key: string]: boolean}>(() => setAllScopes(false))
+
+  function setAllScopes(value: boolean) {
+    return Object.fromEntries(props.scopes.map((v) => [v, value]))
+  } 
+
+  function handleChange(scope: string, checked: boolean) {
+    setGrantedScopes(prev => ({
+      ...prev,
+      [scope]: checked
+    }))
+  }
+
+  function getAcceptedScopes() {
+    return Object.keys(grantedScopes).filter(scope => grantedScopes[scope])
+  }
+
+  return  <Stack padding={2} gap={1}>
+            <Box display='flex' flexDirection={'row'} justifyContent={'space-between'}>
+            <Typography variant='subtitle1'>Requested Scopes</Typography>
+              <Button onClick={() => setGrantedScopes(setAllScopes(true))}>Select All</Button>
+            </Box>
+            <Box>
+              {props.scopes && props.scopes.map((s, i) => {
+                const checked = grantedScopes[s] ?? false
+                return (
+                  <ListItem
+                    key={i}
+                    secondaryAction={
+                      <Checkbox checked={checked} onChange={(ev, checked) => {handleChange(s, checked)}} />
+                    }
+                  >
+                    <ListItemText primary={s} />
+                  </ListItem>)
+              }
+              )}
+            </Box>
+            <Divider />
+            <Box display='flex' flexDirection={'row'} justifyContent={'space-between'}>
+              <Button onClick={() => props.reject()}>Reject</Button>
+              <Button onClick={() => props.accept(getAcceptedScopes())}>Accept</Button>
+            </Box>
+          </Stack>
+}
+
 
 export default function Page() {
   const router = useRouter()
@@ -57,7 +101,7 @@ export default function Page() {
   const [userSession, setUserSession] = useState<any>(undefined)
   const [consent, setConsent] = useState<any>(undefined)
   const [scopes, setScopes] = useState<string[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [accepted, setAccepted] = useState<boolean>(false)
 
   const consentChallenge = searchParams.get('consent_challenge') ?? ""
@@ -70,7 +114,6 @@ export default function Page() {
     }
     if (accepted) { return }
     setAccepted(true)
-    console.log('Attempt to accept consent')
     fetch(withBasePath('/api/consent?' + new URLSearchParams({
       consent_challenge: consentChallenge
     })), {
@@ -147,14 +190,19 @@ export default function Page() {
   }, [consent, userSession])
 
   return (
-    <Box marginTop={2} marginBottom={2} maxWidth={600} justifySelf={'center'} width='100%'>
-      <RadarCard>
-        {isLoading ? 
-          <div></div> : 
-          <ConsentForm accept={accept} reject={reject} userSession={userSession} scopes={scopes} />
-        }
+    <Box marginTop={{xs: 0, sm: 2}} marginBottom={{xs: 0, sm: 2}} maxWidth={800} justifySelf={'center'} width='100%'>
+      <RadarCard> 
+        <Fade
+          in={isLoading}
+          style={{
+            transitionDelay: isLoading ? '800ms' : '0ms',
+          }}
+          unmountOnExit
+        >
+          <CircularProgress />
+        </Fade>
+        {(consent != null) && <ConsentForm accept={accept} reject={reject} scopes={scopes} /> }
       </RadarCard>
     </Box>
-
   )
 }
