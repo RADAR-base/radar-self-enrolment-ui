@@ -7,7 +7,6 @@ const REDIRECT_URI = process.env.NEXT_PUBLIC_ARMT_REDIRECT_URI ?? ""
 
 export async function GET(request: NextRequest) {
   const code  = request.nextUrl.searchParams.get('code')
-  console.log('aRMT Token Request. Code=', code)
   if (code == null) {
     return NextResponse.json({error: 'No code provided'}, {status: 400})
   }
@@ -20,6 +19,5 @@ export async function GET(request: NextRequest) {
   if (token == null) {
     return NextResponse.json({error: 'Unknown error retrieving token'}, {status: 500})
   }
-  console.log('returned token: ', token)
   return NextResponse.json(token)
 }

@@ -5,8 +5,6 @@ import { useEffect, useState } from "react";
 
 import { withBasePath } from "@/app/_lib/util/links";
 import { RadarCard } from "@/app/_ui/components/base/card";
-import { consentAction } from "./action";
-
 function userIsParticipant(userSession: any): boolean {
   return userSession?.identity?.schema_id == "subject"
 }
@@ -83,7 +81,6 @@ export default function Page() {
         if (r.ok) {
           r.json().then(
             (d) => {
-              consentAction(d.redirect_to)
               window.location.replace(d.redirect_to)
             }
           )
