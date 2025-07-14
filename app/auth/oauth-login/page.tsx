@@ -1,6 +1,6 @@
 "use client"
 import { Box, Button, Typography } from "@mui/material";
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import { useState, useEffect, type JSX } from 'react';
 import { withBasePath } from '@/app/_lib/util/links';
@@ -88,31 +88,34 @@ export default function Page() {
   const [flow, setFlow] = useState<any>();  
   const [content, setContent] = useState<JSX.Element>(<div></div>)
 
+  const pathname = usePathname()
   const loginChallenge = searchParams.get('login_challenge') ?? undefined
-  if (loginChallenge == undefined) {
-    router.replace('auth/login')
-    return
-  }
 
   useEffect(() => {
+    if (loginChallenge == undefined) {
+      router.replace('/auth/login')
+      return
+    }
     if (userSession === undefined) {
       getUserSession(setUserSession)
     } else if (userSession === null) {
-      if (flow == undefined) {
-        createLoginFlow(loginChallenge ?? '', setFlow)
-      } else {
-        setContent(<LoginCard>
-          <LoginComponent flow={flow}
-              onLogin={(response?: Response) => {
-                response?.json().then(
-                  (data) => {
-                    console.log('onLogin redir: ', data['redirect_browser_to'])
-                    router.replace(data['redirect_browser_to'])
-                  }
-                )
-              }}/>  
-        </LoginCard>)
-      }
+      router.replace(`/auth/login?redirect_to=${"/auth/oauth-login?" + searchParams.toString()}`)
+      // if (flow == undefined) {
+      //   createLoginFlow(loginChallenge ?? '', setFlow)
+      // } else {
+      //   setContent(<LoginCard>
+      //     <LoginComponent flow={flow}
+      //         onLogin={(response?: Response) => {
+      //           response?.json().then(
+      //             (data) => {
+      //               loginaction(redir)
+      //               console.log('onLogin redir: ', data['redirect_browser_to'])
+      //               router.replace(data['redirect_browser_to'])
+      //             }
+      //           )
+      //         }}/>  
+      //   </LoginCard>)
+      // }
     } else {
       if (userIsParticipant(userSession)) {
         acceptWithCurrentAccount(loginChallenge, router)

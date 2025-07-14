@@ -8,6 +8,7 @@ import { paprkaEmailOnEnrol, paprkaEmailOnFinish } from '@/app/_lib/email/paprka
 import { FinishBanner } from '@/app/_ui/components/portal/finishBanner';
 import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
 import { OrySession } from '@/app/_lib/auth/ory/types';
+import { redirect } from 'next/navigation';
 
 async function getOryUser() {
   const resp = await whoAmI()
@@ -53,6 +54,9 @@ export default async function Page(props: { params: Promise<{ studyId: string }>
   var showFinishBanner: boolean = false
   const params = await props.params;
   const oryUser = await getOryUser()
+  if (oryUser == undefined) {
+    redirect(`/$params.studyId}/login`)
+  }
   const status = await fetchTaskStatus(params.studyId, oryUser)
   const registery = new StudyProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)
