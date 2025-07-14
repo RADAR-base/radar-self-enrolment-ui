@@ -132,10 +132,10 @@ export default function Page() {
     if (consent == null) {
       // Set error content
     }
-    if ((!!consent?.client?.skip_consent) && (!!userSession)) {
-      accept()
-    }
-    if ((scopes.length > 0) && (userSession != undefined)) {
+    // if ((!!(consent?.client?.skip_consent)) && (!!userSession)) {
+    //   accept()
+    // }
+    if ((scopes.length > 0) && (!!userSession)) {
       if (userIsParticipant(userSession) && 
         (consent?.client?.client_id == 'SEP') || 
         (consent?.client?.client_id == 'aRMT')) {
@@ -146,8 +146,15 @@ export default function Page() {
     }
   }, [consent, userSession])
 
+  return (
+    <Box marginTop={2} marginBottom={2} maxWidth={600} justifySelf={'center'} width='100%'>
+      <RadarCard>
+        {isLoading ? 
+          <div></div> : 
+          <ConsentForm accept={accept} reject={reject} userSession={userSession} scopes={scopes} />
+        }
+      </RadarCard>
+    </Box>
 
-  return isLoading ? 
-              <div></div>
-            : <RadarCard><ConsentForm accept={accept} reject={reject} userSession={userSession} scopes={scopes} /></RadarCard>
+  )
 }
