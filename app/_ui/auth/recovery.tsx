@@ -134,7 +134,7 @@ function EmailSentComponent(props: EmailSentComponentProps) {
         const data = await res.json()
         props.setFlow(data)
       }
-  }
+    }
   }
   
   const formik = useFormik({

@@ -341,6 +341,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
     if ((stepIdx + 1) < steps.length) {
       scrollToTop()
       sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx + 1], status: 'ongoing'})
+      console.log(formik.values)
       setStep(stepIdx + 1)
       contentRef.current?.focus()
     }

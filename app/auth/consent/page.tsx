@@ -10,7 +10,6 @@ function userIsParticipant(userSession: any): boolean {
   return userSession?.identity?.schema_id == "subject"
 }
 
-
 function getUserSession(setSession: (value: any) => void) {
   fetch(withBasePath('/api/ory/whoAmI'), {cache: 'no-store'}).then(
     (response) => {

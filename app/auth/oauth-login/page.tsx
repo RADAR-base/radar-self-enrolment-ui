@@ -106,10 +106,10 @@ export default function Page() {
               onLogin={(response?: Response) => {
                 response?.json().then(
                   (data) => {
+                    console.log('onLogin redir: ', data['redirect_browser_to'])
                     router.replace(data['redirect_browser_to'])
                   }
                 )
-              
               }}/>  
         </LoginCard>)
       }
