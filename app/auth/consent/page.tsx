@@ -40,7 +40,7 @@ function getConsentRequest(consentChallenge: string,
   )
 }
 
-function ConsentForm(props: {accept: (scopes: string[]) => void, reject: () => void, userSession: any, scopes: string[]}) {
+function ConsentForm(props: {accept: (grantScopes?: string[]) => void, reject: () => void, userSession: any, scopes: string[]}) {
   return   <Stack padding={2}>
               {props.userSession && props.userSession['identity']['traits']['email']}
               <Typography variant='subtitle1'>Requested Scopes</Typography>
@@ -64,10 +64,10 @@ export default function Page() {
 
   const consentChallenge = searchParams.get('consent_challenge') ?? ""
 
-  function accept() {
+  function accept(grantScopes?: string[]) {
     const body = {
       consentAction: 'accept',
-      grantScope: scopes,
+      grantScope: grantScopes ?? scopes,
       remember: 'true',
     }
     if (accepted) { return }
