@@ -1,15 +1,12 @@
 import Yup from "@/app/_lib/armt/validation/yup";
-import { IOryRecoveryFlow } from "@/app/_lib/auth/ory/flows.interface";
-import { getCsrfToken } from "@/app/_lib/auth/ory/util";
-import { withBasePath } from "@/app/_lib/util/links";
+import { IOryErrorFlow, IOryRecoveryFlow } from "@/app/_lib/auth/ory/flows.interface";
 import { Stack, Typography, TextField, Box, Button } from "@mui/material";
 import { useFormik } from "formik";
 import { ChangeEventHandler, FocusEventHandler, FormEventHandler, useState } from "react";
 import { errorTextFromFlow, FlowErrors } from "../common/displayErrors";
+import { RecoveryEmailFormValues } from "./recovery.interfaces";
+import { SubmitRecoveryEmail } from "./requests";
 
-interface RecoveryEmailFormValues {
-  email: string
-}
 
 function HelperText({children}: {children: React.ReactNode}) {
   return <Typography variant="overline" component={'span'} color="error">
@@ -34,6 +31,7 @@ function RecoveryEmailForm({
   return (
     <form onSubmit={onSubmit}>
       <Stack spacing={4} alignItems="flex-start">
+        <Typography>Please enter the email address for the account you wish to recover</Typography>
         <TextField
             fullWidth
             id="email"
@@ -58,35 +56,12 @@ function RecoveryEmailForm({
 }
 
 interface EnterEmailRecoveryComponentProps {
-  flow?: IOryRecoveryFlow
+  flow: IOryRecoveryFlow
   email?: string
-  setFlow: (flow: IOryRecoveryFlow) => void
+  setFlow: (flow: IOryRecoveryFlow | IOryErrorFlow) => void
 }
 
 export function EnterEmailRecoveryComponent(props: EnterEmailRecoveryComponentProps) {
-  const [errors, setErrors] = useState<FlowErrors>()
-  const submit = async ({email}: RecoveryEmailFormValues): Promise<void> => {
-    if (props.flow) {
-      const body = {
-        email: email,
-        csrf_token: getCsrfToken(props.flow),
-        method: 'code'
-      }
-      const res = await fetch(withBasePath('/api/ory/recovery?' + new URLSearchParams({
-        flow: props.flow.id
-      })), {
-        method: 'POST',
-        body: JSON.stringify(body)
-      })
-      if (res.ok) {
-        const newFlow = (await res.json()) as IOryRecoveryFlow
-        setErrors(errorTextFromFlow(newFlow))
-        props.setFlow(newFlow)
-      }
-      formik.setSubmitting(false)
-    }
-  }
-
   const formik = useFormik<RecoveryEmailFormValues>({
       initialValues: {
           email: props.email ?? '',
@@ -94,8 +69,19 @@ export function EnterEmailRecoveryComponent(props: EnterEmailRecoveryComponentPr
       validationSchema: Yup.object({
         email: Yup.string().email("Please enter a valid email").required()
       }),
-      onSubmit: submit
+      onSubmit: (values) => {
+        SubmitRecoveryEmail(values, props.flow).then(
+          (flow) => {
+            if (flow) {
+              props.setFlow(flow)
+            }
+            formik.setSubmitting(false)
+          }
+        )
+      }
   });
+
+  const errors = errorTextFromFlow(props.flow)
 
   return <RecoveryEmailForm 
               values={formik.values}

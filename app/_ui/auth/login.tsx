@@ -91,6 +91,7 @@ export function LoginComponent(props: LoginProps) {
   }
 
   const formik = useFormik({
+    validateOnMount: true,
       initialValues: {
           identifier: '',
           password: '',
@@ -121,6 +122,7 @@ export function LoginComponent(props: LoginProps) {
         {errorText && <Typography variant='overline' color='error'>{errorText}</Typography>}
         <TextField
             fullWidth
+            autoFocus
             id="identifier"
             name="identifier"
             label="Email"

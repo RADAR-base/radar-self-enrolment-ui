@@ -309,6 +309,17 @@
         "MuiTextField": {
           "defaultProps": {
             "variant": "outlined"
+          },
+          "styleOverrides": {
+            "root": {
+              ".MuiInputLabel-outlined:has(+ .MuiOutlinedInput-root > .MuiOutlinedInput-input:-webkit-autofill)": {
+                "fontSize": "1.5em",
+                "transform": "translate(0.75em, -0.5em) scale(0.75)"
+              },
+              ".MuiOutlinedInput-input:-webkit-autofill + .MuiOutlinedInput-notchedOutline > legend": {
+                "maxWidth": "100%"
+              }
+            }
           }
         },
         "MuiOutlinedInput": {

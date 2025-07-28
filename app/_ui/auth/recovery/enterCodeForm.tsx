@@ -1,48 +1,32 @@
 import Yup from "@/app/_lib/armt/validation/yup"
-import { IOryRecoveryFlow } from "@/app/_lib/auth/ory/flows.interface"
+import { IOryErrorFlow, IOryRecoveryFlow } from "@/app/_lib/auth/ory/flows.interface"
 import { getCsrfToken } from "@/app/_lib/auth/ory/util"
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client"
 import { withBasePath } from "@/app/_lib/util/links"
 import { Box, Typography, TextField, Button } from "@mui/material"
 import { useFormik } from "formik"
-import { useContext} from "react"
+import { useContext, useState} from "react"
+import { SubmitRecoveryCode, SubmitRecoveryEmail } from "./requests"
+
+function emailFromFlow(flow: IOryRecoveryFlow): string | undefined {
+  if (flow.state == 'sent_email') {
+    const node = flow.ui.nodes.find((node) => node.attributes.name == 'email')
+    if (node) {
+      return node.attributes.value
+    }
+  }
+  return undefined
+}
 
 interface RecoveryCodeComponentProps {
   flow: IOryRecoveryFlow
-  setFlow: (flow: IOryRecoveryFlow) => void
+  setFlow: (flow: IOryRecoveryFlow | IOryErrorFlow) => void
   errors?: {[key: string]: string}
+  email?: string
 }
 
-export function RecoveryCodeComponent(props: RecoveryCodeComponentProps) {
-  const study = useContext(ProtocolContext)
-
-  async function submit(code: string) {
-    const body = {
-      code: code,
-      csrf_token: getCsrfToken(props.flow),
-      method: 'code'
-    }
-    const res = await fetch(withBasePath('/api/ory/recovery?' + new URLSearchParams({
-      flow: props.flow.id
-    })), {
-      method: 'POST',
-      body: JSON.stringify(body)
-    })
-    if (res.status == 422) {
-      const data = await res.json()
-      const redirUri = new URL(data.redirect_browser_to)
-      if (study.studyId != undefined) {
-        window.location.assign(withBasePath('/' + study.studyId + '/account/settings' + redirUri.search))
-      } else {
-          window.location.assign(withBasePath('/account/settings' + redirUri.search))
-      }
-    } else {
-      const data = await res.json()
-      props.setFlow(data)
-    }
-    formik.setSubmitting(false)
-  }
-  
+export function RecoveryCodeComponent(props: RecoveryCodeComponentProps) {  
+  const [disabled, setDisabled] = useState<boolean>(false)
   const formik = useFormik({
     initialValues: {code: ''},
     validationSchema: Yup.object({
@@ -51,13 +35,31 @@ export function RecoveryCodeComponent(props: RecoveryCodeComponentProps) {
                .required('Please enter the six digit code from the recovery email')
     }),
     initialErrors: props.errors,
-    onSubmit: (values: {code: string}) => {submit(values.code)}
+    onSubmit: (values) => {
+       SubmitRecoveryCode(values, props.flow).then(
+          (flow) => {
+            if (flow) {
+              props.setFlow(flow)
+            }
+            formik.setSubmitting(false)
+          }
+        )
+      }
   });
 
+  
   const onBackClick = () => window.history.back()
 
-  const onResendClick = () => {
-    window.location.replace(window.location.pathname)
+  const onResendClick = async () => {
+    setDisabled(true)
+    const email = emailFromFlow(props.flow)
+    if (email) {
+      const newFlow = await SubmitRecoveryEmail({email}, props.flow)
+      if (newFlow) {
+        props.setFlow(newFlow)
+      }
+    }
+    setDisabled(false)
   }
 
   return (
@@ -83,10 +85,10 @@ export function RecoveryCodeComponent(props: RecoveryCodeComponentProps) {
         <Button color="primary" variant="contained" onClick={onBackClick}>
           Back
         </Button>
-        <Button color="primary" variant="contained" onClick={onResendClick}>
+        <Button color="primary" variant="contained" onClick={onResendClick} disabled={disabled}>
           Resend Code
         </Button>
-        <Button color="primary" variant="contained" type="submit" disabled={formik.isSubmitting}>
+        <Button color="primary" variant="contained" type="submit" disabled={formik.isSubmitting || disabled}>
           Submit
         </Button>
       </Box>
