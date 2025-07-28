@@ -1,6 +1,6 @@
 import { IOryRecoveryFlow, IOryErrorFlow } from "@/app/_lib/auth/ory/flows.interface"
 import { createRecoveryFlow } from "@/app/_lib/auth/ory/kratos"
-import { RecoveryComponent } from "@/app/_ui/auth/recovery"
+import { RecoveryPageComponent } from "@/app/_ui/auth/recovery/page"
 import { Container, Box } from "@mui/material"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
@@ -38,7 +38,7 @@ export default async function Page({
     <main>
       <Container maxWidth="lg" disableGutters>
       <Box marginTop={2} marginBottom={2} marginRight={"auto"} marginLeft={"auto"} maxWidth={600} justifySelf={'center'} width='100%'>
-          <RecoveryComponent flow={flow}></RecoveryComponent>
+          <RecoveryPageComponent flow={flow}></RecoveryPageComponent>
         </Box>
       </Container>
     </main>
