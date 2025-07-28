@@ -56,7 +56,7 @@ export function FitbitPage() {
           <Typography mt={2} variant="body1" fontStyle={'italic'}>The 3 boxes captures your physical activity information such as time doing activities, distance travelled, step count, and heart rate which is needed for the PAPrKA study.</Typography>
           <Typography display={'inline'} mt={2} variant="body1" fontWeight={600}>*Your profile will be accessed only for the purpose of understanding the measures used for each physical activity information.</Typography>
           <Typography display={'inline'} variant="body1"> Any information that we do not need will be deleted at the end of the study.</Typography>
-          <Typography mt={2} variant="body1">Once you have completed the three steps, you will receive a thank you message that will ask you if you want to link another device or if you are done. Click done, if you are not linking any other device.</Typography>
+          <Typography mt={2} variant="body1">Once you have completed the three steps, you will receive a message that will ask you if you want to link another device or if you are done. Click done, if you are not linking any other device.</Typography>
           <Typography mt={2} variant="body1">If you have any questions about the information we ask for, please contact us on <Link href="mailto:paprka@manchester.ac.uk">paprka@manchester.ac.uk</Link></Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
