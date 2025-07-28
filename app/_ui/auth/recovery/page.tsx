@@ -71,11 +71,7 @@ export function RecoveryPageComponent(props: RecoveryPageComponentProps): React.
         newParams.set('flow', flow.id)
         router.replace(`${pathname}?${newParams.toString()}`)
       }
-    }
-
-    if (flow) {
       if ("state" in flow) {
-        console.log(flow)
         setErrors(errorTextFromFlow(flow))
         switch (flow.state) {
           case 'choose_method':

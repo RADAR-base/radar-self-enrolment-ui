@@ -44,16 +44,6 @@ export async function SubmitRecoveryCode({ code }: RecoveryCodeFormValues, flow:
     method: 'POST',
     body: JSON.stringify(body)
   })
-  if (res.status == 422) {
-    const data = await res.json()
-    const redirUri = new URL(data.redirect_browser_to)
-    if (redirUri != undefined) {
-      console.log(data)
-      // window.location.assign(data.redirect_browser_to)
-    }
-    return data
-  } else {
-    const data = await res.json()
-    return data
-  }
+  const data = await res.json()
+  return data
 }
