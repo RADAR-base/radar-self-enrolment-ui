@@ -14,7 +14,7 @@
       "metadata": {
         "title": "TASK 1: About my knee replacement",
         "order": 0,
-        "description": "Eight quick questions.\n<em>Tip: You will need the month and year of your knee replacement surgery</em>",
+        "description": "Eight quick questions.\n<span style='color:red; font-style: italic'>Tip: You will need the month and year of your knee replacement surgery</span>",
         "optional": false,
         "type": "redcap_local",
         "path": "/public/study/paprka/resources/paprka_surgery.json"
@@ -27,7 +27,7 @@
       "metadata": {
         "title": "TASK 2: About You",
         "order": 1,
-        "description": "Four quick questions.\n<em>Tip: You will need your NHS number</em>",
+        "description": "Four quick questions.\n<span style='color:red; font-style: italic'>Tip: You will need your NHS number</span>",
         "optional": false,
         "type": "redcap_local",
         "path": "/public/study/paprka/resources/paprka_about.json"
@@ -40,7 +40,7 @@
       "metadata": {
         "title": "TASK 3: Connect my devices",
         "order": 2,
-        "description": "Connect one or more devices\n<em>Tip (for Fitbit & Oura ring): You will need login details for your device\nTip (for Apple): You need to enter the study name PAPrKA; use the email and password from your PAPrKA account; best completed using a WiFi</em>",
+        "description": "Connect one or more devices\n<span style='color:red; font-style: italic'>Tip (for Fitbit & Oura ring): You will need login details for your device\nTip (for Apple): You need to enter the study name PAPrKA; use the email and password from your PAPrKA account; best completed using WiFi</span>",
         "optional": false,
         "type": "inbuilt",
         "inbuiltId": "connect",
@@ -74,7 +74,7 @@
       "metadata": {
         "title": "TASK 4: Give us your feedback",
         "order": 3,
-        "description": "7 quick questions about joining the study",
+        "description": "Seven quick questions about joining the study",
         "optional": true,
         "type": "redcap_local",
         "path": "/public/study/paprka/resources/paprka_feedback.json"
@@ -100,17 +100,17 @@
         {
           "fieldType": "yesno",
           "id": "criteria3",
-          "description": "Did you use a Fitbit, iPhone (6s and above)*, Apple Watch* or Oura Ring to track your activity six months or more before your knee replacement?\n_*If you used an iPhone or Apple Watch, it automatically collects physical activity data so please select YES._\n"
+          "description": "Did you use a Fitbit, iPhone (6s and above)_*, Apple Watch_* or Oura Ring to track your activity six months or more before your knee replacement?\n_*If you used an iPhone, it automatically collects physical activity data so please select YES._\n"
         },
         {
           "fieldType": "yesno",
           "id": "criteria4",
-          "description": "Did you use a Fitbit, iPhone (6s and above), Apple Watch or Oura Ring to track your activity one year or more after your knee replacement?\n_*If you used an iPhone or Apple Watch, it automatically collects physical activity data so please select YES._\n"
+          "description": "Did you use a Fitbit, iPhone (6s and above)_*, Apple Watch_* or Oura Ring to track your activity one year or more after your knee replacement?\n_*If you used an iPhone, it automatically collects physical activity data so please select YES._\n"
         }
       ]
     },
     "consent": {
-      "title": "eConsent",
+      "title": "Consent",
       "description": "Before you can take part in this study, we need your consent. Please read carefully the consent statements and click Yes or No for each statement. You will need to scroll down to sign the consent form.\n<br />\nYou need to answer YES to the first nine items to take part in the study. The remaining items are optional, and you can take part if you answer YES or NO.",
       "requiredItems": [
         {
@@ -375,7 +375,7 @@
             },
             {
               "text": "RADAR",
-              "href": "/"
+              "href": "https://radar-base.org/"
             }
           ]
         },
@@ -391,7 +391,7 @@
               "href": "/paprka/cookies"
             },
             {
-              "text": "Privacy Policy",
+              "text": "RADAR Base Privacy Policy",
               "href": "/paprka/privacy"
             }
           ]

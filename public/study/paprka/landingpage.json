@@ -24,7 +24,7 @@
             "noCard": true,
             "title": "About the study", 
             "blockBackground": "white",
-            "content": "<div id='more'></div>To learn more about recovery after knee replacement, we will bring together with your consent 3 bits of information:\n\n<ol><li>Information you provide in a survey.</li><li>A one-time collection of your physical activity information from either iPhone, Fitbit, Apple Watch or Oura Ring. Physical activity can include things such as steps you take daily, walking, numbers of flights of stairs you climb etc.</li><li>Access to your knee replacement surgery information (from the UK National Joint Registry, for the duration of the study).</li></ol><br />The University of Manchester is leading the PAPrKA research study in collaboration with King's College London and with support from the National Joint Registry."
+            "content": "<div id='more'></div>To learn more about recovery after knee replacement, we will bring together with your consent 3 bits of information:\n\n<ol><li>Information you provide in a survey.</li><li>A one-time collection of your physical activity information from either iPhone, Fitbit, Apple Watch or Oura Ring. Physical activity can include things such as steps you take daily, walking, numbers of flights of stairs you climb etc.</li><li>Access to your knee replacement surgery information (from the UK National Joint Registry).</li></ol><br />The University of Manchester is leading the PAPrKA research study in collaboration with King's College London and with support from the National Joint Registry."
           },
           {
             "blockType": "video",
@@ -43,12 +43,12 @@
                 {
                     "blockType": "markdown",
                     "title": "Who can take part?",
-                    "content": "<div>You must answer yes to all 6 questions   to take part in the PAPrKA study. Have you\n<ol><li>People living with knee osteoarthritis who had a total or partial knee replacement by the NHS or a private healthcare provider:\n<ol type='a'><li>between 1st January 2017 and 31st December 2023</li><li>are over 18 years old and live in England, Wales, Northern Ireland, Isle of Man or Guernsey at the time of the surgery</li></ol></li><li>Used an **iPhone (6s and above), Fitbit, Apple Watch or Oura Ring** to track your physical activity at least six months before and one year after your knee replacement surgery.</li><li>People who can read and understand English or have support from someone who can.</li><li>People must be willing to give us permission to access their physical activity data and link it to their knee replacement information in the National Joint Registry.</li></ol></div>"
+                    "content": "You must answer yes to all 5 questions to take part in the PAPrKA study.\n\n 1. Have you had a total or partial knee replacement because of knee osteoarthritis (NHS or private healthcare provider)?\n 2. Are you over 18 years old and lived in England, Wales, Northern Ireland, Isle of Man or Guernsey at the time of the surgery?\n 3. Have you used an **iPhone (6s and above), Fitbit, Apple Watch or Oura Ring** to track your physical activity at least six months before and one year after your knee replacement surgery? You can find out what device you have by checking the logo on the front or back of your device or logging to your device account.\n 4. Can you read and understand English or have support from someone who can?\n 5. Are you willing to give the study team access to your physical activity data and link it to your knee replacement information in the National Joint Registry?\n"
                 },              
                 {
                     "blockType": "markdown",
-                    "title": "What do I need?",
-                    "content": "1. Know your Month and year of your knee replacement surgery.\n2. Know if you have Fitbit, iPhone (6s and above), Apple watch or Oura Ring. You can find out what device you have by checking the logo on the front or back of your device or logging to your device account.\n\n<br />## What will I have to do?\n<br />\n1. Check you can take part in the study.\n2. Sign an electronic consent form.\n3. Set up a study account.\n4. Complete up to 4 tasks.\n\nCompleting all 4 should take approximately 35 minutes."
+                    "title": "What will I have to do?",
+                    "content": "1. Check you can take part in the study.\n2. Sign an electronic consent form.\n3. Set up a study account.\n4. Complete up to 4 tasks.\n"
                   }
             ]
           },
@@ -91,7 +91,7 @@
               {"imgSrc": "/study/paprka/resources/landingpage/profiles_coral.png", "title": "Coral Stevenson", "content": "Project Administrator", "href": "https://personalpages.manchester.ac.uk/advanced.php?dn=cn%3DCoral+Stevenson%2Bumanroleid%3D1419951%2Cou%3DDivision+of+Informatics%5C%2C+Imaging+%26+Data+Sciences%2Cou%3DSchool+of+Health+Sciences%2Cou%3DFaculty+of+Biology%5C%2C+Medicine+and+Health%2Cou%3DPeople%2Co%3DUniversity+of+Manchester%2Cc%3DGB&employeeType=STAFF&action=read&form_input=Submit"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles_elaine.png", "title": "Elaine Mackey", "content": "Information Governance Manager", "href": "https://research.manchester.ac.uk/en/persons/elaine.mackey"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles_lynn.png", "title": "Lynn Laidlaw", "content": "Patient and Public Engagement and Involvement", "href": "https://www.kcl.ac.uk/people/lynn-laidlaw"},
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles_rachel.png", "title": "Rachel Nagy", "content": "Programme Lead", "href": "https://personalpages.manchester.ac.uk/advanced.php?dn=cn%3DRachel+Nagy%2Bumanroleid%3D1397223%2Cou%3DDivision+of+Informatics%5C%2C+Imaging+%26+Data+Sciences%2Cou%3DSchool+of+Health+Sciences%2Cou%3DFaculty+of+Biology%5C%2C+Medicine+and+Health%2Cou%3DPeople%2Co%3DUniversity+of+Manchester%2Cc%3DGB&employeeType=STAFF&action=read&form_input=Submit"}            
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles_louise.jpg", "title": "Louise Cook", "content": "Programme Manager", "href": "#"}            
             ]
           },
           {
