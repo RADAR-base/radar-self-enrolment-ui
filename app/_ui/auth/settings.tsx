@@ -29,25 +29,26 @@ export default function SettingsComponent(props: SettingsProps) {
   }
 
   const updatePassword = async (password: string): Promise<Response> => {
+    if (!flow || !flow.id) {
+      throw new Error("No valid flow available")
+    }
+
     const body = {
       password: password,
       csrf_token: getCsrfToken(flow)
     }
-    if (flow) {
-      const res = await fetch(withBasePath('/api/ory/settings?' + new URLSearchParams({
-        flow: flow.id
-      })), {
-        method: 'POST',
-        body: JSON.stringify(body)
-      })  
-      return res
-    } else {
-      throw new Error("No flow")
-    }
+
+    const res = await fetch(withBasePath('/api/ory/settings?' + new URLSearchParams({
+      flow: flow.id
+    })), {
+      method: 'POST',
+      body: JSON.stringify(body)
+    })
+    return res
   }
 
-  const displayErrors = (flow: IOrySettingsFlow) => {
-    if (flow) {
+  const displayErrors = (flow: IOrySettingsFlow | undefined) => {
+    if (flow && flow.ui) {
       if (("messages" in flow.ui) && (flow.ui.messages.length > 0)) {
         setErrorText(flow.ui.messages[0].text)
       }
@@ -85,17 +86,24 @@ export default function SettingsComponent(props: SettingsProps) {
       password_confirm: Yup.string().oneOf([Yup.ref("password"), undefined], "Your passwords do not match").required("Please confirm your password")
     }),
     onSubmit: async (values) => {
-      const r = await updatePassword(values.password)
-      if (r.ok) {
-        onComplete()
-      } else {
-        const data = await r.json()
-        setFlow(data)
+      try {
+        const r = await updatePassword(values.password)
+        if (r.ok) {
+          onComplete()
+        } else {
+          const data = await r.json()
+          setFlow(data)
+        }
+      } catch (error) {
+        console.error('Error updating password:', error)
+        setErrorText('Unable to update password. Please try again.')
       }
       formik.setSubmitting(false)
     }
   })
   const title = 'Set a new password'
+  const isFlowValid = flow && flow.id && flow.ui
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <Box display={"flex"} flexDirection={"column"} gap={4} textAlign={"left"}>
@@ -124,7 +132,7 @@ export default function SettingsComponent(props: SettingsProps) {
             fullWidth
             autoComplete="new-password"
             />
-        <Button color="primary" variant="contained" disabled={(!formik.isValid) || formik.isSubmitting} type={'submit'} style={{alignSelf: 'end'}}>
+        <Button color="primary" variant="contained" disabled={(!formik.isValid) || formik.isSubmitting || !isFlowValid} type={'submit'} style={{alignSelf: 'end'}}>
           Update password
         </Button>
       </Box>

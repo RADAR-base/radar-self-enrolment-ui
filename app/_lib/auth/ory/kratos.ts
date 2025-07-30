@@ -1,7 +1,6 @@
 "use server"
-import { cookies, type UnsafeUnwrappedCookies } from 'next/headers';
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import { IOrySettingsFlow } from './flows.interface';
 import { setCookies } from '../cookies';
 
 const BASEURL = process.env.KRATOS_INTERNAL_URL;
@@ -164,12 +163,13 @@ export async function createRecoveryFlow(return_to?: string): Promise<Response> 
   })
 }
 
-export async function getRecoveryFlow(flowId: string): Promise<Response> {
+export async function getRecoveryFlow(flowId: string, token?: string): Promise<Response> {
   const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + '/self-service/recovery/flows')
   var params = new URLSearchParams([
     ['id', flowId]
   ])
+  if (token) { params.append("token", token) }
   url.search = params.toString()
   return await fetch(url, {
     method: 'GET',
@@ -179,6 +179,7 @@ export async function getRecoveryFlow(flowId: string): Promise<Response> {
       'Content-Type': 'application/json',
       Cookie: cookieString,
     },
+    credentials: 'include'
   })
 }
 
