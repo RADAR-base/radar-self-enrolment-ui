@@ -10,6 +10,7 @@ import Yup from '@/app/_lib/armt/validation/yup'
 import { ParticipantContext } from '@/app/_lib/auth/provider.client';
 import { IOryErrorFlow, IOryRecoveryFlow } from '@/app/_lib/auth/ory/flows.interface';
 import { ProtocolContext } from '@/app/_lib/study/protocol/provider.client';
+import SettingsComponent from "@/app/_ui/auth/settings";
 
 
 function ErrorComponent(props: {}) {
@@ -136,7 +137,7 @@ function EmailSentComponent(props: EmailSentComponentProps) {
       }
   }
   }
-  
+
   const formik = useFormik({
     initialValues: {code: ''},
     validationSchema: Yup.object({code: Yup.string().matches(/^[0-9]+$/, 'Must be numeric').required('Required')}),
@@ -187,10 +188,11 @@ export function RecoveryComponent(props: RecoveryComponentProps): React.ReactEle
   const searchParams = useSearchParams()
   const [flow, setFlow] = useState<IOryRecoveryFlow | IOryErrorFlow | undefined>(props.flow)
   const [email, setEmail] = useState<string>()
-  const [content, setContent] = useState<React.ReactElement<any>>((flow && "state" in flow) ? 
+  const flowId = searchParams.get('flow')
+  const token = searchParams.get('token')
+  const [content, setContent] = useState<React.ReactElement<any>>((flow && "state" in flow) ?
       <EnterEmailRecoveryComponent flow={flow} setFlow={setFlow} email={email} setEmail={setEmail} /> :
       <CircularProgress style={{alignSelf: 'center'}}/>)
-  const flowId = searchParams.get('flow')
   const userSession = useContext(ParticipantContext)
 
 
@@ -200,58 +202,72 @@ export function RecoveryComponent(props: RecoveryComponentProps): React.ReactEle
       router.refresh()
     }
     if (flow == undefined) {
+      let flowPath: string
       if (flowId == null) {
-        fetch(withBasePath('/api/ory/recovery/browser')).then(
-          (response) => {
-            if (response.ok) {
-              response.json().then(
-                (data) => {
-                  setFlow(data as IOryRecoveryFlow)
-                }
-              )
-            }
-          }
-        )
+        flowPath = '/api/ory/recovery/browser'
       } else {
-        fetch(withBasePath(`/api/ory/recovery/flows?flow=${flowId}`)).then(
+        if (token) {
+          flowPath = `/api/ory/recovery/flows?flow=${flowId}&token=${token}`
+        } else {
+          flowPath = `/api/ory/recovery/flows?flow=${flowId}`
+        }
+      }
+      fetch(withBasePath(flowPath)).then(
           (response) => {
             if (response.ok) {
               response.json().then(
-                (data) => {
-                  setFlow(data as IOryRecoveryFlow)
-                }
+                  (data) => {
+                    setFlow(data as IOryRecoveryFlow)
+                  }
               )
             }
           }
-        )
+      )
+    }
+  }, [flowId, token, userSession?.loggedIn])
+
+  useEffect(() => {
+    if (flow) {
+      if ("state" in flow) {
+        switch (flow.state) {
+          case 'choose_method':
+            setContent(<EnterEmailRecoveryComponent flow={flow} setFlow={setFlow} email={email} setEmail={setEmail} />)
+            break
+          case 'sent_email':
+            setContent(<EmailSentComponent flow={flow} setFlow={setFlow} />)
+            break
+          case 'passed_challenge':
+            setContent(<SettingsComponent onComplete={() => {
+              setContent(
+                  <Box display={'flex'} flexDirection={'column'} gap={4}>
+                    <Typography>Password successfully updated!</Typography>
+                    <Typography>Your account has been verified and your password has been set.</Typography>
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        onClick={() => router.push('/auth/login')}
+                    >
+                      Continue to Login
+                    </Button>
+                  </Box>
+              )
+            }} />)
+            break
+          default:
+            setContent(<CircularProgress style={{alignSelf: 'center'}}/>)
+            break
+        }
+      } else {
+        switch (flow.error.id) {
+          case 'session_already_available':
+            break
+          default:
+            setContent(<ErrorComponent />)
+            break
+        }
       }
     }
-
-  if (flow) {
-    if ("state" in flow) {
-      switch (flow.state) {
-        case 'choose_method':
-          setContent(<EnterEmailRecoveryComponent flow={flow} setFlow={setFlow} email={email} setEmail={setEmail} />)
-          break
-        case 'sent_email':
-          setContent(<EmailSentComponent flow={flow} setFlow={setFlow} />)
-          break
-        default:
-          setContent(<CircularProgress style={{alignSelf: 'center'}}/>)
-          break
-      }
-    } else {
-      switch (flow.error.id) {
-        case 'session_already_available':
-          break
-        default:
-          setContent(<ErrorComponent />)
-          break
-      }
-    }
-  }
-
-  }, [flow, flowId])
+  }, [flow, email])
 
   return (
     <RadarCard>
