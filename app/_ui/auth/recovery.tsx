@@ -32,7 +32,7 @@ function EnterEmailRecoveryComponent(props: EnterEmailRecoveryComponentProps) {
     const body = {
       email: email,
       csrf_token: getCsrfToken(props.flow),
-      method: 'code'
+      method: 'link'
     }
     if (props.flow) {
       const res = await fetch(withBasePath('/api/ory/recovery?' + new URLSearchParams({
@@ -105,6 +105,7 @@ interface EmailSentComponentProps {
   setFlow: (flow: IOryRecoveryFlow) => void
 }
 
+// Component to handle the case where an email has been sent with a recovery code
 function EmailSentComponent(props: EmailSentComponentProps) {
   const router = useRouter()
   const [errorText, setErrorText] = useState<string>()
@@ -234,7 +235,22 @@ export function RecoveryComponent(props: RecoveryComponentProps): React.ReactEle
             setContent(<EnterEmailRecoveryComponent flow={flow} setFlow={setFlow} email={email} setEmail={setEmail} />)
             break
           case 'sent_email':
-            setContent(<EmailSentComponent flow={flow} setFlow={setFlow} />)
+            setContent(
+                <Box display={'flex'} flexDirection={'column'} gap={4}>
+                  <Typography>Recovery email has been sent!</Typography>
+                  <Typography>
+                    If the provided address was associated with a registered user account, you will receive an email.
+                    Follow the instructions in the email to recover your account.
+                  </Typography>
+                  <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={() => router.push('/auth/login')}
+                  >
+                    Continue to Login
+                  </Button>
+                </Box>
+            )
             break
           case 'passed_challenge':
             setContent(<SettingsComponent onComplete={() => {
