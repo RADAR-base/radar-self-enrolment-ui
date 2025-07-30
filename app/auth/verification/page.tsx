@@ -14,7 +14,6 @@ async function getUserSession() {
     return (await userResponse.json()) as OrySession
   }
   return undefined
-
 }
 
 
@@ -26,18 +25,15 @@ export default async function Page({
   searchParams: Promise<{ flow?: string, code?: string, flowId?: string }>
 }) {
   const userSession: OrySession | undefined = await getUserSession()
-  if (userSession == undefined) {
-    redirect('/')
-  }
 
   const cookieJar = await cookies()
   const csrfToken = cookieJar.getAll().find((c) => c.name.startsWith('csrf_token_'))
   const sp = await searchParams
   const flowId = sp.flowId ?? sp.flow
-  if (userSession.identity.traits.projects.length > 0) {
+  if (userSession != undefined && userSession?.identity?.traits?.projects?.length > 0) {
     let redirectUri = `/${userSession.identity.traits.projects[0].id}/verification`
     if (flowId) {
-      redirect(`${redirectUri}?flow=${flowId}`)
+      redirect(`${redirectUri}?flow=${flowId}&code=${sp.code}`)
     }
     redirect(redirectUri)
   }
@@ -46,7 +42,7 @@ export default async function Page({
 
   if (csrfToken != undefined) {
     try {
-      if (flowId == undefined) {
+      if (userSession != undefined && flowId == undefined) {
         const resp = await createVerificationFlow()
         flow = await resp.json() as IOryVerificationFlow
         let userEmail = userSession.identity.traits.email
@@ -56,9 +52,19 @@ export default async function Page({
             flow = await resp2.json() as IOryVerificationFlow
           }
         }
-      } else {
+      } else if (flowId != undefined) {
         const resp = await getVerificationFlow(flowId.toString())
         flow = await resp.json() as IOryVerificationFlow
+        if (sp.code && flow) {
+          const resp2 = await completeVerificationFlow(flow.id, {
+            code: sp.code.toString(),
+            csrf_token: getCsrfToken(flow),
+            method: 'code'
+          })
+          if (resp2.ok) {
+            flow = await resp2.json() as IOryVerificationFlow
+          }
+        }
       }
     } catch (e) {
       console.log(e)
