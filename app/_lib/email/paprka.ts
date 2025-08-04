@@ -15,6 +15,7 @@ import {
   degrees,
   PDFFont,
 } from 'pdf-lib';
+import { OrySession } from "../auth/ory/types";
 
 const PDF_TEMPLATE = '/public/study/paprka/resources/consent_form.pdf';
 
@@ -221,39 +222,52 @@ export async function generateConsentPdf(user: any): Promise<Uint8Array> {
 }
 
 
+const enrolEmailSent = new Set<string>();
+
 export async function paprkaEmailOnEnrol(
-  user: any,
+  user: OrySession,
 ) {
   const user_address = user['identity']['traits']['email']
-
-  await sendMail({
-    to: user_address,
-    fromName: 'PAPrKA Study',
-    subject: 'Your consent form for participating in the PAPrKA Study.',
-    html: enrolHtmlContent,
-    attachments: [
-      {
-        'filename': 'participant_information_sheet.pdf',
-        'path': path.join(process.cwd(), '/public/study/paprka/resources/paprka_pis.pdf')
-      },
-      {
-        'filename': 'paprka_consent_form.pdf',
-        'content': Buffer.from(await generateConsentPdf(user)),
-        'contentType': 'application/pdf'
-      }
-    ]
-  })
+  if (!enrolEmailSent.has(user.identity.id)) {
+    await sendMail({
+      to: user_address,
+      fromName: 'PAPrKA Study',
+      subject: 'Your consent form for participating in the PAPrKA Study.',
+      html: enrolHtmlContent,
+      attachments: [
+        {
+          'filename': 'participant_information_sheet.pdf',
+          'path': path.join(process.cwd(), '/public/study/paprka/resources/paprka_pis.pdf')
+        },
+        {
+          'filename': 'paprka_consent_form.pdf',
+          'content': Buffer.from(await generateConsentPdf(user)),
+          'contentType': 'application/pdf'
+        }
+      ]
+    })
+  } else {
+    console.log(`Enrol email already sent for ${user.identity.id} - skipping`)
+  }
+  enrolEmailSent.add(user.identity.id)
 }
 
+const finishEmailSent = new Set<string>();
 
 export async function paprkaEmailOnFinish(
-  user: any
+  user: OrySession
 ) {
   const user_address = user['identity']['traits']['email']
-  return await sendMail({
-    to: user_address,
-    fromName: 'PAPrKA Study',
-    subject: 'Thank you for participating in the PAPrKA Study.',
-    html: finishHtmlContent,
-  })
+  if (!finishEmailSent.has(user.identity.id)) {
+
+    await sendMail({
+      to: user_address,
+      fromName: 'PAPrKA Study',
+      subject: 'Thank you for participating in the PAPrKA Study.',
+      html: finishHtmlContent,
+    })
+  } else {
+    console.log(`Finish email already sent for ${user.identity.id} - skipping`)
+  }
+  finishEmailSent.add(user.identity.id)
 }
