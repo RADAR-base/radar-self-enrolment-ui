@@ -63,12 +63,13 @@ export function CarouselBlock({ title, subtitle, items, blockType }: ICarouselBl
                     draggable={false}
                     height={180}
                     width={180}
-                    src={withBasePath(item.imgSrc)}
+                    src={item.imgSrc}
                     alt={item.title ?? 'image on a carousel'}
                     style={{ 
                       borderRadius: 100, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)',
                       marginBottom: 4, objectFit: 'cover'}
                     }
+                    unoptimized
                   />
                 </div>
                 <Typography variant="h4" sx={{textDecoration: 'none'}}>{item.title}</Typography>
