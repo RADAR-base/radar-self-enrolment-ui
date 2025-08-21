@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -17,7 +17,7 @@
     "@mui/material": "^6.0.2",
     "@mui/material-nextjs": "^6.0.2",
     "@mui/x-date-pickers": "^7.19.0",
-    "@next/third-parties": "^15.0.3",
+    "@next/third-parties": "15.3.3",
     "@react-pdf/renderer": "^4.2.1",
     "dayjs": "^1.11.13",
     "formik": "^2.4.6",
@@ -25,25 +25,30 @@
     "jwt-decode": "^4.0.0",
     "morph-expressions": "^1.1.1",
     "mui-markdown": "^1.2.2",
-    "next": "^14.2.5",
+    "next": "15.3.3",
+    "p-retry": "^6.2.1",
     "qrcode.react": "^4.2.0",
-    "react": "^18",
+    "react": "19.1.0",
     "react-device-detect": "^2.2.3",
-    "react-dom": "^18",
+    "react-dom": "19.1.0",
+    "react-intersection-observer": "^9.16.0",
     "react-signature-canvas": "^1.0.6",
     "react-signature-pad-wrapper": "^4.0.4",
-    "sharp": "^0.33.5",
     "swiper": "^11.1.15",
     "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "19.1.7",
+    "@types/react-dom": "19.1.6",
     "@types/react-signature-canvas": "^1.0.6",
     "@types/react-slick": "^0.23.13",
     "eslint": "^8",
-    "eslint-config-next": "14.2.5",
+    "eslint-config-next": "15.3.3",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@types/react": "19.1.7",
+    "@types/react-dom": "19.1.6"
   }
 }

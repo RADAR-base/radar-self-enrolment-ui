@@ -29,7 +29,8 @@ function makeRelativePaths(links: FooterItem[], studyId: string): FooterItem[] {
   )
 }
 
-export async function generateMetadata({params}: {params: {studyId: string}}) {
+export async function generateMetadata(props: {params: Promise<{studyId: string}>}) {
+  const params = await props.params;
   const registery: StudyProtocolRepository = new ProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)
   if (protocol == undefined) { return }
@@ -44,8 +45,14 @@ export async function generateMetadata({params}: {params: {studyId: string}}) {
   }
 }
 
-export default async function StudyLayout({children, params}: Readonly<{children: React.ReactNode, params: {studyId: string}}>) {
-  const cookieStore = cookies()
+export default async function StudyLayout(props: Readonly<{children: React.ReactNode, params: {studyId: string}}>) {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
+  const cookieStore = await cookies()
   const cookieChoice = cookieStore.get("cookieChoice")
   const registery: StudyProtocolRepository = new ProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)

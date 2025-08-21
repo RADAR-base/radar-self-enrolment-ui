@@ -1,35 +1,13 @@
 "use server"
-import { cookies } from 'next/headers'
+import { cookies, type UnsafeUnwrappedCookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { IOrySettingsFlow } from './flows.interface';
+import { setCookies } from '../cookies';
 
 const BASEURL = process.env.KRATOS_INTERNAL_URL;
 
-function parseSetCookie(c: string): [string, string, { [key: string]: string | boolean }] {
-  var split = c.split(';')
-  var namevalue = split[0].split('=')
-  var opts = Object.fromEntries(split.slice(1).map(
-    (opt) => {
-      var kv = opt.split('=')
-      var k = kv[0].trim()
-      var k = k.charAt(0).toLowerCase() + k.slice(1).replaceAll('-', '')
-      return [k, kv[1] ? kv[1] : true]
-    }
-  ))
-  return [namevalue[0], namevalue[1], opts]
-}
-
-function setCookies(res: Response) {
-  res.headers.getSetCookie().map(
-    (c) => {
-      var [name, value, opts] = parseSetCookie(c)
-      cookies().set(name, value, opts)
-    }
-  )
-}
-
 export async function createLoginFlow(params?: { login_challenge?: string, refresh?: boolean }): Promise<NextResponse> {
-  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   let url = new URL(BASEURL + "/self-service/login/browser")
   if (params?.login_challenge) {
     let urlParams = new URLSearchParams([['login_challenge', params.login_challenge]])
@@ -40,13 +18,14 @@ export async function createLoginFlow(params?: { login_challenge?: string, refre
       'accept': 'application/json',
       Cookie: cookieString,
     },
+    cache: 'no-store'
   }) as NextResponse
-  setCookies(res)
+  await setCookies(res)
   return res
 }
 
 export async function submitLoginFlow(email: string, password: string, csrf_token: string, flow_id: string): Promise<NextResponse> {
-  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + "/self-service/login")
   var params = new URLSearchParams([["flow", flow_id]])
   url.search = params.toString();
@@ -63,14 +42,14 @@ export async function submitLoginFlow(email: string, password: string, csrf_toke
       identifier: email,
       password: password,
       csrf_token: csrf_token,
-    })
+    }),
   }) as NextResponse
-  setCookies(res)
+  await setCookies(res)
   return res
 }
 
 export async function getLoginFlow(flowId: string): Promise<Response> {
-  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + '/self-service/login/flows')
   var params = new URLSearchParams([
     ['flow', flowId]
@@ -78,6 +57,7 @@ export async function getLoginFlow(flowId: string): Promise<Response> {
   url.search = params.toString()
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -87,10 +67,11 @@ export async function getLoginFlow(flowId: string): Promise<Response> {
 }
 
 export async function createLogoutFlow(): Promise<Response> {
-  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + '/self-service/logout/browser')
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       Cookie: cookieString,
@@ -99,7 +80,7 @@ export async function createLogoutFlow(): Promise<Response> {
 }
 
 export async function updateLogoutFlow(logout_token: string): Promise<Response> {
-  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + '/self-service/logout')
   var params = new URLSearchParams([
     ['token', logout_token]
@@ -107,6 +88,7 @@ export async function updateLogoutFlow(logout_token: string): Promise<Response> 
   url.search = params.toString()
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       Cookie: cookieString,
@@ -115,10 +97,11 @@ export async function updateLogoutFlow(logout_token: string): Promise<Response> 
 }
 
 export async function createRegistrationFlow(): Promise<Response> {
-  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + '/self-service/registration/browser')
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       Cookie: cookieString,
@@ -127,7 +110,7 @@ export async function createRegistrationFlow(): Promise<Response> {
 }
 
 export async function getRegistrationFlow(flowId: string): Promise<Response> {
-  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + '/self-service/registration/flows')
   var params = new URLSearchParams([
     ['flow', flowId]
@@ -135,6 +118,7 @@ export async function getRegistrationFlow(flowId: string): Promise<Response> {
   url.search = params.toString()
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -152,12 +136,13 @@ export interface IUpdateRegistrationFlowBodyPassword {
 }
 
 export async function updateRegistrationFlow(flowId: string, data: IUpdateRegistrationFlowBodyPassword): Promise<Response> {
-  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + "/self-service/registration")
   var params = new URLSearchParams([["flow", flowId]])
   url.search = params.toString();
   return await fetch(url, {
     method: 'POST',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -168,7 +153,7 @@ export async function updateRegistrationFlow(flowId: string, data: IUpdateRegist
 }
 
 export async function createRecoveryFlow(return_to?: string): Promise<Response> {
-  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + '/self-service/recovery/browser')
   return await fetch(url, {
     method: 'GET',
@@ -180,7 +165,7 @@ export async function createRecoveryFlow(return_to?: string): Promise<Response> 
 }
 
 export async function getRecoveryFlow(flowId: string): Promise<Response> {
-  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + '/self-service/recovery/flows')
   var params = new URLSearchParams([
     ['id', flowId]
@@ -188,6 +173,7 @@ export async function getRecoveryFlow(flowId: string): Promise<Response> {
   url.search = params.toString()
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -211,7 +197,7 @@ export interface IUpdateRecoveryFlowBodyEmail {
 }
 
 export async function updateRecoveryFlow(flowId: string, data: IUpdateRecoveryFlowBodyCode | IUpdateRecoveryFlowBodyEmail, token?: string): Promise<Response> {
-  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + "/self-service/recovery")
   var params = new URLSearchParams([
     ["flow", flowId],
@@ -220,6 +206,7 @@ export async function updateRecoveryFlow(flowId: string, data: IUpdateRecoveryFl
   url.search = params.toString();
   return await fetch(url, {
     method: 'POST',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -231,7 +218,7 @@ export async function updateRecoveryFlow(flowId: string, data: IUpdateRecoveryFl
 
 
 export async function getVerificationFlow(flowId: string): Promise<Response> {
-  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + '/self-service/verification/flows')
   var params = new URLSearchParams([
     ['id', flowId]
@@ -239,6 +226,7 @@ export async function getVerificationFlow(flowId: string): Promise<Response> {
   url.search = params.toString()
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -248,10 +236,11 @@ export async function getVerificationFlow(flowId: string): Promise<Response> {
 }
 
 export async function createVerificationFlow(return_to?: string): Promise<Response> {
-  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + '/self-service/verification/browser')
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       Cookie: cookieString,
@@ -260,7 +249,7 @@ export async function createVerificationFlow(return_to?: string): Promise<Respon
 }
 
 export async function completeVerificationFlow(flowId: string, data: IUpdateRecoveryFlowBodyCode | IUpdateRecoveryFlowBodyEmail, token?: string): Promise<Response> {
-  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + "/self-service/verification")
   var params = new URLSearchParams([
     ["flow", flowId],
@@ -269,6 +258,7 @@ export async function completeVerificationFlow(flowId: string, data: IUpdateReco
   url.search = params.toString();
   return await fetch(url, {
     method: 'POST',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -280,7 +270,7 @@ export async function completeVerificationFlow(flowId: string, data: IUpdateReco
 
 
 export async function getSettingsFlow(flowId: string): Promise<Response> {
-  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + '/self-service/settings/flows')
   var params = new URLSearchParams([
     ['id', flowId]
@@ -288,6 +278,7 @@ export async function getSettingsFlow(flowId: string): Promise<Response> {
   url.search = params.toString()
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -297,10 +288,11 @@ export async function getSettingsFlow(flowId: string): Promise<Response> {
 }
 
 export async function createSettingsFlow(return_to?: string): Promise<Response> {
-  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + '/self-service/settings/browser')
   return await fetch(url, {
     method: 'GET',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       Cookie: cookieString,
@@ -315,7 +307,7 @@ export interface IUpdateSettingsPassword {
 }
 
 export async function completeSettingsFlow(flowId: string, data: IUpdateSettingsPassword): Promise<Response> {
-  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   var url = new URL(BASEURL + "/self-service/settings")
   var params = new URLSearchParams([
     ["flow", flowId],
@@ -330,6 +322,7 @@ export async function completeSettingsFlow(flowId: string, data: IUpdateSettings
   }
   return await fetch(url, {
     method: 'POST',
+    cache: 'no-store',
     headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -340,15 +333,16 @@ export async function completeSettingsFlow(flowId: string, data: IUpdateSettings
 }
 
 export async function whoAmI(): Promise<Response> {
-  const cookieString = cookies().getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
+  const cookieString = (await cookies()).getAll().map((cookie) => `${cookie.name}=${cookie.value}`).join('; ')
   const url = new URL(BASEURL + "/sessions/whoami")
   const res = await fetch(url,
     {
+      cache: 'no-store',
       headers: {
         'accept': 'application/json',
         Cookie: cookieString,
       },
     })
-  setCookies(res)
+  await setCookies(res)
   return res
 }

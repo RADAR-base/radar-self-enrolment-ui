@@ -1,7 +1,8 @@
 "use client"
 import { withBasePath } from "@/app/_lib/util/links"
-import { Box, CircularProgress } from "@mui/material"
-import { useState, useEffect } from "react"
+import { Box, CircularProgress, Link, Stack, Typography } from "@mui/material"
+import { useState, useEffect, type JSX } from "react";
+import pRetry from 'p-retry';
 
 async function getAuthUrl(
   clientId: string,
@@ -105,51 +106,89 @@ async function getToken(
   code: string,
 ) {
   const resp = await fetch(withBasePath('/api/connect/sep/token?code=' + code))
+  console.log('token resp status: ', resp.status)
   window.location.reload()
   return
 }
-
-
 
 async function completeFullFlow(
   clientId: string,
   scopes: string[],
   audience: string,
-  redirectUri: string
+  redirectUri: string,
+  codeFunc: (code: string) => Promise<void>
 ) {
 
   const authUrl = await getAuthUrl(clientId, scopes, audience, redirectUri)
   
-  const loginChallenge = await getLoginChallenge(authUrl)
+  const loginChallenge = await pRetry(
+    () => getLoginChallenge(authUrl), 
+    {
+      retries: 4,
+      minTimeout: 1000,
+      maxTimeout: 30000
+    }
+  )
   if (loginChallenge == null) {
-    console.error('Error retrieving login challenge')
-    return null
+    throw new Error('Error retrieving login challenge')
   }
 
-  const loginHydraRedirUrl = await acceptOauthLogin(loginChallenge)
+  const loginHydraRedirUrl = await pRetry(
+    () => acceptOauthLogin(loginChallenge), 
+    {
+      retries: 4,
+      minTimeout: 1000,
+      maxTimeout: 30000
+    }
+  )
   if (loginHydraRedirUrl == null) {
-    console.error('Error accepting OAuth Login')
-    return null
+    throw new Error('Error accepting OAuth Login')
   }
 
-  const consentChallenge = await getConsentChallenge(loginHydraRedirUrl)
+  const consentChallenge = await pRetry(
+    () => getConsentChallenge(loginHydraRedirUrl), 
+    {
+      retries: 4,
+      minTimeout: 1000,
+      maxTimeout: 30000
+    }
+  )
   if (consentChallenge == null) {
-    console.error('Error retrieving consent challenge')
-    return null
+    throw new Error('Error retrieving consent challenge')
   }
 
-  const getCodeUrl = await acceptConsent(consentChallenge, scopes)
+  const getCodeUrl = await pRetry(
+    () => acceptConsent(consentChallenge, scopes), 
+    {
+      retries: 4,
+      minTimeout: 1000,
+      maxTimeout: 30000
+    }
+  )
   if (getCodeUrl == null) {
-    console.error('Error retrieving get code URL')
-    return null
+    throw new Error('Error retrieving get code URL')
   }
 
-  const code = await getCode(getCodeUrl)
+  const code = await pRetry(
+    () => getCode(getCodeUrl), 
+    {
+      retries: 4,
+      minTimeout: 1000,
+      maxTimeout: 30000
+    }
+  )
   if (code == null) {
-    console.error('Error retrieving code')
-    return null
+    throw new Error('Error retrieving code')
   }
-  return code
+
+  await codeFunc(code)
+
+  return
+}
+
+async function clearCookies() {
+  await fetch(withBasePath('/api/ory/clearCsrf'))
+  await fetch(withBasePath('/api/ory/login/browser'))
 }
 
 interface OauthTokenProps {
@@ -157,12 +196,13 @@ interface OauthTokenProps {
   clientId?: string
   audience?: string
   redirectUri?: string
-  codeFunc?: (code: string) => void, 
+  codeFunc?: (code: string) => Promise<void>, 
 }
 
 export function GetOauthToken(props: OauthTokenProps): React.ReactNode {
 
   const [loggingIn, setLoggingIn] = useState<boolean>(false)
+  const [content, setContent] = useState<JSX.Element>(<CircularProgress />)
   const scopes = (
     props.scopes ?? 
     [
@@ -178,27 +218,44 @@ export function GetOauthToken(props: OauthTokenProps): React.ReactNode {
 
   const audience = props.audience ?? 'res_restAuthorizer'
 
-  const redirectUri = props.redirectUri ?? 'https://dev.radarbasedev.co.uk/kratos-ui/connect/sep' // window.location.href
-
-  const codeFunc = props.codeFunc ?? ((code) => {getToken(code)})
+  const redirectUri = props.redirectUri ?? window.location.href
+  
+  const codeFunc = props.codeFunc ?? getToken
 
   useEffect(() => {
     if (!loggingIn) {
       setLoggingIn(true)
-      completeFullFlow(clientId, scopes, audience, redirectUri).then(
-        (code) => {
-          if (code) {
-            codeFunc(code)
-          } else {
-            console.warn('A problem occured when retrieving the OAuth Token Code')
+      pRetry(
+        () => completeFullFlow(clientId, scopes, audience, redirectUri, codeFunc), 
+        {
+          retries: 8,
+          minTimeout: 1000,
+          maxTimeout: 30000,
+          onFailedAttempt: async (attempt) => {
+            if (attempt.attemptNumber > 1) {
+              await clearCookies()
+            }
+            console.log(attempt.message)
+            console.log(attempt)
+            setContent(
+              <Stack alignContent={'center'} alignItems={'center'} justifyContent={'center'} justifyItems={'center'} textAlign={'center'} gap={2}>
+                <CircularProgress />
+                <Typography>Authenticating with RADAR-base</Typography>
+              </Stack>
+            )
           }
+        }
+      ).catch(
+        (err) => {
+          setContent(<Typography m={4}>There was a problem connecting to RADAR-base. Please try again later. If the problem persists, please reach out to us at <Link href='mailto:radar-base@kcl.ac.uk'>radar-base@kcl.ac.uk</Link></Typography>)
         }
       )
     }
   }
   , [])
-
-  return <Box sx={{alignSelf: 'center', margin: 'auto', pt: 16, pb: 16}}>
-    <CircularProgress />
-      </Box>
+  return (
+    <Box sx={{alignSelf: 'center', margin: 'auto', pt: 16, pb: 16}}>
+      {content}
+    </Box>
+  )
 }

@@ -15,7 +15,7 @@ interface EmailSentComponentProps {
   setFlow: (flow: IOryVerificationFlow) => void
 }
 
-function EmailSentComponent(props: EmailSentComponentProps): React.ReactElement {
+function EmailSentComponent(props: EmailSentComponentProps): React.ReactElement<any> {
   const router = useRouter()
   let errorText: string | undefined = undefined
   if (props.flow.ui.messages.length > 0) {
@@ -66,7 +66,7 @@ function EmailSentComponent(props: EmailSentComponentProps): React.ReactElement 
     <form onSubmit={formik.handleSubmit}>
     <Box display={'flex'} flexDirection={'column'} gap={4}>
       {errorText && <Typography variant='overline' color='error'>{errorText}</Typography>}
-      <Typography>An email has been sent to you containing a verification code. Please enter it in the box below. If you cannot find it, please look in your email’s junk/spam folder. Please note, this code expires after 1 hour.</Typography>
+      <Typography>An email has been sent to you containing a verification code. Please enter it in the box below. If you cannot find it, please look in your email’s junk/spam folder. Please note, this code expires after 60 minutes.</Typography>
       <TextField
               fullWidth
               id="code"
@@ -78,6 +78,7 @@ function EmailSentComponent(props: EmailSentComponentProps): React.ReactElement 
               slotProps={{htmlInput: {'inputMode': 'numeric'}, input: {inputMode: 'numeric'}}}
               helperText={<Typography variant="overline" component={'span'} color="error">{formik.errors.code?.toString()}</Typography>}
               error={(formik.errors.code != undefined)}
+              autoComplete='one-time-code'
               />
       <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} width={'100%'}>
         <Button color="primary" variant="contained" onClick={() => {router.back()}}>
@@ -97,7 +98,7 @@ function EmailSentComponent(props: EmailSentComponentProps): React.ReactElement 
 
 interface PassedChallengeComponentProps {}
 
-function PassedChallengeComponent(props: PassedChallengeComponentProps): React.ReactElement {
+function PassedChallengeComponent(props: PassedChallengeComponentProps): React.ReactElement<any> {
   return (
     <Box display={'flex'} flexDirection={'column'} gap={4}>
       <Typography>Successfully verified account</Typography>
@@ -111,71 +112,39 @@ interface VerificationComponentProps {
 }
 
 
-export function VerificationComponent(props: VerificationComponentProps): React.ReactElement {
-  const searchParams = useSearchParams()
+export function VerificationComponent(props: VerificationComponentProps): React.ReactElement<any> {
   const pathname = usePathname()
-  const flowId = searchParams.get('flow')
   const [flow, setFlow] = useState<IOryVerificationFlow | undefined>(props.flow)
   
-  const [content, setContent] = useState<React.ReactElement>(<CircularProgress style={{alignSelf: 'center'}}/>)
+  const [content, setContent] = useState<React.ReactElement<any>>(<CircularProgress style={{alignSelf: 'center'}}/>)
   const router = useRouter()
   const studyContext = useContext(ProtocolContext)
 
   useEffect(() => {
-    // if (flow == undefined) {
-    //   console.log('flow undefined')
-    //   if (flowId == null) {
-    //     fetch(withBasePath('/api/ory/verification/browser')).then(
-    //       (response) => {
-    //         if (response.ok) {
-    //           response.json().then(
-    //             (data) => {
-    //               setFlow(data as IOryVerificationFlow)
-    //             }
-    //           )
-    //         }
-    //       }
-    //     )
-    //   } else {
-    //     fetch(withBasePath(`/api/ory/verification/flows?flow=${flowId}`)).then(
-    //       (response) => {
-    //         if (response.ok) {
-    //           response.json().then(
-    //             (data) => {
-    //               setFlow(data as IOryVerificationFlow)
-    //               router.replace(pathname)
-    //             }
-    //           )
-    //         }
-    //       }
-    //     )
-    //   }
-    // }
-
-  if (flow) {
-    window.history.replaceState(null, '', withBasePath(pathname + '?flow=' + flow.id))
-    switch (flow.state) {
-      case 'choose_method':
-        setContent(<CircularProgress style={{alignSelf: 'center'}}/>)
-        break
-      case 'sent_email':
-        setContent(<EmailSentComponent flow={flow} setFlow={setFlow} />)
-        break
-      case 'passed_challenge':
-        if (studyContext) {
-          router.replace(`/${studyContext.studyId}/portal`)
-          router.refresh()
-        } else {
-          router.push('/')
-          router.refresh()
-        }
-        setContent(<PassedChallengeComponent />)
-        break
-      default:
-        setContent(<CircularProgress style={{alignSelf: 'center'}}/>)
-        break
+    if (flow) {
+      window.history.replaceState(null, '', withBasePath(pathname + '?flow=' + flow.id))
+      switch (flow.state) {
+        case 'choose_method':
+          setContent(<CircularProgress style={{alignSelf: 'center'}}/>)
+          break
+        case 'sent_email':
+          setContent(<EmailSentComponent flow={flow} setFlow={setFlow} />)
+          break
+        case 'passed_challenge':
+          if (studyContext) {
+            router.replace(`/${studyContext.studyId}/portal`)
+            router.refresh()
+          } else {
+            router.push('/')
+            router.refresh()
+          }
+          setContent(<PassedChallengeComponent />)
+          break
+        default:
+          setContent(<CircularProgress style={{alignSelf: 'center'}}/>)
+          break
+      }
     }
-  }
   }, [flow])
 
   return (

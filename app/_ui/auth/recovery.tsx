@@ -9,6 +9,7 @@ import { useFormik } from 'formik';
 import Yup from '@/app/_lib/armt/validation/yup'
 import { ParticipantContext } from '@/app/_lib/auth/provider.client';
 import { IOryErrorFlow, IOryRecoveryFlow } from '@/app/_lib/auth/ory/flows.interface';
+import { ProtocolContext } from '@/app/_lib/study/protocol/provider.client';
 
 
 function ErrorComponent(props: {}) {
@@ -106,6 +107,7 @@ interface EmailSentComponentProps {
 function EmailSentComponent(props: EmailSentComponentProps) {
   const router = useRouter()
   const [errorText, setErrorText] = useState<string>()
+  const study = useContext(ProtocolContext)
   async function submit(code: string) {
     const body = {
       code: code,
@@ -122,7 +124,11 @@ function EmailSentComponent(props: EmailSentComponentProps) {
       if (res.status == 422) {
         const data = await res.json()
         const redirUri = new URL(data.redirect_browser_to)
-        router.push('account/settings' + redirUri.search)
+        if (study.studyId != undefined) {
+          router.push('/' + study.studyId + '/account/settings' + redirUri.search)
+        } else {
+          router.push('/account/settings' + redirUri.search)
+        }
         router.refresh()
       } else {
         const data = await res.json()
@@ -153,12 +159,13 @@ function EmailSentComponent(props: EmailSentComponentProps) {
               slotProps={{htmlInput: {'inputMode': 'numeric'}, input: {inputMode: 'numeric'}}}
               helperText={<Typography variant="overline" component={'span'} color="error">{formik.errors.code?.toString()}</Typography>}
               error={(formik.errors.code != undefined)}
+              autoComplete='one-time-code'
               />
       <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} width={'100%'}>
-        <Button color="primary" variant="contained" onClick={() => {router.refresh()}}>
+        <Button color="primary" variant="contained" onClick={() => {router.back()}}>
           Back
         </Button>
-        <Button color="primary" variant="contained" onClick={() => {}}>
+        <Button color="primary" variant="contained" onClick={() => {router.refresh()}}>
           Resend Code
         </Button>
         <Button color="primary" variant="contained" type="submit" disabled={formik.isSubmitting}>
@@ -175,12 +182,12 @@ interface RecoveryComponentProps {
   flow?: IOryRecoveryFlow
 }
 
-export function RecoveryComponent(props: RecoveryComponentProps): React.ReactElement {
+export function RecoveryComponent(props: RecoveryComponentProps): React.ReactElement<any> {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [flow, setFlow] = useState<IOryRecoveryFlow | IOryErrorFlow | undefined>(props.flow)
   const [email, setEmail] = useState<string>()
-  const [content, setContent] = useState<React.ReactElement>((flow && "state" in flow) ? 
+  const [content, setContent] = useState<React.ReactElement<any>>((flow && "state" in flow) ? 
       <EnterEmailRecoveryComponent flow={flow} setFlow={setFlow} email={email} setEmail={setEmail} /> :
       <CircularProgress style={{alignSelf: 'center'}}/>)
   const flowId = searchParams.get('flow')

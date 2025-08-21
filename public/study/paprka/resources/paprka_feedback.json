@@ -4,12 +4,12 @@
         "form_name": "paprka_feedback",
         "field_type": "descriptive",
         "section_header": "",
-        "field_label": "##TELL US WHAT YOU THINK\n\nYour experience is important to us. Help us learn to improve our study process."
+        "field_label": "## TASK 4 (OPTIONAL): Give us your feedback\n\nYour experience is important to us. Help us learn to improve our study process."
     },
     {
         "field_name": "paprka_feedback_data_collection",
         "form_name": "paprka_feedback",
-        "section_header": "How easy did you find the data collection process? did you find joining the PAPrKA study (for example completing consent form, registering for a task) ?",
+        "section_header": "Please rate how easy or difficult you found joining the PAPrKA study overall",
         "field_type": "dropdown",
         "field_label": "",
         "select_choices_or_calculations": [
@@ -63,7 +63,7 @@
     {
         "field_name": "paprka_feedback_task_1",
         "form_name": "paprka_feedback",
-        "section_header": "How did you find doing Task 1?",
+        "section_header": "Please rate how easy or difficult it was to provide information about your knee replacement surgery?",
         "field_type": "dropdown",
         "field_label": "",
         "select_choices_or_calculations": [
@@ -117,7 +117,7 @@
     {
         "field_name": "paprka_feedback_task_2",
         "form_name": "paprka_feedback",
-        "section_header": "How did you find doing Task 2?",
+        "section_header": "Please rate how easy or difficult it was to provide information about you (including your NHS number)?",
         "field_type": "dropdown",
         "field_label": "",
         "select_choices_or_calculations": [
@@ -171,7 +171,7 @@
     {
         "field_name": "paprka_feedback_task_3",
         "form_name": "paprka_feedback",
-        "section_header": "How did you find doing Task 3?",
+        "section_header": "Please rate how easy or difficult it was to share your physical activity data?",
         "field_type": "dropdown",
         "field_label": "",
         "select_choices_or_calculations": [
@@ -225,7 +225,7 @@
     {
         "field_name": "paprka_feedback_task_4",
         "form_name": "paprka_feedback",
-        "section_header": "How did you find doing Task 4?",
+        "section_header": "Please rate how easy or difficult it was to provide feedback about the study?",
         "field_type": "dropdown",
         "field_label": "",
         "select_choices_or_calculations": [
@@ -320,10 +320,6 @@
                 "label": "Through the National Joint Registry"
             },
             {
-                "code": "friend",
-                "label": "Through a friend"
-            },
-            {
                 "code": "poster",
                 "label": "Through a poster"
             },
@@ -332,12 +328,12 @@
                 "label": "Through a patient group"
             },
             {
-                "code": "versus_arthritis",
-                "label": "Versus Arthritis"
+                "code": "charity",
+                "label": "Through a charity (for example, Versus Arthritis)"
             },
             {
-                "code": "escape_pain",
-                "label": "ESCAPE-pain"
+                "code": "word_of_mouth",
+                "label": " Word of mouth, for example from a friend"
             },
             {
                 "code": "other",
@@ -359,7 +355,7 @@
         "field_name": "paprka_feedback_additional",
         "form_name": "paprka_feedback",
         "section_header": "Please provide any additional feedback, comments, suggestions, or areas for improvement.",
-        "field_note": "Kindly write it.",
+        "field_note": "",
         "field_type": "notes"
     }
 ]

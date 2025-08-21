@@ -13,7 +13,7 @@ export interface IAccordionBlock {
   }[]
 }
 
-export function AccordionBlock({title, subtitle, items}: IAccordionBlock, ref: ForwardedRef<HTMLDivElement>) {
+export function AccordionBlock({title, subtitle, items}: IAccordionBlock) {
   return (
       <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={2}>
         <Typography variant="h2">{title}</Typography>

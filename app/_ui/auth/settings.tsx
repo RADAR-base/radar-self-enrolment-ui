@@ -67,7 +67,7 @@ export default function SettingsComponent(props: SettingsProps) {
 
   const onComplete = props.onComplete ? props.onComplete : 
       () => {
-        router.push(props.redirectTo ?? '/')
+        props.redirectTo && router.push(props.redirectTo)
         router.refresh()
       }
 
@@ -110,6 +110,7 @@ export default function SettingsComponent(props: SettingsProps) {
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
             fullWidth
+            autoComplete="new-password"
             />
           <TextField
             id="password_confirm"
@@ -122,6 +123,7 @@ export default function SettingsComponent(props: SettingsProps) {
             error={formik.touched.password_confirm && Boolean(formik.errors.password_confirm)}
             helperText={formik.touched.password_confirm && formik.errors.password_confirm}
             fullWidth
+            autoComplete="new-password"
             />
         <Button color="primary" variant="contained" disabled={(!formik.isValid) || formik.isSubmitting} type={'submit'} style={{alignSelf: 'end'}}>
           Update password

@@ -7,7 +7,7 @@ import StudyProtocolRepository from "../protocol/repository"
 import { StudyProtocol } from "../protocol"
 import { notFound } from "next/navigation"
 
-async function getExistingTasks(studyId: string, userId: string) {
+export async function getExistingTasks(studyId: string, userId: string) {
   const r = await fetch(process.env.KRATOS_ADMIN_URL + '/identities/' + userId, {
     method: 'GET',
     headers: {
@@ -19,6 +19,10 @@ async function getExistingTasks(studyId: string, userId: string) {
     return {} as {[key: string]: ActiveTaskResponse}
   }
   return data['study'][studyId] as {[key: string]: ActiveTaskResponse}
+}
+
+export async function getExistingTask(studyId: string, userId: string, taskId: string) {
+
 }
 
 

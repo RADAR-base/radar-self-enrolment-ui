@@ -2,7 +2,6 @@
 
 const AUTH_BASE_URL = process.env.HYDRA_PUBLIC_URL + "/oauth2"
 const ARMT_CLIENT_ID = process.env.ARMT_CLIENT_ID ?? 'aRMT'
-const SEP_CLIENT_ID = process.env.SEP_CLIENT_ID ?? 'SEP'
 const GRANT_TYPE = "authorization_code"
 
 interface GetAccessTokenParams {

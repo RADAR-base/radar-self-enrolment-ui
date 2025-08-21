@@ -1,11 +1,9 @@
 "use client"
-import { Box, Button, Card, CircularProgress, Stack, TextField, Typography } from "@mui/material";
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { Box, Button, Typography } from "@mui/material";
+import { useRouter, useSearchParams } from 'next/navigation'
 
-import { useFormik } from "formik"
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, type JSX } from 'react';
 import { withBasePath } from '@/app/_lib/util/links';
-import { getCsrfToken } from "@/app/_lib/auth/ory/util";
 import { LogoutButton } from "@/app/_ui/auth/logout";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import LoginComponent from "@/app/_ui/auth/login";
@@ -74,7 +72,7 @@ function userIsParticipant(userSession: any): boolean {
   return userSession?.identity?.schema_id == "subject"
 }
 
-function LoginCard(params: {children: React.ReactElement}) {
+function LoginCard(params: {children: React.ReactElement<any>}) {
   return <RadarCard>
           <Box padding={4} maxWidth={600} justifySelf={'center'} width='100%'>
             {params.children}
@@ -84,7 +82,6 @@ function LoginCard(params: {children: React.ReactElement}) {
 
 export default function Page() {
   const router = useRouter()
-  const pathname = usePathname()
   const searchParams = useSearchParams()
   
   const [userSession, setUserSession] = useState<any>(undefined)
@@ -96,7 +93,6 @@ export default function Page() {
     window?.location.replace(withBasePath('/auth/login'))
     return
   }
-  let flowId = searchParams.get('flowId')
 
   useEffect(() => {
     if (userSession === undefined) {

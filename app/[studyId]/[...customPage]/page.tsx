@@ -19,7 +19,8 @@ export async function generateStaticParams() {
   return params
 }
 
-export default async function Page({ params }: { params: { studyId: string, customPage: string[]} }) {
+export default async function Page(props: { params: Promise<{ studyId: string, customPage: string[]}> }) {
+  const params = await props.params;
   const pageRepo: PageRepository = new PageRepository()
   const pageContent = await pageRepo.getPage(params.studyId, params.customPage);
   if (pageContent == undefined) {
@@ -29,4 +30,5 @@ export default async function Page({ params }: { params: { studyId: string, cust
     <main>
           <BlockPage blockParams={pageContent.blocks} ></BlockPage>
     </main>
-  )}
+  )
+}

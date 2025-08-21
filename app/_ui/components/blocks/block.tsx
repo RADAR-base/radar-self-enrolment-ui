@@ -21,14 +21,14 @@ sx?: any
 content: IBlockContent[]
 }
 
-export function ColumnBlock({title, subtitle, content, ...props}: IColumnBlock, ref: ForwardedRef<HTMLDivElement>) {
+export function ColumnBlock({title, subtitle, content, sx, blockType}: IColumnBlock) {
   return (
-      <Box display={"flex"} flexDirection={"column"} textAlign={"left"} sx={props.sx}>
+      <Box display={"flex"} flexDirection={"column"} textAlign={"left"} sx={sx}>
         <Typography variant="h2">{title}</Typography>
         <Typography variant="subtitle1">{subtitle}</Typography>
         <Grid container spacing={2}>
-          {content.map(block => 
-            <Grid className={'test'} marginLeft={'auto'} marginRight={'auto'} size={{sm: 12, md: (12/content.length)}}>
+          {content.map((block, idx) => 
+            <Grid className={'test'} marginLeft={'auto'} marginRight={'auto'} size={{sm: 12, md: (12/content.length)}} key={"block" + idx}>
               {getBlockContent(block)}
             </Grid>)
           }
@@ -101,7 +101,7 @@ export function Block(props: IBlock): React.ReactNode {
     <BlockContainer props={props}>
         {
           props.noCard ? (
-            <Box sx={{width: "100%", maxWidth: "lg", textJustify: "right", textAlign: 'right', paddingLeft: {xs: 2, sm: 4}, paddingRight: {xs: 2, sm: 4}, paddingTop: 1, paddingBottom: 1}} >
+            <Box sx={{width: "100%", maxWidth: "lg", textJustify: "right", textAlign: 'right', paddingLeft: {xs: 1, sm: 4}, paddingRight: {xs: 1, sm: 4}, paddingTop: 1, paddingBottom: 1}} >
               {blockContent}
             </Box>
           ) : (

@@ -1,0 +1,75 @@
+{
+    "blocks": [
+      {
+        "blockType": "accordion",
+        "noCard": true,
+        "title": "Frequently Asked Questions",
+        "items": [
+          {
+            "title": "Q1: I want to participate, but unsure where to start ",
+            "content": "Please take a moment to read our [participant information sheet](/kratos-ui/study/paprka/resources/paprka_pis.pdf)\n<br />\nIf you would like to take part, you will need to:\n1. Check that you are eligible to take part.\n2. Sign an electronic consent form.\n3. Set up a study account.\n4. Complete up to 4 tasks.\n\n<br />\nIf you have more questions, you can contact the PAPrKA team on paprka@manchester.ac.uk.\n"
+          },
+          {
+            "title": "Q2: What devices do I need to join?",
+            "content": "You can join using any or all of the fitness tracker listed:<ol type='a'><li>iPhone</li><li>Apple watch</li> <li>Fitbit</li><li>Garmin</li><li>Oura Ring</li></ol>"
+          },
+          {
+            "title": "Q3: What do I need to complete the study",
+            "content": "<table><thead><tr><th>What information you need</th><th>What you need it for</th></tr></thead><tbody><tr><td>Email address</td><td>To set up a study account</td></tr><tr><td>NHS number</td><td>To help complete Task 1</td></tr><tr><td>Month and year of your knee surgery</td><td>To help complete Task 2</td></tr><tr><td>Login details for your fitness tracker(s)</td><td>To help complete Task 3</td></tr></tbody></table>"
+          },
+          {
+            "title": "Q4: I need help: where can I find my NHS number",
+            "content": "You can find your NHS number through any of these four ways\n- Using NHS Find Your NHS Number webpage - https://www.nhs.uk/nhs-services/online-services/find-nhs-number/\n- You can find your NHS number in any documents or letters sent to you by the NHS, such as your prescriptions, test results, hospital referral letters or appointment letters.\n- You can find it by logging in to the NHS App (you'll need to register if you have not used it before) or some GP online services.\n- You can also call your GP surgery and ask them for your NHS number.\n"
+          },
+          {
+            "title": "Q5: I need help: where can I find my login for my fitness tracker(s).",
+            "content": "You will need your username and password provided by fitness tracker (Fitbit, Apple, Oura ring, and/or Garmin).\nIf you cannot remember your login details, you can either: \nGo to your account for your fitness tracker and reset your password from there \nGo through the device connection process on the PAPrKA website (Task 3) and reset your password from there."
+          },
+          {
+            "title": "Q6: I need help: can I get someone to help me take part in the study",
+            "content": "Yes.\n\nIf you are a non-English speaker and can access support on your own, you can also take part.\nIf you need help to complete the study tasks on the website, and you can access support, you can also take part. Kindly remember that we ask some personal questions that only you can answer (for example your name, date of birth, NHS number).\n"
+          },
+          {
+            "title": "Q7: What physical activity data will you be collecting from my fitness tracking device and why?",
+            "content": "We collect physical activity data which are measured in many ways which includes common measures such as steps count, heart rate, distance, speed, floors climbed, and energy expenditure. We will not collect location-related information that could identify you. We are collecting these data to understand how different physical activity components recover after knee replacement to improve knee osteoarthritis care."
+          },
+          {
+            "title": "Q8: Will the data collection from my fitness tracking device be ongoing?",
+            "content": "We will collect physical activity data available between July 2016 until December 2024, and at only at one time (which is the time a participant joins the study and connect their device)."
+          },
+          {
+            "title": "Q9: Will you have access to my NHS record outside of National Joint Registry data access portal? ",
+            "content": "We will only be able to work with your NHS knee replacement record within the secure NJR data access portal. Your NHS record and knee replacement data resides with the NJR at all times."
+          },
+          {
+            "title": "Q10: Who is RADAR-base and how is it related to University of Manchester PAPrKA study?",
+            "content": "The RADAR-base is an open-source solution designed for collection of mobile health data by the Precision Health Informatics group, King’s College London (KCL).  The University of Manchester PAPrKA study is hosted on this RADAR-base to facilitate collection of data for the study."
+          },
+          {
+            "title": "Q11: What fitness tracking devices can I connect and does their version matter?",
+            "content": "You can connect Fitbit, Apple, Oura and Garmin devices.  version of the Fitbit, Oura and Garmin do not matter. However, only Apple versions higher than <insert the versions> can join the study."
+          },
+          {
+            "title": "Q12: Can I connect apple devices without downloading the RADAR aRMT app from my app store?",
+            "content": "No, you cannot connect apple devices without the RADA aRMT app because physical activity can only be accessed from apps installed on an iOS device."
+          },
+          {
+            "title": "Q13: How long can I keep the RADAR aRMT app on my phone before removing it?",
+            "content": "You can remove the app from your phone after you have successfully completed the data sharing task within the app."
+          },
+          {
+            "title": "Q14: Does it matter if I connect to my personal network or to a WiFi when connecting my device?",
+            "content": "When connecting a Fitbit, Garmin and Oura ring account connecting to a personal network does not matter.\n<br />\nHowever, if you are using an Apple watch or iPhone, it is preferable to be connected to a WiFi.\n"
+          },
+          {
+            "title": "Q15: What is the next step after I finish all the tasks?",
+            "content": "You will receive an email thanking you for taking part. You do not have to do anything after receiving this message. If you consent to receive the newsletter or study result summary, then we will be in touch.\n"
+          },
+          {
+            "title": "Q16: Can I take part if I used an iPhone at the time of my surgery but no longer have it?",
+            "content": "Yes, you can if you have used the iPhone for at least 6 months before your knee replacement and for a year after your knee replacement. You also must have the activity data on that iPhone either on your current iPhone or backed up in Apple Cloud storage.\n<br />\nIf you do not have access to the data on your phone or in the cloud storage or you did not use your iPhone before and after your knee replacement, then you cannot take part in the study.\n"
+          }
+        ]
+      }
+    ]
+}

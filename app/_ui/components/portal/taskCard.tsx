@@ -4,6 +4,7 @@ import { Box, Button, Paper, Stack, styled, Typography } from "@mui/material";
 import React from "react";
 import NextLink from 'next/link'
 import { metadata } from "@/app/layout";
+import { MarkdownContainer } from "../base/markdown";
 
 export type RadarBlockCardClassKey = "root";
 
@@ -34,7 +35,7 @@ export const RadarTaskCard = React.forwardRef(function RadarBlockCard({armtProto
     <Box display='flex' flexDirection={'column'} justifyContent={'space-between'} height={"100%"} gap={4}>
       <Box display='block'>
         <Typography variant="h3">{title}</Typography>
-        <Typography variant="body1">{description}</Typography>
+        <MarkdownContainer>{description}</MarkdownContainer>
       </Box>
       <Box display='flex' alignItems={"center"} justifyContent={"space-between"}>
         <Typography variant="subtitle1">{optional ? "Optional" : ""}</Typography>

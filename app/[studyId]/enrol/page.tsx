@@ -5,10 +5,11 @@ import { EnrolmentContent } from '@/app/_ui/enrolment/enrolment.component';
 import { Box, Container } from '@mui/material';
 
 import Auth from '@/app/_lib/auth'
-import { notFound, redirect, usePathname } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { withBasePath } from '@/app/_lib/util/links';
 
-export default async function Page({ params }: { params: { studyId: string } }) {
+export default async function Page(props: { params: Promise<{ studyId: string }> }) {
+  const params = await props.params;
   const auth = new Auth()
   const loggedIn = await auth.isLoggedIn()
   if (loggedIn) {redirect(withBasePath('portal'))}
@@ -30,4 +31,5 @@ export default async function Page({ params }: { params: { studyId: string } }) 
         </Container>
       </Box>
     </main>
-  )}
+  )
+}

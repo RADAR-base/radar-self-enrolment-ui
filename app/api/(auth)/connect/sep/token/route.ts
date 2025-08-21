@@ -7,7 +7,7 @@ const CLIENT_SECRET = process.env.SEP_CLIENT_SECRET  ?? ""
 const REDIRECT_URI = process.env.NEXT_PUBLIC_SEP_REDIRECT_URI ?? ""
 
 export async function GET(request: NextRequest) {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const code  = request.nextUrl.searchParams.get('code')
   if (code == null) {
     return NextResponse.json({error: 'No code provided'}, {status: 400})

@@ -39,13 +39,14 @@ function LoggedInButtons(props: LoggedInButtonsProps) {
         horizontal: 'right',
       }}
       open={Boolean(anchorElNav)}
-      onClose={handleCloseNavMenu}>
-   
+      onClose={handleCloseNavMenu}
+    >
+        {/*    
         <MenuItem onClick={() => {
           handleCloseNavMenu()
         }}>
           My Account
-        </MenuItem>
+        </MenuItem> */}
 
         <MenuItem onClick={() => {
           handleCloseNavMenu()

@@ -4,7 +4,8 @@ import { Download } from '@mui/icons-material';
 import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 
-export default async function Page({ params }: { params: { studyId: string, taskId: string} }) {
+export default async function Page(props: { params: Promise<{ studyId: string, taskId: string}> }) {
+  const params = await props.params;
   const registery: StudyProtocolRepository = new StudyProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)
   if (protocol == undefined) { notFound() }

@@ -4,12 +4,12 @@
         "form_name": "paprka_surgery",
         "field_type": "descriptive",
         "section_header": "",
-        "field_label": "##ABOUT MY KNEE REPLACEMENT\n\nThe following questions are about your knee replacement surgery. Answering them is important to our understanding of how people’s physical activity recovers after the surgery.\n*Please provide response that most accurately answer each question.*"
+        "field_label": "## TASK 1: About my knee replacement \n\nThe following questions are about your knee replacement surgery. Answering them is important to our understanding of how people’s physical activity recovers and improves after knee surgery."
     },
     {
         "field_name": "paprka_surgery_date",
         "form_name": "paprka_surgery",
-        "section_header": "When was your most recent knee replacement surgery?",
+        "section_header": "When was your most recent knee replacement surgery (Jan2017-Dec2023)?",
         "field_note": "Select the month and the year.",
         "field_type": "text",
         "field_label": "",
@@ -57,37 +57,49 @@
     {
         "field_name": "paprka_surgery_multiple_single_knee",
         "form_name": "paprka_surgery",
-        "section_header": "Have you had more than one knee replacement surgery on this knee?",
-        "field_type": "yesno",
+        "section_header": "Was this your first knee replacement on that knee, or was it a second or subsequent knee replacement?",
+        "field_type": "dropdown",
+        "select_choices_or_calculations": [
+            {
+                "code": "first",
+                "label": "First"
+            },
+            {
+                "code": "second",
+                "label": "Second"
+            },
+            {
+                "code": "more",
+                "label": "more"
+            }
+        ],
         "required_field": "true"
-    },
-    {
-        "field_name": "paprka_surgery_text1",
-        "form_name": "paprka_surgery",
-        "field_type": "descriptive",
-        "field_label": "We would like to ask about your current satisfaction level with the knee replacement surgery. If you have had more than one knee replacement between January 2017 and December 2023, please complete this question with respect to the more recent knee replacement in that time."
     },
     {
         "field_name": "paprka_surgery_satisfaction",
         "form_name": "paprka_surgery",
-        "section_header": "How satisfied are you with the results of your most recent knee replacement surgery?",
+        "section_header": "How satisfied are you with the results of your most recent knee replacement surgery? ",
         "field_type": "dropdown",
         "field_label": "",
         "select_choices_or_calculations": [
             {
-                "code": "0",
+                "code": "very_satisfied",
                 "label": "Very satisfied"
             },
             {
-                "code": "1",
+                "code": "somewhat_satisfied",
                 "label": "Somewhat satisfied"
             },
             {
-                "code": "2",
+                "code": "neither",
+                "label": "Neither satisfied nor dissatisfied"
+            },
+            {
+                "code": "somewhat_dissatisfied",
                 "label": "Somewhat dissatisfied"
             },
             {
-                "code": "3",
+                "code": "very_dissatisfied",
                 "label": "Very dissatisfied"
             }
         ],
@@ -118,7 +130,6 @@
         ],
         "field_note": "Select the month and the year.",
         "text_validation_type_or_show_slider_number": "datetime_dmy",
-        "text_validation_min": "2017-01-01",
         "text_validation_max": "2023-12-31",
         "required_field": false,
         "evaluated_logic": "results['paprka_surgery_has_second_surgery'] == true"
@@ -158,7 +169,7 @@
             },
             {
                 "code": "other",
-                "label": "Other qualifications, of unknown level"
+                "label": "Other qualifications"
             }
         ],
         "field_note": "We ask for this because it will help us understand the association between people’s physical activity and education.",
@@ -184,15 +195,15 @@
         "select_choices_or_calculations": [
             {
                 "code": "ft",
-                "label": "Working full-time"
+                "label": "Working full-time (employed/ self-employed)"
             },
             {
                 "code": "pt",
-                "label": "Working part-time (less than 25 hours per week)"
+                "label": "Working part-time (employed/self-employed) (less than 25 hours per week)"
             },
             {
-                "code": "employed_sick",
-                "label": "Employed but currently on sick leave because of knee replacement"
+                "code": "unemployed",
+                "label": "Unemployed"
             },    
             {
                 "code": "student",
@@ -203,20 +214,12 @@
                 "label": "Retired"
             },
             {
-                "code": "oow_knee",
-                "label": "Out of work because of the knee osteoarthritis."
-            },
-            {
-                "code": "oow_other",
-                "label": "Out of work but not because of the knee osteoarthritis"
-            },
-            {
                 "code": "caring",
                 "label": "Caring responsibilities"
             },
             {
                 "code": "other",
-                "label": "Other (Please Specify)"
+                "label": "Other (Please specify)"
             }
         ],
         "field_note": "We ask for this because it will help us understand the association between people’s physical activity and work.",

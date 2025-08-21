@@ -4,6 +4,7 @@ import React from "react";
 import NextLink from 'next/link'
 import Image from 'next/image'
 import { withBasePath } from "@/app/_lib/util/links";
+import { MarkdownContainer } from "../base/markdown";
 
 export type RadarBlockCardClassKey = "root";
 
@@ -28,15 +29,17 @@ const RadarDeviceCardRoot = styled(Paper, {name: 'RadarDeviceCard', slot: 'root'
 export const RadarDeviceCard = React.forwardRef(function RadarDeviceCard({deviceId, status, title, description}: RadarDeviceCardProps, ref) {
   return <RadarDeviceCardRoot>
     <Box display='flex' gap={2} height={"100%"} flexDirection={'row'} justifyItems={'center'}>
+      <Box width={100} height={100}>
       <Image width={100} height={100} 
           src={withBasePath('/devices/' + deviceId + '.png')} 
           alt={deviceId}
           style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
       />
+      </Box>
       <Box display='flex' flexDirection={'column'} width={"100%"} justifyContent={'space-between'} gap={2}>
         <Box display='flex' flexDirection={"column"}>        
           <Typography variant="h3">{title}</Typography>
-          <Typography variant="body1">{description}</Typography>
+          <MarkdownContainer>{description}</MarkdownContainer>
         </Box>
         <NextLink href={'connect/' + deviceId} passHref legacyBehavior>
           <Button 
