@@ -1,4 +1,4 @@
-import PageRepository from '@/app/_lib/study/siteContent/repository';
+import { PageRepository, createPageRepository } from '@/app/_lib/study/siteContent/repository';
 import { RadarCard } from '@/app/_ui/components/base/card';
 import { BlockPage } from '@/app/_ui/components/blocks/blockPage';
 import { Box, Container } from '@mui/material';
@@ -7,7 +7,7 @@ import { notFound } from 'next/navigation';
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const pageRepo: PageRepository = new PageRepository()
+  const pageRepo: PageRepository = createPageRepository()
   const studyIds = await pageRepo.getAllStudyIds()
   var params: {studyId: string, customPage: string[]}[] = []
   for (let i = 0; i < studyIds.length; i++) {
@@ -21,7 +21,7 @@ export async function generateStaticParams() {
 
 export default async function Page(props: { params: Promise<{ studyId: string, customPage: string[]}> }) {
   const params = await props.params;
-  const pageRepo: PageRepository = new PageRepository()
+  const pageRepo: PageRepository = createPageRepository()
   const pageContent = await pageRepo.getPage(params.studyId, params.customPage);
   if (pageContent == undefined) {
     notFound()

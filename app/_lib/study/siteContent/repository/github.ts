@@ -26,7 +26,7 @@ export class GitHubPageRepository implements PageRepository {
     async getAllPageRoutes(studyId: string): Promise<string[][]> {
         try {
             // Get the map of pages for a specific study
-            const pageUriMap = await this.githubService.getDefinitionUriMap(studyId, "json")
+            const pageUriMap = await this.githubService.getDefinitionUriMap(studyId, "*", "json")
 
             // Return the routes (path parts) for each page
             const routes: string[][] = []

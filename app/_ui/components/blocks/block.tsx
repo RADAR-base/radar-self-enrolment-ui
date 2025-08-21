@@ -18,17 +18,18 @@ blockType: 'column'
 title?: string
 subtitle?: string
 sx?: any
-content: IBlockContent[]
+content: IBlockContent[] | Record<string, IBlockContent>
 }
 
 export function ColumnBlock({title, subtitle, content, sx, blockType}: IColumnBlock) {
+  const items = Array.isArray(content) ? content : Object.values(content ?? {})
   return (
       <Box display={"flex"} flexDirection={"column"} textAlign={"left"} sx={sx}>
         <Typography variant="h2">{title}</Typography>
         <Typography variant="subtitle1">{subtitle}</Typography>
         <Grid container spacing={2}>
-          {content.map((block, idx) => 
-            <Grid className={'test'} marginLeft={'auto'} marginRight={'auto'} size={{sm: 12, md: (12/content.length)}} key={"block" + idx}>
+          {items.map((block, idx) => 
+            <Grid className={'test'} marginLeft={'auto'} marginRight={'auto'} size={{sm: 12, md: (items.length ? (12/items.length) : 12)}} key={"block" + idx}>
               {getBlockContent(block)}
             </Grid>)
           }

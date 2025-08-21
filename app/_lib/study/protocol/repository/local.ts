@@ -18,6 +18,12 @@ export class LocalProtocolRepository implements StudyProtocolRepository {
     }
   }
   async getStudies(): Promise<string[]> {
-    return await (fs.readdir(process.cwd() + '/public/study/').then(l => l.filter(item => !/(^|\/)\.[^/.]/g.test(item))))
+    try {
+      const files = await fs.readdir(process.cwd() + '/public/study/')
+      return files.filter(item => !/(^|\/)\.[^/.]/g.test(item))
+    } catch (err) {
+      console.log(err)
+      return []
+    }
   }
 }

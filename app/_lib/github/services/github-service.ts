@@ -64,6 +64,19 @@ export class GithubService {
     return this.cachedRecord.retrieveValue(fileName)
   }
 
+  async getProjectDirectoriesMap(): Promise<Map<string, string>> {
+    const shaUrl = this.SHAUrl()
+    const content = await this.fetchDataWithoutCache(shaUrl)
+    const data = JSON.parse(JSON.stringify(content))
+    const sha = this.findPathTo(data, "tree", "sha")
+    const apiUrl = `${GITHUB_CONFIG.API_URL}/repos/${definitionsRepo}/git/trees/${sha}?recursive=true`
+
+    const treeContent = await this.fetchDataWithoutCache(apiUrl)
+    const treeResponse = JSON.parse(JSON.stringify(treeContent)) as TreeResponse
+
+    return this.extractProjectDirectoryMap(treeResponse, "projects")
+  }
+
   private getPageDefinitionsMap: CachedRetriever<string, string, string> =
     async (...dependencies: string[]) => {
       const [projectName, definitionsFor, version] = dependencies
@@ -172,6 +185,38 @@ export class GithubService {
         `No File exists with the name "${fileName}" in the remote definitions repository`,
       )
     }
+  }
+
+  private extractProjectDirectoryMap = (
+    data: TreeResponse,
+    projectsPath: string,
+  ): Map<string, string> => {
+    const projectDirs = new Set<string>()
+
+    // Extract unique project directory names
+    data.tree
+      .filter(
+        (node: TreeNode) =>
+          node.path.includes(projectsPath) &&
+          node.path.endsWith(".json")
+      )
+      .forEach((node: TreeNode) => {
+        // Extract project directory name from path like "projects/study1/protocol.json"
+        const pathParts = node.path.split("/")
+        const projectsIndex = pathParts.indexOf(projectsPath)
+        if (projectsIndex >= 0 && projectsIndex + 1 < pathParts.length) {
+          const projectDir = pathParts[projectsIndex + 1]
+          projectDirs.add(projectDir)
+        }
+      })
+
+    // Create map with project directory names as both key and value
+    const projectMap = new Map<string, string>()
+    projectDirs.forEach(dir => {
+      projectMap.set(dir, dir)
+    })
+
+    return projectMap
   }
 
   private extractFileUrlMap = (

@@ -1,4 +1,4 @@
-import PageRepository from "@/app/_lib/study/siteContent/repository";
+import { PageRepository, createPageRepository } from "@/app/_lib/study/siteContent/repository";
 import { BlockPage } from "@/app/_ui/components/blocks/blockPage";
 import ProtocolRepository, { StudyProtocolRepository } from "@/app/_lib/study/protocol/repository";
 
@@ -13,7 +13,7 @@ export async function generateStaticParams() {
 export default async function Page(props: { params: Promise<{ studyId: string }> }) {
   const params = await props.params;
 
-  var pageRegistry: PageRepository = new PageRepository()
+  var pageRegistry: PageRepository = createPageRepository()
   const pageContent = await pageRegistry.getLandingPage(params.studyId)
   return (
     <main>

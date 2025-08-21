@@ -24,7 +24,7 @@ export class GitHubProtocolRepository implements StudyProtocolRepository {
     async getStudies(): Promise<string[]> {
         try {
             // Fetch the list of study directories from GitHub using the GithubService
-            const studyUriMap = await this.githubService.getDefinitionUriMap("projects", "json")
+            const studyUriMap = await this.githubService.getProjectDirectoriesMap()
 
             // Return the study IDs (keys in the map)
             return Array.from(studyUriMap.keys())
