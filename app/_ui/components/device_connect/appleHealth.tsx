@@ -45,15 +45,60 @@ function AppStoreDownloadModalContent() {
 }
 
 function QRContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
-  return (
-    <Box display={'flex'} flexDirection={'column'} gap={2}>
-      <Typography variant="body1">1] If you arrived at the website on your computer or tablet <Typography color="primary" component={'span'} fontWeight={700}>scan this QR code</Typography> when prompted.</Typography>
+  return (<Box>
+    <Typography>If you're using a computer or tablet to view this page:</Typography>
+    <List  sx={{listStyle: 'lower-alpha'}}>
+      <ListItem sx={{display: 'list-item'}}>
+        <Typography>Download the app on your iPhone (see Step 3).</Typography>
+      </ListItem>
+      <ListItem sx={{display: 'list-item'}}>
+        <Typography>When prompted, scan this QR code to log in:</Typography>
+      </ListItem>
       <Box margin={'auto'} textAlign={'center'}>
           <QRCodeSVG value={armtAuthUrl ?? ''} size={200} />
       </Box>
-      <Typography variant="body1" fontStyle={'italic'}>To use the QR code you must be looking at it on a computer screen/iPad, scan the code using your phone.</Typography>
+    </List>
     </Box>
-  )
+    )
+}
+
+function LoginInfoContent({studyId, studyName}: {studyId: string, studyName: string}): React.ReactNode {
+return (<div>
+          <Typography variant="body1">If you're using an iPhone to view this page:</Typography>
+          <List sx={{listStyle: 'lower-alpha'}}>
+            <ListItem sx={{display: 'list-item'}}>
+              <Typography>Download the app <em>(see Step 3).</em></Typography>
+            </ListItem>
+            <ListItem sx={{display: 'list-item'}}>
+              <List sx={{listStyle: 'lower-roman'}}>
+                <ListItem sx={{display: 'list-item'}}>
+                  <Typography>
+                    Study name: 
+                    <Typography color="primary" component={'span'} fontWeight={700} letterSpacing={2}>
+                      {" " + studyId}
+                    </Typography>
+                    <IconButton onClick={() =>navigator.clipboard.writeText(studyId)}
+                      color='primary'
+                      >
+                      <ContentCopyIcon />
+                    </IconButton>
+                  </Typography>
+                </ListItem>
+                <ListItem sx={{display: 'list-item'}}>
+                  <Typography>
+                    Email address: the one you used for your {studyName} account.
+                  </Typography>
+                </ListItem>
+                <ListItem sx={{display: 'list-item'}}>
+                <Typography>
+                  Password: the one you used for your {studyName} account.
+                  </Typography>            
+                </ListItem>
+                * Write this info down so you can log in easily later. You do not need your Apple ID or password. 
+              </List>
+            </ListItem>
+          </List>
+        </div>)
 }
 
 function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
@@ -63,35 +108,29 @@ function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNod
   return (
     <React.Fragment>
       <Grid size={12} textAlign={'left'}>
-        <Typography variant="h2">Connect your iPhone or Apple Watch</Typography>
+        <Typography variant="h2">How to Connect Your iPhone or Apple Watch</Typography>
         <Typography>
-          Please read the three steps before you connect your iPhone and or Apple Watch account.
+          You can share data with us if you have an iPhone (6s or newer), or both an iPhone and an Apple Watch. 
         </Typography>
-        <Typography>
-          Read our <Link component={NextLink} href={'/study/paprka/resources/guides/PAPrKA_Study_Guide_iPhone.docx'}>Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to share your Apple Health data.  
-        </Typography>
-      </Grid>
-      <Grid size={12} textAlign={'left'}>
         <Typography variant="h3">
-          Connect your iPhone or Apple Watch
+          Before You Start
         </Typography>
-        <Typography variant="body1">
-          You can take part if you have an iPhone or if you have an iPhone and Apple Watch. 
-          To allow us to access your physical activity information you will need to download the 
-          study app onto your iPhone and sign into it.
-          <strong> Please read step 1 and 2 before you start.</strong>
+        <Typography>
+          Please read Steps 1 and 2 carefully before downloading the app.
+          <br />
+          You will need the information in Step 2 after installing the app to log in. 
         </Typography>
       </Grid>
       <Grid size={12} textAlign={'left'}>
-      <Typography variant="h3">Step 1: About the study app</Typography>
+      <Typography variant="h3">Step 1: About the app</Typography>
         <Typography  variant="body1">
-          The study app is called <Typography fontWeight={700} color="primary" display={'inline'} component={'span'}>RADAR active RMT</Typography>.
+          The app we use is called <Typography fontWeight={700} color="primary" display={'inline'} component={'span'}>RADAR active RMT</Typography>.
           <br />
-          To download the study app, <strong>you will need your iPhone. </strong>
+          You’ll need to install this app on your iPhone to share your physical activity data with us. 
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, sm: 8 }} textAlign={'left'}>
-        <Typography variant="h3">Step 2: There are two ways to log into the study app once downloaded</Typography> 
+        <Typography variant="h3">Step 2: Logging In to the App</Typography> 
       </Grid>
       <Grid size={{xs: 12, sm: 5.5}} textAlign={'left'} >
         <QRContent armtAuthUrl={armtAuthUrl ?? ""} />
@@ -100,50 +139,26 @@ function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNod
         <Divider orientation={useMediaQuery(theme.breakpoints.down("sm")) ? "horizontal" : "vertical"}>OR</Divider>
       </Grid>
       <Grid size={{xs: 12, sm: 5.5}} textAlign={'left'}>
-        <div>
-          <Typography variant="body1">2] If you arrived at the website on your iPhone, type into the study app when prompted:</Typography>
-          <List sx={{listStyle: 'lower-roman'}}>
-            <ListItem sx={{display: 'list-item'}}>
-              <Typography>
-                Study name: 
-                <Typography color="primary" component={'span'} fontWeight={700} letterSpacing={2}>
-                  {" " + protocol.studyId}
-                </Typography>
-                <IconButton onClick={() =>navigator.clipboard.writeText(protocol.studyId)}
-                  color='primary'
-                  >
-                  <ContentCopyIcon />
-                </IconButton>
-              </Typography>
-            </ListItem>
-            <ListItem sx={{display: 'list-item'}}>
-              <Typography>The 
-                <Typography color="primary" component={'span'} fontWeight={700}> email address </Typography>
-                you used to set up your {protocol.name} study account.
-              </Typography>
-            </ListItem>
-            <ListItem sx={{display: 'list-item'}}>
-            <Typography>The 
-                <Typography color="primary" component={'span'} fontWeight={700}> password </Typography>
-                you used to set up your {protocol.name} study account.
-              </Typography>            
-            </ListItem>
-          </List>
-        </div>
+        <LoginInfoContent studyId={protocol.studyId} studyName={protocol.name} />
       </Grid>
       <Grid size={12} textAlign={'left'}>
         <Typography  variant="h3">
-          Step 3: Now you are ready to download the app 
+          Step 3: Download the App
         </Typography>
       </Grid>
-      <Grid size={{ xs: 12, sm: 6 }} textAlign={'left'}>
+
+      <Grid size={{xs: 12, sm: 5.5}} textAlign={'left'} >
         <Typography variant="body1">
-          If you arrived at the website on your computer or tablet – take 
-          your iPhone and search on the app store for the study 
-          app <Typography color='primary' fontWeight={700} component={'span'}>RADAR active RMT</Typography>
+          If you're on a computer or tablet: 
         </Typography>
-      </Grid>
-      <Grid size={{ xs: 12, sm: 6 }} alignContent={'center'}>
+        <List  sx={{listStyle: 'lower-alpha'}}>
+          <ListItem sx={{display: 'list-item'}}>
+            <Typography>On your iPhone, open the App Store.</Typography>
+          </ListItem>
+          <ListItem sx={{display: 'list-item'}}>
+            <Typography>Search for <Typography color='primary' fontWeight={700} component={'span'}>RADAR active RMT</Typography></Typography>
+          </ListItem>
+        </List>
         <Image
           src={withBasePath('/radar/app_store_armt.png')}
           width={254}
@@ -152,13 +167,41 @@ function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNod
           style={{ borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)', alignSelf: 'center' }}
         />
       </Grid>
-      <Grid size={{ xs: 12, sm: 6 }} textAlign={'left'}>
-        <Typography variant="body1">
-          If you arrived at the website on your iPhone, click on:
-        </Typography>
+      <Grid size={{xs: 12, sm: 1}} >
+        <Divider orientation={useMediaQuery(theme.breakpoints.down("sm")) ? "horizontal" : "vertical"}>OR</Divider>
       </Grid>
-      <Grid size={{ xs: 12, sm: 6 }} alignContent={'center'}>
+      <Grid size={{xs: 12, sm: 5.5}} textAlign={'left'}>
+        <Typography variant="body1">
+          If you're on your iPhone:
+        </Typography>
+        <Typography>Tap below to download directly:</Typography>
         <AppStoreDownloadModalContent />
+      </Grid>
+      <Grid size={12} textAlign={'left'}>
+        <Typography  variant="h3">
+          Final Steps
+        </Typography>
+        <List sx={{listStyle: 'disc'}}>
+          <ListItem sx={{display: 'list-item'}}>
+            <Typography>Return to this website.</Typography>
+          </ListItem>
+          <ListItem sx={{display: 'list-item'}}>
+            <Typography>Click the green 'Mark as complete' button.</Typography>
+          </ListItem>
+          <ListItem sx={{display: 'list-item'}}>
+            <Typography>You’ll then be asked if you want to connect another device.</Typography>
+            <div>
+            <List sx={{listStyle: 'circle'}}>
+              <ListItem sx={{display: 'list-item'}}>
+                <Typography>If not, just click 'Done'</Typography>
+              </ListItem>
+              <ListItem sx={{display: 'list-item'}}>
+                <Typography>If you have any questions, contact us at: <Link href='mailto:paprka@manchester.ac.uk'>paprka@manchester.ac.uk</Link></Typography>
+              </ListItem>
+            </List>
+            </div>
+          </ListItem>
+        </List>
       </Grid>
       <Grid size={12}>
         <SubmitButton disabled={armtAuthUrl == undefined} />
