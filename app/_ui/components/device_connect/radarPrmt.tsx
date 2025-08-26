@@ -8,7 +8,7 @@ import { RadarCard } from "../base/card";
 import {QRCodeSVG} from 'qrcode.react'
 import Image from 'next/image'
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
-import { getAuthLink } from "@/app/_lib/connect/armt/authLink";
+import { getAuthLink } from "@/app/_lib/connect/prmt/authLink";
 import { GetOauthToken } from "../../auth/oauthToken";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import NextLink from 'next/link'
