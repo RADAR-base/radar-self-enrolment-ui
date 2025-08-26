@@ -9,6 +9,6 @@ export async function getAuthLink(
     ['data', token],
     ['referrer', referrer]
   ])
-  const appUrl = 'org.phidatalab.radar-armt://enrol?' + UrlParams.toString()
+  const appUrl = 'org.radarbase.prmt://?' + UrlParams.toString()
   return appUrl
 }
