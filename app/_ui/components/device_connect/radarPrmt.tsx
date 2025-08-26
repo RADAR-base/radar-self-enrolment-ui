@@ -28,7 +28,7 @@ const AUDIENCE = ['res_ManagementPortal', 'res_gateway', 'res_AppServer'].join('
 const REDIRECT_URI = process.env.NEXT_PUBLIC_PRMT_REDIRECT_URI ?? ''
 
 function AppStoreDownloadModalContent() {
-  const link = 'https://apps.apple.com/us/app/radar-active-rmt/id1483953055?itscg=30200&itsct=apps_box_badge&mttnsubad=1483953055'
+  const link = 'https://apps.apple.com/us/app/radar-passive-rmt/id1483953055?itscg=30200&itsct=apps_box_badge&mttnsubad=1483953055'
   return (
     <React.Fragment>
       <a href={link} target='_blank'>
@@ -36,7 +36,7 @@ function AppStoreDownloadModalContent() {
           src={withBasePath('/devices/apple_download_app.svg')}
           height={80}
           width={200}
-          alt={"Download the RADAR App on the App Store"}
+          alt={"Download the RADAR Passive RMT App on the App Store"}
           style={{cursor: 'pointer'}}
         />
     </a>
@@ -85,7 +85,7 @@ function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNod
       <Grid size={12} textAlign={'left'}>
       <Typography variant="h3">Step 1: About the study app</Typography>
         <Typography  variant="body1">
-          The study app is called <Typography fontWeight={700} color="primary" display={'inline'} component={'span'}>RADAR active RMT</Typography>.
+          The study app is called <Typography fontWeight={700} color="primary" display={'inline'} component={'span'}>RADAR Passive RMT</Typography>.
           <br />
           To download the study app, <strong>you will need your iPhone. </strong>
         </Typography>
@@ -140,7 +140,7 @@ function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNod
         <Typography variant="body1">
           If you arrived at the website on your computer or tablet – take 
           your iPhone and search on the app store for the study 
-          app <Typography color='primary' fontWeight={700} component={'span'}>RADAR active RMT</Typography>
+          app <Typography color='primary' fontWeight={700} component={'span'}>RADAR Passive RMT</Typography>
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, sm: 6 }} alignContent={'center'}>
@@ -148,7 +148,7 @@ function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNod
           src={withBasePath('/radar/app_store_armt.png')}
           width={254}
           height={291}
-          alt={"RADAR Active RMT app in app store"}
+          alt={"RADAR Passive RMT app in app store"}
           style={{ borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)', alignSelf: 'center' }}
         />
       </Grid>
