@@ -9,6 +9,6 @@ export async function getAuthLink(
     ['data', token],
     ['referrer', referrer]
   ])
-  const appUrl = 'org.radarbase.prmt://?' + UrlParams.toString()
+  const appUrl = 'org.radarbase.prmt://login?' + UrlParams.toString()
   return appUrl
 }
