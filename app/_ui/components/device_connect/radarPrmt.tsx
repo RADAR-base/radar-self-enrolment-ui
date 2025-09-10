@@ -23,7 +23,7 @@ const SCOPES = [
   'SOURCETYPE.UPDATE',
   'offline_access'
 ]
-const AUDIENCE = ['res_ManagementPortal', 'res_gateway', 'res_AppServer'].join(' ')
+const AUDIENCE = ['res_ManagementPortal', 'res_gateway', 'res_appconfig'].join(' ')
 
 const REDIRECT_URI = process.env.NEXT_PUBLIC_PRMT_REDIRECT_URI ?? ''
 
