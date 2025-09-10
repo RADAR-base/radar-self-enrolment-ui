@@ -229,7 +229,7 @@ export function PrmtPage() {
           (<GetOauthToken clientId="pRMT" scopes={SCOPES} audience={AUDIENCE} codeFunc={async (code:string) => setCode(code)} redirectUri={REDIRECT_URI} />) : 
           (<Box display={'inline'} gap={2} aria-live="polite" paddingLeft={4}>
             <Grid container spacing={2} gap={2} rowGap={4}>
-              <HealthKitContent armtAuthUrl={armtAuthUrl} />
+              <PrmtContent armtAuthUrl={armtAuthUrl} />
             </Grid>
             <br />
           </Box>)
