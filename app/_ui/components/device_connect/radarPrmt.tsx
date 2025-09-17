@@ -14,13 +14,9 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import NextLink from 'next/link'
 
 const SCOPES = [
-  'SOURCETYPE.READ',
-  'PROJECT.READ',
   'SUBJECT.READ',
   'SUBJECT.UPDATE',
   'MEASUREMENT.CREATE',
-  'SOURCEDATA.CREATE',
-  'SOURCETYPE.UPDATE',
   'offline_access'
 ]
 const AUDIENCE = ['res_ManagementPortal', 'res_gateway', 'res_appconfig'].join(' ')
