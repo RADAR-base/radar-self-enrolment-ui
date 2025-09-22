@@ -7,6 +7,7 @@ import { withBasePath } from "@/app/_lib/util/links"
 import { getCsrfToken } from '@/app/_lib/auth/ory/util'
 import { ParticipantContext } from '@/app/_lib/auth/provider.client'
 import { IOryLoginFlow } from '@/app/_lib/auth/ory/flows.interface'
+import { PasswordTextField } from './passwordField'
 
 interface LoginProps {
     onLogin?: (response?: Response) => void
@@ -132,12 +133,11 @@ export function LoginComponent(props: LoginProps) {
             error={formik.touched.identifier && Boolean(formik.errors.identifier)}
             autoComplete='email'
           />
-        <TextField
+        <PasswordTextField
             fullWidth
             id="password"
             name="password"
             label={<Box>{"Password"}</Box>}
-            type="password"
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
