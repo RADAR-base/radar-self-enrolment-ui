@@ -2,6 +2,7 @@ import { Box, Stack, TextField, Typography } from "@mui/material";
 import React, { ChangeEvent } from "react";
 import { MarkdownContainer } from "../components/base/markdown";
 import { ArmtDescriptiveField } from "../components/fields/descriptive";
+import { PasswordTextField } from "../auth/passwordField";
 
 interface EnrolmentRegisterProps {
   title?: string
@@ -29,11 +30,10 @@ export function EnrolmentRegister({setFieldValue, values, errors, ...props}: Enr
           autoComplete="email"
           />
 
-        <TextField
+        <PasswordTextField
           id="password"
           name="password"
           label="Password"
-          type="password"
           value={values.password ?? ''}
           onChange={(ev) => setFieldValue('register.password', ev.target.value)}
           error={(errors.password != undefined) && (errors.password.length > 0)}
