@@ -110,6 +110,12 @@ async function getToken(
   return
 }
 
+
+async function clearHydraCookies() {
+  await fetch(withBasePath('/api/ory/clearCsrf'))
+}
+
+
 async function completeFullFlow(
   clientId: string,
   scopes: string[],
@@ -118,8 +124,11 @@ async function completeFullFlow(
   codeFunc: (code: string) => Promise<void>
 ) {
 
+  
   const authUrl = await getAuthUrl(clientId, scopes, audience, redirectUri)
   
+  await clearHydraCookies()
+
   const loginChallenge = await pRetry(
     () => getLoginChallenge(authUrl), 
     {
