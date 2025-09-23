@@ -110,12 +110,6 @@ async function getToken(
   return
 }
 
-
-async function clearHydraCookies() {
-  await fetch(withBasePath('/api/ory/clearCsrf'))
-}
-
-
 async function completeFullFlow(
   clientId: string,
   scopes: string[],
@@ -127,12 +121,12 @@ async function completeFullFlow(
   
   const authUrl = await getAuthUrl(clientId, scopes, audience, redirectUri)
   
-  await clearHydraCookies()
+  await clearCookies()
 
   const loginChallenge = await pRetry(
     () => getLoginChallenge(authUrl), 
     {
-      retries: 4,
+      retries: 2,
       minTimeout: 1000,
       maxTimeout: 30000
     }
@@ -144,7 +138,7 @@ async function completeFullFlow(
   const loginHydraRedirUrl = await pRetry(
     () => acceptOauthLogin(loginChallenge), 
     {
-      retries: 4,
+      retries: 2,
       minTimeout: 1000,
       maxTimeout: 30000
     }
@@ -156,7 +150,7 @@ async function completeFullFlow(
   const consentChallenge = await pRetry(
     () => getConsentChallenge(loginHydraRedirUrl), 
     {
-      retries: 4,
+      retries: 2,
       minTimeout: 1000,
       maxTimeout: 30000
     }
@@ -168,7 +162,7 @@ async function completeFullFlow(
   const getCodeUrl = await pRetry(
     () => acceptConsent(consentChallenge, scopes), 
     {
-      retries: 4,
+      retries: 2,
       minTimeout: 1000,
       maxTimeout: 30000
     }
@@ -180,7 +174,7 @@ async function completeFullFlow(
   const code = await pRetry(
     () => getCode(getCodeUrl), 
     {
-      retries: 4,
+      retries: 2,
       minTimeout: 1000,
       maxTimeout: 30000
     }
@@ -246,9 +240,7 @@ export function GetOauthToken(props: OauthTokenProps): React.ReactNode {
           minTimeout: 1000,
           maxTimeout: 30000,
           onFailedAttempt: async (attempt) => {
-            if (attempt.attemptNumber > 1) {
-              await clearCookies()
-            }
+            // await clearCookies()
             if (checkAccessCookieExists()) {
               window.location.reload()
             }

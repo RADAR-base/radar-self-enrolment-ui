@@ -175,9 +175,9 @@ export default function Page() {
     if (consent == null) {
       // Set error content
     }
-    // if ((!!(consent?.client?.skip_consent)) && (!!userSession)) {
-    //   accept()
-    // }
+    if ((!!(consent?.client?.skip_consent)) && (!!userSession)) {
+      accept()
+    }
     if ((scopes.length > 0) && (!!userSession)) {
       if (userIsParticipant(userSession) && 
         (consent?.client?.client_id == 'SEP') || 
