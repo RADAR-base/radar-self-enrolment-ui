@@ -208,6 +208,7 @@ interface OauthTokenProps {
 export function GetOauthToken(props: OauthTokenProps): React.ReactNode {
   const [loggingIn, setLoggingIn] = useState<boolean>(false)
   const [content, setContent] = useState<JSX.Element>(<CircularProgress />)
+  
   const scopes = (
     props.scopes ?? 
     [
@@ -221,14 +222,11 @@ export function GetOauthToken(props: OauthTokenProps): React.ReactNode {
 
   const clientId = props.clientId ?? 'SEP'
 
-  const audience = props.audience ?? 'res_restAuthorizer'
-
-  const redirectUri = props.redirectUri ?? window.location.href
-  
-  const codeFunc = props.codeFunc ?? getToken
+  const audience = props.audience ?? 'res_restAuthorizer' 
 
   useEffect(() => {
-
+    const codeFunc = props.codeFunc ?? getToken
+    const redirectUri = props.redirectUri ?? window.location.href
     if (!loggingIn) {
       setLoggingIn(true)
       pRetry(
