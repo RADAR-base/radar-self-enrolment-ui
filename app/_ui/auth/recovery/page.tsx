@@ -1,124 +1,137 @@
 "use client"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useContext, useEffect, useState } from "react"
-import { IOryRecoveryFlow, IOryErrorFlow } from "@/app/_lib/auth/ory/flows.interface"
-import { CircularProgress, Box, Typography } from "@mui/material"
-import { ParticipantContext } from "@/app/_lib/auth/provider.client"
-import { withBasePath } from "@/app/_lib/util/links"
-import { RadarCard } from "@/app/_ui/components/base/card"
+import { Box, Button, CircularProgress, Container, Link, Stack, TextField, Typography } from '@mui/material';
+import { RadarCard } from '@/app/_ui/components/base/card';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useContext, useEffect, useState } from 'react';
+import { withBasePath } from '@/app/_lib/util/links';
+import { ParticipantContext } from '@/app/_lib/auth/provider.client';
 import { EnterEmailRecoveryComponent } from "./enterEmailForm"
-import { RecoveryCodeComponent } from "./enterCodeForm"
 import { ErrorComponent } from "./errorComponent"
-import { errorTextFromFlow, FlowErrors } from "../common/displayErrors"
-import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client"
 import { SuccessComponent } from "./successComponent"
+import { IOryErrorFlow, IOryRecoveryFlow } from '@/app/_lib/auth/ory/flows.interface';
+import SettingsComponent from "@/app/_ui/auth/settings";
+
 
 interface RecoveryPageComponentProps {
   flow?: IOryRecoveryFlow
 }
 
 export function RecoveryPageComponent(props: RecoveryPageComponentProps): React.ReactElement<any> {
-  const [flow, setFlow] = useState<IOryRecoveryFlow | IOryErrorFlow | undefined>(props.flow)
-  const [errors, setErrors] = useState<FlowErrors>()
-  const [content, setContent] = useState<React.ReactElement<any>>(<CircularProgress style={{alignSelf: 'center'}}/>)
-  const userSession = useContext(ParticipantContext)
-  const study = useContext(ProtocolContext)
-  const pathname = usePathname()
   const router = useRouter()
   const searchParams = useSearchParams()
+  const [flow, setFlow] = useState<IOryRecoveryFlow | IOryErrorFlow | undefined>(props.flow)
   const flowId = searchParams.get('flow')
+  const token = searchParams.get('token')
+  const [content, setContent] = useState<React.ReactElement<any>>(<CircularProgress style={{alignSelf: 'center'}}/>)
+  const userSession = useContext(ParticipantContext)
+
 
   useEffect(() => {
     if (userSession?.loggedIn) {
       router.replace('./')
+      router.refresh()
     }
     if (flow == undefined) {
+      let flowPath: string
       if (flowId == null) {
-        const redirUri = withBasePath(study.studyId ? 
-                                      `/${study.studyId}/account/settings` :
-                                      `/account/settings`)
-        fetch(withBasePath(`/api/ory/recovery/browser?return_to=${redirUri}`)).then(
-          (response) => {
-            try {
-              response.json().then(
-                (data: IOryRecoveryFlow | IOryErrorFlow) => {
-                  setFlow(data)
-                }
-              )
-            } catch {
-              console.log("Error retrieving flow")
-            }
-          }
-        )
+        flowPath = '/api/ory/recovery/browser'
       } else {
-        fetch(withBasePath(`/api/ory/recovery/flows?flow=${flowId}`)).then(
+        if (token) {
+          flowPath = `/api/ory/recovery/flows?flow=${flowId}&token=${token}`
+        } else {
+          flowPath = `/api/ory/recovery/flows?flow=${flowId}`
+        }
+      }
+      fetch(withBasePath(flowPath)).then(
           (response) => {
-            try {
+            if (response.ok) {
               response.json().then(
-                (data: IOryRecoveryFlow | IOryErrorFlow) => {
-                  setFlow(data)
-                }
+                  (data) => {
+                    setFlow(data as IOryRecoveryFlow)
+                  }
               )
-            } catch {
-              console.log("Error retrieving flow")
             }
           }
-        )
-      }
-    } else {
-      const newParams = new URLSearchParams(searchParams.toString())
-      if ('id' in flow) {
-        newParams.set('flow', flow.id)
-        router.replace(`${pathname}?${newParams.toString()}`)
-      }
+      )
+    }
+  }, [flowId, token, userSession?.loggedIn])
+
+  useEffect(() => {
+    if (flow) {
       if ("state" in flow) {
-        setErrors(errorTextFromFlow(flow))
         switch (flow.state) {
           case 'choose_method':
             setContent(<EnterEmailRecoveryComponent flow={flow} setFlow={setFlow} />)
             break
           case 'sent_email':
-            setContent(<RecoveryCodeComponent flow={flow} setFlow={setFlow} />)
+            setContent(
+                <Box display={'flex'} flexDirection={'column'} gap={4}>
+                  <Typography>Recovery email has been sent!</Typography>
+                  <Typography>
+                    If the provided address was associated with a registered user account, you will receive an email.
+                    Follow the instructions in the email to recover your account.
+                  </Typography>
+                  <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={() => router.push('/auth/login')}
+                  >
+                    Continue to Login
+                  </Button>
+                </Box>
+            )
             break
           case 'passed_challenge':
-            setContent(<SuccessComponent />)
-            router.replace('./account/settings')
+            setContent(<SettingsComponent onComplete={() => {
+              setContent(
+                  <Box display={'flex'} flexDirection={'column'} gap={4}>
+                    <Typography>Password successfully updated!</Typography>
+                    <Typography>Your account has been verified and your password has been set.</Typography>
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        onClick={() => router.push('/auth/login')}
+                    >
+                      Continue to Login
+                    </Button>
+                  </Box>
+              )
+            }} />)
             break
           default:
             setContent(<CircularProgress style={{alignSelf: 'center'}}/>)
             break
         }
       } else {
-        switch (flow.error.id) {
-          case 'session_already_available':
-            setContent(<ErrorComponent title={"Already logged in"} message={"You are already logged in"} />)
-            break
-          case 'security_csrf_violation':
-            window.location.replace(window.location.pathname)
-            window.location.reload()
-            break
-          case 'browser_location_change_required':
-            if (flow.redirect_browser_to) {
-              const searchParams = (new URL(flow.redirect_browser_to)).searchParams.toString()
-              window.location.replace(`./account/settings?${searchParams}`)
-            } else {
-              window.location.replace('./account/settings')
-            }
-            setContent(<SuccessComponent />)
-            break
-          default:
-            setContent(<ErrorComponent title={flow.error.status} message={flow.error.reason} />)
-            break
-        }
+          switch (flow.error.id) {
+              case 'session_already_available':
+                  setContent(<ErrorComponent title={"Already logged in"} message={"You are already logged in"}/>)
+                  break
+              case 'security_csrf_violation':
+                  window.location.replace(window.location.pathname)
+                  window.location.reload()
+                  break
+              case 'browser_location_change_required':
+                  if (flow.redirect_browser_to) {
+                      const searchParams = (new URL(flow.redirect_browser_to)).searchParams.toString()
+                      window.location.replace(`./account/settings?${searchParams}`)
+                  } else {
+                      window.location.replace('./account/settings')
+                  }
+                  setContent(<SuccessComponent/>)
+                  break
+              default:
+                  setContent(<ErrorComponent title={flow.error.status} message={flow.error.reason}/>)
+                  break
+          }
       }
     }
-  }, [flow, flowId])
+  }, [flow])
 
   return (
     <RadarCard>
-      <Box padding={4} display={'flex'} flexDirection={'column'} textAlign={'left'} gap={2}>
+      <Box padding={4} display={'flex'} flexDirection={'column'} textAlign={'left'} gap={4}>
         <Typography variant='h1'>Recover Account</Typography>
-        {errors?.general && <Typography variant='overline' color='error'>{errors.general}</Typography>}
         {content}
       </Box>
     </RadarCard>
