@@ -1,0 +1,9 @@
+{
+    "blocks": [
+        {
+            "blockType": "markdown",
+            "noCard": true,
+            "content": "<PdfViewer fileUrl=\"/study/paprka/resources/guides/PAPrKA_Study_Guide.pdf\" />"
+        }
+    ]
+}
