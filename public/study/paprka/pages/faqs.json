@@ -1,73 +1,217 @@
 {
     "blocks": [
       {
+        "blockType": "markdown",
+        "content": "# Frequently Asked Questions",
+        "noCard": true,
+        "blockBackground": "white"
+      },
+      {
         "blockType": "accordion",
         "noCard": true,
-        "title": "Frequently Asked Questions",
+        "title": "Getting Started",
         "items": [
           {
-            "title": "Q1: I want to participate, but unsure where to start ",
-            "content": "Please take a moment to read our [participant information sheet](/study/study/paprka/resources/paprka_pis.pdf)\n<br />\nIf you would like to take part, you will need to:\n1. Check that you are eligible to take part.\n2. Sign an electronic consent form.\n3. Set up a study account.\n4. Complete up to 4 tasks.\n\n<br />\nIf you have more questions, you can contact the PAPrKA team on paprka@manchester.ac.uk.\n"
+            "title": "1) I want to participate, but unsure where to start ",
+            "content": "Please take a moment to read our [participant information sheet](/study/paprka/resources/paprka_pis.pdf)\n<br />\nIf you would like to take part, you will need to:\n1. Check that you are eligible to take part.\n2. Sign an electronic consent form.\n3. Set up a study account.\n4. Complete up to 4 tasks.\n5. Complete up to 4 tasks. Please find step by step guidance on how to complete the tasks in our [User Guide](/study/paprka/resources/guides/PAPrKA_Study_Guide.pdf)\n\n<br />\n"
           },
           {
-            "title": "Q2: What devices do I need to join?",
-            "content": "You can join using any or all of the fitness tracker listed:<ol type='a'><li>iPhone</li><li>Apple watch</li> <li>Fitbit</li><li>Garmin</li><li>Oura Ring</li></ol>"
+            "title": "2) What physical activity tracking devices do I need to join? ",
+            "content": "You can join using any or all of the fitness tracker listed:<ol><li>iPhone (iOS Version 13 or above, available for iPhone 6s and aboveversion 6s or higher)</li><li>Apple watch</li> <li>Fitbit</li><li>Garmin</li><li>Oura Ring</li></ol>"
           },
           {
-            "title": "Q3: What do I need to complete the study",
+            "title": "3) What do I need to complete the study",
             "content": "<table><thead><tr><th>What information you need</th><th>What you need it for</th></tr></thead><tbody><tr><td>Email address</td><td>To set up a study account</td></tr><tr><td>NHS number</td><td>To help complete Task 1</td></tr><tr><td>Month and year of your knee surgery</td><td>To help complete Task 2</td></tr><tr><td>Login details for your fitness tracker(s)</td><td>To help complete Task 3</td></tr></tbody></table>"
           },
           {
-            "title": "Q4: I need help: where can I find my NHS number",
+            "title": "4) Where can I find my NHS number?",
             "content": "You can find your NHS number through any of these four ways\n- Using NHS Find Your NHS Number webpage - https://www.nhs.uk/nhs-services/online-services/find-nhs-number/\n- You can find your NHS number in any documents or letters sent to you by the NHS, such as your prescriptions, test results, hospital referral letters or appointment letters.\n- You can find it by logging in to the NHS App (you'll need to register if you have not used it before) or some GP online services.\n- You can also call your GP surgery and ask them for your NHS number.\n"
+          }
+        ]
+      },
+      {
+        "blockType": "accordion",
+        "noCard": true,
+        "title": "Guidance & Support",
+        "items": [
+          {
+            "title": "5) Where can I find further guidance on how to join the study and connect my physical activity tracking device?",
+            "content": "Please find the user guides below:\n - [General User Guide (PDF)](/study/paprka/resources/guides/PAPrKA_Study_Guide.pdf)\n - [Apple Guide (PDF)](/study/paprka/resources/guides/PAPrKA_Study_Guide_iPhone.pdf)\n - [Oura Guide (PDF)](/study/paprka/resources/guides/PAPrKA_Study_Guide_Oura.pdf)\n - [Fitbit Guide (PDF)](/study/paprka/resources/guides/PAPrKA_Study_Guide_Fitbit.pdf)"
           },
           {
-            "title": "Q5: I need help: where can I find my login for my fitness tracker(s).",
-            "content": "You will need your username and password provided by fitness tracker (Fitbit, Apple, Oura ring, and/or Garmin).\nIf you cannot remember your login details, you can either: \nGo to your account for your fitness tracker and reset your password from there \nGo through the device connection process on the PAPrKA website (Task 3) and reset your password from there."
+            "title": "6) Can I ask someone to help me take part in the study?",
+            "content": "Yes.\nYou can still take part in the study if you need the assistance of another person.\n - If you don’t speak English but have someone who can support you, you’re welcome to join. \n - If you need help using the website and have someone who can assist you, that’s okay too.\n\n\nPlease note: some questions in the study are personal (like your name, date of birth, or NHS number), and only you can answer those.\n"
           },
           {
-            "title": "Q6: I need help: can I get someone to help me take part in the study",
-            "content": "Yes.\n\nIf you are a non-English speaker and can access support on your own, you can also take part.\nIf you need help to complete the study tasks on the website, and you can access support, you can also take part. Kindly remember that we ask some personal questions that only you can answer (for example your name, date of birth, NHS number).\n"
+            "title": "7) Who can I contact if I need help?",
+            "content": "You can contact the PAPrKA team at [paprka@manchester.ac.uk](mailto:paprka@manchester.ac.uk) or call us on [0161 306 2719](tel:01613062719).\nWe aim to respond to emails within 3 working days.\nOur phone line is open Monday to Friday from 10am to 4pm (excluding national holidays)."
+          }
+        ]
+      },
+      {
+        "blockType": "accordion",
+        "noCard": true,
+        "title": "Connecting My Device",
+        "items": [
+          {
+            "title": "8) Where can I find my login for my Fitbit/ Oura ring.",
+            "content": "You will need the username and password you created to set up your Fitbit and /or Oura ring account.\nIf you cannot remember your login details, you can either:\n 1. Go to your account for your fitness tracker and reset your password from there\n 2. Go through the device connection process on the PAPrKA website (Task 3) and reset your password from there\n"
           },
           {
-            "title": "Q7: What physical activity data will you be collecting from my fitness tracking device and why?",
-            "content": "We collect physical activity data which are measured in many ways which includes common measures such as steps count, heart rate, distance, speed, floors climbed, and energy expenditure. We will not collect location-related information that could identify you. We are collecting these data to understand how different physical activity components recover after knee replacement to improve knee osteoarthritis care."
+            "title": "9) Can I connect my Apple Watch or iPhone without downloading the RADAR active RMT app from my app store?",
+            "content": "No, you cannot connect Apple devices without the RADAR active RMT app because physical activity can only be accessed from apps installed on an iOS (Apple) device."
           },
           {
-            "title": "Q8: Will the data collection from my fitness tracking device be ongoing?",
-            "content": "We will collect physical activity data available between July 2016 until December 2024, and at only at one time (which is the time a participant joins the study and connect their device)."
+            "title": "10) How long do I have to keep the RADAR active RMT app on my iPhone before removing it?",
+            "content": "We recommend keeping the app on your phone until June 2026, which marks the end of the study recruitment period. This is because, although unlikely, there may be issues with collecting your physical activity data. If that happens, we might ask you to use the app again."
           },
           {
-            "title": "Q9: Will you have access to my NHS record outside of National Joint Registry data access portal? ",
-            "content": "We will only be able to work with your NHS knee replacement record within the secure NJR data access portal. Your NHS record and knee replacement data resides with the NJR at all times."
+            "title": "11)  Does it matter if I use mobile data (e.g. 4G) or Wi-Fi to connect my device?",
+            "content": "For Fitbit and Oura Ring, you can connect your device using either your mobile data or WiFi.\nFor Apple Watch or iPhone, it's better to use Wi-Fi when connecting your device."
           },
           {
-            "title": "Q10: Who is RADAR-base and how is it related to University of Manchester PAPrKA study?",
-            "content": "The RADAR-base is an open-source solution designed for collection of mobile health data by the Precision Health Informatics group, King’s College London (KCL).  The University of Manchester PAPrKA study is hosted on this RADAR-base to facilitate collection of data for the study."
+            "title": "12) How much will it cost if I use mobile data (e.g. 4G), to connect my Apple Watch or iPhone?",
+            "content": "Up to approximately 800MB of your personal data allowance could be used up when connecting your Apple watch/iPhone for the study. <u>We strongly recommend that you use Wi Fi.</u>"
           },
           {
-            "title": "Q11: What fitness tracking devices can I connect and does their version matter?",
-            "content": "You can connect Fitbit, Apple, Oura and Garmin devices. The version of the Fitbit, Oura and Garmin do not matter. However, only Apple versions higher than &lt;insert the versions&gt; can join the study."
+            "title": "13) Can I take part if I have switched from an older iPhone to a newer iPhone since the time of my surgery?",
+            "content": "Yes. You’re eligible to take part if:\n - You used an iPhone for at least 6 months before your knee replacement surgery, and\n - You’ve continued using an iPhone for at least 1 year after the surgery.\n\n\nAdditionally, your activity data must still be available—either stored on your current iPhone or backed up in Apple iCloud."
           },
           {
-            "title": "Q12: Can I connect apple devices without downloading the RADAR aRMT app from my app store?",
-            "content": "No, you cannot connect apple devices without the RADA aRMT app because physical activity can only be accessed from apps installed on an iOS device."
+            "title": "14) Can I take part if I had an iPhone at the time of surgery but no longer have one?",
+            "content": "You can only take part if you still have access to your iPhone’s activity data—either directly on the phone or backed up in Apple iCloud.\nIf you no longer have the phone and cannot access the data, or if you didn’t use your iPhone both before and after your knee replacement, then unfortunately you cannot take part in the study, unless you have a Fitbit or Oura device you can connect instead."
           },
           {
-            "title": "Q13: How long can I keep the RADAR aRMT app on my phone before removing it?",
-            "content": "You can remove the app from your phone after you have successfully completed the data sharing task within the app."
+            "title": "15) Can I take part if I have switched from an older Fitbit or Oura device to a newer Fitbit or Oura device since the time of my surgery?",
+            "content": "Yes. You’re eligible to take part if:\n - You used the device for at least 6 months before your knee replacement surgery, and\n - You’ve continued using the device for at least 1 year after the surgery.\n\n\nAdditionally, your activity data must still be available, stored in your Fitbit or Oura account."
           },
           {
-            "title": "Q14: Does it matter if I connect to my personal network or to a WiFi when connecting my device?",
-            "content": "When connecting a Fitbit, Garmin and Oura ring account connecting to a personal network does not matter.\n<br />\nHowever, if you are using an Apple watch or iPhone, it is preferable to be connected to a WiFi.\n"
+            "title": "16) Can I take part if I had a Fitbit or Oura device at the time of surgery but no longer have one?",
+            "content": "You’re eligible to take part if:\n - You used the device for at least 6 months before your knee replacement surgery, and\n - You’ve continued using the device for at least 1 year after the surgery.\n\n\nYou can still take part if you have access to your device’s activity data, stored on your Fitbit or Oura account.\n\n\nIf you cannot access the data, or if you didn’t use your device both before and after your knee replacement, then unfortunately you cannot take part in the study, unless you have another eligible device you can connect instead."
           },
           {
-            "title": "Q15: What is the next step after I finish all the tasks?",
-            "content": "You will receive an email thanking you for taking part. You do not have to do anything after receiving this message. If you consent to receive the newsletter or study result summary, then we will be in touch.\n"
+            "title": "17) How do I download the RADAR active RMT app onto my iPhone?",
+            "content": "On your iPhone:\n 1. Open the App Store.\n 2. Search for “RADAR active RMT” exactly as written.\n 3. Tap Get, then Open once the app is installed.\n 4. You should see the app’s Welcome page.\n\n\nYou can find more guidance on connecting your apple device in the [Apple Guide](/study/paprka/resources/guides/PAPrKA_Study_Guide_iPhone.pdf)"
           },
           {
-            "title": "Q16: Can I take part if I used an iPhone at the time of my surgery but no longer have it?",
-            "content": "Yes, you can if you have used the iPhone for at least 6 months before your knee replacement and for a year after your knee replacement. You also must have the activity data on that iPhone either on your current iPhone or backed up in Apple Cloud storage.\n<br />\nIf you do not have access to the data on your phone or in the cloud storage or you did not use your iPhone before and after your knee replacement, then you cannot take part in the study.\n"
+            "title": "18) What data should I select to share?",
+            "content": "You can share different data types depending on the device you are connecting:\n\n\n<u>For iPhone or Apple Watch</u>\n\nWhen prompted in the RADAR active RMT app, you should select the following data types to share:\n - Active Energy\n - Exercise Minutes\n - Flights Climbed\n - Heart Rate\n - Steps\n - Walking + Running Distance\n - Cycling Distance\n - Workouts\n\n\nYou can either tap “Turn On All” to select everything at once or manually toggle each item from grey to green. Then tap “Allow” to confirm.\n\n\n<u>For Fitbit</u>\nOn the Fitbit data sharing screen, tick both boxes and click “Allow” to share:\n - Activities and Exercise (e.g. step count, distance, time spent active)\n - Heart Rate (to understand activity intensity)\n\n<br/>\n<u>For Oura Ring</u>\nTick all three boxes and click “Accept” to share:\n - Sleep, Readiness, and Activity Data (e.g. steps, distance, time active)\n - Heart Rate Data (for activity intensity)\n - Workout Data (e.g. activity type, distance, intensity)\n"
+          },
+          {
+            "title": "19) How long will it take to share my activity data?",
+            "content": "<u>For Apple watch or iPhone</u><br />Sharing of your data usually takes up to 5 minutes but can sometimes take up to 30 minutes (depending on internet speed and size of data).<br /><br /><u>For Fitbit or Oura</u><br />Once you have provided permission to share your information you do not need to do anything further<br /><br />For your information - it will take approximately 9 days for the research team to receive your physical activity information from Fitbit/Oura. In some circumstances, for example because there is a connection issue, it may take up to 4 weeks for the research team to receive your data. This is because Fitbit/Oura will send the information to us in small chunks rather than all in one go.<br /><br />If there are gaps in the physical activity data we receive from Fitbit or Oura, we will make one further request to Fitbit/Oura to download your data (14 days after the first request). Please find more information on why in the ‘Fitbit and Oura Data Sharing’ FAQ section.<br /><br />If you are unsure if your data has been shared successfully, please contact us at [paprka@manchester.ac.uk](mailto:paprka@manchester.ac.uk) or 0161 306 2719"
+          },
+          {
+            "title": "20) Can I navigate away from the Radar active RMT app on my Apple device while my data is uploadingdownloading?",
+            "content": "Please keep the app running in the foreground during data download. If you navigate away from the app during this process, the data download will freeze and resume again once you return to the app.<br /><br />If you are unsure if your data has been shared successfully, please contact us at [paprka@manchester.ac.uk](mailto:paprka@manchester.ac.uk) or 0161 306 2719"
+          },
+          {
+            "title": "21) How long will I need to continue to track my activity for? ",
+            "content": "When you agree to take part in the study, we will take a copy of your past physical activity data that was recorded by your device around the time of your previous knee surgery.  This is a one-off donation of historical data. You are not required to track any additional activity – only to donate your past activity data."
+          }
+        ]
+      },
+      {
+        "blockType": "accordion",
+        "noCard": true,
+        "title": "Your Data & Privacy",
+        "items": [
+          {
+            "title": "22) How is my data handled?",
+            "content": "Your data is kept safe and confidential. Any personal details that could identify you are stored separately from the research data.\nThe University of Manchester is responsible for managing your data and follows strict rules under GDPR (data protection law).\nYour data will only be used for the purposes explained in the study and won’t be used to make decisions about your healthcare (your data won’t be shared with your healthcare team).\nWe will collect all available historical physical activity data from 1 July 2016 to 31 December 2024, but only once—when you join the study and connect your device."
+          },
+          {
+            "title": "23) How long will my data be kept for?",
+            "content": "- Your research data will be archived for 10 years.\n- Consent forms will be kept for 5 years.\n- If you win a prize draw, your name and email will be kept for 7 years for audit purposes"
+          },
+          {
+            "title": "24) What data will be collected and obtained for the study?",
+            "content": "We collect three types of information:\n\n1. Survey responses provided by you.\n2. A one-off collection of physical activity data from <strong>01<sup>st</sup> July 2016 to 31<sup>st</sup> December 2024.</strong>\n3. Information about your knee replacement from the <strong>National Joint Registry</strong>.\n\n\nThis data is collected only once, at the time you join the study and connect your device. No further data will be taken after that."
+          },
+          {
+            "title": "25) What physical activity information will be collected from my fitness tracking device and why?",
+            "content": "We collect physical activity data, which is measured in many ways,  such as step count, heart rate, distance, speed, stairs climbed, and energy used. This will help us understand how your activity changes following your knee replacement."
+          },
+          {
+            "title": "26) If I have connected my iPhone/Fitbit/Oura ring with another fitness tracking device and or app will information from the other device/app be shared also?",
+            "content": "Yes, we will collect and use the same information you agreed to share from your iPhone/Fitbit/Oura ring from any other fitness tracking device or app you have connected to your iPhone/Fitbit/Oura ring."
+          },
+          {
+            "title": "27) Is there a chance my data from my fitness tracking device will continue to be collected?",
+            "content": "No.\n\nThe study involves a one-off collection of historical data for the period of 01<sup>st</sup> July 2016 to 31<sup>st</sup> December 2024. Once your data is uploaded and the study is complete, no additional data will be collected."
+          },
+          {
+            "title": "28) Can I remove (or revoke) my permission for the study to access my activity data after I’ve connected my device?",
+            "content": "<u>For Fitbit and Oura Ring</u><br />Yes, you can stop sharing your data at any time by changing your settings on the Fitbit or Oura websites.<br /><br />It can take approximately 9 daysup to 8 weeks for Fitbit and Oura to send us your data. In some circumstances it might take as long as 4 weeks.<br /><br />If you remove permission within this time, we might not get all your data, and it may not be used in the study.<br />If you remove permission after this period of time, we’ll likely already have received your data.<br />If you would like to remove your data from the study, please contact us at [paprka@manchester.ac.uk](mailto:paprka@manchester.ac.uk) or 0161 306 2719<br /><br /><u>For Apple Watch or iPhone</u><br />Once you download the Active RMT app and give permission, your phone starts sending your data.\nIf you delete the app within minutes, we might not get all your data, and it may not be used in the study.\nIf you delete the app later, we’ll likely already have your data.<br />If you would like to remove your data from the study, please contact us at [paprka@manchester.ac.uk](mailto:paprka@manchester.ac.uk) or 0161 306 2719<br /><br /><strong>Important note</strong>: We only plan to collect one copy of your past activity data from 01<sup>st</sup> July 2016 to 31<sup>st</sup> December 2024."
+          },
+          {
+            "title": "29) Do you have access to my NHS record? Will you have access to my NHS record outside of National Joint Registry data access portal?",
+            "content": "No.\nWe will be provided by the National Joint Registry (NJR) with some information about your knee replacement which will have been taken from your NHS record."
+          }
+        ]
+      },
+      {
+        "blockType": "accordion",
+        "title": "Fitbit and Oura Data Sharing",
+        "noCard": true,
+        "items": [
+          {
+            "title": "30) How do you plan to access my Fitbit and Oura physical activity data?",
+            "content": "With your permission we will ask Fitbit / Oura for your physical activity data starting from 01<sup>st</sup> July 2016 until we get to 31<sup>st</sup> Dec 2024. The information you agree to share will be sent from Fitbit/Oura to the research team. The research team <strong>WILL NEVER</strong> have access to your Fitbit/Oura account."
+          },
+          {
+            "title": "31) If the research team don't access my Fitbit/Oura account, how do you get my information?",
+            "content": "The research team make daily requests to Fitbit/Oura to send your physical activity data starting from 1st July 2016 to 2nd July 2016 then from the 2nd July 2016 to 3rd July 2016 and so on until we get to 31st of Dec 2024. When we make these daily requests, we are in effect sending Fitbit/Oura a permission slip from you to ask for the information you agreed to share."
+          },
+          {
+            "title": "32) Why does it take time to collect my Fitbit/Oura physical activity data?",
+            "content": "Fitbit/Oura has your physical activity information organised a bit like books on shelves and they allow us to get one book at a time. This means the research team do not receive your physical activity information all in one go.  It could take up to 4 weeks for the research team to receive all the information your agreed to share with us. This is because Fitbit/ Oura has a limit on the amount of information (books) we can ask for each day for the time covering 01<sup>st</sup> July 2016- 31<sup>st</sup> Dec 2024.\n\n\nIt will take time for us to receive your physical activity data because we are asking for information for about 7 years, and the data contains different types of information e.g., heart rate, distance travelled, duration of exercise. Other things may impact on the time taken for us to receive your data such as loss of network connectivity."
+          },
+          {
+            "title": "33) What happens if you don’t receive all my physical activity data from Fitbit/ Oura for the time-period requested?",
+            "content": "You do not need to do anything.\nThe research team will check first what data we have received. If there are gaps in the physical activity data, we will try one more time to download it. We will do this 14 days after the first request is made to Fitbit/Oura."
+          },
+          {
+            "title": "34) When does the study stop having access to my Fitbit or Oura activity data?",
+            "content": "You give permission for the study to access your past activity data from 01<sup>st</sup> July 2016 to 31<sup>st</sup> December 2024 when you first join and connect your device.\n\n\nOnce recruitment for the study is complete (approx. June 2026), the research team will destroy the permission to access your physical activity data.\nYou don’t need to do anything else—your data won’t be accessed again after that.\n<strong>Important note</strong>: We will only collect the physical activity data you agreed to give us when you completed your consent form (past physical activity data from 01<sup>st</sup> July 2016 to 31<sup>st</sup> December 2024).\n\n\nIf you have any questions, please do contact us at [paprka@manchester.ac.uk](mailto:paprka@manchester.ac.uk) or 0161 306 2719."
+          }
+        ]
+      },
+      {
+        "blockType": "accordion",
+        "noCard": true,
+        "title": "Leaving the study",
+        "items": [
+          {
+            "title": "35) What if I don't want to take part in the study anymore?",
+            "content": "You can withdraw at any time without giving a reason and without any negative consequences. If you would like to withdraw from the study, please contact us at [paprka@manchester.ac.uk](mailto:paprka@manchester.ac.uk) or 0161 306 2719"
+          }
+        ]
+      },
+      {
+        "blockType": "accordion",
+        "noCard": true,
+        "title": "Other Issues",
+        "items": [
+          {
+            "title": "36) I haven’t received my verification code",
+            "content": "1. Check your junk folder for an email from platform@sep.radar-base.net\n2. The code expires after 1 hour. If it times out or doesn’t arrive, go back to the “verify account” page and click “Resend code”"
+          },
+          {
+            "title": "37) I’ve entered an email and password to join the study but nothing happens when I click ‘Join’.",
+            "content": "Make sure:\n- Your email is valid and active\n- Your password meets the 12-character minimum\n- You check your inbox for the verification code\n- If issues persist, try using a stronger password by introducing more numbers and symbols into the password."
+          },
+          {
+            "title": "38) Can I change my answers to a submitted task?",
+            "content": "No, once you click the “Submit” button after completing a required task, you cannot change your responses. However, you will still be able to view them."
+          },
+          {
+            "title": "39) What is the next step after I finish all the tasks?",
+            "content": "You will receive an email thanking you for taking part. You do not have to do anything after receiving this message.\nWe also have a newsletter where we will provide participants with updates on our study's progress. If you consent to receive the newsletter then we will be in touch."
+          },
+          {
+            "title": "40) What is RADAR-base and how is it related to University of Manchester PAPrKA study?",
+            "content": "RADAR-base is a platform for the collection of health information from surveys and from smartphones and wearable devices. It is managed by King's College London who have partnered with the University of Manchester to conduct the PAPrKA study. For the study, if you consent to take part, we will collect information from you and your fitness tracker provider on RADAR-base.\n\n\nYou can find more information on RADAR-base on their website: [https://radar-base.org/](https://radar-base.org)"
           }
         ]
       }
