@@ -14,7 +14,7 @@ viewerPath?: string;
 
 const PdfViewer: React.FC<PdfViewerProps> = ({
   fileUrl,
-  viewerHash = "zoom=page-fit",
+  viewerHash = "zoom=page-width",
   height = "80vh",
   className,
   viewerPath = withBasePath("/pdfjs/web/viewer.html"),
