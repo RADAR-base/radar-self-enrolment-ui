@@ -27,12 +27,43 @@
             "content": "<div id='more'></div>To learn more about recovery after knee replacement, we will bring together with your consent 3 bits of information:\n\n<ol><li>Information you provide in a survey.</li><li>A one-time collection of your physical activity information from either iPhone, Fitbit, Apple Watch or Oura Ring. Physical activity can include things such as steps you take daily, walking, numbers of flights of stairs you climb etc.</li><li>Access to your knee replacement surgery information (from the UK National Joint Registry).</li></ol><br />The University of Manchester is leading the PAPrKA research study in collaboration with King's College London and with support from the National Joint Registry."
           },
           {
+            "blockType": "imageGallery",
+            "title": "Quick Guide",
+            "columns": {"xs": 1, "sm": 2, "md": 2, "lg": 3, "xl": 3},
+            "gap": 1,
+            "borderRadius": 0,
+            "aspectRatio": "32/27",
+            "objectFit": "fill",
+            "images": [
+              {"src": "/study/paprka/resources/landingpage/image_guide_overview/overview-guide-1.jpeg", "alt": "Step 1"},
+              {"src": "/study/paprka/resources/landingpage/image_guide_overview/overview-guide-2.jpeg", "alt": "Step 2"},
+              {"src": "/study/paprka/resources/landingpage/image_guide_overview/overview-guide-3.jpeg", "alt": "Step 3"},
+              {"src": "/study/paprka/resources/landingpage/image_guide_overview/overview-guide-4.jpeg", "alt": "Step 4"},
+              {"src": "/study/paprka/resources/landingpage/image_guide_overview/overview-guide-5.jpeg", "alt": "Step 5"},
+              {"src": "/study/paprka/resources/landingpage/image_guide_overview/overview-guide-6.jpeg", "alt": "Step 6"}
+            ]
+          },
+          {
             "blockType": "video",
             "noCard": true,
             "blockBackground": "white",
             "video": {
               "youtubeId": "5mFgOzLI5ZM"
             }
+          },
+                    {
+            "blockType": "imageGallery",
+            "title": "Quick Guide",
+            "noCard": true,
+            "blockBackground": "#0098A8",
+            "columns": {"xs": 1, "sm": 1, "md": 1, "lg": 1, "xl": 1},
+            "gap": 0,
+            "borderRadius": 0,
+            "objectFit": "contain",
+            "aspectRatio": "35/20",
+            "images": [
+              {"src": "/study/paprka/resources/landingpage/Eligibility-100.jpg", "alt": "Eligibility Guide"}
+            ]
           },
           {
             "blockType": "column",
@@ -78,20 +109,21 @@
             "noCard": true,
             "title": "Meet The Team",
             "items": [
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles_will_dixon.png", "title": "Will Dixon", "content": "Professor of Digital Epidemiology", "href": "https://research.manchester.ac.uk/en/persons/will.dixon"},
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles_ayo.png", "title": "Ayobami Esther Olanrewaju", "content": "PhD candidate in Musculoskeletal", "href": "https://research.manchester.ac.uk/en/persons/ayobami-olanrewaju"},
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles_sabine.png", "title": "Sabine Van der veer", "content": "Senior Lecturer in Health Informatics", "href": "https://research.manchester.ac.uk/en/persons/sabine.vanderveer"},
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles_david_wong.png", "title": "David Wong", "content": "A/Prof Health Informatics and Health Data Science", "href": "https://medicinehealth.leeds.ac.uk/medicine/staff/9808/dr-david-wong"},
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles_shuai.png", "title": "Shuai Shao", "content": "Research Associate", "href": "https://research.manchester.ac.uk/en/persons/shuai-shao"},
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles_amos.png", "title": "Amos Folarin", "content": "Senior Software Development Group Leader", "href": "https://www.kcl.ac.uk/people/amos-folarin"},
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles_richard.png", "title": "Richard Dobson", "content": "Professor of Medical Bioinformatics", "href": "https://www.kcl.ac.uk/people/richard-dobson"},
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles_mark.png", "title": "Mark Wilkinson", "content": "Professor of Orthopaedics", "href": "https://www.sheffield.ac.uk/smph/people/clinical-medicine/mark-wilkinson"},
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles_michael_whitehouse.png", "title": "Michael Whitehouse", "content": "Professor of Trauma and Orthopaedics", "href": "https://www.bristol.ac.uk/people/person/Michael-Whitehouse-606eae62-257d-43da-aba1-7fed58b6246e"},
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles_andrew.png", "title": "Andrew Judge", "content": "Professor of Translational Statistics", "href": "https://www.bristol.ac.uk/people/person/Andy-Judge-1d244ce0-922d-43f0-ba5a-becbea56e9cd"},
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles_coral.png", "title": "Coral Stevenson", "content": "Project Administrator", "href": "https://personalpages.manchester.ac.uk/advanced.php?dn=cn%3DCoral+Stevenson%2Bumanroleid%3D1419951%2Cou%3DDivision+of+Informatics%5C%2C+Imaging+%26+Data+Sciences%2Cou%3DSchool+of+Health+Sciences%2Cou%3DFaculty+of+Biology%5C%2C+Medicine+and+Health%2Cou%3DPeople%2Co%3DUniversity+of+Manchester%2Cc%3DGB&employeeType=STAFF&action=read&form_input=Submit"},
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles_elaine.png", "title": "Elaine Mackey", "content": "Information Governance Manager", "href": "https://research.manchester.ac.uk/en/persons/elaine.mackey"},
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles_lynn.png", "title": "Lynn Laidlaw", "content": "Patient and Public Engagement and Involvement", "href": "https://www.kcl.ac.uk/people/lynn-laidlaw"},
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles_louise.jpg", "title": "Louise Cook", "content": "Programme Manager", "href": "#"}            
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/will_dixon.png", "title": "Will Dixon", "content": "Professor of Digital Epidemiology", "href": "https://research.manchester.ac.uk/en/persons/will.dixon"},
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/ayo.png", "title": "Ayobami Esther Olanrewaju", "content": "PhD candidate in Musculoskeletal", "href": "https://research.manchester.ac.uk/en/persons/ayobami-olanrewaju"},
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/sabine.png", "title": "Sabine Van der veer", "content": "Senior Lecturer in Health Informatics", "href": "https://research.manchester.ac.uk/en/persons/sabine.vanderveer"},
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/david_wong.png", "title": "David Wong", "content": "A/Prof Health Informatics and Health Data Science", "href": "https://medicinehealth.leeds.ac.uk/medicine/staff/9808/dr-david-wong"},
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/shuai.png", "title": "Shuai Shao", "content": "Research Associate", "href": "https://research.manchester.ac.uk/en/persons/shuai-shao"},
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/amos.png", "title": "Amos Folarin", "content": "Senior Software Development Group Leader", "href": "https://www.kcl.ac.uk/people/amos-folarin"},
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/richard.png", "title": "Richard Dobson", "content": "Professor of Medical Bioinformatics", "href": "https://www.kcl.ac.uk/people/richard-dobson"},
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/mark.png", "title": "Mark Wilkinson", "content": "Professor of Orthopaedics", "href": "https://www.sheffield.ac.uk/smph/people/clinical-medicine/mark-wilkinson"},
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/michael_whitehouse.png", "title": "Michael Whitehouse", "content": "Professor of Trauma and Orthopaedics", "href": "https://www.bristol.ac.uk/people/person/Michael-Whitehouse-606eae62-257d-43da-aba1-7fed58b6246e"},
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/andrew.png", "title": "Andrew Judge", "content": "Professor of Translational Statistics", "href": "https://www.bristol.ac.uk/people/person/Andy-Judge-1d244ce0-922d-43f0-ba5a-becbea56e9cd"},
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/coral.png", "title": "Coral Stevenson", "content": "Project Administrator", "href": "https://personalpages.manchester.ac.uk/advanced.php?dn=cn%3DCoral+Stevenson%2Bumanroleid%3D1419951%2Cou%3DDivision+of+Informatics%5C%2C+Imaging+%26+Data+Sciences%2Cou%3DSchool+of+Health+Sciences%2Cou%3DFaculty+of+Biology%5C%2C+Medicine+and+Health%2Cou%3DPeople%2Co%3DUniversity+of+Manchester%2Cc%3DGB&employeeType=STAFF&action=read&form_input=Submit"},
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/elaine.png", "title": "Elaine Mackey", "content": "Information Governance Manager", "href": "https://research.manchester.ac.uk/en/persons/elaine.mackey"},
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/lynn.png", "title": "Lynn Laidlaw", "content": "Patient and Public Engagement and Involvement", "href": "https://www.kcl.ac.uk/people/lynn-laidlaw"},
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/louise.jpg", "title": "Louise Cook", "content": "Programme Manager", "href": "#"},
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/emma.jpg", "title": "Emma Pritchard", "content": "Research Associate", "href": "https://research.manchester.ac.uk/en/persons/emma-pritchard" }
             ]
           },
           {
