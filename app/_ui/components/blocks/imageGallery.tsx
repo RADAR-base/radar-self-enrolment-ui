@@ -33,25 +33,14 @@ export type ResponsiveNumber =
 export interface IImageGalleryBlock {
   blockType: "imageGallery";
   images: IGalleryImage[];
-  /** Number of columns per breakpoint */
   columns?: ResponsiveNumber; // default: { xs: 1, sm: 2, md: 3, lg: 4 }
-  /**
-  * Number of rows per breakpoint. When provided, the gallery will only render up to rows * columns images
-  * for the current breakpoint. When omitted, all images are shown and rows are unconstrained.
-  */
   rows?: ResponsiveNumber;
-  /** How images should fit inside their tiles */
   objectFit?: ObjectFit; // default: 'cover'
-  /** Gap (spacing) between tiles */
   gap?: number; // default: 2 (theme spacing units)
-  /** CSS aspect-ratio for each tile (e.g., '1 / 1', '16 / 9') */
   aspectRatio?: string; // default: '1 / 1'
-  /** Border radius for the image tiles */
   borderRadius?: number | string; // default: 2 (theme.shape.borderRadius scale)
 }
 
-
-// ---------- Helpers ----------
 const toBreakpointMap = (
   val: ResponsiveNumber | undefined,
   fallback: Required<Record<"xs" | "sm" | "md" | "lg", number>> = { xs: 1, sm: 2, md: 3, lg: 4 }
@@ -65,9 +54,6 @@ const toBreakpointMap = (
   return { xs, sm, md, lg, xl };
 };
 
-
-// Convert a columns map into Grid2 `size` object where the grid has 12 columns per row.
-// We assign each item a fraction of 12 based on desired column count.
 const toGridItemSizes = (columns: ReturnType<typeof toBreakpointMap>) => {
   const frac = (c: number) => {
     const v = Math.max(1, Math.min(12, Math.round(12 / c)));
@@ -103,7 +89,6 @@ const currentLimit = (
 };
 
 
-// ---------- Component ----------
 export function ImageGalleryBlock({
   images,
   columns,
@@ -119,7 +104,6 @@ export function ImageGalleryBlock({
   const limit = currentLimit(rowMap, colMap);
   const list = Number.isFinite(limit) ? images.slice(0, limit as number) : images;
 
-
   return (
     <Box width="100%">
       <Grid container spacing={gap} columns={12}>
@@ -127,6 +111,7 @@ export function ImageGalleryBlock({
           const Tile = (
             <Box sx={{ position: "relative", width: "100%", aspectRatio, overflow: "hidden", borderRadius }}>
               <Image
+                unoptimized
                 src={withBasePath(img.src)}
                 alt={img.alt}
                 fill
