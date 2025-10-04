@@ -116,7 +116,7 @@
         {
           "fieldType": "yesno",
           "id": "M-Confirmed read",
-          "description": "I confirm that I have read the [Participant Information Sheet (PIS) (Version xx, Date xx/xx/xx)](/study/paprka/resources/paprka_pis.pdf) for the above study and have had the opportunity to consider the information and ask questions and had these answered satisfactorily.\n"
+          "description": "I confirm that I have read the [Participant Information Sheet (PIS) (Version 6.0, Date xx/10/25)](/study/paprka/resources/paprka_pis.pdf) for the above study and have had the opportunity to consider the information and ask questions and had these answered satisfactorily.\n"
         },
         {
           "fieldType": "yesno",
@@ -131,12 +131,12 @@
         {
           "fieldType": "yesno",
           "id": "M-Permission to collect PGHD",
-          "description": "I give permission for the study team to collect my physical activity data stored with Fitbit, Apple Health or Oura Ring.\n<br />\nThis means the PAPrKA team will collect any data available between 01<sup>st</sup> July 2016 and 31<sup>st</sup> December 2024.\n"
+          "description": "I give permission for the study team to collect my physical activity data stored within Fitbit, Oura Ring, and / or Apple Health between 01<sup>st</sup> July 2016 and 31<sup>st</sup> December 2024.\n<br />\nI acknowledge that if I have connected my iPhone, Apple Watch, Fitbit or Oura ring to other fitness tracking devices and or apps, physical activity information from those other devices/ apps will also be collected and used by the research team.\n"
         },
         {
           "fieldType": "yesno",
           "id": "M-Permission to create joined dataset",
-          "description": "I understand that creating the joined research dataset will involve:\n1. The PAPrKA team sending my name, date of birth, NHS number, sex and postcode to the National Joint Registry (NJR).\n2. The NJR looking to see if I am in the Registry. If I am in the Registry, they will add a copy of my knee replacement information in their secure portal for the PAPrKA study team to access.\n3. The PAPrKA study team joining my physical activity and survey information to my knee replacement information in the NJR secure portal.\n\n<br />\nI give permission for my information to be shared, accessed, and joined.\n"
+          "description": "I understand that creating the joined research dataset will involve:\n1. The PAPrKA team sending my name, date of birth, NHS number, sex and postcode to the National Joint Registry (NJR).\n2. The NJR looking to see if I am in the Registry. If I am in the Registry, they will add a copy of my knee replacement information in their secure portal for the PAPrKA study team to access.\n3. The PAPrKA study team joining my physical activity (for 6 months before and 1 year after my knee replacement) and survey information to my knee replacement information in the NJR secure portal.\n\n<br />\nI give permission for my information to be shared, accessed, and joined.\n"
         },
         {
           "fieldType": "yesno",
@@ -163,12 +163,12 @@
         {
           "fieldType": "yesno",
           "id": "O-Agree UoM holding data",
-          "description": "I agree my information (physical activity, survey data and demographic data) being held at University of Manchester, can be used by other researchers, to answer research questions over and above those for the PAPrKA study.\n<br />\nI agree on the basis that only pseudonymised data will be shared and where there are data protection measures in place to ensure the confidentiality of the data.\n"
+          "description": "I agree my information (i.e. physical activity data for 01<sup>st</sup> July 2016–31<sup>st</sup> Dec 2024, survey data and demographic data) held at University of Manchester can beshared for both research and educational purposes.\n<br />\nI agree on the basis that only de-identified data will be shared and where there are data protection measures in place to ensure the confidentiality of the data.\n"
         },
         {
           "fieldType": "yesno",
           "id": "O-Prize draw",
-          "description": "I would like to take part in the prize draw\n<br />\nI understand that my full name and email address will be passed to the University of Manchester's Finance team for the sole purpose of sending me the Amazon voucher, If I agree to take part in the prize draw and win.\n"
+          "description": "I would like to take part in the prize draw\n<br />\nI understand that my full name and email address will be passed to the University of Manchester’s Finance team for the sole purpose of sending me the Love to Shop voucher, If I agree to take part in the prize draw and win.\n"
         },
         {
           "fieldType": "yesno",
