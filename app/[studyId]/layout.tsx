@@ -45,13 +45,10 @@ export async function generateMetadata(props: {params: Promise<{studyId: string}
   }
 }
 
-export default async function StudyLayout(props: Readonly<{children: React.ReactNode, params: {studyId: string}}>) {
+export default async function StudyLayout(props: LayoutProps<'/[studyId]'>) {
+  
   const params = await props.params;
-
-  const {
-    children
-  } = props;
-
+  const children = props.children;
   const cookieStore = await cookies()
   const cookieChoice = cookieStore.get("cookieChoice")
   const registery: StudyProtocolRepository = new ProtocolRepository()
