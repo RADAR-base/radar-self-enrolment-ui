@@ -410,6 +410,23 @@
           ]
         }
       ],
+       "blocks": [
+        {
+          "blockType": "imageGallery",
+          "columns": {"xs": 2, "sm": 4, "md": 4, "lg": 4, "xl": 4},
+          "gap": 1,
+          "noCard": true,
+          "borderRadius": 0,
+          "aspectRatio": "3/1",
+          "objectFit": "contain",
+          "images": [
+            {"src": "/study/paprka/resources/landingpage/paprka-logo.webp", "alt": "University of Manchester"},
+            {"src": "/study/paprka/resources/landingpage/hrfh_landscape_text.jpg", "alt": "Health Research from Home"},
+            {"src": "/radar/kcl-logo.webp", "alt": "King's College London"},
+            {"src": "/study/paprka/resources/landingpage/njr_logo.jpg", "alt": "National Joint Registry - This study uses NJR data"}
+          ]
+        }
+      ],
       "copyrightText": "© 2024 Health Research from Home"
     },
     "portal": {

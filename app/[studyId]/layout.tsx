@@ -91,6 +91,7 @@ export default async function StudyLayout(props: LayoutProps<'/[studyId]'>) {
               (col) => {
                 col.items = makeRelativePaths(col.items, params.studyId)
                 return col})}
+            blocks={protocol.studyUiConfig.footer.blocks}
             copyrightText={protocol.studyUiConfig.footer.copyrightText}
           />
         </Box>
