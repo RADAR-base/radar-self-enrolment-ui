@@ -55,14 +55,12 @@ export function CookieBanner() {
 
             {"By clicking ‘Accept All’, we will be able to study how people use the website. We hope this will help us improve how research is done in the future.\n"}   
             {"By clicking ‘Essential Only’, the website will remember your account details allowing you to log in easily. It will not allow us to study how you use the website\n"}
-            {"By clicking ‘Reject All’, the website will not remember your account details and we will not be able to study how you use the website."}
           </Typography>
           <Typography>
             For more information, view our <NextLink href={cookiePolicyLink}>cookie statement</NextLink>.
           </Typography>
           <Box display={'flex'} flexDirection={'row'} justifyContent={'flex-end'} marginTop={2} gap={1}>
-            <Button onClick={handleReject} variant="outlined">Reject All</Button>
-            <Button onClick={handleFunctional} variant="outlined">Functional Only</Button>
+            <Button onClick={handleReject} variant="outlined">Essential Only</Button>
             <Button onClick={handleAll} variant="outlined">Accept All</Button>
           </Box>
         </Box>

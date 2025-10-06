@@ -11,7 +11,6 @@ import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 import { getAuthLink } from "@/app/_lib/connect/armt/authLink";
 import { GetOauthToken } from "../../auth/oauthToken";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import NextLink from 'next/link'
 
 const SCOPES = [
   'SOURCETYPE.READ',

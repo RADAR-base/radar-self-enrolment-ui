@@ -131,7 +131,7 @@
         {
           "fieldType": "yesno",
           "id": "M-Permission to collect PGHD",
-          "description": "I give permission for the study team to collect my physical activity data stored within Fitbit, Oura Ring, and / or Apple Health between 01<sup>st</sup> July 2016 and 31<sup>st</sup> December 2024.\n<br />\nI acknowledge that if I have connected my iPhone, Apple Watch, Fitbit or Oura ring to other fitness tracking devices and or apps, physical activity information from those other devices/ apps will also be collected and used by the research team.\n"
+          "description": "I give permission for the study team to collect my past physical activity data stored within Fitbit, Oura Ring, and / or Apple Health between 01<sup>st</sup> July 2016 and 31<sup>st</sup> December 2024.\n<br />\nI acknowledge that if I have connected my iPhone, Apple Watch, Fitbit or Oura ring to other fitness tracking devices and or apps, physical activity information from those other devices/ apps will also be collected and used by the research team.\n"
         },
         {
           "fieldType": "yesno",
@@ -163,7 +163,7 @@
         {
           "fieldType": "yesno",
           "id": "O-Agree UoM holding data",
-          "description": "I agree my information (i.e. physical activity data for 01<sup>st</sup> July 2016–31<sup>st</sup> Dec 2024, survey data and demographic data) held at University of Manchester can beshared for both research and educational purposes.\n<br />\nI agree on the basis that only de-identified data will be shared and where there are data protection measures in place to ensure the confidentiality of the data.\n"
+          "description": "I agree my information (i.e. physical activity data for 01<sup>st</sup> July 2016–31<sup>st</sup> Dec 2024, survey data and demographic data) held at University of Manchester can be shared for both research and educational purposes.\n<br />\nI agree on the basis that only de-identified data will be shared and where there are data protection measures in place to ensure the confidentiality of the data.\n"
         },
         {
           "fieldType": "yesno",
