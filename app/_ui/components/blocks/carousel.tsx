@@ -60,7 +60,6 @@ export function CarouselBlock({ title, subtitle, items, blockType }: ICarouselBl
                   >
                 <div style={{ height: 200 }}>
                   <Image
-                    unoptimized
                     draggable={false}
                     height={180}
                     width={180}
@@ -70,6 +69,7 @@ export function CarouselBlock({ title, subtitle, items, blockType }: ICarouselBl
                       borderRadius: 100, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)',
                       marginBottom: 4, objectFit: 'cover'}
                     }
+                    unoptimized
                   />
                 </div>
                 <Typography variant="h4" sx={{textDecoration: 'none'}}>{item.title}</Typography>
