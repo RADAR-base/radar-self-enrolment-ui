@@ -28,7 +28,6 @@
           },
           {
             "blockType": "imageGallery",
-            "title": "Quick Guide",
             "columns": {"xs": 1, "sm": 2, "md": 3, "lg": 3, "xl": 3},
             "gap": 1,
             "borderRadius": 0,
@@ -53,7 +52,7 @@
           },
           {
             "blockType": "imageGallery",
-            "title": "You can take part if you...",
+            "title": {"children": "You can take part if you...", "sx": {"color": "white", "textAlign": "center"}},
             "noCard": true,
             "blockBackground": "#0098A8",
             "columns": {"xs": 1, "sm": 2, "md": 3, "lg": 3, "xl": 3},

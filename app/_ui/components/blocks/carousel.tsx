@@ -60,6 +60,7 @@ export function CarouselBlock({ title, subtitle, items, blockType }: ICarouselBl
                   >
                 <div style={{ height: 200 }}>
                   <Image
+                    unoptimized
                     draggable={false}
                     height={180}
                     width={180}

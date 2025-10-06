@@ -1,7 +1,7 @@
 "use client"
 import React from "react";
 import Grid from "@mui/material/Grid2";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { withBasePath } from "@/app/_lib/util/links";
@@ -39,6 +39,7 @@ export interface IImageGalleryBlock {
   gap?: number; // default: 2 (theme spacing units)
   aspectRatio?: string; // default: '1 / 1'
   borderRadius?: number | string; // default: 2 (theme.shape.borderRadius scale)
+  title?: any
 }
 
 const toBreakpointMap = (
@@ -97,6 +98,7 @@ export function ImageGalleryBlock({
   gap = 2,
   aspectRatio = "1 / 1",
   borderRadius = 2,
+  title
 }: IImageGalleryBlock) {
   const colMap = toBreakpointMap(columns, { xs: 1, sm: 2, md: 3, lg: 4 });
   const size = toGridItemSizes(colMap);
@@ -105,7 +107,8 @@ export function ImageGalleryBlock({
   const list = Number.isFinite(limit) ? images.slice(0, limit as number) : images;
 
   return (
-    <Box width="100%">
+    <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1}>
+      {title?.children ? <Typography variant="h1" {...title}></Typography> : <Typography variant="h1">{title}</Typography> }
       <Grid container spacing={gap} columns={12}>
         {list.map((img, idx) => {
           const Tile = (
