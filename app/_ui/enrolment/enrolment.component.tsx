@@ -217,12 +217,10 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
         body: JSON.stringify(body)
       }).then(
         (res) => {
-          console.log(res)
           if (res.ok) {
             sendGAEvent('event', 'study_enrolment', {status: 'joined'})
             res.json().then(
               (data) => {
-                console.log('resp data: ', data)
                 const verificationFlow = data.continue_with[0].flow.id
                 if (verificationFlow) {
                   router.push(`/${studyProtocol.studyId}/verification?flow=${verificationFlow}`)
@@ -340,8 +338,6 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   function nextStep() {
     if ((stepIdx + 1) < steps.length) {
       scrollToTop()
-      sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx + 1], status: 'ongoing'})
-      console.log(formik.values)
       setStep(stepIdx + 1)
       contentRef.current?.focus()
     }
@@ -349,7 +345,6 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   
   function previousStep() {
     if (stepIdx > 0) {
-      sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx - 1], status: 'ongoing'})
       setStep(stepIdx - 1)
       scrollToTop()
     } else {
@@ -358,14 +353,20 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   }
 
   useEffect(() => {
+    sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx], status: 'start'})
     if (flow === undefined) {
-      sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx], status: 'start'})
       getFlow(setFlow)
-    } else {
-      validateStep()
     }
-  }, [formik.values, stepIdx, flow])
+  }, [])
 
+  useEffect(() => {
+    validateStep()
+  }, [formik.values])
+
+  useEffect(() => {
+    validateStep()
+    sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx], status: 'ongoing'})
+  }, [stepIdx])
 
   const ControlButtons = (
     <Box 
