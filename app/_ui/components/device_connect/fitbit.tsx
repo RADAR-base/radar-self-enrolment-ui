@@ -23,7 +23,7 @@ export function FitbitPage() {
               The first step will take you to Fitbit's website. For the second step <strong>you need to login to your Fitbit account.</strong> In the third step you will be asked to tick all the boxes in the Fitbit screen.
             </Typography>
             <Typography>
-              Read our <Link component={NextLink} href={'/study/paprka/resources/guides/PAPrKA_Study_Guide_Fitbit.pdf'}>Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to share your Fitbit data.  
+              Read our <Link component={NextLink} href={'/study/paprka/resources/guides/PAPrKA_Study_Guide_Fitbit.pdf'} target="_blank">Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to share your Fitbit data.  
             </Typography>
           </div>
         </Grid>

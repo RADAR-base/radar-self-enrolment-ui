@@ -143,7 +143,7 @@ function ArmtFormContainer({armtDef, schema, studyId, taskId, disabled, initialV
         </form>
       </Container>
       <TaskConfirmDialog 
-        title={"Are you sure you want to complete this task?"}
+        title={"Are you sure you want to submit this task?"}
         onConfirm={() => {
           setSubmitDialogOpen(false)
           formik.submitForm()
