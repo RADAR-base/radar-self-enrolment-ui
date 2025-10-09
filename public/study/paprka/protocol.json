@@ -141,7 +141,7 @@
         {
           "fieldType": "yesno",
           "id": "M-Permission to access/work with NJR",
-          "description": "I give permission for the PAPrKA team to: \n1. Access my knee replacement information from the NJR (page 10 in PIS)\n2. Access my information from NHS England held at NJR (page 11 in PIS)\n3. Work with NJR researchers to analyse the joined research dataset.\n"
+          "description": "I give permission for the PAPrKA team to: \n1. Access my knee replacement information from the NJR\n2. Access my information from NHS England held at NJR\n3. Work with NJR researchers to analyse the joined research dataset.\n"
         },
         {
           "fieldType": "yesno",
