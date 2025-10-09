@@ -15,7 +15,7 @@ async function sendTaskResponse(studyId: string, userId: string, taskData: Activ
     },
     body: JSON.stringify([{
       op: 'add',
-      path: '/metadata_admin/study/' + studyId + '/' + taskData.id,
+      path: '/metadata_admin/study/' + studyId + '/tasks/' + taskData.id,
       value: taskData
     }])
   })
@@ -26,7 +26,7 @@ async function getTask(studyId:string, userId: string, taskId: string) {
   if (resp.ok) {
     try {
       const userData = await resp.json()
-      const currentValue = userData['metadata_admin']['study'][studyId][taskId]
+      const currentValue = userData['metadata_admin']['study'][studyId]['tasks'][taskId]
       return currentValue
     } catch {
       return null
@@ -40,7 +40,7 @@ async function getCurrentValue(studyId: string, userId: string, taskId: string) 
   if (resp.ok) {
     try {
       const userData = await resp.json()
-      const currentValue = userData['metadata_admin']['study'][studyId][taskId]['answers']
+      const currentValue = userData['metadata_admin']['study'][studyId]['tasks'][taskId]['answers']
       return currentValue
     } catch {
       return null

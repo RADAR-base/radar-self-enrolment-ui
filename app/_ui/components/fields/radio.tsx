@@ -28,7 +28,10 @@ export function ArmtRadioField(props: ArmtRadioFieldProps) {
         onChange={groupHandleChange(props.id, props.setFieldValue)}
         >
           {props.choices.map((choice) => (
-            <FormControlLabel value={choice.code} label={choice.label} control={<Radio />} key={props.id + choice.code + "_radio"} />
+            <FormControlLabel disabled={props.disabled}
+              value={choice.code} label={choice.label} 
+              control={<Radio />} key={props.id + choice.code + "_radio"} 
+            />
             ))
           }
       </RadioGroup>

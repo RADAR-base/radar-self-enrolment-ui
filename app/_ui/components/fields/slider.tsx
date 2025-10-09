@@ -18,6 +18,7 @@ export function ArmtSliderField(props: ArmtSliderFieldProps) {
       <Typography variant="h2">{props.title}</Typography>
       <Typography variant="h4" component={'span'}>{props.label}</Typography>
       <Slider 
+      disabled={props.disabled}
         sx={{
           width: "80%",
           alignSelf: 'center'

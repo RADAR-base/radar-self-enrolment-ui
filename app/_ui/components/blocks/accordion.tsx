@@ -20,9 +20,9 @@ export function AccordionBlock({title, subtitle, items}: IAccordionBlock) {
         <Typography variant="subtitle1">{subtitle}</Typography>
         <Box>
         {items.map(
-          (item => {
+          ((item, idx) => {
             return (        
-              <Accordion disableGutters={true}>
+              <Accordion disableGutters={true} key={`${idx}`}>
                 <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
                   <Typography variant="h4">                  
                     {item.title}

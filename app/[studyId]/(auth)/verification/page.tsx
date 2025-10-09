@@ -26,8 +26,9 @@ export default async function Page({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
   const userSession: OrySession | undefined = await getUserSession()
+  const { studyId } = await params
   if (userSession == undefined) {
-    redirect('/' + (await params).studyId)
+    redirect('/' + studyId)
   }
   const cookieJar = await cookies()
   const csrfToken = cookieJar.getAll().find((c) => c.name.startsWith('csrf_token_'))
@@ -52,6 +53,10 @@ export default async function Page({
     } catch (e) {
       console.log(e)
     }
+  }
+
+  if (flow?.state == 'passed_challenge') {
+    redirect(`/${studyId}/portal`)
   }
   return (
     <main>

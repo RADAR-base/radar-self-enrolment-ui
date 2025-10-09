@@ -40,7 +40,6 @@ function getConsentRequest(consentChallenge: string) {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ consent_challenge: string }> }
 ) {
   const consentChallenge = request.nextUrl.searchParams.get('consent_challenge') ?? undefined
   if (consentChallenge == undefined) {
@@ -52,7 +51,6 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: Promise<{ consent_challenge: string }> }
 ) {
   let oryUser: any
   let userId: string

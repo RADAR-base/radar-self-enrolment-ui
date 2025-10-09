@@ -10,17 +10,17 @@
             "blockType": "markdown",
             "noCard": false,
             "title": "Who is running the study?", 
-            "content": "The University of Manchester is leading the PAPrKA research study. We are working in partnership with Kings College London and with support from the National Joint Registry.\n<br />\nThis website is hosted by King’s College London on its secure health research platform called RADAR-base.\n<br />\nThe PAPrKA study is part of the [Health Research from Home programme](https://sites.manchester.ac.uk/health-research-from-home) led by the University of Manchester.\n<br />\nThe Health Research from Home programme received funding from the UK Research and Innovation Medical Research Council (UKRI MRC) to carry out our important work.\n"
+            "content": "The University of Manchester is leading the PAPrKA research study. We are working in partnership with King's College London and with support from the National Joint Registry.\n<br />\nThis website is hosted by King’s College London on its secure health research platform called RADAR-base.\n<br />\nThe PAPrKA study is part of the [Health Research from Home programme](https://sites.manchester.ac.uk/health-research-from-home) led by the University of Manchester.\n<br />\nThe Health Research from Home programme received funding from the UK Research and Innovation Medical Research Council (UKRI MRC) to carry out our important work.\n"
           },
           {
             "blockType": "markdown",
             "title": "What is the research about?", 
-            "content": "You are being invited to take part in the Physical Activity Patterns after Knee Arthroplasty (PAPrKA) study which aims to:\n1. Learn more about people’s recovery after knee replacement so that in the future patients and doctors can make better informed decisions about knee replacement surgery.\n2. Improve people’s experience of taking part in studies like PAPrKA.\n\n<br />\nFind out more about [our research](/kratos-ui/paprka)\n"
+            "content": "You are being invited to take part in the Physical Activity Patterns after Knee Arthroplasty (PAPrKA) study which aims to:\n1. Learn more about people’s recovery after knee replacement so that in the future patients and doctors can make better informed decisions about knee replacement surgery.\n2. Improve people’s experience of taking part in studies like PAPrKA.\n"
           },
           {
             "blockType": "markdown",
             "title": "What will I be asked to do if I decide to join the study?", 
-            "content": "1. Check you can take part.\n2. Sign an electronic consent form.\n3. Set up a study account.\n4. Complete up to 4 tasks (3 you must complete, 1 is optional).\n\n\n<br />\nCompleting all 4 should take approximately 35 minutes.\n\n<br />\n<button variant='contained' href='/kratos-ui/paprka/enrol'>Join Study</button>"
+            "content": "1. Check you can take part.\n2. Sign an electronic consent form.\n3. Set up a study account.\n4. Complete up to 4 tasks (3 you must complete, 1 is optional).\n\n\n<br />\nCompleting all 4 should take approximately 35 minutes.\n\n<br />\n<button variant='contained' href='enrol'>Join Study</button>"
           }
     ]
 }

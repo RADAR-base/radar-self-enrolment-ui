@@ -207,20 +207,10 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
         email: register.email,
         password: register.password,
         csrf_token: getCsrfToken(flow),
-        traits: {
-          projects: [
-            {
-              id: studyProtocol.studyId,
-              name: studyProtocol.name,
-              userId: crypto.randomUUID(),
-              ...traits,
-              version: protocol.version
-            }
-          ]
-        }
+        traits: traits,
       }
       sendGAEvent('event', 'study_enrolment', {status: 'submitting'})
-      fetch(withBasePath('/api/ory/registration?' + new URLSearchParams({
+      fetch(withBasePath(`/api/study/${studyProtocol.studyId}/join?` + new URLSearchParams({
         flow: flow.id
       })), {
         method: 'POST',
@@ -348,7 +338,6 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   function nextStep() {
     if ((stepIdx + 1) < steps.length) {
       scrollToTop()
-      sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx + 1], status: 'ongoing'})
       setStep(stepIdx + 1)
       contentRef.current?.focus()
     }
@@ -356,7 +345,6 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   
   function previousStep() {
     if (stepIdx > 0) {
-      sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx - 1], status: 'ongoing'})
       setStep(stepIdx - 1)
       scrollToTop()
     } else {
@@ -365,14 +353,20 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   }
 
   useEffect(() => {
+    sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx], status: 'start'})
     if (flow === undefined) {
-      sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx], status: 'start'})
       getFlow(setFlow)
-    } else {
-      validateStep()
     }
-  }, [formik.values, stepIdx, flow])
+  }, [])
 
+  useEffect(() => {
+    validateStep()
+  }, [formik.values])
+
+  useEffect(() => {
+    validateStep()
+    sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx], status: 'ongoing'})
+  }, [stepIdx])
 
   const ControlButtons = (
     <Box 

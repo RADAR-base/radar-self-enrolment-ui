@@ -3,6 +3,12 @@ import { getOverrides, MuiMarkdown } from 'mui-markdown'
 import Image from 'next/image'
 import HoverPopover from './hoverPopover'
 import NextLink from 'next/link'
+import dynamic from 'next/dynamic'
+
+
+const PdfViewer = dynamic(() => import("./pdfViewer"), {
+  // ssr: false,
+});
 
 interface MarkdownContainerProps {
   children?: string
@@ -25,6 +31,10 @@ export function MarkdownContainer({children, ...props }: MarkdownContainerProps)
               'maxWidth': '100%'
             }
           }
+        },
+        PdfViewer:
+        {
+          component: PdfViewer
         },
         img: {
           props: {

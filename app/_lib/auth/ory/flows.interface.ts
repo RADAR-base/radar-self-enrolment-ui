@@ -48,7 +48,8 @@ export interface IOryErrorFlow {
     reason: string,
     request: string,
     status: string
-  }
+  },
+  redirect_browser_to?: string
 }
 
 export interface IOryLoginFlow {

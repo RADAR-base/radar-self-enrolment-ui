@@ -6,6 +6,7 @@ import { ITextBlock, TextBlock } from "./text";
 import { HeroBlock, IHeroBlock } from "./hero";
 import { IVideoBlock, VideoBlock } from "./video";
 import { CarouselBlock, ICarouselBlock } from "./carousel";
+import { ImageGalleryBlock, IImageGalleryBlock } from "./imageGallery";
 import Grid from '@mui/material/Grid2';
 import { AccordionBlock, IAccordionBlock } from "./accordion";
 
@@ -51,7 +52,8 @@ export type IBlock = (BlockProps & IMarkdownBlock) |
                      (BlockProps & IVideoBlock) |
                      (BlockProps & ICarouselBlock) |
                      (BlockProps & IColumnBlock) | 
-                     (BlockProps & IAccordionBlock)
+                     (BlockProps & IAccordionBlock) |
+                    (BlockProps & IImageGalleryBlock)
 
 function BlockContainer({children, props}: {children: React.ReactNode, props: BlockProps}): React.ReactNode {
   let padding = props.blockPadding ?? 2
@@ -92,6 +94,9 @@ function getBlockContent(props: IBlock) {
     }
     case "accordion": {
       return <AccordionBlock {...props} />
+    }
+    case "imageGallery": {
+      return <ImageGalleryBlock {...props} />
     }
   }
 }

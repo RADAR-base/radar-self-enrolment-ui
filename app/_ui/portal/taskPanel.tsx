@@ -1,8 +1,7 @@
 "use client"
-import { Box, Button, Container, Modal, Typography } from "@mui/material"
+import { Box, Container, Typography } from "@mui/material"
 import { RadarTaskCard, RadarTaskCardProps } from '@/app/_ui/components/portal/taskCard';
 import Grid from '@mui/material/Grid2';
-import { ArmtProtocol, StudyProtocol } from "@/app/_lib/study/protocol";
 import { ArmtStatus } from "@/app/api/study/[studyId]/tasks/status/route";
 import { withBasePath } from "@/app/_lib/util/links";
 import { useContext, useEffect } from "react";
@@ -10,7 +9,6 @@ import React from "react";
 import { RadarCard } from "../components/base/card";
 import { CircularProgressWithLabel } from "../components/base/circularProgress";
 import { MarkdownContainer } from "../components/base/markdown";
-import { useRouter } from "next/navigation";
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 
 async function fetchTaskStatus(studyId: string) {
