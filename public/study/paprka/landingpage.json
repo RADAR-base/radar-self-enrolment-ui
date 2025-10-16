@@ -13,10 +13,14 @@
             "cta": {
                 "text": "FAQs",
                 "href": "paprka/faqs"
-            },
-            "cta2": {
-                "text" :"Join Study",
-                "href": "paprka/enrol"
+            }
+          },
+          {
+            "blockType": "video",
+            "noCard": true,
+            "blockBackground": "white",
+            "video": {
+              "youtubeId": "5mFgOzLI5ZM"
             }
           },
           {
@@ -43,14 +47,6 @@
             ]
           },
           {
-            "blockType": "video",
-            "noCard": true,
-            "blockBackground": "white",
-            "video": {
-              "youtubeId": "5mFgOzLI5ZM"
-            }
-          },
-          {
             "blockType": "imageGallery",
             "title": {"children": "You can take part if you...", "sx": {"color": "white", "textAlign": "center"}},
             "noCard": true,
@@ -71,22 +67,11 @@
             ]
           },
           {
-            "blockType": "column",
             "noCard": true,
             "blockBackground": "white",
-            "title": "",
-            "content": [
-                {
-                    "blockType": "markdown",
-                    "title": "Who can take part?",
-                    "content": "You must answer yes to all 5 questions to take part in the PAPrKA study.\n\n 1. Have you had a total or partial knee replacement because of knee osteoarthritis (NHS or private healthcare provider)?\n 2. Are you over 18 years old and lived in England, Wales, Northern Ireland, Isle of Man or Guernsey at the time of the surgery?\n 3. Have you used an **iPhone (6s and above), Fitbit, Apple Watch or Oura Ring** to track your physical activity at least six months before and one year after your knee replacement surgery? You can find out what device you have by checking the logo on the front or back of your device or logging to your device account.\n 4. Can you read and understand English or have support from someone who can?\n 5. Are you willing to give the study team access to your physical activity data and link it to your knee replacement information in the National Joint Registry?\n"
-                },              
-                {
-                    "blockType": "markdown",
-                    "title": "What will I have to do?",
-                    "content": "1. Check you can take part in the study.\n2. Sign an electronic consent form.\n3. Set up a study account.\n4. Complete up to 4 tasks.\n"
-                  }
-            ]
+            "blockType": "markdown",
+            "title": "What will I have to do?",
+            "content": "1. Check you can take part in the study.\n2. Sign an electronic consent form.\n3. Set up a study account.\n4. Complete up to 4 tasks.\n"
           },
           {
             "blockType": "column",
