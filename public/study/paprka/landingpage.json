@@ -82,10 +82,6 @@
             "content": [
               {
                 "blockType": "markdown",
-                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'>_Interested in taking part?_<div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/study/paprka/enrol'>Join Study</button></div></div>"
-              },
-              {
-                "blockType": "markdown",
                 "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'><div>_Need more help?_\nView our step-by-step guide</div><div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/study/study/paprka/resources/guides/PAPrKA_Study_Guide.pdf'>Step-by-Step Guide</button></div></div>"
               },
               {
@@ -113,7 +109,9 @@
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/elaine.png", "title": "Elaine Mackey", "content": "Information Governance Manager", "href": "https://research.manchester.ac.uk/en/persons/elaine.mackey"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/lynn.png", "title": "Lynn Laidlaw", "content": "Patient and Public Engagement and Involvement", "href": "https://www.kcl.ac.uk/people/lynn-laidlaw"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/louise.jpg", "title": "Louise Cook", "content": "Programme Manager", "href": "#"},
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles/emma.jpg", "title": "Emma Pritchard", "content": "Research Associate", "href": "https://research.manchester.ac.uk/en/persons/emma-pritchard" }
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/emma.jpg", "title": "Emma Pritchard", "content": "Research Associate", "href": "https://research.manchester.ac.uk/en/persons/emma-pritchard" },
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/cw.jpg", "title": "Chris Waugh", "content": "Research Associate", "href": "" },
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/fld.jpg", "title": "Fu Lian Doble", "content": "Communication Manager", "href": "" }
             ]
           },
           {
