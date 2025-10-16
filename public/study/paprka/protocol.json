@@ -85,27 +85,32 @@
     "version": "0.1",
     "eligibility": {
       "title": "Check you can take part",
-      "description": "_You can join the study if you answer Yes to all **four questions**. Please scroll down to complete all four questions._\n<br />\n_If your answer is No to any of the questions, and you want to leave the page, click the exit button on your left._",
+      "description": "_You can join the study if you answer Yes to all **five questions**. Please scroll down to complete all four questions._\n<br />\n_If your answer is No to any of the questions, and you want to leave the page, click the exit button on your left._",
       "items": [
         {
           "fieldType": "yesno",
           "id": "criteria1",
-          "description": "Have you had knee replacement (total, or partial), either through the NHS or a private healthcare provider, between 1<sup>st</sup> January 2017 and 31<sup>st</sup> December 2023?\n"
+          "description": "Have you had knee replacement (total, or partial) because of knee osteoarthritis, either through the NHS or a private healthcare provider, between 1<sup>st</sup> January 2017 and 31<sup>st</sup> December 2023?\n"
         },
         {
           "fieldType": "yesno",
           "id": "criteria2",
-          "description": "Were you over 18 years of age at the time of your knee replacement?\n"
+          "description": "Were you over 18 years of age at the time of your knee replacement and living in England, Wales, Northern Ireland, Isle of Man or Guernsey at the time of surgery?\n"
         },
         {
           "fieldType": "yesno",
           "id": "criteria3",
-          "description": "Did you use a Fitbit, iPhone (6s and above)_*, Apple Watch_* or Oura Ring to track your activity six months or more before your knee replacement?\n_*If you used an iPhone, it automatically collects physical activity data so please select YES._\n"
+          "description": "Did you use a Fitbit, iPhone (6s and above)_*, Apple Watch_* or Oura Ring to track your activity at least six months before and one year after your knee replacement?\n_*If you used an iPhone, it automatically collects physical activity data so please select YES._\n"
         },
         {
           "fieldType": "yesno",
           "id": "criteria4",
-          "description": "Did you use a Fitbit, iPhone (6s and above)_*, Apple Watch_* or Oura Ring to track your activity one year or more after your knee replacement?\n_*If you used an iPhone, it automatically collects physical activity data so please select YES._\n"
+          "description": "Can you read and understand English or have support from someone who can?\n"
+        },
+        {
+          "fieldType": "yesno",
+          "id": "criteria5",
+          "description": "Are you willing to give the study team access to your physical activity data and link it to your knee replacement information in the National Joint Registry?\n"
         }
       ]
     },

@@ -38,12 +38,12 @@
             "aspectRatio": "32/27",
             "objectFit": "fill",
             "images": [
-              {"src": "/study/paprka/resources/landingpage/image_guide_overview/overview-guide-1.jpeg", "alt": "Step 1"},
-              {"src": "/study/paprka/resources/landingpage/image_guide_overview/overview-guide-2.jpeg", "alt": "Step 2"},
-              {"src": "/study/paprka/resources/landingpage/image_guide_overview/overview-guide-3.jpeg", "alt": "Step 3"},
-              {"src": "/study/paprka/resources/landingpage/image_guide_overview/overview-guide-4.jpeg", "alt": "Step 4"},
-              {"src": "/study/paprka/resources/landingpage/image_guide_overview/overview-guide-5.jpeg", "alt": "Step 5"},
-              {"src": "/study/paprka/resources/landingpage/image_guide_overview/overview-guide-6.jpeg", "alt": "Step 6"}
+              {"src": "/study/paprka/resources/landingpage/image_guide_overview/overview-guide-1.jpeg", "alt": "1: Fitness data was tracked before surgery"},
+              {"src": "/study/paprka/resources/landingpage/image_guide_overview/overview-guide-2.jpeg", "alt": "2: Surgery was carried out"},
+              {"src": "/study/paprka/resources/landingpage/image_guide_overview/overview-guide-3.jpeg", "alt": "3: Fitness data was tracked"},
+              {"src": "/study/paprka/resources/landingpage/image_guide_overview/overview-guide-4.jpeg", "alt": "4: Taking part in PAPrKA"},
+              {"src": "/study/paprka/resources/landingpage/image_guide_overview/overview-guide-5.jpeg", "alt": "5: Linking your details"},
+              {"src": "/study/paprka/resources/landingpage/image_guide_overview/overview-guide-6.jpeg", "alt": "6: Our work begins!"}
             ]
           },
           {
@@ -57,12 +57,12 @@
             "aspectRatio": "1/1",
             "objectFit": "fill",
             "images": [
-              {"src": "/study/paprka/resources/landingpage/image_guide_eligibility/eligibility 1.webp", "alt": ""},
-              {"src": "/study/paprka/resources/landingpage/image_guide_eligibility/eligibility 2.webp", "alt": ""},
-              {"src": "/study/paprka/resources/landingpage/image_guide_eligibility/eligibility 3.webp", "alt": ""},
-              {"src": "/study/paprka/resources/landingpage/image_guide_eligibility/eligibility 4.webp", "alt": ""},
-              {"src": "/study/paprka/resources/landingpage/image_guide_eligibility/eligibility 5.webp", "alt": ""},
-              {"src": "/study/paprka/resources/landingpage/image_guide_eligibility/eligibility 6.webp", "alt": ""}
+              {"src": "/study/paprka/resources/landingpage/image_guide_eligibility/eligibility 1.webp", "alt": "Have had total or partial knee replacement between January 2017 and December 2023"},
+              {"src": "/study/paprka/resources/landingpage/image_guide_eligibility/eligibility 2.webp", "alt": "Used a smartphone or fitness tracker to track activity before and after the knee replacement surgery. These are: iPhone, Fitbit, Apple Watch, and Oura Ring"},
+              {"src": "/study/paprka/resources/landingpage/image_guide_eligibility/eligibility 3.webp", "alt": "Were 18 or over at the time of surgery"},
+              {"src": "/study/paprka/resources/landingpage/image_guide_eligibility/eligibility 4.webp", "alt": "Lived in England, Wales, Northern Ireland, Isle of Man, or Guernsey at the time of surgery"},
+              {"src": "/study/paprka/resources/landingpage/image_guide_eligibility/eligibility 5.webp", "alt": "Can read and understand English or have support from someone who can"},
+              {"src": "/study/paprka/resources/landingpage/image_guide_eligibility/eligibility 6.webp", "alt": "Are happy to give PAPrKA researchers permission to take a copy of your physical activity data and join it with your knee replacement information from the National Joint Registry"}
 
             ]
           },
