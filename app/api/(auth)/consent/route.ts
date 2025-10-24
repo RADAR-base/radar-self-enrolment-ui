@@ -12,6 +12,7 @@ const extractSession = (identity: any, grantScope: string[]) => {
       authorities: identity.metadata_public.authorities,
       sources: identity.metadata_public.sources,
       user_name: identity.metadata_public.mp_login,
+      kratos_id: identity.id
     },
     id_token: {
       email: identity.traits.email
@@ -91,7 +92,7 @@ export async function POST(
     session = extractSession(identity, grantScope)
   } catch (e) {
     console.log(e)
-    return NextResponse.json({error: {type: 'session', content: { message: "User session could not be converted into token, may not have required role"}}}, {status: 403})
+    return NextResponse.json({ error: { type: 'session', content: { message: "User session could not be converted into token, may not have required role" } } }, { status: 403 })
   }
 
   if (consentAction == "accept") {
