@@ -209,7 +209,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
         csrf_token: getCsrfToken(flow),
         traits: traits,
       }
-      sendGAEvent('event', 'study_enrolment', {status: 'submitting'})
+      sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx], status: 'submitting'})
       fetch(withBasePath(`/api/study/${studyProtocol.studyId}/join?` + new URLSearchParams({
         flow: flow.id
       })), {
@@ -218,7 +218,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
       }).then(
         (res) => {
           if (res.ok) {
-            sendGAEvent('event', 'study_enrolment', {status: 'joined'})
+            sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx], status: 'joined'})
             res.json().then(
               (data) => {
                 const verificationFlow = data.continue_with[0].flow.id
@@ -234,7 +234,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
             return
           }
           if (res.status == 400) {
-            sendGAEvent('event', 'study_enrolment', {status: 'submission_error'})
+            sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx], status: 'submission_error'})
             res.json().then(
               (data) => {
                 if (data?.ui?.messages !== undefined) {
@@ -353,6 +353,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   }
 
   useEffect(() => {
+    console.log('datalayer: ', window.dataLayer)
     sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx], status: 'start'})
     if (flow === undefined) {
       getFlow(setFlow)

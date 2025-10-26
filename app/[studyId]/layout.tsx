@@ -13,8 +13,9 @@ import { isAbsolutePath, withBasePath } from "@/app/_lib/util/links";
 
 import ProtocolProvider from '@/app/_lib/study/protocol/provider.client';
 import ProtocolRepository, { StudyProtocolRepository } from "@/app/_lib/study/protocol/repository";
-import { StudyProtocol } from '@/app/_lib/study/protocol';
 import ThemeProviderFromObject from '../_ui/components/base/themeProviderFromObject';
+import Script from 'next/script';
+import ConsentProvider from '../_ui/cookies/consentProvider';
 
 function makeRelativePaths(links: FooterItem[], studyId: string): FooterItem[] {
   return links.map(
@@ -73,6 +74,18 @@ export default async function StudyLayout(props: LayoutProps<'/[studyId]'>) {
       <ThemeProviderFromObject themeObject={themeObject}>
       <CssBaseline />
       <ProtocolProvider protocol={protocol}>
+        <Script id="ga-consent-default" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('consent', 'default', {
+              ad_storage: 'denied',
+              analytics_storage: 'denied'
+            });
+          `}
+        </Script>
+        <GoogleAnalytics gaId={protocol.studyUiConfig.analytics.gaId} />
+        <ConsentProvider initialGranted={gaEnabled} />
         <Box
           sx={{
             minHeight: '100vh',
@@ -96,7 +109,6 @@ export default async function StudyLayout(props: LayoutProps<'/[studyId]'>) {
           />
         </Box>
         {(cookieChoice == undefined) ? <CookieBanner /> : null}
-        {gaEnabled && <GoogleAnalytics gaId={protocol.studyUiConfig.analytics.gaId}/>}
       </ProtocolProvider>
     </ThemeProviderFromObject>
     </ThemeProvider>
