@@ -13,14 +13,10 @@
             "cta": {
                 "text": "FAQs",
                 "href": "paprka/faqs"
-            }
-          },
-          {
-            "blockType": "video",
-            "noCard": true,
-            "blockBackground": "white",
-            "video": {
-              "youtubeId": "5mFgOzLI5ZM"
+            },
+            "cta2": {
+                "text" :"Join Study",
+                "href": "#"
             }
           },
           {
@@ -47,8 +43,16 @@
             ]
           },
           {
+            "blockType": "video",
+            "noCard": true,
+            "blockBackground": "white",
+            "video": {
+              "youtubeId": "5mFgOzLI5ZM"
+            }
+          },
+          {
             "blockType": "imageGallery",
-            "title": {"children": "You can take part if you...", "sx": {"color": "white", "textAlign": "center"}},
+            "title": {"children": "Who can take part?", "sx": {"color": "white", "textAlign": "center"}},
             "noCard": true,
             "blockBackground": "#0098A8",
             "columns": {"xs": 1, "sm": 2, "md": 3, "lg": 3, "xl": 3},
@@ -80,6 +84,10 @@
             "title": "",
             "sx": {"color": "white"},
             "content": [
+              {
+                "blockType": "markdown",
+                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'>_Interested in taking part?_<div style='margin-left:auto;margin-right:auto'><button variant='contained' href='#'>Join Study</button></div></div>"
+              },
               {
                 "blockType": "markdown",
                 "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'><div>_Need more help?_\nView our step-by-step guide</div><div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/study/study/paprka/resources/guides/PAPrKA_Study_Guide.pdf'>Step-by-Step Guide</button></div></div>"

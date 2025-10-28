@@ -85,12 +85,12 @@
     "version": "0.1",
     "eligibility": {
       "title": "Check you can take part",
-      "description": "_You can join the study if you answer Yes to all **five questions**. Please scroll down to complete all four questions._\n<br />\n_If your answer is No to any of the questions, and you want to leave the page, click the exit button on your left._",
+      "description": "_You can join the study if you answer Yes to all **five questions**. Please scroll down to complete all five questions._\n<br />\n_If your answer is No to any of the questions, and you want to leave the page, click the exit button on your left._",
       "items": [
         {
           "fieldType": "yesno",
           "id": "criteria1",
-          "description": "Have you had knee replacement (total, or partial) because of knee osteoarthritis, either through the NHS or a private healthcare provider, between 1<sup>st</sup> January 2017 and 31<sup>st</sup> December 2023?\n"
+          "description": "Have you had knee replacement (total or partial) because of knee osteoarthritis, either through the NHS or a private healthcare provider, between 1<sup>st</sup> January 2017 and 31<sup>st</sup> December 2023?\n"
         },
         {
           "fieldType": "yesno",
@@ -110,7 +110,7 @@
         {
           "fieldType": "yesno",
           "id": "criteria5",
-          "description": "Are you willing to give the study team access to your physical activity data and link it to your knee replacement information in the National Joint Registry?\n"
+          "description": "Are you willing to give the study team permission to access your physical activity data and link it to your knee replacement information in the National Joint Registry?\n"
         }
       ]
     },
