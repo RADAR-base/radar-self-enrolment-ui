@@ -51,17 +51,17 @@
             {
               "id": "fitbit",
               "title": "Fitbit Tab",
-              "description": "Before clicking Connect, you can read [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_Fitbit.pdf) or [watch a video](https://youtu.be/nPRRGlkdrvg) to see how to share your Fitbit physical activity data.\n"
+              "description": "Before clicking Connect, you can read [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_Fitbit.pdf) or [watch a video](https://youtu.be/cPYi0-3fmQ4) to see how to share your Fitbit physical activity data.\n"
             },
             {
               "id": "oura",
               "title": "Oura Ring Tab",
-              "description": "Before clicking Connect, you can read [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_Oura.pdf) or [watch a video](https://youtu.be/m_4rbNYphXs) to see how to share your Oura Ring physical activity data.\n"
+              "description": "Before clicking Connect, you can read [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_Oura.pdf) or [watch a video](https://youtu.be/-id0Qb7V9Qc) to see how to share your Oura Ring physical activity data.\n"
             },
             {
               "id": "apple_health",
               "title": "Apple Health",
-              "description": "Before clicking Connect, you can [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_iPhone.docx) or [watch a video](#) to see how to share your iPhone or Apple Watch physical activity data.\n"
+              "description": "Before clicking Connect, you can [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_iPhone.docx) or [watch a video](https://youtu.be/avBYvuSVvuU) to see how to share your iPhone or Apple Watch physical activity data.\n"
             }
           ]
         }
@@ -195,7 +195,7 @@
     },
     "account": {
       "title": "Register account",
-      "description": "**You need an account to join the PAPrKA study.**\nSet up your account by providing an email address and creating a password which must be 12 characters long. <em>You will need this password if you plan to provide iPhone or Apple watch information. You may wish to write it down.</em>\n<br />\nOnce you provide both your email address and password, you will need to verify your account by opening an email we will send to you and entering the code.\n<br />\nOnce your account is verified, we will send you a copy of your consent form and the study’s information sheet. If you cannot find the email, please check you junk/spam folder."
+      "description": "**You need an account to join the PAPrKA study.**\nSet up your account by providing an email address and creating a password which must be 12 characters long. <em>You will need this password if you plan to provide iPhone or Apple watch information. You may wish to write it down.</em>\n<br />\nOnce you provide both your email address and password, you will need to verify your account by opening an email we will send to you and entering the code.\n<br />\nOnce your account is verified, we will send you a copy of your consent form and the study’s information sheet. If you cannot find the email, please check your junk/spam folder."
     },
     "studyInformation": {
       "title": "Study Information",

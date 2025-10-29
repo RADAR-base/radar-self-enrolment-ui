@@ -104,7 +104,7 @@ function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNod
           Before you start please read through all the steps below. 
         </Typography>
         <Typography>
-          Read our <Link href={"/study/study/paprka/resources/guides/Study_Guide_iPhone.pdf"} target='_blank'>Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to share your Apple data. 
+          Read our <Link href={"/study/study/paprka/resources/guides/Study_Guide_iPhone.pdf"} target='_blank'>Guide</Link> or view our <Link href="https://youtu.be/avBYvuSVvuU" target="_blank">Video</Link> for more detailed instructions on how to share your Apple data. 
         </Typography>
       </Grid>
       <Grid size={12} textAlign={'left'}>

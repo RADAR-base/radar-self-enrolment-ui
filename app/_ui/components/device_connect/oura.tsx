@@ -23,7 +23,7 @@ export function OuraPage() {
                 The first step will take you to Oura's website. For the second step <strong>you need to login to your Oura account.</strong> In the third step you will be asked to tick all the 3 boxes in the “Connect with Oura” screen.  
               </Typography>
               <Typography>
-                Read our <Link component={NextLink} href={'/study/paprka/resources/guides/PAPrKA_Study_Guide_Oura.pdf'} target='_blank'>Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to share your Oura data.  
+                Read our <Link component={NextLink} href={'/study/paprka/resources/guides/PAPrKA_Study_Guide_Oura.pdf'} target='_blank'>Guide</Link> or view our <Link href="https://youtu.be/-id0Qb7V9Qc" target="_blank">Video</Link> for more detailed instructions on how to share your Oura data.  
               </Typography>
             </div>
           </Grid>
