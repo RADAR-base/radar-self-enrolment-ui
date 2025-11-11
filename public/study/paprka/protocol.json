@@ -121,7 +121,7 @@
         {
           "fieldType": "yesno",
           "id": "M-Confirmed read",
-          "description": "I confirm that I have read the [Participant Information Sheet (PIS) (Version 6.0, Date xx/10/25)](/study/paprka/resources/paprka_pis.pdf) for the above study and have had the opportunity to consider the information and ask questions and had these answered satisfactorily.\n"
+          "description": "I confirm that I have read the [Participant Information Sheet (PIS) (**Version 6.0, 16/10/25)](/study/paprka/resources/paprka_pis.pdf) for the above study and have had the opportunity to consider the information and ask questions and had these answered satisfactorily.\n"
         },
         {
           "fieldType": "yesno",
