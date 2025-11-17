@@ -1,14 +1,13 @@
-import React from 'react';
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
-
-
 import { NextRequest, NextResponse } from "next/server"
+import { generateConsentPdf } from '@/app/_lib/email/paprka'
 
-export async function GET(request: NextRequest) {
-  const styles = StyleSheet.create({
-    page: { backgroundColor: 'tomato' },
-    section: { color: 'white', textAlign: 'center', margin: 30 }
-  });
-
-  return await new NextResponse()
+export async function POST(request: NextRequest) {
+  const user = await request.json()
+  console.log(user)
+  try {
+    const data = await generateConsentPdf({'identity': user})
+    return new NextResponse(Buffer.from(data))
+  } catch {
+    return NextResponse.json({}, {status: 500})
+  }
 }
