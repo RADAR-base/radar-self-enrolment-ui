@@ -100,7 +100,7 @@
         {
           "fieldType": "yesno",
           "id": "criteria3",
-          "description": "Did you use a Fitbit, iPhone (6s and above)_*, Apple Watch_* or Oura Ring to track your activity at least six months before and one year after your knee replacement?\n_*If you used an iPhone, it automatically collects physical activity data so please select YES._\n"
+          "description": "Did you use a Fitbit, iPhone (6s and above)\\* , Apple Watch\\* or Oura Ring to track your activity at least six months before and one year after your knee replacement?\n\\*_If you used an iPhone, it automatically collects physical activity data so please select YES._\n"
         },
         {
           "fieldType": "yesno",
