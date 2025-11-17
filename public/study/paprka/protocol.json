@@ -173,7 +173,7 @@
         {
           "fieldType": "yesno",
           "id": "O-Prize draw",
-          "description": "I would like to take part in the prize draw\n<br />\nI understand that my full name and email address will be passed to the University of Manchester’s Finance team for the sole purpose of sending me the Love to Shop voucher, If I agree to take part in the prize draw and win.\n"
+          "description": "I would like to take part in the prize draw\n<br />\nI understand that my full name and email address will be passed to the University of Manchester’s Finance team for the sole purpose of sending me the Love to Shop voucher if I agree to take part in the prize draw and win.\n"
         },
         {
           "fieldType": "yesno",
@@ -191,7 +191,7 @@
           "description": "I agree that the researchers may send me the quarterly newsletter.\n<br />\nI understand this means I will be added to the PAPrKA mailing list.\n"
         }
       ],
-      "signatureDescription": "Please draw or type your signature in the box below and press the Save button.\n<br />\n<em>Please note, drawing or typing your signature is the same as signing a paper form with a pen.</em>\n<br />\n<em>Please check your responses carefully before you submit.</em>"
+      "signatureDescription": "### Data Protection\n\n\nThe personal information we collect and use to conduct this research will be processed in accordance with data protection law as explained in the Participant Information Sheet and the [Privacy Notice for Research Participants](https://documents.manchester.ac.uk/display.aspx?DocID=37095).\n\n\nPlease draw or type your signature in the box below and press the Save button.\n<br />\n<em>Please note, drawing or typing your signature is the same as signing a paper form with a pen.</em>\n<br />\n<em>Please check your responses carefully before you submit.</em>"
     },
     "account": {
       "title": "Register account",
