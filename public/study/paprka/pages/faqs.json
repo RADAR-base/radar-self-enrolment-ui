@@ -21,7 +21,7 @@
           },
           {
             "title": "3) What do I need to complete the study",
-            "content": "<table><thead><tr><th>What information you need</th><th>What you need it for</th></tr></thead><tbody><tr><td>Email address</td><td>To set up a study account</td></tr><tr><td>Month and year of your knee surgery</td><td>To help complete Task 1</td></tr><tr><td>NHS number</td><td>To help complete Task 2</td></tr><tr><td>Login details for your fitness tracker(s)</td><td>To help complete Task 3</td></tr></tbody></table>"
+            "content": "<table><thead><tr><th>What information you need</th><th>What you need it for</th></tr></thead><tbody><tr><td>Email address</td><td>To set up a study account</td></tr><tr><td>Month and year of your knee surgery</td><td>To help complete Task 1</td></tr><tr><td>NHS number</td><td>To help complete Task 2</td></tr><tr><td>Login details for your fitness tracker(s) if you have a Fitbit or Oura Ring</td><td>To help complete Task 3</td></tr></tbody></table>"
           },
           {
             "title": "4) Where can I find my NHS number?",
@@ -36,7 +36,7 @@
         "items": [
           {
             "title": "5) Where can I find further guidance on how to join the study and connect my physical activity tracking device?",
-            "content": "Please find the user guides below:\n - [General User Guide (PDF)](/study/paprka/resources/guides/PAPrKA_Study_Guide.pdf)\n - [Apple Guide (PDF)](/study/paprka/resources/guides/PAPrKA_Study_Guide_iPhone.pdf)\n - [Oura Guide (PDF)](/study/paprka/resources/guides/PAPrKA_Study_Guide_Oura.pdf)\n - [Fitbit Guide (PDF)](/study/paprka/resources/guides/PAPrKA_Study_Guide_Fitbit.pdf)"
+            "content": "Please find the user guides below:\n - [General User Guide (PDF)](/study/paprka/resources/guides/PAPrKA_Study_Guide.pdf)\t[General User Guide (video)](https://youtu.be/_QFtRcNB5Bc)\n - [Apple Guide (PDF)](/study/paprka/resources/guides/PAPrKA_Study_Guide_iPhone.pdf)\t[Apple Guide (Video)](https://youtu.be/avBYvuSVvuU)\n - [Oura Guide (PDF)](/study/paprka/resources/guides/PAPrKA_Study_Guide_Oura.pdf)\t[Oura Guide (Video)](https://youtu.be/-id0Qb7V9Qc)\n - [Fitbit Guide (PDF)](/study/paprka/resources/guides/PAPrKA_Study_Guide_Fitbit.pdf)\t[Fitbit Guide (Video)](https://youtu.be/cPYi0-3fmQ4)"
           },
           {
             "title": "6) Can I ask someone to help me take part in the study?",
@@ -91,7 +91,7 @@
           },
           {
             "title": "17) How do I download the RADAR active RMT app onto my iPhone?",
-            "content": "On your iPhone:\n 1. Open the App Store.\n 2. Search for “RADAR active RMT” exactly as written.\n 3. Tap Get, then Open once the app is installed.\n 4. You should see the app’s Welcome page.\n\n\nYou can find more guidance on connecting your apple device in the [Apple Guide](/study/paprka/resources/guides/PAPrKA_Study_Guide_iPhone.pdf)"
+            "content": "On your iPhone:\n 1. Open the App Store.\n 2. Search for “RADAR active RMT” exactly as written.\n 3. Tap Get, then Open once the app is installed.\n 4. You should see the app’s Welcome page.\n\n\nYou can find more guidance on connecting your Apple device in the [Apple Guide](/study/paprka/resources/guides/PAPrKA_Study_Guide_iPhone.pdf)"
           },
           {
             "title": "18) What data should I select to share?",
@@ -211,7 +211,7 @@
           },
           {
             "title": "40) What is RADAR-base and how is it related to University of Manchester PAPrKA study?",
-            "content": "RADAR-base is a platform for the collection of health information from surveys and from smartphones and wearable devices. It is managed by King's College London who have partnered with the University of Manchester to conduct the PAPrKA study. For the study, if you consent to take part, we will collect information from you and your fitness tracker provider on RADAR-base.\n\n\nYou can find more information on RADAR-base on their website: [https://radar-base.org/](https://radar-base.org)"
+            "content": "RADAR-base is a platform for the collection of health information from surveys and from smartphones and wearable devices. It is managed by King's College London who have partnered with The University of Manchester to conduct the PAPrKA study. For the study, if you consent to take part, we will collect information from you and your fitness tracker provider on RADAR-base.\n\n\nYou can find more information on RADAR-base on their website: [https://radar-base.org/](https://radar-base.org)"
           }
         ]
       }
