@@ -54,11 +54,11 @@ export function CookieBanner() {
           </Typography>
           <Typography sx={{ mt: 2, mb: 1 }}>
 
-            {"By clicking ‘Accept All’, we will be able to study how people use the website. We hope this will help us improve how research is done in the future.\n"}   
+            {"By clicking ‘Accept All’, we will be able to study how people use the website. We hope this will help us improve how research like the PAPrKA study is done in the future.\n"}   
             {"By clicking ‘Essential Only’, the website will remember your account details allowing you to log in easily. It will not allow us to study how you use the website\n"}
           </Typography>
           <Typography>
-            For more information, view our <NextLink href={cookiePolicyLink}>cookie statement</NextLink>.
+            For more information, view our <NextLink href={cookiePolicyLink}>cookie policy</NextLink>.
           </Typography>
           <Box display={'flex'} flexDirection={'row'} justifyContent={'flex-end'} marginTop={2} gap={1}>
             <Button onClick={handleReject} variant="outlined">Essential Only</Button>
