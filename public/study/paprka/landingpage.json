@@ -10,14 +10,17 @@
             },
             "subtitle": "The **P**hysical **A**ctivity **P**atterns after **K**nee **A**rthroplasty (**PAPrKA**) study seeks to learn more about people's recovery after knee replacement. With your help, and through our research, we can support patients and doctors in the future make better informed decisions about knee replacement surgery.",
             "sx": {"color": "white"},
-            "cta": {
+            "ctas": [
+              {
                 "text": "FAQs",
                 "href": "paprka/faqs"
-            },
-            "cta2": {
+              }, {
                 "text" :"Join Study",
-                "href": "#"
-            }
+                "href": "paprka/enrol"
+              }, {
+                "text": "Video",
+                "href": "#5mFgOzLI5ZM"
+              }]
           },
           {
             "blockType": "markdown",
@@ -94,7 +97,7 @@
               },
               {
                 "blockType": "markdown",
-                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'><div>_More Information_\nFor full details, see our participant information sheet</div><div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/study/study/paprka/resources/paprka_pis.pdf' target='_blank'>Information Sheet</button></div></div>"
+                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'><div>_More Information_\nFor full details, see our participant information sheet</div><div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/study/study/paprka/resources/paprka_pis.pdf' target='_blank'>Participant Information Sheet</button></div></div>"
               }
             ]
           },
@@ -103,7 +106,7 @@
             "noCard": true,
             "title": "Meet The Team",
             "items": [
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles/will_dixon.png", "title": "Will Dixon", "content": "Professor of Digital Epidemiology", "href": "https://research.manchester.ac.uk/en/persons/will.dixon"},
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/will_dixon.png", "title": "William G Dixon", "content": "Professor of Digital Epidemiology", "href": "https://research.manchester.ac.uk/en/persons/will.dixon"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/ayo.png", "title": "Ayobami Esther Olanrewaju", "content": "PhD candidate in Musculoskeletal", "href": "https://research.manchester.ac.uk/en/persons/ayobami-olanrewaju"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/sabine.png", "title": "Sabine Van der veer", "content": "Senior Lecturer in Health Informatics", "href": "https://research.manchester.ac.uk/en/persons/sabine.vanderveer"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/david_wong.png", "title": "David Wong", "content": "A/Prof Health Informatics and Health Data Science", "href": "https://medicinehealth.leeds.ac.uk/medicine/staff/9808/dr-david-wong"},
@@ -113,12 +116,12 @@
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/mark.png", "title": "Mark Wilkinson", "content": "Professor of Orthopaedics", "href": "https://www.sheffield.ac.uk/smph/people/clinical-medicine/mark-wilkinson"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/michael_whitehouse.png", "title": "Michael Whitehouse", "content": "Professor of Trauma and Orthopaedics", "href": "https://www.bristol.ac.uk/people/person/Michael-Whitehouse-606eae62-257d-43da-aba1-7fed58b6246e"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/andrew.png", "title": "Andrew Judge", "content": "Professor of Translational Statistics", "href": "https://www.bristol.ac.uk/people/person/Andy-Judge-1d244ce0-922d-43f0-ba5a-becbea56e9cd"},
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles/coral.png", "title": "Coral Stevenson", "content": "Project Administrator", "href": "https://personalpages.manchester.ac.uk/advanced.php?dn=cn%3DCoral+Stevenson%2Bumanroleid%3D1419951%2Cou%3DDivision+of+Informatics%5C%2C+Imaging+%26+Data+Sciences%2Cou%3DSchool+of+Health+Sciences%2Cou%3DFaculty+of+Biology%5C%2C+Medicine+and+Health%2Cou%3DPeople%2Co%3DUniversity+of+Manchester%2Cc%3DGB&employeeType=STAFF&action=read&form_input=Submit"},
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/coral.png", "title": "Coral Stevenson", "content": "Project Coordinator", "href": "https://personalpages.manchester.ac.uk/advanced.php?dn=cn%3DCoral+Stevenson%2Bumanroleid%3D1419951%2Cou%3DDivision+of+Informatics%5C%2C+Imaging+%26+Data+Sciences%2Cou%3DSchool+of+Health+Sciences%2Cou%3DFaculty+of+Biology%5C%2C+Medicine+and+Health%2Cou%3DPeople%2Co%3DUniversity+of+Manchester%2Cc%3DGB&employeeType=STAFF&action=read&form_input=Submit"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/elaine.png", "title": "Elaine Mackey", "content": "Information Governance Manager", "href": "https://research.manchester.ac.uk/en/persons/elaine.mackey"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/lynn.png", "title": "Lynn Laidlaw", "content": "Patient and Public Engagement and Involvement", "href": "https://www.kcl.ac.uk/people/lynn-laidlaw"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/louise.jpg", "title": "Louise Cook", "content": "Programme Manager", "href": "#"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/emma.jpg", "title": "Emma Pritchard", "content": "Research Associate", "href": "https://research.manchester.ac.uk/en/persons/emma-pritchard" },
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles/cw.jpg", "title": "Chris Waugh", "content": "Research Associate", "href": "" },
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/cw.jpg", "title": "Christopher Waugh", "content": "Academic Clinical Fellow in Orthopaedic", "href": "" },
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/fld.jpg", "title": "Fu Lian Doble", "content": "Communication Manager", "href": "" }
             ]
           },

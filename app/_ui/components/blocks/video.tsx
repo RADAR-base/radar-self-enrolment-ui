@@ -22,7 +22,7 @@ function YoutubeVideoComponent({video}: {video: VideoYoutube}) {
       <iframe width='100%' height='100%' style={{position: 'absolute', top: 0, bottom: 0, right: 0, left: 0, width: '100%', height: '100%'}}
               src={"https://www.youtube-nocookie.com/embed/" + video.youtubeId + "?rel=0&modestbranding=1"} 
               title="Video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" 
-              referrerPolicy="strict-origin-when-cross-origin" allowFullScreen>  
+              referrerPolicy="strict-origin-when-cross-origin" allowFullScreen id={video.youtubeId}>  
       </iframe>
     </div>
   )
@@ -49,7 +49,7 @@ export interface IVideoBlock {
 
 export function VideoBlock({title, subtitle, video}: IVideoBlock) {
   return (
-      <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1}>
+      <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1} >
         <Typography variant="h2">{title}</Typography>
         <Typography variant="subtitle1">{subtitle}</Typography>
         {isVideoFile(video) ? <DirectVideoComponent video={video} /> : <YoutubeVideoComponent video={video}/>}
