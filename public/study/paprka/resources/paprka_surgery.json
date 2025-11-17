@@ -171,7 +171,7 @@
                 "label": "Other qualifications"
             }
         ],
-        "field_note": "What is your highest level of education?\nWe ask for this because it will help us understand the association between people’s physical activity and education.",
+        "field_note": "What is your highest level of education?\nWe ask for this because it will help us understand the relationship between people’s physical activity and education.",
         "text_validation_type_or_show_slider_number": "",
         "text_validation_min": "",
         "text_validation_max": "",
