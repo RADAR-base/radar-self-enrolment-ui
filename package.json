@@ -20,7 +20,7 @@
     "@next/third-parties": "^15.0.3",
     "dayjs": "^1.11.13",
     "formik": "^2.4.6",
-    "glob": "^11.0.0",
+    "glob": "^11.1.0",
     "jwt-decode": "^4.0.0",
     "morph-expressions": "^1.1.1",
     "mui-markdown": "^1.2.2",
@@ -42,7 +42,7 @@
     "@types/react-signature-canvas": "^1.0.6",
     "@types/react-slick": "^0.23.13",
     "eslint": "^8",
-    "eslint-config-next": "14.2.5",
+    "eslint-config-next": "16.0.3",
     "typescript": "^5"
   }
 }
