@@ -353,7 +353,6 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   }
 
   useEffect(() => {
-    console.log('datalayer: ', window.dataLayer)
     sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx], status: 'start'})
     if (flow === undefined) {
       getFlow(setFlow)

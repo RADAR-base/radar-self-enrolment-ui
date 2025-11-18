@@ -3,7 +3,6 @@ import { generateConsentPdf } from '@/app/_lib/email/paprka'
 
 export async function POST(request: NextRequest) {
   const user = await request.json()
-  console.log(user)
   try {
     const data = await generateConsentPdf({'identity': user})
     return new NextResponse(Buffer.from(data))
