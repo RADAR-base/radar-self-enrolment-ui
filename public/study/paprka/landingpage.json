@@ -12,17 +12,18 @@
             "sx": {"color": "white"},
             "ctas": [
               {
-                "text" :"Join Study",
-                "href": "paprka/enrol"
-              }, 
-              {
                 "text": "FAQs",
                 "href": "paprka/faqs"
               }, 
               {
                 "text": "Video",
                 "href": "#5mFgOzLI5ZM"
-              }]
+              },
+              {
+                "text" :"Join Study",
+                "href": "paprka/enrol"
+              }
+            ] 
           },
           {
             "blockType": "markdown",
