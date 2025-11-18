@@ -12,12 +12,14 @@
             "sx": {"color": "white"},
             "ctas": [
               {
-                "text": "FAQs",
-                "href": "paprka/faqs"
-              }, {
                 "text" :"Join Study",
                 "href": "paprka/enrol"
-              }, {
+              }, 
+              {
+                "text": "FAQs",
+                "href": "paprka/faqs"
+              }, 
+              {
                 "text": "Video",
                 "href": "#5mFgOzLI5ZM"
               }]
@@ -108,7 +110,7 @@
             "items": [
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/will_dixon.png", "title": "William G Dixon", "content": "Professor of Digital Epidemiology", "href": "https://research.manchester.ac.uk/en/persons/will.dixon"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/ayo.png", "title": "Ayobami Esther Olanrewaju", "content": "PhD candidate in Musculoskeletal", "href": "https://research.manchester.ac.uk/en/persons/ayobami-olanrewaju"},
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles/sabine.png", "title": "Sabine Van der veer", "content": "Senior Lecturer in Health Informatics", "href": "https://research.manchester.ac.uk/en/persons/sabine.vanderveer"},
+              {"imgSrc": "/study/paprka/resources/landingpage/profiles/sabine.png", "title": "Sabine Van der veer", "content": "Professor of Health Informatics", "href": "https://research.manchester.ac.uk/en/persons/sabine.vanderveer"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/david_wong.png", "title": "David Wong", "content": "A/Prof Health Informatics and Health Data Science", "href": "https://medicinehealth.leeds.ac.uk/medicine/staff/9808/dr-david-wong"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/shuai.png", "title": "Shuai Shao", "content": "Research Associate", "href": "https://research.manchester.ac.uk/en/persons/shuai-shao"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/amos.png", "title": "Amos Folarin", "content": "Senior Software Development Group Leader", "href": "https://www.kcl.ac.uk/people/amos-folarin"},
@@ -121,7 +123,6 @@
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/lynn.png", "title": "Lynn Laidlaw", "content": "Patient and Public Engagement and Involvement", "href": "https://www.kcl.ac.uk/people/lynn-laidlaw"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/louise.jpg", "title": "Louise Cook", "content": "Programme Manager", "href": "#"},
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/emma.jpg", "title": "Emma Pritchard", "content": "Research Associate", "href": "https://research.manchester.ac.uk/en/persons/emma-pritchard" },
-              {"imgSrc": "/study/paprka/resources/landingpage/profiles/cw.jpg", "title": "Christopher Waugh", "content": "Academic Clinical Fellow in Orthopaedic", "href": "" },
               {"imgSrc": "/study/paprka/resources/landingpage/profiles/fld.jpg", "title": "Fu Lian Doble", "content": "Communication Manager", "href": "" }
             ]
           },
