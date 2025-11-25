@@ -10,14 +10,19 @@ export class GitHubProtocolRepository implements StudyProtocolRepository {
         this.githubService = new GithubService()
     }
 
-    async getStudyProtocol(studyId: string): Promise<StudyProtocol> {
+    async getStudyProtocol(studyId: string): Promise<StudyProtocol | undefined> {
         try {
             const fileName = REMOTE_DEFINITIONS_CONFIG.PROTOCOL_DEFINITION_FILE_NAME_CONTENT
             const landingPageContentJson = await this.githubService.initiateFetch(studyId, fileName)
             return JSON.parse(landingPageContentJson!!) as StudyProtocol
         } catch (error) {
-            console.error(`Error fetching study protocol for studyId ${studyId}:`, error)
-            throw error
+            console.warn(
+                `Study protocol not found or failed on GitHub for studyId ${studyId}. Proceeding without remote definitions.`,
+                {
+                    error: error instanceof Error ? error.message : String(error),
+                },
+            )
+            return undefined
         }
     }
 

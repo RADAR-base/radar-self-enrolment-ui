@@ -7,8 +7,13 @@
       "title": "",
       "content": {
         "block1": {
-          "blockType": "markdown",
-          "content": "Default study landing page.<br/><br/>\n<button variant='contained' href='RADAR-mCRAVING-KCL-s1/enrol'>Join Study</button>"
+          "blockType": "hero",
+          "title": "Join the RADAR Project",
+          "subtitle": "This is the default study landing page.",
+          "cta": {
+            "text": "Join Study",
+            "href": "enrol"
+          }
         },
         "block2": {
           "blockType": "markdown",
