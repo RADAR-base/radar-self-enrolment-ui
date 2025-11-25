@@ -8,8 +8,8 @@
       "content": {
         "block1": {
           "blockType": "hero",
-          "title": "#Default study landing page.",
-          "subtitle": "",
+          "title": "",
+          "subtitle": "Default study landing page.",
           "cta": {
             "text": "Join Study",
             "href": "enrol"
