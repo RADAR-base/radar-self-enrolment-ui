@@ -1,0 +1,98 @@
+{
+  "name": "RADAR Project",
+  "studyId": "default",
+  "healthIssues": [],
+  "onboarding": {
+    "metadata": {},
+    "steps": []
+  },
+  "protocols": [
+    {
+      "id": "connect",
+      "appearance": {},
+      "schedule": {},
+      "metadata": {
+        "title": "Connect Devices",
+        "order": 2,
+        "description": "Share your fitness tracker or smartphone app with us.",
+        "optional": false,
+        "type": "inbuilt",
+        "inbuiltId": "connect",
+        "options": {
+          "devices": [
+            "radar_armt"
+          ]
+        }
+      }
+    }
+  ],
+  "enrolment": {
+    "account": {
+      "title": "Register Account",
+      "description": "You need an account to give us your information and connect your fitness tracker or smartphone app.\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
+    }
+  },
+  "studyUiConfig": {
+    "materialTheme": {},
+    "faviconSrc": "https://raw.githubusercontent.com/RADAR-base/radar-self-enrolment-definitions/refs/heads/main/projects/RADAR-mCRAVING-KCL-s1/resources/icon.png",
+    "navbar": {
+      "links": [
+        {
+          "text": "Home",
+          "href": "/RADAR-mCRAVING-KCL-s1"
+        }
+      ],
+      "logoSrc": "https://raw.githubusercontent.com/RADAR-base/radar-self-enrolment-definitions/refs/heads/main/projects/RADAR-mCRAVING-KCL-s1/resources/icon.png"
+    },
+    "footer": {
+      "columns": [
+        {
+          "title": "Study Links",
+          "items": [
+            {
+              "text": "Home",
+              "href": "#"
+            },
+            {
+              "text": "About the study",
+              "href": "#"
+            },
+            {
+              "text": "LinkedIn",
+              "href": "https://www.linkedin.com/company/onsentia"
+            }
+          ]
+        },
+        {
+          "title": "Contact Us",
+          "items": [
+            {
+              "text": "support@onsentia.com",
+              "href": "mailto:support@onsentia.com"
+            }
+          ]
+        },
+        {
+          "title": "Legal Links",
+          "items": [
+            {
+              "text": "Privacy Policy",
+              "href": "privacy"
+            },
+            {
+              "text": "Cookie Policy",
+              "href": "cookies"
+            }
+          ]
+        }
+      ],
+      "copyrightText": "© 2024 Onsentia"
+    },
+    "portal": {
+      "title": "Complete Tasks to Join Study"
+    },
+    "analytics": {
+      "gaId": ""
+    }
+  }
+}
