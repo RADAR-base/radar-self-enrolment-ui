@@ -159,7 +159,7 @@ function NavBar(props: NavBarProps) {
                 </img>
               </Box>
             }
-            <Typography display={{'xs': 'none', 'md': 'block'}} variant="h1" align="center" style={{userSelect: 'none'}}>
+            <Typography display={{'xs': 'none', 'md': 'block'}} variant="h3" align="center" style={{userSelect: 'none'}}>
               {props.title}
             </Typography>
           </Box>
