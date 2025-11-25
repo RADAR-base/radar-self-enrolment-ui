@@ -185,7 +185,8 @@ const extractSession = (identity: any, grantScope: string[]) => {
         authorities: identity.metadata_public.authorities,
         sources: identity.metadata_public.sources,
         user_name: identity.metadata_public.mp_login,
-        email: identity.traits.email
+        email: identity.traits.email,
+        kratos_id: identity.id
     }
 }
 
@@ -200,7 +201,8 @@ function enrichSessionWithClaims(session: any, identity: any, grantScope: string
             authorities: enrichedClaims.authorities,
             sources: enrichedClaims.sources,
             user_name: enrichedClaims.user_name,
-            scope: grantScope
+            scope: grantScope,
+            kratos_id: enrichedClaims.kratos_id
         }
 
         // Create ID token claims (for user identity)
