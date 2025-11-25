@@ -4,6 +4,7 @@ import { FitbitPage } from '@/app/_ui/components/device_connect/fitbit';
 import { GarminPage } from '@/app/_ui/components/device_connect/garmin';
 import { OuraPage } from '@/app/_ui/components/device_connect/oura';
 import { ArmtPage } from '@/app/_ui/components/device_connect/radarArmt';
+import { PrmtPage } from '@/app/_ui/components/device_connect/radarPrmt';
 import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 
@@ -28,6 +29,9 @@ export default async function Page(props: { params: Promise<{ studyId: string, d
       break
     case "radar_armt":
       content = <ArmtPage />
+      break
+    case "radar_prmt":
+      content = <PrmtPage />
       break
     default:
       return notFound()

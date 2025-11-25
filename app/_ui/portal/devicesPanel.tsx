@@ -1,5 +1,5 @@
 "use client"
-import { Box, Container, Typography } from "@mui/material"
+import { Box, Container, Typography, Alert, AlertTitle } from "@mui/material"
 import Grid from '@mui/material/Grid2';
 import { ArmtMetadataInbuilt } from "@/app/_lib/study/protocol";
 import { usePathname, useSearchParams } from 'next/navigation'
@@ -22,10 +22,20 @@ export function DevicesPanel(props: DevicePanelProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const deviceConnected = searchParams.get('success')
+  const errorParam = searchParams.get('error')
+  const [errorMsg, setErrorMsg] = useState<string | undefined>(undefined)
   const [device, setDevice] = useState<string | undefined>(deviceConnected ?? undefined)
   const pathname = usePathname()
 
   useEffect(() => {
+    if (errorParam) {
+      setErrorMsg(errorParam)
+      if (deviceConnected) {
+        setDevice(deviceConnected)
+      }
+      router.replace(pathname)
+      return
+    }
     if (deviceConnected) {
       setDevice(deviceConnected)
       markDeviceConnected(deviceConnected.toLowerCase()).then(
@@ -79,7 +89,15 @@ export function DevicesPanel(props: DevicePanelProps) {
   
   return (
     <Container maxWidth="lg" disableGutters>
-    {(device != undefined) ? <DeviceConnectedBanner device={deviceConnectedName} onFinish={onSubmit} /> : null}
+    {errorMsg ? (
+      <Box mb={2}>
+        <Alert severity="error">
+          <AlertTitle>Could not connect {deviceConnectedName || 'device'}</AlertTitle>
+          {errorMsg}
+        </Alert>
+      </Box>
+    ) : null}
+    {(device != undefined && !errorMsg) ? <DeviceConnectedBanner device={deviceConnectedName} onFinish={onSubmit} /> : null}
     <Grid container spacing={2} gridAutoColumns={'3lf'} gridAutoFlow={"column"}>
       <Grid size={12}>
         <RadarCard>

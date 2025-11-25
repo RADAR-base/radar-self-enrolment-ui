@@ -3,8 +3,10 @@ import { NextResponse } from 'next/server'
 const AUTH_BASE_URL = process.env.NEXT_PUBLIC_HYDRA_PUBLIC_URL + '/oauth2'
 const SEP_REDIRECT_URI = process.env.NEXT_PUBLIC_SEP_REDIRECT_URI ?? ''
 const ARMT_REDIRECT_URI = process.env.NEXT_PUBLIC_ARMT_REDIRECT_URI ?? ''
+const PRMT_REDIRECT_URI = process.env.NEXT_PUBLIC_PRMT_REDIRECT_URI ?? ''
 const ARMT_CLIENT_ID = process.env.ARMT_CLIENT_ID ?? 'aRMT'
 const SEP_CLIENT_ID = process.env.SEP_CLIENT_ID ?? 'SEP'
+const PRMT_CLIENT_ID = 'pRMT'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -20,8 +22,14 @@ export async function GET(request: Request) {
   ).join(' ')
 
   const clientId = searchParams.get('clientId')
-  const redirectUri =
-    clientId === SEP_CLIENT_ID ? SEP_REDIRECT_URI : ARMT_REDIRECT_URI
+  let redirectUri
+  if (clientId === SEP_CLIENT_ID) {
+    redirectUri = SEP_REDIRECT_URI
+  } else if (clientId === PRMT_CLIENT_ID) {
+    redirectUri = PRMT_REDIRECT_URI
+  } else {
+    redirectUri = ARMT_REDIRECT_URI
+  }
 
   const urlParams = [
     ['client_id', clientId],
