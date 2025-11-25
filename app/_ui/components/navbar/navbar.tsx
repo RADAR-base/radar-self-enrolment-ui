@@ -20,6 +20,22 @@ interface MenuProps {
 }
 
 function SmallMenu(props: MenuProps) {
+  const resolveHref = (link: {text: string, href: string}): string => {
+    const href = link.href ?? ''
+    const studyId = props.studyId
+    if (!studyId) return href
+    // External
+    if (/^\w+:/.test(href)) return href
+    // Home link normalization
+    if (link.text?.toLowerCase() === 'home' || href === '/' || href === '') {
+      return `/${studyId}`
+    }
+    // Already study-scoped
+    if (href === `/${studyId}` || href.startsWith(`/${studyId}/`)) return href
+    // Normalize relative
+    if (href.startsWith('/')) return `/${studyId}${href}`
+    return `/${studyId}/${href}`
+  }
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => setAnchorElNav(event.currentTarget);
   const handleCloseNavMenu = () => setAnchorElNav(null);
@@ -60,7 +76,7 @@ function SmallMenu(props: MenuProps) {
           <MenuItem
             onClick={() => {
                 handleCloseNavMenu()
-                router.push(link.href)
+                router.push(resolveHref(link))
               }
             }
             key={i}>
@@ -83,10 +99,22 @@ function SmallMenu(props: MenuProps) {
 }
 
 function LargeMenu(props: MenuProps) {
+  const resolveHref = (link: {text: string, href: string}): string => {
+    const href = link.href ?? ''
+    const studyId = props.studyId
+    if (!studyId) return href
+    if (/^\w+:/.test(href)) return href
+    if (link.text?.toLowerCase() === 'home' || href === '/' || href === '') {
+      return `/${studyId}`
+    }
+    if (href === `/${studyId}` || href.startsWith(`/${studyId}/`)) return href
+    if (href.startsWith('/')) return `/${studyId}${href}`
+    return `/${studyId}/${href}`
+  }
   return (
     <Box flexGrow={1} flexDirection='row' alignItems='center' justifyContent='flex-end'
          gap={2} display='flex'>
-      {props.links?.map((link, i) => <NextButton href={link.href} key={i}>{link.text}</NextButton>)}
+      {props.links?.map((link, i) => <NextButton href={resolveHref(link)} key={i}>{link.text}</NextButton>)}
       {(props.loggedIn && props.studyId) && <NextButton href={`/${props.studyId}/portal`}>Tasks</NextButton>}
       <AccountButton />
     </Box>
