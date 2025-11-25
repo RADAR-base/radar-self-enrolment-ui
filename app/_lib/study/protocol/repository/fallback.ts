@@ -43,10 +43,13 @@ export class FallbackProtocolRepository implements StudyProtocolRepository {
             const defaultProtocol = await this.localRepo.getStudyProtocol(
                 DEFAULT_STUDY_ID
             );
+            console.log("Default protocol", defaultProtocol);
             // Return default UI but keep the requested studyId for routing and API calls
-            return defaultProtocol
+            const result = defaultProtocol
                 ? { ...defaultProtocol, studyId, name: studyId }
                 : undefined;
+            console.log("Result", result);
+            return result;
         } catch (_) {
             return undefined;
         }
