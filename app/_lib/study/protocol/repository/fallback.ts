@@ -39,6 +39,7 @@ export class FallbackProtocolRepository implements StudyProtocolRepository {
 
         // 3) Fallback to default bundled study definition
         try {
+            console.log("Fallback to default bundled study definition", DEFAULT_STUDY_ID);
             const defaultProtocol = await this.localRepo.getStudyProtocol(
                 DEFAULT_STUDY_ID
             );
