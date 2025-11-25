@@ -38,9 +38,9 @@ async function paprkaEmails(studyId: string, oryUser: any, status?: {[key:string
     } 
     if (studyStatus != 'complete') {
       if (!(status &&
-        ((status['paprka_about'].due) ||
-        (status['paprka_surgery'].due) ||
-        (status['connect'].due) )
+        ((status['paprka_about']?.due) ||
+        (status['paprka_surgery']?.due) ||
+        (status['connect']?.due) )
       )) {
         await setStudyStatus('paprka', oryUser['identity']['id'], 'complete')
         paprkaEmailOnFinish(oryUser)

@@ -28,7 +28,7 @@
               "description": "Connect your Fitbit account."
             },
             {
-              "id": "radar_armt",
+              "id": "apple_health",
               "title": "RADAR aRMT",
               "description": "Connect via RADAR aRMT."
             }

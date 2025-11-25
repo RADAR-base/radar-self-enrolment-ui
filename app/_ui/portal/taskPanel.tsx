@@ -42,9 +42,9 @@ export function TaskPanel(props: TaskPanel) {
     (item) => {
       let status = 'disabled'
       if (armtStatuses != undefined) {
-        status = armtStatuses[item.id].due ? 'todo': 'done'
-        numTasksComplete += + (!armtStatuses[item.id].due)
-        numRequiredTasksComplete += +!(armtStatuses[item.id].due || item.metadata.optional)
+        status = armtStatuses[item.id]?.due ? 'todo': 'done'
+        numTasksComplete += + (!armtStatuses[item.id]?.due)
+        numRequiredTasksComplete += +!(armtStatuses[item.id]?.due || item.metadata.optional)
       }
       return <RadarTaskCard armtProtocol={item} status={status as RadarTaskCardProps["status"]} />
   })
