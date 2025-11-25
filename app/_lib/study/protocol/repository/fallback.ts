@@ -44,7 +44,7 @@ export class FallbackProtocolRepository implements StudyProtocolRepository {
             );
             // Return default UI but keep the requested studyId for routing and API calls
             return defaultProtocol
-                ? { ...defaultProtocol, studyId }
+                ? { ...defaultProtocol, studyId, name: studyId }
                 : undefined;
         } catch (_) {
             return undefined;
