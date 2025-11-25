@@ -149,7 +149,7 @@ function PrmtContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
       </Grid>
       <Grid size={{ xs: 12, sm: 6 }} textAlign={'left'}>
         <Typography variant="body1">
-          If you arrived at the website on your iPhone, click on:
+          If you arrived at the website on your Android device, click on:
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, sm: 6 }} alignContent={'center'}>
