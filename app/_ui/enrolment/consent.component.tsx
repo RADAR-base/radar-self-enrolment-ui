@@ -67,10 +67,10 @@ export function EnrolmentConsent(props: EnrolmentConsentProps) {
       <Divider />
       {<MarkdownContainer>{props.signatureDescription ?? "Sign here"}</MarkdownContainer>}
       <Box display={'flex'} flexWrap={'wrap'} flexDirection={'row'} width={'100%'} gap={2}>
-        <Box minWidth={390}>
+        <Box minWidth={{xs: "100%", sm: 390}} flexGrow={1}>
           <ArmtTextField label={"First Name"} setFieldValue={props.setFieldValue} value={props.values['first_name']} id='consent.first_name' fieldType="text" />
         </Box>
-        <Box minWidth={390}>
+        <Box minWidth={{xs: "100%", sm: 390}} flexGrow={1}>
           <ArmtTextField label={"Last Name"} setFieldValue={props.setFieldValue} value={props.values['last_name']} id='consent.last_name' fieldType="text"/>
         </Box>
         <TextField label={'Date'} value={props.values['date']} />

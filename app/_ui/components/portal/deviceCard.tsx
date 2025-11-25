@@ -41,16 +41,15 @@ export const RadarDeviceCard = React.forwardRef(function RadarDeviceCard({device
           <Typography variant="h3">{title}</Typography>
           <MarkdownContainer>{description}</MarkdownContainer>
         </Box>
-        <NextLink href={'connect/' + deviceId} passHref legacyBehavior>
-          <Button 
-            style={{alignSelf: 'flex-end'}}
-            variant="contained"
-            color={(status == "done") ? "success" : "warning"}
-            disabled={status == "disabled"}
-            >
-              {(status == "done") ? "Connected" : "Connect"}
-          </Button>
-        </NextLink>
+        <Button 
+          style={{alignSelf: 'flex-end'}}
+          variant="contained"
+          color={(status == "done") ? "success" : "warning"}
+          disabled={status == "disabled"}
+          href={'connect/' + deviceId}
+          >
+            {(status == "done") ? "Connected" : "Connect"}
+        </Button>
         </Box>
       </Box>
   </RadarDeviceCardRoot>

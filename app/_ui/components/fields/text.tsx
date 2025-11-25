@@ -12,7 +12,6 @@ interface ArmtTextFieldProps extends ITextItem {
 
 function handleChange(setFieldValue: (id: string, value: string) => void) {
   return (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    console.log("onChange: ", event.target.value)
     setFieldValue(event.target.id, event.target.value)
   }
 }

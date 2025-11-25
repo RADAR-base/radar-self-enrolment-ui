@@ -38,12 +38,9 @@ function token_matches_session(token: string, session: any, studyId: string): bo
   }
 }
 
-export default async function StudyLayout(props: Readonly<{children: React.ReactNode, params: {studyId: string}}>) {
+export default async function StudyLayout(props: LayoutProps<'/[studyId]/portal'>) {
   const params = await props.params;
-
-  const {
-    children
-  } = props;
+  const children = props.children;
 
   const cookieStore = await cookies()
   const kratos_cookie = cookieStore.get('ory_kratos_session')

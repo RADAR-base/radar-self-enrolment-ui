@@ -1,10 +1,54 @@
 {
-    "blocks": [
-          {
-            "blockType": "markdown",
-            "noCard": false,
-            "title": "Privacy Policy", 
-            "content": "..."
-          }
-    ]
+  "blocks": [
+    {
+      "blockType": "markdown",
+      "noCard": true,
+      "content": "# Privacy Policy – RADAR Study Portal\n\n_Last updated: 4th October 2025_\n\nThe RADAR Study Portal is operated by a research team at **King’s College London (KCL)**. The Portal supports mobile health research studies by allowing participants to log in, complete questionnaires, and connect devices such as Fitbit. This page explains how your data is handled."
+    },
+    {
+      "blockType": "markdown",
+      "noCard": true,
+      "content": "## 1. Who we are\n\nThe RADAR Study Portal is managed by King’s College London as part of its research infrastructure. Each individual study using this platform has its **own research team** who act as the **data controller**. KCL provides and maintains the Portal as a **data processor** on their behalf.\n\nFor questions about your study data:\n\n- Email your study team (see your participant information sheet)\n- Email the Portal team at [radar-base@kcl.ac.uk](mailto:radar-base@kcl.ac.uk)\n- Or contact the KCL Data Protection Team at [info-compliance@kcl.ac.uk](mailto:info-compliance@kcl.ac.uk)"
+    },
+    {
+      "blockType": "markdown",
+      "noCard": true,
+      "content": "## 2. What data we collect\n\n- Name and email address\n- Demographic information (such as age or gender)\n- Survey and questionnaire responses\n- Linked device or app data (e.g., Fitbit, wearable sensors)\n- Technical data such as IP address, browser type, and device information\n- Cookies (see the study's [Cookies Policy](cookies))"
+    },
+    {
+      "blockType": "markdown",
+      "noCard": true,
+      "content": "## 3. How we use your data\n\nWe use your information to:\n\n- Set up and manage your account\n- Display and collect questionnaires\n- Connect to external data sources you authorise\n- Maintain and secure the Portal\n- (If approved) monitor site usage via Google Analytics"
+    },
+    {
+      "blockType": "markdown",
+      "noCard": true,
+      "content": "## 4. Where and how your data is stored\n\nYour data is stored securely on **Amazon Web Services (AWS)** servers in the **United Kingdom** (or the European Economic Area for EU studies). It is encrypted and kept only for the duration of your study’s data collection period before being securely transferred to your study team."
+    },
+    {
+      "blockType": "markdown",
+      "noCard": true,
+      "content": "## 5. Legal basis\n\nWe process your data based on your **consent** to participate and, where appropriate, KCL’s **legitimate interests** in securely operating the Portal. Each study provides full details in its own information sheet."
+    },
+    {
+      "blockType": "markdown",
+      "noCard": true,
+      "content": "## 6. Your rights\n\nYou have rights under UK and EU data protection law to:\n\n- Access a copy of your data\n- Ask for corrections or deletion\n- Withdraw your consent\n- Limit or object to how your data is used\n\nTo exercise these rights, contact your study team or [radar-base@kcl.ac.uk](mailto:radar-base@kcl.ac.uk)."
+    },
+    {
+      "blockType": "markdown",
+      "noCard": true,
+      "content": "## 7. Keeping your data secure\n\nYour information is protected using encryption, secure servers, and strict access controls. Only authorised KCL staff and the relevant research team can access your data."
+    },
+    {
+      "blockType": "markdown",
+      "noCard": true,
+      "content": "## 8. Updates to this policy\n\nWe may update this Privacy Policy from time to time. Any significant changes will be shown here with a new “last updated” date."
+    },
+    {
+      "blockType": "markdown",
+      "noCard": true,
+      "content": "## 9. Contact us\n\n**For study questions:** your research team (see your participant information sheet)\n\n**For Portal or data questions:** [radar-base@kcl.ac.uk](mailto:radar-base@kcl.ac.uk)\n\n**For data protection queries:** [info-compliance@kcl.ac.uk](mailto:info-compliance@kcl.ac.uk)"
+    }
+  ]
 }

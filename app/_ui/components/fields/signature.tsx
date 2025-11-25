@@ -1,3 +1,4 @@
+"use client"
 import { Box, Button, FormControl, Modal, TextField, Typography } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import TextFieldsIcon from '@mui/icons-material/TextFields';

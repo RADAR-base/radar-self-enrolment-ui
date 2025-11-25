@@ -16,10 +16,11 @@ interface ArmtFieldProps {
   value: any
   setFieldValue: (id: string, value: any) => void
   errorText?: string
-  showItem?: boolean
+  showItem?: boolean,
+  disabled?: boolean
 }
 
-export function ArmtField({ item, value, setFieldValue, errorText, showItem }: ArmtFieldProps): React.ReactNode {
+export function ArmtField({ item, value, setFieldValue, errorText, showItem, disabled }: ArmtFieldProps): React.ReactNode {
   if (showItem == false) {
     return <></>
   }
@@ -28,22 +29,22 @@ export function ArmtField({ item, value, setFieldValue, errorText, showItem }: A
       return <ArmtDescriptiveField {...item.content} />
     }
     case "radio": {
-      return <ArmtRadioField  {...item.content} value={value} setFieldValue={setFieldValue} errorText={errorText} />
+      return <ArmtRadioField {...item.content} value={value} setFieldValue={setFieldValue} errorText={errorText} disabled={disabled} />
     }
     case "text": {
-      return <ArmtTextField {...item.content} value={value} setFieldValue={setFieldValue}  errorText={errorText} />
+      return <ArmtTextField {...item.content} value={value} setFieldValue={setFieldValue} errorText={errorText} disabled={disabled} />
     }
     case "yesno": {
-      return <YesNoField {...item.content} value={value}  setFieldValue={setFieldValue}/>
+      return <YesNoField {...item.content} value={value}  setFieldValue={setFieldValue} disabled={disabled} />
     }
     case "date": {
-      return <ArmtDateField {...item.content} value={value} setFieldValue={setFieldValue}  errorText={errorText} />
+      return <ArmtDateField {...item.content} value={value} setFieldValue={setFieldValue}  errorText={errorText} disabled={disabled}  />
     }
     case "dropdown": {
-      return <ArmtDropdownField {...item.content} value={value} setFieldValue={setFieldValue} errorText={errorText} />
+      return <ArmtDropdownField {...item.content} value={value} setFieldValue={setFieldValue} errorText={errorText} disabled={disabled} />
     }
     case "slider": {
-      return <ArmtSliderField {...item.content} value={value} setFieldValue={setFieldValue} errorText={errorText} />
+      return <ArmtSliderField {...item.content} value={value} setFieldValue={setFieldValue} errorText={errorText} disabled={disabled} />
     }
   }
 }
@@ -52,11 +53,12 @@ interface ArmtFormProps {
   title?: string
   definition: ArmtDefinition
   values:  {[key: string]: any}
-  errors?: {[key: string]: string}
+  errors?: {[key: string]: any}
   setFieldValue: (id: string, value: any) => void
+  disabled?: boolean
 }
 
-export function ArmtForm({ title, definition, values, setFieldValue, errors }: ArmtFormProps): React.ReactNode {
+export function ArmtForm({ title, definition, values, setFieldValue, errors, disabled}: ArmtFormProps): React.ReactNode {
   return  (
     <Box display={"flex"} flexDirection={"column"} gap={4} textAlign={"left"}>
       {title ? <Typography variant="h2">{title}</Typography> : null}
@@ -73,6 +75,7 @@ export function ArmtForm({ title, definition, values, setFieldValue, errors }: A
                               key={item.content.id}
                               errorText={errorText} 
                               showItem={showItem}
+                              disabled={disabled}
                               />)
         })
       }

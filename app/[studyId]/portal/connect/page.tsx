@@ -2,7 +2,7 @@
 import { Box, Container } from '@mui/material';
 import { DevicesPanel } from '@/app/_ui/portal/devicesPanel';
 import { whoAmI } from '@/app/_lib/auth/ory/kratos';
-import { allTaskStatus, getExistingTasks } from '@/app/_lib/study/tasks/status';
+import { getExistingTasks } from '@/app/_lib/study/tasks/status';
 
 
 export default async function Page(props: { params: Promise<{ studyId: string}> }) {

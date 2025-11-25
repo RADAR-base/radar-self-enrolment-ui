@@ -1,7 +1,4 @@
 "use server";
-import { whoAmI } from '@/app/_lib/auth/ory/kratos';
-import { getRestSourceAuthLink, makeRestSourceUser } from '@/app/_lib/connect/rsa/authorizer';
-import { withBasePath } from '@/app/_lib/util/links';
 import { HealthKitPage } from '@/app/_ui/components/device_connect/appleHealth';
 import { FitbitPage } from '@/app/_ui/components/device_connect/fitbit';
 import { GarminPage } from '@/app/_ui/components/device_connect/garmin';
@@ -9,7 +6,6 @@ import { OuraPage } from '@/app/_ui/components/device_connect/oura';
 import { ArmtPage } from '@/app/_ui/components/device_connect/radarArmt';
 import { PrmtPage } from '@/app/_ui/components/device_connect/radarPrmt';
 import { Box } from '@mui/material';
-import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 
 import type { JSX } from "react";

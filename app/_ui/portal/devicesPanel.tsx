@@ -3,7 +3,6 @@ import { Box, Container, Typography, Alert, AlertTitle } from "@mui/material"
 import Grid from '@mui/material/Grid2';
 import { ArmtMetadataInbuilt } from "@/app/_lib/study/protocol";
 import { usePathname, useSearchParams } from 'next/navigation'
-
 import React, { useContext, useEffect, useState } from "react";
 import { RadarDeviceCard } from "@/app/_ui/components/portal/deviceCard";
 import { RadarCard } from "../components/base/card";
@@ -20,7 +19,6 @@ interface DevicePanelProps {
 }
 
 export function DevicesPanel(props: DevicePanelProps) {
-  const [submitting, setSubmitting] = useState<boolean>(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const deviceConnected = searchParams.get('success')
@@ -67,7 +65,6 @@ export function DevicesPanel(props: DevicePanelProps) {
   }
 
   async function onSubmit() {
-    setSubmitting(true)
     markDeviceConnected('').then(
       () => {
         router.push('/' + protocol.studyId + '/portal')

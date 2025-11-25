@@ -101,7 +101,7 @@ interface PassedChallengeComponentProps {}
 function PassedChallengeComponent(props: PassedChallengeComponentProps): React.ReactElement<any> {
   return (
     <Box display={'flex'} flexDirection={'column'} gap={4}>
-      <Typography>Successfully verified account</Typography>
+      <Typography>You have successfully verified your account</Typography>
       <Button href={'portal'}>Continue</Button>
     </Box>
     )
@@ -115,9 +115,7 @@ interface VerificationComponentProps {
 export function VerificationComponent(props: VerificationComponentProps): React.ReactElement<any> {
   const pathname = usePathname()
   const [flow, setFlow] = useState<IOryVerificationFlow | undefined>(props.flow)
-  
   const [content, setContent] = useState<React.ReactElement<any>>(<CircularProgress style={{alignSelf: 'center'}}/>)
-  const router = useRouter()
   const studyContext = useContext(ProtocolContext)
 
   useEffect(() => {
@@ -132,11 +130,11 @@ export function VerificationComponent(props: VerificationComponentProps): React.
           break
         case 'passed_challenge':
           if (studyContext) {
-            router.replace(`/${studyContext.studyId}/portal`)
-            router.refresh()
+            window.location.replace(withBasePath(`/${studyContext.studyId}/portal`))
+            window.location.reload()
           } else {
-            router.push('/')
-            router.refresh()
+            window.location.replace(withBasePath('/'))
+            window.location.reload()
           }
           setContent(<PassedChallengeComponent />)
           break

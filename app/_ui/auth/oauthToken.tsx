@@ -106,7 +106,6 @@ async function getToken(
   code: string,
 ) {
   const resp = await fetch(withBasePath('/api/connect/sep/token?code=' + code))
-  console.log('token resp status: ', resp.status)
   window.location.reload()
   return
 }
@@ -119,12 +118,15 @@ async function completeFullFlow(
   codeFunc: (code: string) => Promise<void>
 ) {
 
+  
   const authUrl = await getAuthUrl(clientId, scopes, audience, redirectUri)
   
+  await clearCookies()
+
   const loginChallenge = await pRetry(
     () => getLoginChallenge(authUrl), 
     {
-      retries: 4,
+      retries: 2,
       minTimeout: 1000,
       maxTimeout: 30000
     }
@@ -136,7 +138,7 @@ async function completeFullFlow(
   const loginHydraRedirUrl = await pRetry(
     () => acceptOauthLogin(loginChallenge), 
     {
-      retries: 4,
+      retries: 2,
       minTimeout: 1000,
       maxTimeout: 30000
     }
@@ -148,7 +150,7 @@ async function completeFullFlow(
   const consentChallenge = await pRetry(
     () => getConsentChallenge(loginHydraRedirUrl), 
     {
-      retries: 4,
+      retries: 2,
       minTimeout: 1000,
       maxTimeout: 30000
     }
@@ -160,7 +162,7 @@ async function completeFullFlow(
   const getCodeUrl = await pRetry(
     () => acceptConsent(consentChallenge, scopes), 
     {
-      retries: 4,
+      retries: 2,
       minTimeout: 1000,
       maxTimeout: 30000
     }
@@ -172,7 +174,7 @@ async function completeFullFlow(
   const code = await pRetry(
     () => getCode(getCodeUrl), 
     {
-      retries: 4,
+      retries: 2,
       minTimeout: 1000,
       maxTimeout: 30000
     }
@@ -191,6 +193,10 @@ async function clearCookies() {
   await fetch(withBasePath('/api/ory/login/browser'))
 }
 
+function checkAccessCookieExists() {
+  return document.cookie.split(';').some((c) => c.trim().startsWith('sep_access_token'))
+}
+
 interface OauthTokenProps {
   scopes?: string[]
   clientId?: string
@@ -200,9 +206,9 @@ interface OauthTokenProps {
 }
 
 export function GetOauthToken(props: OauthTokenProps): React.ReactNode {
-
   const [loggingIn, setLoggingIn] = useState<boolean>(false)
   const [content, setContent] = useState<JSX.Element>(<CircularProgress />)
+  
   const scopes = (
     props.scopes ?? 
     [
@@ -216,27 +222,26 @@ export function GetOauthToken(props: OauthTokenProps): React.ReactNode {
 
   const clientId = props.clientId ?? 'SEP'
 
-  const audience = props.audience ?? 'res_restAuthorizer'
-
-  const redirectUri = props.redirectUri ?? window.location.href
-  
-  const codeFunc = props.codeFunc ?? getToken
+  const audience = props.audience ?? 'res_restAuthorizer' 
 
   useEffect(() => {
+    const codeFunc = props.codeFunc ?? getToken
+    const redirectUri = props.redirectUri ?? window.location.href
     if (!loggingIn) {
       setLoggingIn(true)
       pRetry(
-        () => completeFullFlow(clientId, scopes, audience, redirectUri, codeFunc), 
+        () => {
+          completeFullFlow(clientId, scopes, audience, redirectUri, codeFunc)
+        }, 
         {
           retries: 8,
           minTimeout: 1000,
           maxTimeout: 30000,
           onFailedAttempt: async (attempt) => {
-            if (attempt.attemptNumber > 1) {
-              await clearCookies()
+            // await clearCookies()
+            if (checkAccessCookieExists()) {
+              window.location.reload()
             }
-            console.log(attempt.message)
-            console.log(attempt)
             setContent(
               <Stack alignContent={'center'} alignItems={'center'} justifyContent={'center'} justifyItems={'center'} textAlign={'center'} gap={2}>
                 <CircularProgress />

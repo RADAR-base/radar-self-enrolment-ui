@@ -4,7 +4,7 @@
         "form_name": "paprka_surgery",
         "field_type": "descriptive",
         "section_header": "",
-        "field_label": "## TASK 1: About my knee replacement \n\nThe following questions are about your knee replacement surgery. Answering them is important to our understanding of how people’s physical activity recovers and improves after knee surgery."
+        "field_label": "## TASK 1: About my knee replacement \n\nThe following questions are about your knee replacement surgery. Answering them is important to our understanding of how people’s physical activity recovers and improves after knee surgery.\nQuestions in **bold** must be completed. If you are happy to, **please complete all** the questions."
     },
     {
         "field_name": "paprka_surgery_date",
@@ -28,7 +28,7 @@
         "text_validation_max": "2023-12-31",
         "identifier": "",
         "branching_logic": "",
-        "required_field": "true",
+        "required_field": true,
         "custom_alignment": "",
         "question_number": "",
         "matrix_group_name": "",
@@ -39,9 +39,9 @@
     {
         "field_name": "paprka_surgery_side",
         "form_name": "paprka_surgery",
-        "section_header": "Which knee was the knee replacement surgery performed on?",
+        "section_header": "",
         "field_type": "dropdown",
-        "field_label": "",
+        "field_note": "Which knee was the knee replacement surgery performed on?",
         "select_choices_or_calculations": [
             {
                 "code": "left",
@@ -52,12 +52,12 @@
                 "label": "Right"
             }
         ],
-        "required_field": "true"
+        "required_field": false
     },
     {
         "field_name": "paprka_surgery_multiple_single_knee",
         "form_name": "paprka_surgery",
-        "section_header": "Was this your first knee replacement on that knee, or was it a second or subsequent knee replacement?",
+        "field_note": "Was this your first knee replacement on that knee, or was it a second or subsequent knee replacement?",
         "field_type": "dropdown",
         "select_choices_or_calculations": [
             {
@@ -73,12 +73,12 @@
                 "label": "more"
             }
         ],
-        "required_field": "true"
+        "required_field": false
     },
     {
         "field_name": "paprka_surgery_satisfaction",
         "form_name": "paprka_surgery",
-        "section_header": "How satisfied are you with the results of your most recent knee replacement surgery? ",
+        "field_note": "How satisfied are you with the results of your most recent knee replacement surgery? ",
         "field_type": "dropdown",
         "field_label": "",
         "select_choices_or_calculations": [
@@ -103,14 +103,14 @@
                 "label": "Very dissatisfied"
             }
         ],
-        "required_field": "true"
+        "required_field": false
     },
     {
         "field_name": "paprka_surgery_has_second_surgery",
         "form_name": "paprka_surgery",
         "section_header": "Have you had a knee replacement surgery on your other (opposite) knee?",
         "field_type": "yesno",
-        "required_field": "true"
+        "required_field": true
     },
     {
         "field_name": "paprka_surgery_date_2",
@@ -131,7 +131,7 @@
         "field_note": "Select the month and the year.",
         "text_validation_type_or_show_slider_number": "datetime_dmy",
         "text_validation_max": "2023-12-31",
-        "required_field": false,
+        "required_field": true,
         "evaluated_logic": "results['paprka_surgery_has_second_surgery'] == true"
     },
     {
@@ -143,7 +143,6 @@
     {
         "field_name": "paprka_surgery_education",
         "form_name": "paprka_surgery",
-        "section_header": "What is your highest level of education?",
         "field_type": "dropdown",
         "field_label": "",
         "select_choices_or_calculations": [
@@ -172,13 +171,13 @@
                 "label": "Other qualifications"
             }
         ],
-        "field_note": "We ask for this because it will help us understand the association between people’s physical activity and education.",
+        "field_note": "What is your highest level of education?\nWe ask for this because it will help us understand the association between people’s physical activity and education.",
         "text_validation_type_or_show_slider_number": "",
         "text_validation_min": "",
         "text_validation_max": "",
         "identifier": "",
         "branching_logic": "",
-        "required_field": "true",
+        "required_field": false,
         "custom_alignment": "",
         "question_number": "",
         "matrix_group_name": "",
@@ -189,7 +188,6 @@
     {
         "field_name": "paprka_surgery_work",
         "form_name": "paprka_surgery",
-        "section_header": "What is your current work status?",
         "field_type": "dropdown",
         "field_label": "",
         "select_choices_or_calculations": [
@@ -222,13 +220,13 @@
                 "label": "Other (Please specify)"
             }
         ],
-        "field_note": "We ask for this because it will help us understand the association between people’s physical activity and work.",
+        "field_note": "What is your current work status?\nWe ask for this because it will help us understand the association between people’s physical activity and work.",
         "text_validation_type_or_show_slider_number": "",
         "text_validation_min": "",
         "text_validation_max": "",
         "identifier": "",
         "branching_logic": "",
-        "required_field": "true",
+        "required_field": false,
         "custom_alignment": "",
         "question_number": "",
         "matrix_group_name": "",

@@ -2,7 +2,7 @@ import { PageRepository, createPageRepository } from "@/app/_lib/study/siteConte
 import { BlockPage } from "@/app/_ui/components/blocks/blockPage";
 import ProtocolRepository, { StudyProtocolRepository } from "@/app/_lib/study/protocol/repository";
 
-export const dynamicParams = false
+export const dynamicParams = true
 
 export async function generateStaticParams() {
   const registery: StudyProtocolRepository = new ProtocolRepository()

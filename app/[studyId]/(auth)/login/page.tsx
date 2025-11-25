@@ -32,8 +32,6 @@ export default async function Page({
   const headerList = await headers();
   const referer = headerList.get('referer')
 
-  console.log('referer: ', referer)
-
   return (
     <main>
       <Container maxWidth="lg" disableGutters>

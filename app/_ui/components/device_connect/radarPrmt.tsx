@@ -24,7 +24,7 @@ const AUDIENCE = ['res_ManagementPortal', 'res_gateway', 'res_appconfig'].join('
 const REDIRECT_URI = process.env.NEXT_PUBLIC_PRMT_REDIRECT_URI ?? ''
 
 function AppStoreDownloadModalContent() {
-  const link = 'https://play.google.com/store/apps/details?id=org.radarcns.detail&hl=en'
+  const link = 'https://play.google.com/store/apps/details?id=org.radarcns.detail&hl=en_IN&pli=1'
   return (
     <React.Fragment>
       <a href={link} target='_blank'>
@@ -135,7 +135,7 @@ function PrmtContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
         <Typography variant="body1">
           If you arrived at the website on your computer or tablet – take 
           your phone and search on the Play Store for the study 
-          app <Typography color='primary' fontWeight={700} component={'span'}>RADAR Active RMT</Typography>
+          app <Typography color='primary' fontWeight={700} component={'span'}>RADAR Passive RMT</Typography>
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, sm: 6 }} alignContent={'center'}>
@@ -143,13 +143,13 @@ function PrmtContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
           src={withBasePath('/radar/playstore_prmt.png')}
           width={254}
           height={291}
-          alt={"RADAR Passive RMT app in app store"}
+          alt={"RADAR Passive RMT app in Play Store"}
           style={{ borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)', alignSelf: 'center' }}
         />
       </Grid>
       <Grid size={{ xs: 12, sm: 6 }} textAlign={'left'}>
         <Typography variant="body1">
-          If you arrived at the website on your iPhone, click on:
+          If you arrived at the website on your Android device, click on:
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, sm: 6 }} alignContent={'center'}>
