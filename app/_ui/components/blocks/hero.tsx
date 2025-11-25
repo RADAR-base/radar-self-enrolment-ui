@@ -3,6 +3,8 @@ import { withBasePath } from "@/app/_lib/util/links";
 import { Box, Button, Container, Typography, useTheme } from "@mui/material";
 import Image from "next/image";
 import { MarkdownContainer } from "../base/markdown";
+import React, { useContext } from "react";
+import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 
 
 interface ICallToAction {
@@ -48,6 +50,21 @@ export interface IHeroBlock {
 
 export function HeroBlock(props: IHeroBlock) {
   const flex = props.heroImage ? 0.6 : 0.6
+  const protocol = useContext(ProtocolContext)
+
+  const resolveHref = (href?: string): string | undefined => {
+    if (!href) return undefined
+    // external links (http, https, mailto, tel, etc.)
+    if (/^\w+:/.test(href)) return href
+    // already study-scoped
+    if (protocol?.studyId && href.startsWith(`/${protocol.studyId}/`)) return href
+    // normalize and prefix with study id
+    const trimmed = href.startsWith('/') ? href.slice(1) : href
+    return protocol?.studyId ? `/${protocol.studyId}/${trimmed}` : `/${trimmed}`
+  }
+
+  const ctaResolved = props.cta ? { ...props.cta, href: resolveHref(props.cta.href) } : undefined
+  const cta2Resolved = props.cta2 ? { ...props.cta2, href: resolveHref(props.cta2.href) } : undefined
   return (
     <Box 
       display={"flex"} 
@@ -58,7 +75,7 @@ export function HeroBlock(props: IHeroBlock) {
       <Box display={"flex"} flexDirection={"column"} justifyContent={'center'} textAlign={{xs: "center", sm: "left"}} flexShrink={1} flex={flex} gap={1}>
         {props.title?.children ? <Typography variant="h1" {...props.title}></Typography> : <Typography variant="h1">{props.title}</Typography> }
         <MarkdownContainer>{props.subtitle}</MarkdownContainer>
-        {CTAButtons(props.cta, props.cta2)}
+        {CTAButtons(ctaResolved, cta2Resolved)}
       </Box>
       {props.heroImage && <Box flex={1}>
           <Container 
