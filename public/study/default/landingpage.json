@@ -8,8 +8,8 @@
       "content": {
         "block1": {
           "blockType": "hero",
-          "title": "",
-          "subtitle": "Default study landing page.",
+          "title": "Join the RADAR Project",
+          "subtitle": "This is the default study landing page.",
           "cta": {
             "text": "Join Study",
             "href": "enrol"

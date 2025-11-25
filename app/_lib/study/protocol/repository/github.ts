@@ -16,7 +16,12 @@ export class GitHubProtocolRepository implements StudyProtocolRepository {
             const landingPageContentJson = await this.githubService.initiateFetch(studyId, fileName)
             return JSON.parse(landingPageContentJson!!) as StudyProtocol
         } catch (error) {
-            console.warn(`Study protocol not found on GitHub for studyId ${studyId}. Proceeding without remote definitions.`)
+            console.warn(
+                `Study protocol not found or failed on GitHub for studyId ${studyId}. Proceeding without remote definitions.`,
+                {
+                    error: error instanceof Error ? error.message : String(error),
+                },
+            )
             return undefined
         }
     }
