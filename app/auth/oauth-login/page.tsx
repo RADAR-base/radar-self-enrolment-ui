@@ -1,12 +1,11 @@
 "use client"
 import { Box, Button, Typography } from "@mui/material";
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import { useState, useEffect, type JSX } from 'react';
 import { withBasePath } from '@/app/_lib/util/links';
 import { LogoutButton } from "@/app/_ui/auth/logout";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import LoginComponent from "@/app/_ui/auth/login";
 import { RadarCard } from "@/app/_ui/components/base/card";
 
 function LoginWithCurrentAccountForm(props: {userSession: any, loginChallenge: string}) {
@@ -88,31 +87,34 @@ export default function Page() {
   const [flow, setFlow] = useState<any>();  
   const [content, setContent] = useState<JSX.Element>(<div></div>)
 
+  const pathname = usePathname()
   const loginChallenge = searchParams.get('login_challenge') ?? undefined
-  if (loginChallenge == undefined) {
-    window?.location.replace(withBasePath('/auth/login'))
-    return
-  }
 
   useEffect(() => {
+    if (loginChallenge == undefined) {
+      window.location.replace(withBasePath('/auth/login'))
+      return
+    }
     if (userSession === undefined) {
       getUserSession(setUserSession)
     } else if (userSession === null) {
-      if (flow == undefined) {
-        createLoginFlow(loginChallenge ?? '', setFlow)
-      } else {
-        setContent(<LoginCard>
-          <LoginComponent flow={flow}
-              onLogin={(response?: Response) => {
-                response?.json().then(
-                  (data) => {
-                    router.replace(data['redirect_browser_to'])
-                  }
-                )
-              
-              }}/>  
-        </LoginCard>)
-      }
+      window.location.replace(withBasePath(`/auth/login?redirect_to=${"/auth/oauth-login?" + searchParams.toString()}`))
+      // if (flow == undefined) {
+      //   createLoginFlow(loginChallenge ?? '', setFlow)
+      // } else {
+      //   setContent(<LoginCard>
+      //     <LoginComponent flow={flow}
+      //         onLogin={(response?: Response) => {
+      //           response?.json().then(
+      //             (data) => {
+      //               loginaction(redir)
+      //               console.log('onLogin redir: ', data['redirect_browser_to'])
+      //               router.replace(data['redirect_browser_to'])
+      //             }
+      //           )
+      //         }}/>  
+      //   </LoginCard>)
+      // }
     } else {
       if (userIsParticipant(userSession)) {
         acceptWithCurrentAccount(loginChallenge, router)

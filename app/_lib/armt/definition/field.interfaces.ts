@@ -5,6 +5,7 @@ interface IItem {
   label?: string,
   description?: string,
   errorText?: string,
+  disabled?: boolean
 }
 
 export interface IDateItem extends IItem {

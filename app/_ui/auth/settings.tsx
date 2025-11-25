@@ -7,6 +7,7 @@ import { Box, Typography, TextField, Button } from "@mui/material"
 import { useFormik } from "formik"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { PasswordTextField } from "./passwordField"
 
 interface SettingsProps {
   onComplete?: () => void
@@ -99,11 +100,10 @@ export default function SettingsComponent(props: SettingsProps) {
     <form onSubmit={formik.handleSubmit}>
       <Box display={"flex"} flexDirection={"column"} gap={4} textAlign={"left"}>
         <Typography variant="h2">{title}</Typography>
-          <TextField
+          <PasswordTextField
             id="password"
             name="password"
             label="New Password"
-            type="password"
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -112,11 +112,10 @@ export default function SettingsComponent(props: SettingsProps) {
             fullWidth
             autoComplete="new-password"
             />
-          <TextField
+          <PasswordTextField
             id="password_confirm"
             name="password_confirm"
             label="Confirm New Password"
-            type="password"
             value={formik.values.password_confirm}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}

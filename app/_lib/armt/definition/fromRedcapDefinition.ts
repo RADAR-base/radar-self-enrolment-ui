@@ -3,6 +3,7 @@ import Yup from "../validation/yup";
 import dayjs, { Dayjs } from 'dayjs';
 import { ArmtDefinition, ArmtItem, ArmtItemContent } from "./definition.types";
 import { RadarRedcapDefinition, RadarRedcapFieldDefinition } from "./redcap.types";
+import { parseAndEvalLogic } from "../../parsers/evaluation-parser";
 
 function getTextSchema(field: RadarRedcapFieldDefinition) {
   switch (field.text_validation_type_or_show_slider_number) {
@@ -135,7 +136,18 @@ function FieldFromRedcap(field: RadarRedcapFieldDefinition): ArmtItem {
       validation = getTextSchema(field)
     }
   if (field.required_field) {
-    validation = validation?.required("")
+    if (field.evaluated_logic) {
+      validation = validation?.when('$', 
+        ([results], schema) => {
+          if (parseAndEvalLogic(field.evaluated_logic, results)) {
+            return schema.required("")
+          } else {
+            return schema
+          }
+        })
+    } else {
+      validation = validation?.required("")
+    }
   }
   return {
     content: content,
@@ -150,7 +162,6 @@ export default function fromRedcapDefinition(redcap: RadarRedcapDefinition): Arm
     name: first ? first.form_name : "",
     id: first ? first.form_name : "",
     items: redcap.map((field) => FieldFromRedcap(field))
-  } 
-
+  }
   return definition
 }

@@ -7,6 +7,7 @@ import { withBasePath } from "@/app/_lib/util/links"
 import { getCsrfToken } from '@/app/_lib/auth/ory/util'
 import { ParticipantContext } from '@/app/_lib/auth/provider.client'
 import { IOryLoginFlow } from '@/app/_lib/auth/ory/flows.interface'
+import { PasswordTextField } from './passwordField'
 
 interface LoginProps {
     onLogin?: (response?: Response) => void
@@ -19,9 +20,6 @@ export function LoginComponent(props: LoginProps) {
   // const searchParams = useSearchParams()
   const router = useRouter()
   const participant = useContext(ParticipantContext)
-  if (participant?.loggedIn) {
-    router.back()
-  }
 
   let [errorText, setErrorText] = useState<string>('');
   let [flow, setFlow] = useState<IOryLoginFlow | undefined>(props.flow);
@@ -80,6 +78,9 @@ export function LoginComponent(props: LoginProps) {
   }
 
   useEffect(() => {
+    if (participant?.loggedIn) {
+      router.back()
+    }
     if (flow === undefined) {
       getFlow(setFlow)
     }
@@ -91,6 +92,7 @@ export function LoginComponent(props: LoginProps) {
   }
 
   const formik = useFormik({
+    validateOnMount: true,
       initialValues: {
           identifier: '',
           password: '',
@@ -121,6 +123,7 @@ export function LoginComponent(props: LoginProps) {
         {errorText && <Typography variant='overline' color='error'>{errorText}</Typography>}
         <TextField
             fullWidth
+            autoFocus
             id="identifier"
             name="identifier"
             label="Email"
@@ -130,12 +133,11 @@ export function LoginComponent(props: LoginProps) {
             error={formik.touched.identifier && Boolean(formik.errors.identifier)}
             autoComplete='email'
           />
-        <TextField
+        <PasswordTextField
             fullWidth
             id="password"
             name="password"
             label={<Box>{"Password"}</Box>}
-            type="password"
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}

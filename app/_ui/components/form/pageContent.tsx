@@ -12,6 +12,8 @@ import { sendGAEvent } from "@next/third-parties/google";
 import React, { useEffect, useState } from "react";
 import { InView } from 'react-intersection-observer';
 import { TaskConfirmDialog } from "./confirmDialog";
+import Yup from "@/app/_lib/armt/validation/yup";
+import { ActiveTaskResponse } from "@/app/_lib/armt/response/response.interface";
 
 function ControlButtons(props: {
   submitDisabled: boolean
@@ -48,24 +50,23 @@ return (
   )
 }
 
-interface ArmtContentProps {
-  studyId: string
-  taskId: string
-  redcapDef: RadarRedcapDefinition
-}
-
-export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
-  const armtDef: ArmtDefinition = fromRedcapDefinition(redcapDef)
-  const schema = schemaFromDefinition(armtDef)
+function ArmtFormContainer({armtDef, schema, studyId, taskId, disabled, initialValues}: 
+  {
+    armtDef: ArmtDefinition, 
+    schema: Yup.Schema,
+    studyId: string,
+    taskId: string,
+    disabled?: boolean,
+    initialValues?: any
+  }) {
   const router = useRouter()
   const [submitDialogOpen, setSubmitDialogOpen] = useState<boolean>(false);
   const [backDialogOpen, setBackDialogOpen] = useState<boolean>(false);
-
   const formik = useFormik({
     validateOnChange: true,
     validateOnMount: true,
     validateOnBlur: false,
-    initialValues: {},
+    initialValues: initialValues ?? {},
     validationSchema: schema,
     onSubmit: async (values) => {
       let resp = await fetch(
@@ -94,7 +95,6 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
       }
     }
   })
-
   useEffect(() => {
     sendGAEvent('event', 'study_task', {
       'study_id': studyId,
@@ -109,9 +109,9 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
     return () => {
       // window.removeEventListener('popstate', onPopState);
       // window.removeEventListener('beforeunload', handleBeforeUnload);
-
     };
   }, [])
+
 
   const setValue = (field: string, value: any, shouldValidate?: boolean) => {
     formik.setFieldValue(field, value, shouldValidate)
@@ -130,16 +130,20 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
       }}>
         <form onSubmit={formik.handleSubmit}>
           <Stack gap={4} margin={"auto"}>
-            <ArmtForm definition={armtDef} values={formik.values} setFieldValue={setValue} errors={formik.errors}></ArmtForm>
+            <ArmtForm 
+              definition={armtDef} values={formik.values} 
+              setFieldValue={setValue} errors={formik.errors}
+              disabled={disabled}>
+            </ArmtForm>
             <ControlButtons 
               onSubmit={() => {setSubmitDialogOpen(true)}}
-              submitDisabled={(!formik.isValid) || formik.isSubmitting} 
+              submitDisabled={(!formik.isValid) || formik.isSubmitting || (disabled??false) } 
             />
           </Stack>
         </form>
       </Container>
       <TaskConfirmDialog 
-        title={"Are you sure you want to complete this task?"}
+        title={"Are you sure you want to submit this task?"}
         onConfirm={() => {
           setSubmitDialogOpen(false)
           formik.submitForm()
@@ -160,4 +164,27 @@ export function ArmtContent({redcapDef, studyId, taskId}: ArmtContentProps) {
       </TaskConfirmDialog>
     </React.Fragment>
   )
+}
+
+interface ArmtContentProps {
+  studyId: string
+  taskId: string
+  redcapDef: RadarRedcapDefinition,
+  disabled?: boolean,
+  initialResponse?: ActiveTaskResponse
+}
+
+export function ArmtContent({redcapDef, studyId, taskId, disabled, initialResponse}: ArmtContentProps) {
+  var armtDef: ArmtDefinition
+  var schema: Yup.Schema
+  armtDef = fromRedcapDefinition(redcapDef)
+  schema = schemaFromDefinition(armtDef)
+  return <ArmtFormContainer
+    armtDef={armtDef}
+    schema={schema}
+    studyId={studyId}
+    taskId={taskId}
+    disabled={disabled}
+    initialValues={initialResponse ? initialResponse.answers : undefined}
+  />
 }

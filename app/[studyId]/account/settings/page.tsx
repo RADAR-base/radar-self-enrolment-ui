@@ -1,13 +1,15 @@
 "use server"
 import { IOrySettingsFlow } from '@/app/_lib/auth/ory/flows.interface';
-import { createSettingsFlow, getSettingsFlow } from '@/app/_lib/auth/ory/kratos';
+import { createSettingsFlow, getSettingsFlow, whoAmI } from '@/app/_lib/auth/ory/kratos';
+import { ParticipantContext } from '@/app/_lib/auth/provider.client';
 import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
 import SettingsComponent from '@/app/_ui/auth/settings';
 import { RadarCard } from '@/app/_ui/components/base/card';
 import { Download } from '@mui/icons-material';
 import { Box, Container } from '@mui/material';
 import { cookies } from 'next/headers';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
+import { useContext } from 'react';
 
 export default async function Page({
   params,
@@ -21,6 +23,11 @@ export default async function Page({
   const cookieJar = await cookies()
   const csrfToken = cookieJar.getAll().find((c) => c.name.startsWith('csrf_token_'))
   let flow: IOrySettingsFlow | undefined
+
+  const r = await whoAmI()
+  if (!r.ok) {
+    redirect(`/${studyId}`)
+  }
 
   if (csrfToken != undefined) {
     if (flowId == undefined) {

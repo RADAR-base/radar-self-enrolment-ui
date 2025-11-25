@@ -7,7 +7,6 @@ import 'dayjs/locale/en-gb';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
-
 function valueFormatFromView(view: DateView[]) {
   let formatArray: string[] = []
   if (view.includes("year")) {
@@ -20,6 +19,20 @@ function valueFormatFromView(view: DateView[]) {
     formatArray.push("DD")
   }
   return formatArray.join("-")
+}
+
+function inputFormatFromView(view: DateView[]) {
+  let formatArray: string[] = []
+  if (view.includes("day")) {
+    formatArray.push("DD")
+  }
+  if (view.includes("month")) {
+    formatArray.push("MM")
+  }
+  if (view.includes("year")) {
+    formatArray.push("YYYY")
+  }
+  return formatArray.join("/")
 }
 
 interface ArmtDateFieldProps extends IDateItem {
@@ -35,14 +48,10 @@ export function ArmtDateField({title, label, description, errorText, ...props}: 
   const valueFormat = valueFormatFromView(view)
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'en-gb'}>
-      <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
+      <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1}>
         <Typography variant="h4" component={'span'}>{title}</Typography>
         <Typography variant="body1" component={'span'} fontStyle={'italic'}>{description}</Typography>
-        <DatePicker 
-          sx={{
-            pt: 1,
-            maxWidth: '16em'
-          }}
+        <DatePicker
           key={props.key}
           value={props.value ? dayjs(props.value, valueFormat) : null}
           disabled={props.disabled}
@@ -51,6 +60,7 @@ export function ArmtDateField({title, label, description, errorText, ...props}: 
           minDate={props.minDate ? dayjs(props.minDate) : undefined}
           maxDate={props.maxDate ? dayjs(props.maxDate) : undefined}
           formatDensity='spacious'
+          format={inputFormatFromView(view)}
           label={label}
           onChange={(value, context) => {
             if (value) {
