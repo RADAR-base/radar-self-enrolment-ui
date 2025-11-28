@@ -22,7 +22,7 @@
     "@types/nodemailer": "^6.4.17",
     "dayjs": "^1.11.13",
     "formik": "^2.4.6",
-    "glob": "^11.0.0",
+    "glob": "^11.1.0",
     "jwt-decode": "^4.0.0",
     "morph-expressions": "^1.1.1",
     "mui-markdown": "^1.2.2",
