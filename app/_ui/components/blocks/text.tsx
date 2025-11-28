@@ -8,7 +8,7 @@ export interface ITextBlock {
   content: string
 }
 
-export function TextBlock({title, subtitle, content, ...props}: ITextBlock, ref: ForwardedRef<HTMLDivElement>) {
+export function TextBlock({ title, subtitle, content }: ITextBlock) {
   return (
       <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1}>
         <Typography variant="h2">{title}</Typography>

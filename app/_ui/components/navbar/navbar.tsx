@@ -20,6 +20,22 @@ interface MenuProps {
 }
 
 function SmallMenu(props: MenuProps) {
+  const resolveHref = (link: {text: string, href: string}): string => {
+    const href = link.href ?? ''
+    const studyId = props.studyId
+    if (!studyId) return href
+    // External
+    if (/^\w+:/.test(href)) return href
+    // Home link normalization
+    if (link.text?.toLowerCase() === 'home' || href === '/' || href === '') {
+      return `/${studyId}`
+    }
+    // Already study-scoped
+    if (href === `/${studyId}` || href.startsWith(`/${studyId}/`)) return href
+    // Normalize relative
+    if (href.startsWith('/')) return `/${studyId}${href}`
+    return `/${studyId}/${href}`
+  }
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => setAnchorElNav(event.currentTarget);
   const handleCloseNavMenu = () => setAnchorElNav(null);
@@ -30,7 +46,9 @@ function SmallMenu(props: MenuProps) {
          alignItems='center'
          justifyContent='flex-end'
          display='flex'>
+      {(props.loggedIn && props.studyId) && <NextButton href={`/${props.studyId}/portal`}>Tasks</NextButton>}
       <AccountButton />
+      
       <IconButton
         size="large"
         aria-label="account of current user"
@@ -58,7 +76,7 @@ function SmallMenu(props: MenuProps) {
           <MenuItem
             onClick={() => {
                 handleCloseNavMenu()
-                router.push(link.href)
+                router.push(resolveHref(link))
               }
             }
             key={i}>
@@ -72,7 +90,7 @@ function SmallMenu(props: MenuProps) {
               router.push(`/${props.studyId}/portal`)
             }
         }>
-          Portal
+          Tasks
         </MenuItem>
         }
       </Menu>
@@ -81,11 +99,23 @@ function SmallMenu(props: MenuProps) {
 }
 
 function LargeMenu(props: MenuProps) {
+  const resolveHref = (link: {text: string, href: string}): string => {
+    const href = link.href ?? ''
+    const studyId = props.studyId
+    if (!studyId) return href
+    if (/^\w+:/.test(href)) return href
+    if (link.text?.toLowerCase() === 'home' || href === '/' || href === '') {
+      return `/${studyId}`
+    }
+    if (href === `/${studyId}` || href.startsWith(`/${studyId}/`)) return href
+    if (href.startsWith('/')) return `/${studyId}${href}`
+    return `/${studyId}/${href}`
+  }
   return (
     <Box flexGrow={1} flexDirection='row' alignItems='center' justifyContent='flex-end'
          gap={2} display='flex'>
-      {props.links?.map((link, i) => <NextButton href={link.href} key={i}>{link.text}</NextButton>)}
-      {(props.loggedIn && props.studyId) && <NextButton href={`/${props.studyId}/portal`}>Portal</NextButton>}
+      {props.links?.map((link, i) => <NextButton href={resolveHref(link)} key={i}>{link.text}</NextButton>)}
+      {(props.loggedIn && props.studyId) && <NextButton href={`/${props.studyId}/portal`}>Tasks</NextButton>}
       <AccountButton />
     </Box>
   )
@@ -104,6 +134,10 @@ function NavBar(props: NavBarProps) {
   const matches = useMediaQuery(theme.breakpoints.down('sm'));
   const participant = useContext(ParticipantContext);
   const study = useContext(ProtocolContext)
+  const router = useRouter()
+  const onLogoClick = () => {
+    router.push(`/${study.studyId}`)
+  }
   return (
   <AppBar color='inherit' sx={{'overflowX': 'auto'}}>
     <Container maxWidth='lg' sx={{padding: 2}}> 
@@ -115,8 +149,20 @@ function NavBar(props: NavBarProps) {
               alignItems='center'
               gap={2}
               paddingRight={4}>
-          {props.logo_src &&<Box height={"3rem"}><img src={withBasePath(props.logo_src)} alt='Study logo' height={"100%"}></img></Box>}
-          <Typography display={{'xs': 'none', 'md': 'block'}} variant="h1" align="center">{props.title}</Typography>
+          <Box onClick={onLogoClick} style={{cursor: 'pointer'}} display={'flex'}
+               flexDirection={'row'} flexWrap={'nowrap'}
+               alignItems={'center'} gap={1}>
+            {props.logo_src &&
+              <Box height={"3rem"}>
+                <img src={withBasePath(props.logo_src)}
+                    alt='Study logo' height={"100%"}>
+                </img>
+              </Box>
+            }
+            <Typography display={{'xs': 'none', 'md': 'block'}} variant="h1" align="center" style={{userSelect: 'none'}}>
+              {props.title}
+            </Typography>
+          </Box>
         </Box>
         {matches ? <SmallMenu links={props.links} loggedIn={participant?.loggedIn ?? false} studyId={study.studyId} /> : <LargeMenu links={props.links} loggedIn={participant?.loggedIn ?? false} studyId={study.studyId} />}
       </Toolbar>

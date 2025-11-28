@@ -24,7 +24,7 @@ export function EnrolmentConsent(props: EnrolmentConsentProps) {
   const title = props.title ? props.title : 'Consent'
   const description = props.description
 
-  var requiredItems: React.ReactElement[] = [];
+  var requiredItems: React.ReactElement<any>[] = [];
   for (let i = 0; i < props.requiredItems.length; i++) {
     requiredItems.push(<Divider key={"divider." + i} />)
     requiredItems.push(
@@ -38,7 +38,7 @@ export function EnrolmentConsent(props: EnrolmentConsentProps) {
       />
     )
   }
-  var optionalItems: React.ReactElement[] = [];
+  var optionalItems: React.ReactElement<any>[] = [];
   if (props.optionalItems) {
     for (let i = 0; i < props.optionalItems.length; i++) {
       optionalItems.push(<Divider key={"divider." + i} />)
@@ -67,10 +67,10 @@ export function EnrolmentConsent(props: EnrolmentConsentProps) {
       <Divider />
       {<MarkdownContainer>{props.signatureDescription ?? "Sign here"}</MarkdownContainer>}
       <Box display={'flex'} flexWrap={'wrap'} flexDirection={'row'} width={'100%'} gap={2}>
-        <Box minWidth={390}>
+        <Box minWidth={{xs: "100%", sm: 390}} flexGrow={1}>
           <ArmtTextField label={"First Name"} setFieldValue={props.setFieldValue} value={props.values['first_name']} id='consent.first_name' fieldType="text" />
         </Box>
-        <Box minWidth={390}>
+        <Box minWidth={{xs: "100%", sm: 390}} flexGrow={1}>
           <ArmtTextField label={"Last Name"} setFieldValue={props.setFieldValue} value={props.values['last_name']} id='consent.last_name' fieldType="text"/>
         </Box>
         <TextField label={'Date'} value={props.values['date']} />

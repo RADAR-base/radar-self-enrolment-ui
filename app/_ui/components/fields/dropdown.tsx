@@ -10,7 +10,7 @@ interface ArmtDropdownFieldProps extends IDropdownItem {
   setFieldValue: (id: string, value: string) => void
 }
 
-export function ArmtDropdownField(props: ArmtDropdownFieldProps, ref: ForwardedRef<HTMLDivElement>) {
+export function ArmtDropdownField(props: ArmtDropdownFieldProps) {
 
   return (
     <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1} key={props.key}>
@@ -22,15 +22,16 @@ export function ArmtDropdownField(props: ArmtDropdownFieldProps, ref: ForwardedR
                 margin: 'dense'
               }
           }}
+          disabled={props.disabled}
           select
           id={props.id}
           value={props.value ?? ""}
           onChange={(event) => {props.setFieldValue(props.id, event.target.value)}}
-          variant="standard"
+          variant="outlined"
           label={props.label}
         >
           {props.choices.map((choice) => (
-            <MenuItem value={choice.code} key={props.id + '.' + choice.code}>{choice.label}</MenuItem>
+            <MenuItem sx={{whiteSpace: 'normal'}} value={choice.code} key={props.id + '.' + choice.code}>{choice.label}</MenuItem>
           ))}          
         </TextField>
   </Box>

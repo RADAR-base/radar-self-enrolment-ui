@@ -1,75 +1,50 @@
-FROM node:lts-alpine AS base
-
-# Install dependencies only when needed
-FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
+# Stage 1: Install dependencies
+FROM node:22-alpine AS deps
 
 WORKDIR /app
 
-# Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
+COPY package.json package-lock.json* pnpm-lock.yaml* yarn.lock* ./
+
+# Install dependencies
 RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+  if [ -f package-lock.json ]; then npm ci; \
+  elif [ -f pnpm-lock.yaml ]; then npm install -g pnpm && pnpm install; \
+  elif [ -f yarn.lock ]; then yarn install --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; fi
 
+# Stage 2: Build the app
+FROM node:22-alpine AS builder
 
-# Rebuild the source code only when needed
-FROM base AS builder
 WORKDIR /app
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line in case you want to disable telemetry during the build.
-ENV NEXT_TELEMETRY_DISABLED=1
+RUN npm run build
 
-RUN \
-  if [ -f yarn.lock ]; then yarn run build; \
-  elif [ -f package-lock.json ]; then npm run build; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+# Stage 3: Production image
+FROM node:22-alpine AS runner
 
-# Production image, copy all the files and run next
-FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV=production
-# Uncomment the following line in case you want to disable telemetry during runtime.
-# ENV NEXT_TELEMETRY_DISABLED=1
+# Add a non-root user (optional, safer)
+RUN addgroup -g 1001 nextjs \
+  && adduser -D -u 1001 -G nextjs nextjs
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
+# Copy built app from builder
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 
-# Set the correct permission for prerender cache
-RUN mkdir -p .next/cache/images
-RUN chown -R nextjs:nodejs .next
-RUN chmod -R 660 .next
-VOLUME ["/app/.next/cache"]
 
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Fix permissions
+RUN mkdir -p /app/.next/cache/images \
+  && chown -R nextjs:nextjs /app \
+  && chmod -R 777 /app/.next
 
-# 
-COPY --chown=nextjs:nodejs --from=builder /app/ ./
-
+# Run as non-root user
 USER nextjs
 
 EXPOSE 3000
 
-ENV PORT=3000
-
-# server.js is created by next build from the standalone output
-# https://nextjs.org/docs/pages/api-reference/next-config-js/output
-
-ENV HOSTNAME="0.0.0.0"
 CMD ["node", "server.js"]

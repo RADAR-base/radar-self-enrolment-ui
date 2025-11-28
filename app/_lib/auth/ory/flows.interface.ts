@@ -1,4 +1,6 @@
-interface IOryUiNodeAttributes {
+import { OryIdentity } from "./types"
+
+export interface IOryUiNodeAttributes {
   disabled: boolean,
   name: string,
   node_type: string,
@@ -7,7 +9,7 @@ interface IOryUiNodeAttributes {
   value: string
 }
 
-interface IOryUiNode {
+export interface IOryUiNode {
   attributes: IOryUiNodeAttributes,
   group: string,
   messages: IOryMessage[],
@@ -15,21 +17,21 @@ interface IOryUiNode {
   
 }
 
-interface IOryUi {
+export interface IOryUi {
   action: string,
   messages: IOryMessage[],
   method: string,
   nodes: IOryUiNode[]
 }
 
-interface IOryMessage {
+export interface IOryMessage {
   id: number,
   text: string,
   type: string,
   context?: any
 }
 
-interface IOryRecoveryContinueWith {
+export interface IOryContinueWith {
   action: string,
   flow: {
     id: string,
@@ -38,7 +40,19 @@ interface IOryRecoveryContinueWith {
   }[]
 }
 
-interface IOryLoginFlow {
+export interface IOryErrorFlow {
+  error: {
+    code: number,
+    id: string,
+    message: string,
+    reason: string,
+    request: string,
+    status: string
+  },
+  redirect_browser_to?: string
+}
+
+export interface IOryLoginFlow {
   created_at: Date,
   expires_at: Date,
   id: string,
@@ -53,7 +67,7 @@ interface IOryLoginFlow {
   updated_at: Date
 }
 
-interface IOryRegistrationFlow {
+export interface IOryRegistrationFlow {
   expires_at: Date,
   id: string,
   issued_at: Date,
@@ -64,9 +78,9 @@ interface IOryRegistrationFlow {
   updated_at: Date
 }
 
-interface IOryRecoveryFlow {
+export interface IOryRecoveryFlow {
   active: string,
-  continue_with: IOryRecoveryContinueWith[],
+  continue_with: IOryContinueWith[],
   expires_at: Date,
   id: string,
   issued_at: Date,
@@ -78,7 +92,7 @@ interface IOryRecoveryFlow {
   state: string
 }
 
-interface IOryVerificationFlow {
+export interface IOryVerificationFlow {
   active: string,
   expires_at: Date,
   id: string,
@@ -89,4 +103,19 @@ interface IOryVerificationFlow {
   type: string,
   ui: IOryUi
   state: string
+}
+
+export interface IOrySettingsFlow {
+  active: string,
+  continue_with: IOryContinueWith[],
+  expires_at: Date,
+  id: string,
+  identity: OryIdentity,
+  issued_at: Date,
+  request_url: string,
+  return_to: string,
+  state: string,
+  transient_payload: any,
+  type: string,
+  ui: IOryUi
 }

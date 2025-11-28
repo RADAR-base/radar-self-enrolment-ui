@@ -1,4 +1,4 @@
-import { cookies } from "next/headers"
+import { cookies } from "next/headers";
 
 export function parseSetCookie(c: string): [string, string, {[key: string]: string | boolean}] {
   var split = c.split(';')
@@ -14,11 +14,12 @@ export function parseSetCookie(c: string): [string, string, {[key: string]: stri
   return [namevalue[0], namevalue[1], opts]
 }
 
-export function setCookies(res: Response) {
+export async function setCookies(res: Response) {
+  const cookieJar = await cookies()
   res.headers.getSetCookie().map(
     (c) => {
       var [name, value, opts] = parseSetCookie(c)
-      cookies().set(name, value, opts)
+      cookieJar.set(name, value, opts)
     }
   )
 }

@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation'
 import Yup from '@/app/_lib/armt/validation/yup'
 import { useFormik } from 'formik';
@@ -17,6 +17,8 @@ import { EnrolmentRegister } from './register.component';
 import { withBasePath } from '@/app/_lib/util/links';
 import { getCsrfToken } from '@/app/_lib/auth/ory/util';
 import { sendGAEvent } from '@next/third-parties/google'
+import { IOryRegistrationFlow } from '@/app/_lib/auth/ory/flows.interface';
+import StepperProgress from '../components/base/stepperProgress';
 
 
 function generateEligibilitySchema(protocol: EnrolmentProtocol): Yup.Schema {
@@ -109,11 +111,11 @@ function SubmitButton(props: SubmitButtonProps) {
 
 function generateSteps(protocol: EnrolmentProtocol, stepContent: {[key: string]: React.ReactNode}) {
   const steps: string[] = [];
-  if (protocol.studyInformation && stepContent["studyInformation"]) {
-    steps.push("studyInformation")
-  }
   if (stepContent["eligibility"]) {
     steps.push("eligibility")
+  }
+  if (protocol.studyInformation && stepContent["studyInformation"]) {
+    steps.push("studyInformation")
   }
   if (stepContent["consent"]) {
     steps.push("consent")
@@ -144,6 +146,8 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   const [stepIdx, setStep] = React.useState(0)
   let [flow, setFlow] = useState<any>();
   let [errorText, setErrorText] = useState<string>('');
+  const contentRef = useRef<HTMLElement>(undefined)
+
   
   const getFlow = async (setFlow: (v: any) => void) => {
     const response = await fetch(withBasePath('/api/ory/registration/browser'))
@@ -203,20 +207,10 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
         email: register.email,
         password: register.password,
         csrf_token: getCsrfToken(flow),
-        traits: {
-          projects: [
-            {
-              id: studyProtocol.studyId,
-              name: studyProtocol.name,
-              userId: crypto.randomUUID(),
-              ...traits,
-              version: protocol.version
-            }
-          ]
-        }
+        traits: traits,
       }
       sendGAEvent('event', 'study_enrolment', {status: 'submitting'})
-      fetch(withBasePath('/api/ory/registration?' + new URLSearchParams({
+      fetch(withBasePath(`/api/study/${studyProtocol.studyId}/join?` + new URLSearchParams({
         flow: flow.id
       })), {
         method: 'POST',
@@ -260,7 +254,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   })
 
   const stepContent: { [key: string]: React.ReactNode } = {
-    ...(protocol.studyInformation && protocol.studyInformation.title && protocol.studyInformation.content
+    ...(protocol.studyInformation && protocol.studyInformation.content
       ? {
           studyInformation: (
             <EnrolmentStudyInformation
@@ -344,14 +338,13 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   function nextStep() {
     if ((stepIdx + 1) < steps.length) {
       scrollToTop()
-      sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx + 1], status: 'ongoing'})
       setStep(stepIdx + 1)
+      contentRef.current?.focus()
     }
   }
   
   function previousStep() {
     if (stepIdx > 0) {
-      sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx - 1], status: 'ongoing'})
       setStep(stepIdx - 1)
       scrollToTop()
     } else {
@@ -360,31 +353,21 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   }
 
   useEffect(() => {
+    sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx], status: 'start'})
     if (flow === undefined) {
-      sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx], status: 'start'})
       getFlow(setFlow)
-    } else {
-      validateStep()
     }
-  }, [formik.values, stepIdx, flow])
+  }, [])
 
+  useEffect(() => {
+    validateStep()
+  }, [formik.values])
 
-  const shapeStyles = { width: '0.5rem', height: '0.5rem' };
-  const shapeCircleStyles = { borderRadius: '50%' };
-  const circle = (active: boolean, key?: string) => {
-    return <Box component="span"
-                key={key}
-                sx={{ 
-                  bgcolor: (active) ? 'primary.main' : 'lightgray',
-                  ...shapeStyles, 
-                  ...shapeCircleStyles,}} />
-  }
-  let stepperDots: JSX.Element[] = [];
-  for (let i=0; i < steps.length; i++) {
-    stepperDots.push(
-      circle(i <= stepIdx, 'stepdot' + i)
-    )
-  }
+  useEffect(() => {
+    validateStep()
+    sendGAEvent('event', 'study_enrolment', {'step': steps[stepIdx], status: 'ongoing'})
+  }, [stepIdx])
+
   const ControlButtons = (
     <Box 
       width={"100%"}
@@ -403,9 +386,7 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
         }}
         >
         <BackButton exit={stepIdx == 0} onClick={previousStep}/>
-        <Box display={'flex'} flexDirection={'row'} gap={0.5}>
-          {stepperDots}
-        </Box>
+        <StepperProgress numSteps={steps.length} currentStep={stepIdx} />
         {((stepIdx+1) == steps.length) ? 
           <SubmitButton disabled={disabled || formik.isSubmitting} onClick={formik.submitForm} /> : 
           <NextButton disabled={disabled} onClick={nextStep} />
@@ -423,12 +404,14 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
       }}
     >
       <form onSubmit={formik.handleSubmit}>
-        <Stack display={'inline'} gap={2} margin={"auto"}>
+        <Box display={'inline'} gap={2} margin={"auto"} aria-live="polite">
           {errorText && <Typography variant='overline' color='error'>{errorText}</Typography>}
-          {stepContent[steps[stepIdx]]}
+          <Box  ref={contentRef}> 
+           {stepContent[steps[stepIdx]]}
+          </Box>
           <br />
           {ControlButtons}
-        </Stack>  
+        </Box>  
       </form>
     </Container>
   )

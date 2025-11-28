@@ -5,11 +5,14 @@ interface IItem {
   label?: string,
   description?: string,
   errorText?: string,
+  disabled?: boolean
 }
 
 export interface IDateItem extends IItem {
   fieldType: "date",
-  views?: ("year" | "month" | "day")[]
+  views?: ("year" | "month" | "day")[],
+  minDate?: Date | string,
+  maxDate?: Date | string
 }
 
 export interface IYesNoItem extends IItem {

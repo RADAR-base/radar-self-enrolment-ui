@@ -12,12 +12,13 @@ interface ArmtSliderFieldProps extends ISliderItem {
 }
 
 
-export function ArmtSliderField(props: ArmtSliderFieldProps, ref: ForwardedRef<HTMLDivElement>) {
+export function ArmtSliderField(props: ArmtSliderFieldProps) {
   return (
     <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1} key={props.key}>
       <Typography variant="h2">{props.title}</Typography>
       <Typography variant="h4" component={'span'}>{props.label}</Typography>
       <Slider 
+      disabled={props.disabled}
         sx={{
           width: "80%",
           alignSelf: 'center'

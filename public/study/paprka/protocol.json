@@ -12,25 +12,25 @@
       "appearance": {},
       "schedule": {},
       "metadata": {
-        "title": "Surgery Information",
+        "title": "TASK 1: About my knee replacement",
         "order": 0,
-        "description": "Tell us when you had your knee replacement surgery.",
+        "description": "Eight quick questions.\n<span style='color:red; font-style: italic'>Tip: You will need the month and year of your knee replacement surgery</span>",
         "optional": false,
         "type": "redcap_local",
         "path": "/public/study/paprka/resources/paprka_surgery.json"
       }
     },
     {
-      "id": "paprka_nhs",
+      "id": "paprka_about",
       "appearance": {},
       "schedule": {},
       "metadata": {
-        "title": "NHS Number",
+        "title": "TASK 2: About You",
         "order": 1,
-        "description": "Your unique, 10 digit, NHS identifier.",
+        "description": "Four quick questions.\n<span style='color:red; font-style: italic'>Tip: You will need your NHS number</span>",
         "optional": false,
         "type": "redcap_local",
-        "path": "/public/study/paprka/resources/paprka_nhs.json"
+        "path": "/public/study/paprka/resources/paprka_about.json"
       }
     },
     {
@@ -38,18 +38,31 @@
       "appearance": {},
       "schedule": {},
       "metadata": {
-        "title": "Connect Devices",
+        "title": "TASK 3: Connect my devices",
         "order": 2,
-        "description": "Share your fitness tracker or smartphone app with us.",
+        "description": "Connect one or more devices\n<span style='color:red; font-style: italic'>Tip (for Fitbit & Oura ring): You will need login details for your device\nTip (for Apple): You need to enter the study name PAPrKA; use the email and password from your PAPrKA account; best completed using WiFi</span>",
         "optional": false,
         "type": "inbuilt",
         "inbuiltId": "connect",
         "options": {
+          "title": "TASK 3: Connect my device(s)",
+          "description": "<p>Click on the connect button for your device.</p><p>The study team will collect past physical activity data, if available, from 1st July 2016 until 31st December 2024. This will be a one-off transfer of data. We will not collect any activity data beyond the 31st December 2024.</p>",
           "devices": [
-            "fitbit",
-            "apple_health",
-            "garmin",
-            "oura"
+            {
+              "id": "fitbit",
+              "title": "Fitbit Tab",
+              "description": "Before clicking Connect, you can read [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_Fitbit.pdf) or [watch a video](https://youtu.be/nPRRGlkdrvg) to see how to share your Fitbit physical activity data.\n"
+            },
+            {
+              "id": "oura",
+              "title": "Oura Ring Tab",
+              "description": "Before clicking Connect, you can read [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_Oura.pdf) or [watch a video](https://youtu.be/m_4rbNYphXs) to see how to share your Oura Ring physical activity data.\n"
+            },
+            {
+              "id": "apple_health",
+              "title": "Apple Health",
+              "description": "Before clicking Connect, you can [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_iPhone.docx) or [watch a video](#) to see how to share your iPhone or Apple Watch physical activity data.\n"
+            }
           ]
         }
       }
@@ -59,9 +72,9 @@
       "appearance": {},
       "schedule": {},
       "metadata": {
-        "title": "Feedback",
+        "title": "TASK 4: Give us your feedback",
         "order": 3,
-        "description": "Help us make this process easier for others.",
+        "description": "Seven quick questions about joining the study",
         "optional": true,
         "type": "redcap_local",
         "path": "/public/study/paprka/resources/paprka_feedback.json"
@@ -71,173 +84,128 @@
   "enrolment": {
     "version": "0.1",
     "eligibility": {
-      "title": "Who Can Take Part",
-      "description": "We can only accept people onto our study if they answer Yes to the following questions.",
+      "title": "Check you can take part",
+      "description": "_You can join the study if you answer Yes to all **four questions**. Please scroll down to complete all four questions._\n<br />\n_If your answer is No to any of the questions, and you want to leave the page, click the exit button on your left._",
       "items": [
         {
           "fieldType": "yesno",
           "id": "criteria1",
-          "description": "Are you over 18 years of age?"
+          "description": "Have you had knee replacement (total, or partial), either through the NHS or a private healthcare provider, between 1<sup>st</sup> January 2017 and 31<sup>st</sup> December 2023?\n"
         },
         {
           "fieldType": "yesno",
           "id": "criteria2",
-          "description": "Have you had total, or partial, knee replacement surgery, either through the NHS or a private healthcare provider, between January 2017 and December 2023?"
+          "description": "Were you over 18 years of age at the time of your knee replacement?\n"
         },
         {
           "fieldType": "yesno",
           "id": "criteria3",
-          "description": "Did you use a smartphone app or fitness tracker to track your activity six months before your surgery? An iPhone automatically collects activity data."
+          "description": "Did you use a Fitbit, iPhone (6s and above)_*, Apple Watch_* or Oura Ring to track your activity six months or more before your knee replacement?\n_*If you used an iPhone, it automatically collects physical activity data so please select YES._\n"
         },
         {
           "fieldType": "yesno",
           "id": "criteria4",
-          "description": "Did you use a smartphone app or fitness tracker to track your activity one year after your surgery? An iPhone automatically collects activity data."
+          "description": "Did you use a Fitbit, iPhone (6s and above)_*, Apple Watch_* or Oura Ring to track your activity one year or more after your knee replacement?\n_*If you used an iPhone, it automatically collects physical activity data so please select YES._\n"
         }
       ]
     },
     "consent": {
       "title": "Consent",
-      "description": "Before you can take part in this study, we need your consent to access activity data from your iPhone, fitness tracker or smartphone app, and your National Joint Registry knee replacement surgery record.\n<br />\nWe also need you to create an account, using an email and password, so you can log back into the PAPrKA research study portal. You may want to do this to update your personal information or if you decide to leave the study.\n<br />\nYour data will be managed by the PAPRKA research team and will not be shared with any other parties. You can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095).\n",
+      "description": "Before you can take part in this study, we need your consent. Please read carefully the consent statements and click Yes or No for each statement. You will need to scroll down to sign the consent form.\n<br />\nYou need to answer YES to the first nine items to take part in the study. The remaining items are optional, and you can take part if you answer YES or NO.",
       "requiredItems": [
         {
           "fieldType": "yesno",
-          "id": "required1",
-          "description": "I confirm that I have read the attached information sheet (Version 3.0, Date xx/xx/xx) for the above study and have had the opportunity to consider the information and ask questions and had these answered satisfactorily.\n"
+          "id": "M-Confirmed read",
+          "description": "I confirm that I have read the [Participant Information Sheet (PIS) (Version 6.0, Date xx/10/25)](/study/paprka/resources/paprka_pis.pdf) for the above study and have had the opportunity to consider the information and ask questions and had these answered satisfactorily.\n"
         },
         {
           "fieldType": "yesno",
-          "id": "required2",
-          "description": "I understand that my participation in the study is voluntary and that I am free to withdraw at any time without giving a reason and without detriment to myself. I understand that it will not be possible to remove my data from the project once it has been anonymised and forms part of the data set.\n\nI agree to take part on this basis.\n"
+          "id": "M-Ack vol involvement",
+          "description": "I understand that my participation in the study is voluntary and that I am free to withdraw at any time without giving a reason and without detriment to myself.\n<br />\nI understand that it will not be possible to remove my data from the project dataset once the key that links my name and contact information with my participant ID has been broken.\n<br />\nI agree to take part on this basis.\n"
         },
         {
           "fieldType": "yesno",
-          "id": "required3",
-          "description": "I understand my involvement in this study involves:\n- Answering an online survey on a platform hosted by King’s College London and\n- Allowing the PAPrKA team to:\n  - access physical activity data from my fitness tracker provider.\n  - access data about my knee replacement from the National Joint Registry.\n  - work with the National Joint Registry to link and analyse my physical activity data, knee replacement data, and survey data to answer the PAPrKA study questions.\n"
+          "id": "M-Ack understand involvement",
+          "description": "I understand my involvement in this study involves:\n- Setting up a study account on the PAPrKA website.\n- Completing up to 4 tasks in the PAPrKA Website.\n"
         },
         {
           "fieldType": "yesno",
-          "id": "required4",
-          "description": "I give permission for the PAPrKA team to access my physical activity data stored with my fitness tracker provider. This means the PAPrKA team will collect any data available between January 2016 and December 2024.\n"
+          "id": "M-Permission to collect PGHD",
+          "description": "I give permission for the study team to collect my past physical activity data stored within Fitbit, Oura Ring, and / or Apple Health between 01<sup>st</sup> July 2016 and 31<sup>st</sup> December 2024.\n<br />\nI acknowledge that if I have connected my iPhone, Apple Watch, Fitbit or Oura ring to other fitness tracking devices and or apps, physical activity information from those other devices/ apps will also be collected and used by the research team.\n"
         },
         {
           "fieldType": "yesno",
-          "id": "required5",
-          "description": "I give permission for the PAPrKA team to access my knee replacement data stored with the National Joint Registry to collect information for the study.\n"
+          "id": "M-Permission to create joined dataset",
+          "description": "I understand that creating the joined research dataset will involve:\n1. The PAPrKA team sending my name, date of birth, NHS number, sex and postcode to the National Joint Registry (NJR).\n2. The NJR looking to see if I am in the Registry. If I am in the Registry, they will add a copy of my knee replacement information in their secure portal for the PAPrKA study team to access.\n3. The PAPrKA study team joining my physical activity (for 6 months before and 1 year after my knee replacement) and survey information to my knee replacement information in the NJR secure portal.\n\n<br />\nI give permission for my information to be shared, accessed, and joined.\n"
         },
         {
           "fieldType": "yesno",
-          "id": "required6",
-          "description": "I give permission for the PAPrKA team to share my identifying information (full name, date of birth, NHS number, sex and postcode) with the National Joint Registry, to allow for my knee replacement data, physical activity data and survey response to be linked.\n"
+          "id": "M-Permission to access/work with NJR",
+          "description": "I give permission for the PAPrKA team to: \n1. Access my knee replacement information from the NJR\n2. Access my information from NHS England held at NJR\n3. Work with NJR researchers to analyse the joined research dataset.\n"
         },
         {
           "fieldType": "yesno",
-          "id": "required7",
-          "description": "I understand that the data linkage involves two stages:\n- First, the National Joint Registry will filter out my knee replacement data and replace my identifying information with the study identification. \n- Second, the PAPrKA team will add my physical activity and survey data to the data in the first step to form the complete linked data.\n\nI give permission for my data to be linked.\n"
-        },
-        {
-          "fieldType": "yesno",
-          "id": "required8",
-          "description": "I give permission for the PAPrKA team to work with researchers at the National Joint Registry to analyse my linked data to answer the study’s research questions.\n"
-        },
-        {
-          "fieldType": "yesno",
-          "id": "required9",
+          "id": "M-Agree data in publications",
           "description": "I agree that any data collected may be included in anonymous form in **publications, academic theses, dissertations, or conference presentations.**\n"
         },
         {
           "fieldType": "yesno",
-          "id": "required10",
+          "id": "M-Ack regulatory access",
           "description": "I understand that data collected during the study may be looked at by individuals from the University of Manchester or regulatory authorities, where it is relevant to my taking part in this research. I give permission for these individuals to have access to my data.\n"
         },
         {
           "fieldType": "yesno",
-          "id": "required11",
+          "id": "M-Agree take part",
           "description": "I agree to take part in this study.\n"
         }
       ],
       "optionalItems": [
         {
           "fieldType": "yesno",
-          "id": "optional1",
-          "description": "I agree my physical activity data, survey data and demographic data, being held at Manchester University, can be used by other researchers, to answer research questions over and above those for the PAPrKA study.\n\nI agree on the basis that only pseudonymised data will be shared and where there are data protection measures in place to ensure the confidentiality of the data.\n"
+          "id": "O-Agree UoM holding data",
+          "description": "I agree my information (i.e. physical activity data for 01<sup>st</sup> July 2016–31<sup>st</sup> Dec 2024, survey data and demographic data) held at University of Manchester can be shared for both research and educational purposes.\n<br />\nI agree on the basis that only de-identified data will be shared and where there are data protection measures in place to ensure the confidentiality of the data.\n"
         },
         {
           "fieldType": "yesno",
-          "id": "optional2",
-          "description": "I would like to take part in the prize draw\n\nI understand that my full name and email address will be passed to the University's Finance team for the sole purpose of sending me the Amazon voucher, If I agree to take part in the prize draw and win.\n"
+          "id": "O-Prize draw",
+          "description": "I would like to take part in the prize draw\n<br />\nI understand that my full name and email address will be passed to the University of Manchester’s Finance team for the sole purpose of sending me the Love to Shop voucher, If I agree to take part in the prize draw and win.\n"
         },
         {
           "fieldType": "yesno",
-          "id": "optional3",
+          "id": "O-Contact future",
           "description": "I agree that the researchers may contact me in future about other research projects.\n"
         },
         {
           "fieldType": "yesno",
-          "id": "optional4",
+          "id": "O-Summary findings",
           "description": "I agree that the researchers may retain my contact details in order to provide me with a summary of the findings for this study.\n"
+        },
+        {
+          "fieldType": "yesno",
+          "id": "O-Newsletter",
+          "description": "I agree that the researchers may send me the quarterly newsletter.\n<br />\nI understand this means I will be added to the PAPrKA mailing list.\n"
         }
       ],
-      "signatureDescription": "**Data Protection**\n\n**The personal information we collect and use to conduct this research will be processed in accordance with data protection law as explained in the Participant Information Sheet and the [Privacy Notice for Research Participants](https://documents.manchester.ac.uk/display.aspx?DocID=37095).**\n\nBy signing this consent form, I declare that I have provided accurate identity details (full name and electronic signature).\n"
+      "signatureDescription": "Please draw or type your signature in the box below and press the Save button.\n<br />\n<em>Please note, drawing or typing your signature is the same as signing a paper form with a pen.</em>\n<br />\n<em>Please check your responses carefully before you submit.</em>"
+    },
+    "account": {
+      "title": "Register account",
+      "description": "**You need an account to join the PAPrKA study.**\nSet up your account by providing an email address and creating a password which must be 12 characters long. <em>You will need this password if you plan to provide iPhone or Apple watch information. You may wish to write it down.</em>\n<br />\nOnce you provide both your email address and password, you will need to verify your account by opening an email we will send to you and entering the code.\n<br />\nOnce your account is verified, we will send you a copy of your consent form and the study’s information sheet. If you cannot find the email, please check you junk/spam folder."
+    },
+    "studyInformation": {
+      "title": "Study Information",
+      "content": "We understand that you may have questions about our research, what your involvement would be and much more. Please read carefully the Participant Information Sheet to find answers to these questions. If you have any questions about what you have read, please feel free to contact the team on <paprka@manchester.ac.uk> and 0161 306 2719. Please feel free to talk to a family member or friend about taking part in this study before you go on to sign the consent form.\n<br />\n<PdfViewer fileUrl='/study/paprka/resources/paprka_pis.pdf' />\n<br />\n<button variant='contained' target='_blank' href='/study/study/paprka/resources/paprka_pis.pdf'>Download Participant Information</button>"
     },
     "additional": {
-      "title": "Register Account",
+      "title": "Thank you for consenting",
       "items": [
         {
           "field_name": "paprka_additional_heading",
           "form_name": "paprka_additional",
           "field_type": "descriptive",
-          "field_label": "You need an account to give us your information and connect your fitness tracker or smartphone app.\n<br />\nPlease fill out this information as accurately as possible so we can successfully link your activity data to your knee replacement data from the National Joint Registry. \n<br />\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
-        },
-        {
-          "field_name": "paprka_surgery_satisfaction",
-          "form_name": "paprka_surgery",
-          "section_header": "",
-          "field_type": "dropdown",
-          "field_label": "Gender",
-          "select_choices_or_calculations": [
-            {
-              "code": "0",
-              "label": "Male"
-            },
-            {
-              "code": "1",
-              "label": "Female"
-            },
-            {
-              "code": "2",
-              "label": "Non-binary / Trans / Other"
-            },
-            {
-              "code": "3",
-              "label": "Prefer not to say"
-            }
-          ],
-          "required_field": "true"
-        },
-        {
-          "field_name": "paprka_additional_dob",
-          "form_name": "paprka_additional",
-          "field_type": "text",
-          "field_label": "Date of Birth",
-          "text_validation_type_or_show_slider_number": "datetime_dmy",
-          "text_validation_min": "01/01/1900",
-          "text_validation_max": "01/01/2006",
-          "required_field": "true"
-        },
-        {
-          "field_name": "paprka_additional_postcode",
-          "form_name": "paprka_additional",
-          "field_type": "text",
-          "field_label": "Postcode",
-          "required_field": "true",
-          "text_validation_type_or_show_slider_number": "postcode"
+          "field_label": "Thank you for consenting. Now set up your PAPrKA study account.\n_Please note, if you do not set up your study account, the study team cannot get in touch with you._\n"
         }
       ]
-    },
-    "account": {
-      "title": "Register Account Continued",
-      "description": "You need an account to give us your information and connect your fitness tracker or smartphone app.\n<br />\nPlease fill out this information as accurately as possible so we can successfully link your activity data to your knee replacement data from the National Joint Registry. \n<br />\nYou can find out more information about the way we use personal information, and the rights individuals have to control and manage their data in our [privacy policy](https://documents.manchester.ac.uk/display.aspx?DocID=37095)\n"
     }
   },
   "studyUiConfig": {
@@ -305,9 +273,22 @@
       "components": {
         "MuiButton": {
           "defaultProps": {
-            "disableElevation": true,
-            "sx": {
-              "borderRadius": 3
+            "disableElevation": true
+          },
+          "styleOverrides": {
+            "root": {
+              "variants": [
+                {
+                  "props": { "variant": "text"},
+                  "style": {
+                    ":hover": {
+                      "backgroundColor": "#0297A7",
+                      "color": "#FFFFFF"
+                    }
+                  }
+                }
+              ],
+              "borderRadius": 16
             }
           }
         },
@@ -327,18 +308,48 @@
         },
         "MuiTextField": {
           "defaultProps": {
-            "variant": "standard"
+            "variant": "outlined"
+          },
+          "styleOverrides": {
+            "root": {
+              ".MuiInputLabel-outlined:has(+ .MuiOutlinedInput-root > .MuiOutlinedInput-input:-webkit-autofill)": {
+                "fontSize": "1.5em",
+                "transform": "translate(0.75em, -0.5em) scale(0.75)"
+              },
+              ".MuiOutlinedInput-input:-webkit-autofill + .MuiOutlinedInput-notchedOutline > legend": {
+                "maxWidth": "100%"
+              },
+              "& .MuiInputBase-root:has(input:-webkit-autofill)": {
+                "backgroundColor": "var(--mui-palette-action-selected)"
+              },
+              "& .MuiInputAdornment-root": {
+                "backgroundColor": "inherit"
+              },
+              "& input:-webkit-autofill": {
+                "WebkitBoxShadow": "0 0 0 1000px transparent inset",
+                "WebkitTextFillColor": "inherit",
+                "caretColor": "inherit",
+                "transition": "background-color 9999s ease-out"
+
+              }
+            }
+          }
+        },
+        "MuiOutlinedInput": {
+          "styleOverrides": {
+            "notchedOutline": {
+              "fontSize": "1.35em"
+            }
           }
         },
         "MuiInputLabel": {
           "styleOverrides": {
-            "standard": {
-              "fontSize": "1rem"
-            },
-            "shrink": {
-              "fontSize": "1rem",
-              "fontWeight": "700",
-              "transform": "translate(0, -10px)"
+            "outlined": {
+              "&.MuiInputLabel-shrink": {
+                "fontSize": "1.5em",
+                "transform": "translate(0.75em, -0.5em) scale(0.75)"
+
+              }
             }
           }
         }
@@ -354,9 +365,13 @@
         {
           "text": "About",
           "href": "/paprka/about"
+        },
+        {
+          "text": "FAQs",
+          "href": "/paprka/faqs"
         }
       ],
-      "logoSrc": "/study/paprka/resources/hrfh_landscape_text.jpg"
+      "logoSrc": "/study/paprka/resources/uom.png"
     },
     "footer": {
       "columns": [
@@ -364,29 +379,16 @@
           "title": "More Information",
           "items": [
             {
-              "text": "Home",
-              "href": "/paprka"
-            },
-            {
               "text": "About the study",
               "href": "/paprka/about"
             },
             {
-              "text": "LinkedIn",
-              "href": "https://www.linkedin.com/company/health-research-from-home"
+              "text": "paprka@manchester.ac.uk",
+              "href": "mailto:paprka@manchester.ac.uk"
             },
             {
               "text": "RADAR",
-              "href": "/"
-            }
-          ]
-        },
-        {
-          "title": "Contact Us",
-          "items": [
-            {
-              "text": "paprka@manchester.ac.uk",
-              "href": "mailto:paprka@manchester.ac.uk"
+              "href": "https://radar-base.org/"
             }
           ]
         },
@@ -394,24 +396,46 @@
           "title": "Legal",
           "items": [
             {
-              "text": "Privacy Policy",
-              "href": "/paprka/privacy"
+              "text": "University of Manchester Privacy Policy",
+              "href": "https://documents.manchester.ac.uk/display.aspx?DocID=37095"
             },
             {
-              "text": "Cookie Policy",
+              "text": "PAPrKA Cookie Policy",
               "href": "/paprka/cookies"
+            },
+            {
+              "text": "RADAR Base Privacy Policy",
+              "href": "/paprka/privacy"
             }
+          ]
+        }
+      ],
+       "blocks": [
+        {
+          "blockType": "imageGallery",
+          "columns": {"xs": 2, "sm": 4, "md": 4, "lg": 4, "xl": 4},
+          "gap": 1,
+          "noCard": true,
+          "borderRadius": 0,
+          "aspectRatio": "3/1",
+          "objectFit": "contain",
+          "images": [
+            {"src": "/study/paprka/resources/landingpage/paprka-logo.webp", "alt": "University of Manchester"},
+            {"src": "/study/paprka/resources/landingpage/hrfh_landscape_text.jpg", "alt": "Health Research from Home"},
+            {"src": "/radar/kcl-logo.webp", "alt": "King's College London"},
+            {"src": "/study/paprka/resources/landingpage/njr_logo.jpg", "alt": "National Joint Registry - This study uses NJR data"}
           ]
         }
       ],
       "copyrightText": "© 2024 Health Research from Home"
     },
     "portal": {
-      "title": "Complete Tasks to Join Study"
+      "title": "What You Need to Complete PAPrKA Study Tasks",
+      "content": "To take part you will need to complete Tasks 1, 2 and 3. Task 4 ‘Give us your feedback’ is optional.\n\nPlease note, when you start a task, you must answer all the questions in one go and press \"submit\" or you will lose your answers"
     },
     "finishContent": {
-      "title": "Thank you",
-      "content": "You have successfully joined the PAPrKA research study.\n<br />\nThanks to your contribution, our research will help millions of people living with knee osteoarthritis who will undergo knee replacement surgeries in the future.\n<br />\nThe results of the study will be published at the end of 2026. You can receive regular updates and be the first to hear the results by subscribing to our newsletter"
+      "title": "Thank you for completing the PAPrKA study tasks.",
+      "content": "<br />Thank you for taking part in our study.\n\n\nThanks to your contribution, and through our research, we can support patients and doctors to make better informed decisions about knee replacement surgery in the future.\n\n\nNow that you have submitted the study tasks, you will be able to view (but not change) your responses by logging back into your study account.\n\n<br />\nIf you haven’t already completed task 4, and can spare a few minutes, please consider completing it to give us your feedback\n"
     },
     "analytics": {
       "gaId": "G-LTRMSY2PNR"

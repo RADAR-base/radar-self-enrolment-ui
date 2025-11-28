@@ -5,6 +5,7 @@ import { Container, Box } from "@mui/material"
 import { cookies } from "next/headers"
 import { OrySession } from "@/app/_lib/auth/ory/types"
 import { redirect } from "next/navigation"
+import { IOryVerificationFlow } from "@/app/_lib/auth/ory/flows.interface"
 
 async function getUserSession() {
   const userResponse = await whoAmI()
@@ -29,7 +30,7 @@ export default async function Page({
     redirect('/')
   }
 
-  const cookieJar = cookies()
+  const cookieJar = await cookies()
   const csrfToken = cookieJar.getAll().find((c) => c.name.startsWith('csrf_token_'))
   const sp = await searchParams
   const flowId = sp.flowId ?? sp.flow

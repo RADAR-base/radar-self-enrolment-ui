@@ -1,0 +1,63 @@
+[
+    {
+      "field_name": "paprka_about_description",
+      "form_name": "paprka_about",
+      "field_type": "descriptive",
+      "field_label": "## TASK 2: About you\n<em>This information is to help us find your record in the National Joint Registry, as well as to study whether differences following knee replacement relate to age, sex or where you live.</em>\n"
+    },
+    {
+      "field_name": "paprka_about_nhs_heading",
+      "form_name": "paprka_about",
+      "section_header": "",
+      "field_type": "descriptive",
+      "field_label": "### How to find your NHS number\n\nYour NHS number is unique to you. It helps healthcare staff and service providers identify you correctly and match your details to your health records. Your NHS number is a 10 digit number, like 485 777 3456.\n\n\nWe need your NHS number to access your NHS record. You can find this number by:\n- Using NHS Find Your NHS Number webpage - https://www.nhs.uk/nhs-services/online-services/find-nhs-number/\n- You can find your NHS number in any documents or letters sent to you by the NHS, such as your prescriptions, test results or hospital letters.\n- You can find it by logging in to the NHS App or some GP online services.\n- You can also call your GP surgery and ask them for your NHS number.\n"
+    },
+    {
+      "field_name": "paprka_about_nhs_number",
+      "form_name": "paprka_about",
+      "field_type": "text",
+      "section_header": "NHS Number",
+      "required_field": "true",
+      "text_validation_type_or_show_slider_number": "nhs_number"
+    },
+    {
+        "field_name": "paprka_about_dob",
+        "form_name": "paprka_about",
+        "field_type": "text",
+        "section_header": "Date of Birth",
+        "text_validation_type_or_show_slider_number": "datetime_dmy",
+        "text_validation_min": "01/01/1900",
+        "text_validation_max": "01/01/2008",
+        "required_field": "true"
+    },
+    {
+      "field_name": "paprka_about_sex",
+      "form_name": "paprka_about",
+      "section_header": "Sex",
+      "field_type": "dropdown",
+      "field_label": "",
+      "select_choices_or_calculations": [
+        {
+          "code": "male",
+          "label": "Male"
+        },
+        {
+          "code": "female",
+          "label": "Female"
+        },
+        {
+          "code": "pfns",
+          "label": "Prefer not to say"
+        }
+      ],
+      "required_field": "true"
+    },
+    {
+      "field_name": "paprka_about_postcode",
+      "form_name": "paprka_about",
+      "field_type": "text",
+      "section_header": "Postcode",
+      "required_field": "true",
+      "text_validation_type_or_show_slider_number": "postcode"
+    }
+]

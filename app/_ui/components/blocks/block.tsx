@@ -6,6 +6,7 @@ import { ITextBlock, TextBlock } from "./text";
 import { HeroBlock, IHeroBlock } from "./hero";
 import { IVideoBlock, VideoBlock } from "./video";
 import { CarouselBlock, ICarouselBlock } from "./carousel";
+import { ImageGalleryBlock, IImageGalleryBlock } from "./imageGallery";
 import Grid from '@mui/material/Grid2';
 import { AccordionBlock, IAccordionBlock } from "./accordion";
 
@@ -17,21 +18,22 @@ export interface IColumnBlock {
 blockType: 'column'
 title?: string
 subtitle?: string
-content: {block1: IBlockContent, block2: IBlockContent}
+sx?: any
+content: IBlockContent[] | Record<string, IBlockContent>
 }
 
-export function ColumnBlock({title, subtitle, content, ...props}: IColumnBlock, ref: ForwardedRef<HTMLDivElement>) {
+export function ColumnBlock({title, subtitle, content, sx, blockType}: IColumnBlock) {
+  const items = Array.isArray(content) ? content : Object.values(content ?? {})
   return (
-      <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
+      <Box display={"flex"} flexDirection={"column"} textAlign={"left"} sx={sx}>
         <Typography variant="h2">{title}</Typography>
         <Typography variant="subtitle1">{subtitle}</Typography>
         <Grid container spacing={2}>
-          <Grid size={{xs: 12, md: 6}}>
-            {getBlockContent(content.block1)}
-          </Grid>
-          <Grid size={{xs: 12, md: 6}}>
-            {getBlockContent(content.block2)}
-          </Grid>
+          {items.map((block, idx) => 
+            <Grid className={'test'} marginLeft={'auto'} marginRight={'auto'} size={{sm: 12, md: (items.length ? (12/items.length) : 12)}} key={"block" + idx}>
+              {getBlockContent(block)}
+            </Grid>)
+          }
         </Grid>
       </Box>
   )
@@ -41,6 +43,7 @@ interface BlockProps {
   blockBackground?: string
   blockPadding?: number | {[key: string]: number}
   noCard?: boolean
+  sx?: any
 }
 
 export type IBlock = (BlockProps & IMarkdownBlock) |
@@ -49,7 +52,8 @@ export type IBlock = (BlockProps & IMarkdownBlock) |
                      (BlockProps & IVideoBlock) |
                      (BlockProps & ICarouselBlock) |
                      (BlockProps & IColumnBlock) | 
-                     (BlockProps & IAccordionBlock)
+                     (BlockProps & IAccordionBlock) |
+                    (BlockProps & IImageGalleryBlock)
 
 function BlockContainer({children, props}: {children: React.ReactNode, props: BlockProps}): React.ReactNode {
   let padding = props.blockPadding ?? 2
@@ -62,6 +66,7 @@ function BlockContainer({children, props}: {children: React.ReactNode, props: Bl
       alignItems="center"
       display="flex"
       style={{background: props.blockBackground}}
+      sx={props.sx}
       >
         {children}
       </Box>)
@@ -90,6 +95,9 @@ function getBlockContent(props: IBlock) {
     case "accordion": {
       return <AccordionBlock {...props} />
     }
+    case "imageGallery": {
+      return <ImageGalleryBlock {...props} />
+    }
   }
 }
 
@@ -99,7 +107,7 @@ export function Block(props: IBlock): React.ReactNode {
     <BlockContainer props={props}>
         {
           props.noCard ? (
-            <Box sx={{width: "100%", maxWidth: "lg", textJustify: "right", textAlign: 'right', padding: 4}} >
+            <Box sx={{width: "100%", maxWidth: "lg", textJustify: "right", textAlign: 'right', paddingLeft: {xs: 1, sm: 4}, paddingRight: {xs: 1, sm: 4}, paddingTop: 1, paddingBottom: 1}} >
               {blockContent}
             </Box>
           ) : (

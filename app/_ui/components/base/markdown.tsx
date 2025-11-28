@@ -1,7 +1,14 @@
-import { Button, Typography, Link } from '@mui/material'
+import { Button, Typography, Link, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material'
 import { getOverrides, MuiMarkdown } from 'mui-markdown'
 import Image from 'next/image'
 import HoverPopover from './hoverPopover'
+import NextLink from 'next/link'
+import dynamic from 'next/dynamic'
+
+
+const PdfViewer = dynamic(() => import("./pdfViewer"), {
+  // ssr: false,
+});
 
 interface MarkdownContainerProps {
   children?: string
@@ -25,6 +32,10 @@ export function MarkdownContainer({children, ...props }: MarkdownContainerProps)
             }
           }
         },
+        PdfViewer:
+        {
+          component: PdfViewer
+        },
         img: {
           props: {
             style: {
@@ -34,6 +45,9 @@ export function MarkdownContainer({children, ...props }: MarkdownContainerProps)
         },
         button: {
           component: Button,
+          props: {
+            'fullWidth': false
+          }
         },
         h5: {
           component: Typography,
@@ -52,8 +66,24 @@ export function MarkdownContainer({children, ...props }: MarkdownContainerProps)
           props: {
             underline: 'always',
             rel: 'noreferrer',
-            target: '_blank'
+            target: '_blank',
+            component: NextLink
           }
+        },
+        table: {
+          component: Table
+        },
+        tHead: {
+          component: TableHead
+        },
+        tr: {
+          component: TableRow
+        },
+        td: {
+          component: TableCell
+        },
+        tbody: {
+          component: TableBody
         },
       }}
       {...props}>

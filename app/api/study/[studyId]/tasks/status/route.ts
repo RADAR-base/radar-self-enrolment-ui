@@ -1,8 +1,5 @@
-import ProtocolRepository, { StudyProtocolRepository } from "@/app/_lib/study/protocol/repository";
-import { StudyProtocol } from '@/app/_lib/study/protocol';
 import { NextRequest, NextResponse } from "next/server"
 import { whoAmI } from "@/app/_lib/auth/ory/kratos";
-import { ActiveTaskResponse } from "@/app/_lib/armt/response/response.interface";
 import { allTaskStatus } from "@/app/_lib/study/tasks/status";
 
 export interface ArmtStatus {

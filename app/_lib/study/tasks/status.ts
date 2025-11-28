@@ -1,13 +1,9 @@
 "use server"
-
 import { ArmtStatus } from "@/app/api/study/[studyId]/tasks/status/route"
 import { ActiveTaskResponse } from "../../armt/response/response.interface"
-import { whoAmI } from "../../auth/ory/kratos"
 import StudyProtocolRepository from "../protocol/repository"
-import { StudyProtocol } from "../protocol"
-import { notFound } from "next/navigation"
 
-async function getExistingTasks(studyId: string, userId: string) {
+export async function getExistingTasks(studyId: string, userId: string) {
   const r = await fetch(process.env.KRATOS_ADMIN_URL + '/identities/' + userId, {
     method: 'GET',
     headers: {
@@ -15,12 +11,22 @@ async function getExistingTasks(studyId: string, userId: string) {
     }
   })
   const data = (await r.json())['metadata_admin']
-  if ((data == null) || (data['study'] == undefined) || (data['study'][studyId] == undefined))  {
+  if ((data == null) || 
+      (data['study'] == undefined) || 
+      (data['study'][studyId] == undefined) ||
+      (data['study'][studyId]['tasks'] == undefined)
+    )  {
     return {} as {[key: string]: ActiveTaskResponse}
   }
-  return data['study'][studyId] as {[key: string]: ActiveTaskResponse}
+  return data['study'][studyId]['tasks'] as {[key: string]: ActiveTaskResponse}
 }
 
+export async function getExistingTask(studyId: string, userId: string, taskId: string) {
+  const allTasks = await getExistingTasks(studyId, userId)
+  if (taskId in allTasks) {
+    return allTasks[taskId]
+  }
+}
 
 export async function allTaskStatus(studyId: string, userId: string): Promise<{[key: string]: ArmtStatus} | null> {
   const registery: StudyProtocolRepository = new StudyProtocolRepository()

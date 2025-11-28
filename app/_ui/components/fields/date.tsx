@@ -7,7 +7,6 @@ import 'dayjs/locale/en-gb';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
-
 function valueFormatFromView(view: DateView[]) {
   let formatArray: string[] = []
   if (view.includes("year")) {
@@ -22,6 +21,20 @@ function valueFormatFromView(view: DateView[]) {
   return formatArray.join("-")
 }
 
+function inputFormatFromView(view: DateView[]) {
+  let formatArray: string[] = []
+  if (view.includes("day")) {
+    formatArray.push("DD")
+  }
+  if (view.includes("month")) {
+    formatArray.push("MM")
+  }
+  if (view.includes("year")) {
+    formatArray.push("YYYY")
+  }
+  return formatArray.join("/")
+}
+
 interface ArmtDateFieldProps extends IDateItem {
   setFieldValue: (id: string, value: string | Date) => void
   value?: string | Date,
@@ -30,29 +43,29 @@ interface ArmtDateFieldProps extends IDateItem {
   color? : 'primary' | 'secondary' | 'standard' | 'error' | 'info' | 'success' | 'warning'
 }
 
-export function ArmtDateField({label, description, errorText, ...props}: ArmtDateFieldProps, ref: ForwardedRef<HTMLDivElement>) {
+export function ArmtDateField({title, label, description, errorText, ...props}: ArmtDateFieldProps) {
   const view = (props.views ?? ["year", "month", "day"]) as DateView[]
   const valueFormat = valueFormatFromView(view)
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'en-gb'}>
-      <Box display={"flex"} flexDirection={"column"} textAlign={"left"}>
-        <Typography variant="h4" component={'span'}>{props.title}</Typography>
-        <Typography variant="body1" component={'span'}>{description}</Typography>
-        <DatePicker 
-          sx={{
-            maxWidth: '16em'
-          }}
+      <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={1}>
+        <Typography variant="h4" component={'span'}>{title}</Typography>
+        <Typography variant="body1" component={'span'} fontStyle={'italic'}>{description}</Typography>
+        <DatePicker
           key={props.key}
           value={props.value ? dayjs(props.value, valueFormat) : null}
           disabled={props.disabled}
           openTo="year"
           views={view}
+          minDate={props.minDate ? dayjs(props.minDate) : undefined}
+          maxDate={props.maxDate ? dayjs(props.maxDate) : undefined}
           formatDensity='spacious'
+          format={inputFormatFromView(view)}
           label={label}
           onChange={(value, context) => {
             if (value) {
               try {
-              props.setFieldValue(props.id, value.format(valueFormat))
+                props.setFieldValue(props.id, value.format(valueFormat))
               } catch {
               }
             }

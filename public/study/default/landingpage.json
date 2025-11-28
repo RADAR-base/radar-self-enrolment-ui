@@ -1,0 +1,25 @@
+{
+  "blocks": [
+    {
+      "blockType": "column",
+      "noCard": true,
+      "blockBackground": "white",
+      "title": "",
+      "content": {
+        "block1": {
+          "blockType": "hero",
+          "title": "Join the RADAR Project",
+          "subtitle": "This is the default study landing page.",
+          "cta": {
+            "text": "Join Study",
+            "href": "enrol"
+          }
+        },
+        "block2": {
+          "blockType": "markdown",
+          "content": ""
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,211 @@
+{
+  "name": "RADAR Project",
+  "studyId": "default",
+  "healthIssues": [],
+  "onboarding": {
+    "metadata": {},
+    "steps": []
+  },
+  "protocols": [
+    {
+      "id": "connect",
+      "appearance": {},
+      "schedule": {},
+      "metadata": {
+        "title": "Connect Devices",
+        "order": 2,
+        "description": "Share your fitness tracker or smartphone app with us.",
+        "optional": false,
+        "type": "inbuilt",
+        "inbuiltId": "connect",
+        "options": {
+          "title": "TASK: Connect my device(s)",
+          "description": "Click on the connect button for your device to share activity and health metrics in support of this study.",
+          "devices": [
+            {
+              "id": "fitbit",
+              "title": "Fitbit",
+              "description": "Connect your Fitbit account."
+            },
+            {
+              "id": "apple_health",
+              "title": "RADAR aRMT",
+              "description": "Connect via RADAR aRMT."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "enrolment": {
+    "account": {
+      "title": "Register Account",
+      "description": "You need an account to give us your information and, if applicable, connect your fitness tracker or smartphone app."
+    }
+  },
+  "studyUiConfig": {
+    "materialTheme": {
+      "typography": {
+        "allVariants": {
+          "fontFamily": "var(--font-montserrat)",
+          "wordBreak": "break-word",
+          "whiteSpace": "pre-wrap"
+        },
+        "h1": {
+          "fontSize": "2rem",
+          "fontWeight": "700",
+          "color": "#000000",
+          "wordBreak": "normal",
+          "overflow": "hidden"
+        },
+        "h2": {
+          "fontSize": "1.5rem",
+          "fontWeight": "700",
+          "color": "#000000"
+        },
+        "h3": {
+          "fontSize": "1rem",
+          "fontWeight": "700",
+          "color": "#000000"
+        },
+        "h4": {
+          "fontSize": "1rem",
+          "fontWeight": "600"
+        },
+        "button": {
+          "textTransform": "none",
+          "wordBreak": "normal"
+        },
+        "body1": {},
+        "body2": {}
+      },
+      "palette": {
+        "background": {
+          "default": "#ffffff"
+        },
+        "primary": {
+          "light": "#000000",
+          "main": "#000000",
+          "dark": "#000000",
+          "contrastText": "#ffffff"
+        },
+        "secondary": {
+          "light": "#000000",
+          "main": "#000000",
+          "dark": "#000000",
+          "contrastText": "#ffffff"
+        },
+        "success": {
+          "main": "#000000"
+        },
+        "warning": {
+          "main": "#000000"
+        },
+        "error": {
+          "main": "#000000"
+        }
+      },
+      "components": {
+        "MuiButton": {
+          "defaultProps": {
+            "disableElevation": true,
+            "sx": {
+              "borderRadius": 3
+            }
+          }
+        },
+        "MuiAppBar": {
+          "defaultProps": {
+            "elevation": 0,
+            "position": "static"
+          }
+        },
+        "MuiToggleButton": {
+          "styleOverrides": {
+            "root": {
+              "borderRadius": 32,
+              "fontSize": "1em"
+            }
+          }
+        },
+        "MuiTextField": {
+          "defaultProps": {
+            "variant": "standard"
+          }
+        },
+        "MuiInputLabel": {
+          "styleOverrides": {
+            "standard": {
+              "fontSize": "1rem"
+            },
+            "shrink": {
+              "fontSize": "1rem",
+              "fontWeight": "700",
+              "transform": "translate(0, -10px)"
+            }
+          }
+        }
+      }
+    },
+    "faviconSrc": "https://raw.githubusercontent.com/RADAR-base/radar-self-enrolment-definitions/refs/heads/main/projects/RADAR-mCRAVING-KCL-s1/resources/icon.png",
+    "navbar": {
+      "links": [
+        {
+          "text": "Home",
+          "href": "/RADAR-mCRAVING-KCL-s1"
+        }
+      ],
+      "logoSrc": "https://raw.githubusercontent.com/RADAR-base/radar-self-enrolment-definitions/refs/heads/main/projects/RADAR-mCRAVING-KCL-s1/resources/icon.png"
+    },
+    "footer": {
+      "columns": [
+        {
+          "title": "Study Links",
+          "items": [
+            {
+              "text": "Home",
+              "href": "#"
+            },
+            {
+              "text": "About the study",
+              "href": "#"
+            },
+            {
+              "text": "LinkedIn",
+              "href": "https://www.linkedin.com/company/onsentia"
+            }
+          ]
+        },
+        {
+          "title": "Contact Us",
+          "items": [
+            {
+              "text": "contact@radar-base.org",
+              "href": "mailto:contact@radar-base.org"
+            }
+          ]
+        },
+        {
+          "title": "Legal Links",
+          "items": [
+            {
+              "text": "Privacy Policy",
+              "href": "privacy"
+            },
+            {
+              "text": "Cookie Policy",
+              "href": "cookies"
+            }
+          ]
+        }
+      ],
+      "copyrightText": "© 2024 Onsentia"
+    },
+    "portal": {
+      "title": "Complete Tasks to Join Study"
+    },
+    "analytics": {
+      "gaId": ""
+    }
+  }
+}

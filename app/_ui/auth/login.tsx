@@ -1,40 +1,37 @@
 "use client"
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { Box, Button, Link, Stack, TextField, Typography } from "@mui/material"
-import React, { useCallback, useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { useFormik } from "formik"
 import { withBasePath } from "@/app/_lib/util/links"
 import { getCsrfToken } from '@/app/_lib/auth/ory/util'
 import { ParticipantContext } from '@/app/_lib/auth/provider.client'
+import { IOryLoginFlow } from '@/app/_lib/auth/ory/flows.interface'
+import { PasswordTextField } from './passwordField'
 
 interface LoginProps {
-    onLogin?: () => void
+    onLogin?: (response?: Response) => void
     redirectTo?: string
     loginChallenge?: string
     flow?: IOryLoginFlow
 }
 
 export function LoginComponent(props: LoginProps) {
+  // const searchParams = useSearchParams()
   const router = useRouter()
-
   const participant = useContext(ParticipantContext)
-  if (participant?.loggedIn) {
-    router.back()
-  }
 
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
   let [errorText, setErrorText] = useState<string>('');
   let [flow, setFlow] = useState<IOryLoginFlow | undefined>(props.flow);
 
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString())
-      params.set(name, value)
-      return params.toString()
-    },
-    [searchParams]
-  )
+  // const createQueryString = useCallback(
+  //   (name: string, value: string) => {
+  //     const params = new URLSearchParams(searchParams.toString())
+  //     params.set(name, value)
+  //     return params.toString()
+  //   },
+  //   [searchParams]
+  // )
 
   const getFlow = async (setFlow: (v: any) => void) => {
     const response = await fetch(withBasePath('/api/ory/login/browser'))
@@ -67,7 +64,7 @@ export function LoginComponent(props: LoginProps) {
 
   const displayErrors = (flow: IOryLoginFlow) => {
     if (flow) {
-      if (flow.ui.messages.length > 0) {
+      if (flow.ui.messages?.length > 0) {
         setErrorText(flow.ui.messages[0].text)
       }
       flow.ui.nodes.filter(node => node.messages.length > 0).forEach(
@@ -81,16 +78,21 @@ export function LoginComponent(props: LoginProps) {
   }
 
   useEffect(() => {
+    if (participant?.loggedIn) {
+      router.back()
+    }
     if (flow === undefined) {
       getFlow(setFlow)
     }
   }, [flow])
 
   const onLogin = props.onLogin ? props.onLogin : () => {
-    window.location.replace(props.redirectTo ?? '/')
+    router.replace(props.redirectTo ?? '/')
+    router.refresh()
   }
 
   const formik = useFormik({
+    validateOnMount: true,
       initialValues: {
           identifier: '',
           password: '',
@@ -99,13 +101,19 @@ export function LoginComponent(props: LoginProps) {
         {
         const res = await login(values.identifier, values.password)
         if (res.ok) {
-          onLogin()
+          onLogin(res)
         } else {
-          const data = await res.json()
-          displayErrors(data)
-          setFlow(data)
+          if (res.status == 422) {
+            const data = await res.json()
+            const url = data['redirect_browser_to']
+            if (url) {router.replace(url)}
+          } else {
+            const data = await res.json() as IOryLoginFlow
+            displayErrors(data)
+            setFlow(data)
         }
       }
+    }
   });
 
   return (
@@ -115,6 +123,7 @@ export function LoginComponent(props: LoginProps) {
         {errorText && <Typography variant='overline' color='error'>{errorText}</Typography>}
         <TextField
             fullWidth
+            autoFocus
             id="identifier"
             name="identifier"
             label="Email"
@@ -122,17 +131,19 @@ export function LoginComponent(props: LoginProps) {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.identifier && Boolean(formik.errors.identifier)}
-            />
-        <TextField
+            autoComplete='email'
+          />
+        <PasswordTextField
             fullWidth
             id="password"
             name="password"
-            label="Password"
-            type="password"
+            label={<Box>{"Password"}</Box>}
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.password && Boolean(formik.errors.password)}/>
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            autoComplete='current-password'
+            />
         <Link href={'recovery'}>Forgot password?</Link>
         <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} width={'100%'}>
           <Button color="primary" variant="contained" onClick={() => router.back()}>

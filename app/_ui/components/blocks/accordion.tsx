@@ -13,16 +13,16 @@ export interface IAccordionBlock {
   }[]
 }
 
-export function AccordionBlock({title, subtitle, items}: IAccordionBlock, ref: ForwardedRef<HTMLDivElement>) {
+export function AccordionBlock({title, subtitle, items}: IAccordionBlock) {
   return (
       <Box display={"flex"} flexDirection={"column"} textAlign={"left"} gap={2}>
         <Typography variant="h2">{title}</Typography>
         <Typography variant="subtitle1">{subtitle}</Typography>
         <Box>
         {items.map(
-          (item => {
+          ((item, idx) => {
             return (        
-              <Accordion disableGutters={true}>
+              <Accordion disableGutters={true} key={`${idx}`}>
                 <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
                   <Typography variant="h4">                  
                     {item.title}

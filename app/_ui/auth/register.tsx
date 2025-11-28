@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 import { useCallback, useEffect, useState } from "react";
 import { withBasePath } from "@/app/_lib/util/links";
 import { getCsrfToken } from "@/app/_lib/auth/ory/util";
+import { PasswordTextField } from "./passwordField";
 
 const CustomTextField = styled(TextField)({
   '& .MuiFormHelperText-root.Mui-error': {
@@ -110,18 +111,19 @@ const Register: React.FC<{onRegister?: () => void}> = (props: {onRegister?: () =
             helperText={formik.touched.email && formik.errors.email}
             hidden={true}
             fullWidth
+            autoComplete="email"
             />
-          <CustomTextField
+          <PasswordTextField
             id="password"
             name="password"
             label="Password"
-            type="password"
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
             fullWidth
+            autoComplete="new-password"
             />
           <Button color="primary" variant="contained" type="submit" disabled={(formik.isValid == null) ? false : (!formik.isValid)}>
             Sign Up

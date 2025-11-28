@@ -37,3 +37,5 @@ yarn-error.log*
 next-env.d.ts
 
 *.mp4
+.env.development
+.gitignore
