@@ -181,7 +181,7 @@ function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNod
             </div>
           </ListItem>
         </List>
-        <Typography>If you have any questions, contact us at: <Link href='mailto:paprka@manchester.ac.uk'>paprka@manchester.ac.uk</Link></Typography>
+        <Typography>If you have any questions, please find our contact details at the bottom of the page.</Typography>
       </Grid>
       <Grid size={12}>
         <SubmitButton disabled={armtAuthUrl == undefined} />

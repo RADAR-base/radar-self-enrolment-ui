@@ -1,153 +1,264 @@
 "use client"
-import { Box, Button, Container, Typography } from "@mui/material"
+import { Box, IconButton, Button, Container, Divider, List, ListItem, Typography, useMediaQuery, useTheme, Link } from "@mui/material"
 import Grid from '@mui/material/Grid2';
 import React, { useContext, useEffect, useState } from "react";
 import { withBasePath } from "@/app/_lib/util/links";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter} from "next/navigation";
 import { RadarCard } from "../base/card";
 import {QRCodeSVG} from 'qrcode.react'
 import Image from 'next/image'
-import NextButton from "../base/nextButton";
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 import { getAuthLink } from "@/app/_lib/connect/armt/authLink";
-import { isMobile, isTablet } from "react-device-detect";
+import { GetOauthToken } from "../../auth/oauthToken";
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+
+const SCOPES = [
+  'SOURCETYPE.READ',
+  'PROJECT.READ',
+  'SUBJECT.READ',
+  'SUBJECT.UPDATE',
+  'MEASUREMENT.CREATE',
+  'SOURCEDATA.CREATE',
+  'SOURCETYPE.UPDATE',
+  'offline_access'
+]
+const AUDIENCE = ['res_ManagementPortal', 'res_gateway', 'res_AppServer'].join(' ')
+
+const REDIRECT_URI = process.env.NEXT_PUBLIC_ARMT_REDIRECT_URI ?? ''
+
+function AppStoreDownloadModalContent() {
+  const link = 'https://apps.apple.com/us/app/radar-active-rmt/id1483953055?itscg=30200&itsct=apps_box_badge&mttnsubad=1483953055'
+  return (
+    <React.Fragment>
+      <a href={link} target='_blank'>
+        <Image
+          src={withBasePath('/devices/apple_download_app.svg')}
+          height={80}
+          width={200}
+          alt={"Download the RADAR App on the App Store"}
+          style={{cursor: 'pointer'}}
+        />
+    </a>
+    </React.Fragment>
+  )
+}
+
+function QRContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
+  return (<Box>
+    <Typography variant="body1" fontWeight={700}>If you're on a computer or tablet</Typography>
+    <Typography>When prompted, scan this QR code to log in:</Typography>
+    <Box margin={'auto'} textAlign={'center'} padding={2}>
+        <QRCodeSVG value={armtAuthUrl ?? ''} size={200} />
+    </Box>
+    </Box>
+    )
+}
+
+function LoginInfoContent({studyId, studyName}: {studyId: string, studyName: string}): React.ReactNode {
+return (<div>
+          <Typography variant="body1" fontWeight={700}>If you're using an iPhone to view this page:</Typography>
+            <Typography>Log in manually using:</Typography>
+            <List sx={{listStyle: 'lower-roman'}}>
+              <ListItem sx={{display: 'list-item'}}>
+                <Typography>
+                  Study name: 
+                  <Typography color="primary" component={'span'} fontWeight={700} letterSpacing={2}>
+                    {" " + studyId}
+                  </Typography>
+                  <IconButton onClick={() =>navigator.clipboard.writeText(studyId)}
+                    color='primary'
+                    >
+                    <ContentCopyIcon />
+                  </IconButton>
+                </Typography>
+              </ListItem>
+              <ListItem sx={{display: 'list-item'}}>
+                <Typography>
+                  Email address: the one you used for your {studyName} account.
+                </Typography>
+              </ListItem>
+              <ListItem sx={{display: 'list-item'}}>
+              <Typography>
+                Password: the one you used for your {studyName} account.
+                </Typography>            
+              </ListItem>
+              <Typography fontStyle={'italic'}>Note: Use your study account email and password (the same as this portal).</Typography>
+            </List>
+        </div>)
+}
+
+function ArmtContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
+  const protocol = useContext(ProtocolContext);
+  const theme = useTheme()
+  return (
+    <React.Fragment>
+      <Grid size={12} textAlign={'left'}>
+        <Typography variant="h2">How to Connect with the RADAR aRMT App</Typography>
+        <Typography>
+          You can share data with us by downloading the RADAR aRMT app on your iPhone.
+        </Typography>
+        <Typography>
+          The RADAR aRMT app lets you send us your activity and questionnaire data.
+        </Typography>
+        <Typography variant="h3" padding={2} textAlign={'center'}>
+          Before you start please read through all the steps below. 
+        </Typography>
+        <Typography>
+          Read our <Link href={"/study/study/paprka/resources/guides/Study_Guide_iPhone.pdf"} target='_blank'>Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to connect with the aRMT app. 
+        </Typography>
+      </Grid>
+      <Grid size={12} textAlign={'left'}>
+        <Typography  variant="h3">
+          Step 1: Download the App
+        </Typography>
+      </Grid>
+
+      <Grid size={{xs: 12, sm: 5.5}} textAlign={'left'} >
+        <Typography variant="body1" fontWeight={700}>
+          If you're on a computer or tablet: 
+        </Typography>
+        <List  sx={{listStyle: 'lower-alpha'}}>
+          <ListItem sx={{display: 'list-item'}}>
+            <Typography>On your iPhone, open the App Store.</Typography>
+          </ListItem>
+          <ListItem sx={{display: 'list-item'}}>
+            <Typography>Search for <Typography color='primary' fontWeight={700} component={'span'}>RADAR active RMT</Typography></Typography>
+          </ListItem>
+        </List>
+        <Image
+          src={withBasePath('/radar/app_store_armt.png')}
+          width={254}
+          height={291}
+          alt={"RADAR Active RMT app in app store"}
+          style={{ borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)', alignSelf: 'center' }}
+        />
+      </Grid>
+      <Grid size={{xs: 12, sm: 1}} >
+        <Divider orientation={useMediaQuery(theme.breakpoints.down("sm")) ? "horizontal" : "vertical"}>OR</Divider>
+      </Grid>
+      <Grid size={{xs: 12, sm: 5.5}} textAlign={'left'}>
+        <Typography variant="body1" fontWeight={700}>
+          If you're on your iPhone:
+        </Typography>
+        <Typography>Tap below to download directly:</Typography>
+        <AppStoreDownloadModalContent />
+      </Grid>
+      <Grid size={{ xs: 12, sm: 8 }} textAlign={'left'}>
+        <Typography variant="h3">Step 2: Log into the app</Typography> 
+        <Typography variant="body1" fontWeight={700}>
+          There are two ways to log into the app once it's installed 
+        </Typography>
+      </Grid>
+      <Grid size={{xs: 12, sm: 5.5}} textAlign={'left'} >
+        <QRContent armtAuthUrl={armtAuthUrl ?? ""} />
+      </Grid>
+      <Grid size={{xs: 12, sm: 1}} >
+        <Divider orientation={useMediaQuery(theme.breakpoints.down("sm")) ? "horizontal" : "vertical"}>OR</Divider>
+      </Grid>
+      <Grid size={{xs: 12, sm: 5.5}} textAlign={'left'}>
+        <LoginInfoContent studyId={protocol.studyId} studyName={protocol.name} />
+      </Grid>
+      <Grid size={12} textAlign={'left'}>
+        <Typography  variant="h3">
+          Step 3
+        </Typography>
+        <Typography>After you've logged into the aRMT app and shared your data:</Typography>
+        <List sx={{listStyle: 'disc'}}>
+          <ListItem sx={{display: 'list-item'}}>
+            <Typography>Return to this website</Typography>
+          </ListItem>
+          <ListItem sx={{display: 'list-item'}}>
+            <Typography>Click the green 'Mark as complete' button.</Typography>
+          </ListItem>
+          <ListItem sx={{display: 'list-item'}}>
+            <Typography>You’ll then be asked if you want to connect another device.</Typography>
+            <div>
+            <List sx={{listStyle: 'circle'}}>
+              <ListItem sx={{display: 'list-item'}}>
+                <Typography>If not, just click 'Done'</Typography>
+              </ListItem>
+            </List>
+            </div>
+          </ListItem>
+        </List>
+        <Typography>If you have any questions, please find our contact details at the bottom of the page.</Typography>
+      </Grid>
+      <Grid size={12}>
+        <SubmitButton disabled={armtAuthUrl == undefined} />
+      </Grid>
+    </React.Fragment>
+)}
+
+interface SubmitButtonProps {
+  disabled?: boolean
+}
+
+function SubmitButton(props: SubmitButtonProps) {
+  const router = useRouter();
+  const protocol = useContext(ProtocolContext);
+  return  <Button color="primary" variant="contained" 
+                  disabled={props.disabled}
+                  onClick={() => {
+                    router.push(`/${protocol.studyId}/portal/connect?success=armt`)
+                  }}
+                  >
+            Mark as Complete
+          </Button>
+}
 
 
-function MobileContent({armtAuthUrl}: {armtAuthUrl: string}) {
-  return <React.Fragment>
-    <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-      <Typography variant="h3">Using your phone now?</Typography>
-      <Typography variant="body1">Once the RADAR app is installed, if you are using the same phone to view this website, press the following button to enter the app now and skip to Step 5</Typography>
-    </Grid>
-    <Grid size={{xs: 12, sm: 6}}>
-      <Button href={armtAuthUrl} variant={"contained"}>Open Study App</Button>
-    </Grid>
-  </React.Fragment>
+function createShortToken(token: any) {
+  if (token?.access_token && token?.expires_in) {
+    token['iat'] =  Math.floor(Date.now() / 1000)
+    const shortToken = { 
+      iat: token.iat, 
+      expires_in: token.expires_in, 
+      refresh_token: token.refresh_token, 
+      scope: token.scope, 
+      token_type: token.token_type 
+    }
+    return shortToken
+  }
 }
 
 
 export function ArmtPage() {
-  const protocol = useContext(ProtocolContext);
-  const studyId = protocol.studyId
-  const router = useRouter()
-  const pathname = usePathname()
-  const code = useSearchParams().get('code')
   const [isFetchingToken, setIsFetchingToken] = useState(false)
   const [armtAuthUrl, setArmtAuthUrl] = useState<any>(undefined)
 
-
-  if ((code == undefined) && (armtAuthUrl == undefined) && (isFetchingToken == false)) {
-    router.replace(`/connect/armt?return_to=/${studyId}/portal/connect/radar_armt`)
-  }
+  const [code, setCode] = useState<string>()
   
   useEffect(() => {
     const handleToken = async () => {
-      if (isFetchingToken || (armtAuthUrl != undefined)) return
-      if (code) {
-        setIsFetchingToken(true)
-        const tokenResponse = await fetch(withBasePath('/api/connect/armt/token?code=' + code))
-        if (tokenResponse.ok) {
-          let token = await tokenResponse.json()
-          token?.access_token
-          
-          if (token?.access_token && token?.expires_in) {
-            token['iat'] =  Math.floor(Date.now() / 1000)
-            const shortToken = { 
-              iat: token.iat, 
-              expires_in: token.expires_in, 
-              refresh_token: token.refresh_token, 
-              scope: token.scope, 
-              token_type: token.token_type 
-            }
-            const url = await getAuthLink(shortToken)
-            setArmtAuthUrl(url)
-          }
-        }
-        setIsFetchingToken(false)
-        router.replace(pathname)
+      if (isFetchingToken || (armtAuthUrl != undefined) || (code == undefined)) return
+      setIsFetchingToken(true)
+      const tokenResponse = await fetch(withBasePath('/api/connect/armt/token?code=' + code))
+      if (tokenResponse.ok) {
+        let token = await tokenResponse.json()
+        const url = await getAuthLink(createShortToken(token))
+        setArmtAuthUrl(url)
       }
     }
     handleToken()
-  }, [code, isFetchingToken])
+  }, [code])
+
+
+  const disabled = false
 
   return (
-  <Container maxWidth="lg" disableGutters>
+  <Container maxWidth="lg" disableGutters >
     <RadarCard>
-      <Grid container spacing={2} padding={3} gap={2} rowGap={4}>
-        <Grid size={12} textAlign={'left'}>
-          <div>
-            <Typography variant="h2">Connect to RADAR Active RMT</Typography>
-            <Typography variant="body1">
-              {"The RADAR Active RMT app is the app that allows user to answer questionnaires and perform timed tasks (termed in RADAR parlance 'active remote monitoring'. Please follow the steps below to link your RADAR Active RMT to our study.\n"
-              }
-            </Typography>
-          </div>
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 1: Download the app</Typography>
-          <Typography variant="body1">This study uses the RADAR aRMT app to access Apple data. You will need to download the app from the Apple App Store or Google Playstore.</Typography>
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-          <a href="https://apps.apple.com/us/app/radar-active-rmt/id1483953055?itscg=30200&itsct=apps_box_badge&mttnsubad=1483953055" style={{display: "inline-block"}} target="_blank">
-          <Image
-            src={withBasePath('/devices/apple_download_app.svg')}
-            height={80}
-            width={200}
-            alt={"Download the RADAR App on the App Store"}
-            /> 
-          </a>   
-      
-        </Grid>
-        {(isMobile || isTablet) && <MobileContent armtAuthUrl={armtAuthUrl} />}
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 2: Open the app</Typography>
-          <Typography variant="body1">Once the app is opened, you will see the following screen. Press the 'Start' button.</Typography>
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-          <Image 
-            src={withBasePath('/radar/app/app_start_screen.png')}
-            width={280}
-            height={500}
-            alt='A placeholder image which should show the opening screen of the RADAR app'
-            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
-          />
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 3: Press 'Scan'</Typography>
-          <Typography variant="body1">Press the 'Scan' button to enable the QR code scanner</Typography>
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-          <Image 
-            src={withBasePath('/radar/app/app_scan_screen.png')}
-            width={280}
-            height={500}
-            alt='A placeholder image which should show the opening screen of the RADAR app'
-            style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
-          />
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 4: Scan the QR Code</Typography>
-          <Typography variant="body1">While the app is showing the scanning screen, point it at the following QR code. Scanning the QR code will connect the app to this study.</Typography>
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-          <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
-          {armtAuthUrl && <QRCodeSVG value={armtAuthUrl} size={200} />}
-          <NextButton href={`/connect/armt?return_to=${pathname}`}>Generate QR Code</NextButton>
-          </Box>
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
-          <Typography variant="h3">Step 5: Complete app tasks</Typography>
-          <Typography variant="body1">Once you have logged in to the app, press the following 'Finish' button to continue</Typography>
-        </Grid>
-        <Grid size={{xs: 12, sm: 6}}>
-          <Button variant={'contained'} fullWidth sx={{maxWidth: 200}}
-            onClick={() => router.push('./')}
-          >
-            Finish
-          </Button>
-        </Grid>
-      </Grid>
-      
+      <Container sx={{ pl: 4, pr: 4}}>
+        {armtAuthUrl == undefined ? 
+          (<GetOauthToken clientId="aRMT" scopes={SCOPES} audience={AUDIENCE} codeFunc={async (code:string) => setCode(code)} redirectUri={REDIRECT_URI} />) : 
+          (<Box display={'inline'} gap={2} aria-live="polite" paddingLeft={4}>
+            <Grid container spacing={2} gap={2} rowGap={4}>
+              <ArmtContent armtAuthUrl={armtAuthUrl} />
+            </Grid>
+            <br />
+          </Box>)
+        }
+      </Container>
     </RadarCard>
   </Container>
   )
