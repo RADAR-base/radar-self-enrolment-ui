@@ -104,7 +104,7 @@ export function AccountButton(props: AccountButtonProps) {
   const participant = useContext(ParticipantContext);
   const loggedIn = participant?.loggedIn
   const signInLink = protocol.studyId ? withBasePath(`/${protocol.studyId}/login`) : withBasePath('/auth/login')
-  const joinLink = withBasePath(`${protocol.studyId}/enrol`)
+  const joinLink = withBasePath(`/${protocol.studyId}/enrol`)
   if (loggedIn) {
     return (
       <React.Fragment>
