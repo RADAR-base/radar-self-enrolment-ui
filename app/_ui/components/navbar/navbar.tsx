@@ -1,12 +1,10 @@
 "use client"
-import React, { useContext, useEffect, useState } from 'react'
-import Image from 'next/image'
-import NextLink from 'next/link'
+import React, { useContext } from 'react'
 
 import { AppBar, Box, Button, Container, Divider, IconButton, Link, Menu, MenuItem, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu';
 import { withBasePath } from '@/app/_lib/util/links'
-import { AccountButton } from './accountButton'
+import { AccountButton, AccountMenuItemsFragment } from './accountButton'
 import { ProtocolContext } from '@/app/_lib/study/protocol/provider.client'
 import { ParticipantContext } from '@/app/_lib/auth/provider.client'
 import { useRouter } from 'next/navigation'
@@ -30,12 +28,10 @@ function SmallMenu(props: MenuProps) {
          alignItems='center'
          justifyContent='flex-end'
          display='flex'>
-      {(props.loggedIn && props.studyId) && <NextButton href={`/${props.studyId}/portal`}>Tasks</NextButton>}
-      <AccountButton />
-      
+      {(props.loggedIn && props.studyId) && <NextButton href={`/${props.studyId}/portal`}>Tasks</NextButton>}      
       <IconButton
         size="large"
-        aria-label="account of current user"
+        aria-label="Dropdown menu"
         aria-controls="menu-appbar"
         aria-haspopup="true"
         onClick={handleOpenNavMenu}
@@ -74,9 +70,11 @@ function SmallMenu(props: MenuProps) {
               router.push(`/${props.studyId}/portal`)
             }
         }>
-          Tasks
+          <Typography color='primary'>Tasks</Typography>
         </MenuItem>
         }
+        <Divider />
+        <AccountMenuItemsFragment />
       </Menu>
     </Box>
   )
@@ -103,7 +101,8 @@ interface NavBarProps {
 
 function NavBar(props: NavBarProps) {
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down('sm'));
+  theme.breakpoints.down('sm')
+  const matches = useMediaQuery(theme.breakpoints.down('sm'), {defaultMatches: true});
   const participant = useContext(ParticipantContext);
   const study = useContext(ProtocolContext)
   const router = useRouter()
@@ -111,7 +110,7 @@ function NavBar(props: NavBarProps) {
     router.push(`/${study.studyId}`)
   }
   return (
-  <AppBar color='inherit' sx={{'overflowX': 'auto'}}>
+  <AppBar color='inherit' sx={{'overflowX': 'auto'}} position='sticky'>
     <Container maxWidth='lg' sx={{padding: 2}}> 
       <Toolbar variant='dense' disableGutters>
         <Box  flexGrow={1}          // Large & small title

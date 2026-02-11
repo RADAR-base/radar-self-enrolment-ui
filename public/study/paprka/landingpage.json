@@ -8,7 +8,7 @@
                 "children": "PAPrKA: How active are people after knee replacement surgery?",
                 "sx": {"color":"white"}
             },
-            "subtitle": "The **P**hysical **A**ctivity **P**atterns after **K**nee **A**rthroplasty (**PAPrKA**) study seeks to learn more about people's recovery after knee replacement. With your help, and through our research, we can support patients and doctors in the future make better informed decisions about knee replacement surgery.",
+            "subtitle": "The **P**hysical **A**ctivity **P**atterns after **K**nee **A**rthroplasty (**PAPrKA**) study seeks to learn more about people's recovery after knee replacement. With your help, and through our research, we can support patients and doctors in the future make better informed decisions about knee replacement surgery.<br /><br /><div><button variant='contained' size='large' color='warning' href='/study/paprka/enrol'><h2 color='white'>Join Study</h2></button></div><br />",
             "sx": {"color": "white"},
             "ctas": [
               {
@@ -18,10 +18,6 @@
               {
                 "text": "Video",
                 "href": "#5mFgOzLI5ZM"
-              },
-              {
-                "text" :"Join Study",
-                "href": "paprka/enrol"
               }
             ] 
           },
@@ -92,7 +88,7 @@
             "content": [
               {
                 "blockType": "markdown",
-                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'>_Interested in taking part?_<div style='margin-left:auto;margin-right:auto'><button variant='contained' href='#'>Join Study</button></div></div>"
+                "content": "<div style='display:flex;flex-direction:column;justify-content:space-between;text-align:center;height:100%;gap:24px'>_Interested in taking part?_<div style='margin-left:auto;margin-right:auto'><button variant='contained' href='/study/paprka/enrol'>Join Study</button></div></div>"
               },
               {
                 "blockType": "markdown",

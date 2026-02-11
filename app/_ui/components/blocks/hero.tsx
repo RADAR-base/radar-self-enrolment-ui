@@ -23,7 +23,7 @@ interface CTAButtonProps {
 
 function CTAButton({cta}: CTAButtonProps) {
   const theme = useTheme()
-  let sx2 = {width: { xs: "auto", sm: "auto" }}
+  let sx2 = {width: { xs: "aut", sm: "auto" }}
   let sx = theme.components?.MuiButton?.defaultProps?.sx
   sx = {...sx, ...sx2}
   return <Button variant="contained" 
