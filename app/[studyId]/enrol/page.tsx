@@ -1,4 +1,5 @@
 "use server"
+import { Suspense } from 'react';
 import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
 import { RadarCard } from '@/app/_ui/components/base/card';
 import { EnrolmentContent } from '@/app/_ui/enrolment/enrolment.component';
@@ -26,7 +27,9 @@ export default async function Page(props: { params: Promise<{ studyId: string }>
             alignItems="center">
         <Container maxWidth="lg" disableGutters>
           <RadarCard>
-            <EnrolmentContent studyProtocol={protocol}/>
+            <Suspense>
+              <EnrolmentContent studyProtocol={protocol}/>
+            </Suspense>
           </RadarCard>
         </Container>
       </Box>

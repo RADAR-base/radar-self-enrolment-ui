@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { notFound, redirect } from 'next/navigation'
 import { Box, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { Alert, Container } from "@mui/material";
@@ -17,6 +17,7 @@ import ProtocolRepository, { StudyProtocolRepository } from "@/app/_lib/study/pr
 import { StudyProtocol } from '@/app/_lib/study/protocol';
 import ThemeProviderFromObject from '../_ui/components/base/themeProviderFromObject';
 import fetchProjectsFromMp from "@/app/_lib/github/services/mp-projects-fetcher";
+import { SearchParamsCapture } from '../_ui/components/base/searchParamsCapture';
 
 function makeRelativePaths(links: FooterItem[], studyId: string): FooterItem[] {
   return links.map(
@@ -93,6 +94,9 @@ export default async function StudyLayout(props: { params: Promise<{studyId: str
       <ThemeProvider theme={themeObject}>      
       <ThemeProviderFromObject themeObject={themeObject}>
       <CssBaseline />
+      <Suspense>
+        <SearchParamsCapture />
+      </Suspense>
       <ProtocolProvider protocol={protocol}>
         <Box
           sx={{
