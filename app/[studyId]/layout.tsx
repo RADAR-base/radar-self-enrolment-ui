@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { notFound, redirect } from 'next/navigation'
 import { Box, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import { Alert, Container } from "@mui/material";
 
 import NavBar from "@/app/_ui/components/navbar/navbar";
 import {Footer, FooterItem } from "@/app/_ui/components/footer";
@@ -15,6 +16,8 @@ import ProtocolProvider from '@/app/_lib/study/protocol/provider.client';
 import ProtocolRepository, { StudyProtocolRepository } from "@/app/_lib/study/protocol/repository";
 import { StudyProtocol } from '@/app/_lib/study/protocol';
 import ThemeProviderFromObject from '../_ui/components/base/themeProviderFromObject';
+import fetchProjectsFromMp from "@/app/_lib/github/services/mp-projects-fetcher";
+import { SearchParamsCapture } from '../_ui/components/base/searchParamsCapture';
 
 function makeRelativePaths(links: FooterItem[], studyId: string): FooterItem[] {
   return links.map(
@@ -45,10 +48,29 @@ export async function generateMetadata(props: {params: Promise<{studyId: string}
   }
 }
 
-export default async function StudyLayout(props: LayoutProps<'/[studyId]'>) {
+export default async function StudyLayout(props: { params: Promise<{studyId: string}>, children: React.ReactNode }) {
   
   const params = await props.params;
   const children = props.children;
+  // If project is not present in MP, render only the warning UI
+  const projects = await fetchProjectsFromMp()
+  const existsInMp = projects.some((p) => p.projectName === params.studyId)
+  if (!existsInMp) {
+    return (
+      <React.Fragment>
+        <Box sx={{ flexGrow: 1, margin: {xs: 0, sm: 2}}} 
+              display="flex"
+              justifyContent="center"
+              alignItems="center">
+          <Container maxWidth="md">
+            <Alert severity="warning" variant="outlined">
+              Project "{params.studyId}" does not exist in Management Portal.
+            </Alert>
+          </Container>
+        </Box>
+      </React.Fragment>
+    )
+  }
   const cookieStore = await cookies()
   const cookieChoice = cookieStore.get("cookieChoice")
   const registery: StudyProtocolRepository = new ProtocolRepository()
@@ -72,6 +94,9 @@ export default async function StudyLayout(props: LayoutProps<'/[studyId]'>) {
       <ThemeProvider theme={themeObject}>      
       <ThemeProviderFromObject themeObject={themeObject}>
       <CssBaseline />
+      <Suspense>
+        <SearchParamsCapture />
+      </Suspense>
       <ProtocolProvider protocol={protocol}>
         <Box
           sx={{

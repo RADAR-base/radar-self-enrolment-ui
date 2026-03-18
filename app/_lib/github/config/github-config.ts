@@ -27,6 +27,6 @@ export const REMOTE_DEFINITIONS_CONFIG = {
 
 export const MP_CONFIG = {
   BASE_URL:
-    process.env.MP_CONFIG_BASE_URL || "http://127.0.1.1:8080/managementportal",
+    process.env.MP_CONFIG_BASE_URL || "http://localhost:8080/managementportal",
   PROJECTS_ENDPOINT: process.env.MP_PROJECTS_ENDPOINT || "api/public/projects",
 }

@@ -38,9 +38,9 @@ async function paprkaEmails(studyId: string, oryUser: any, status?: {[key:string
     } 
     if (studyStatus != 'complete') {
       if (!(status &&
-        ((status['paprka_about'].due) ||
-        (status['paprka_surgery'].due) ||
-        (status['connect'].due) )
+        ((status['paprka_about']?.due) ||
+        (status['paprka_surgery']?.due) ||
+        (status['connect']?.due) )
       )) {
         await setStudyStatus('paprka', oryUser['identity']['id'], 'complete')
         paprkaEmailOnFinish(oryUser)
@@ -51,24 +51,44 @@ async function paprkaEmails(studyId: string, oryUser: any, status?: {[key:string
 }
 
 export default async function Page(props: { params: Promise<{ studyId: string }> }) {
-  var showFinishBanner: boolean = false
   const params = await props.params;
-  const oryUser = await getOryUser()
-  if (oryUser == undefined) {
-    redirect(`/$params.studyId}/login`)
+  console.log("[PortalPage] render:start", { studyId: params.studyId });
+
+  try {
+    let showFinishBanner = false;
+    const oryUser = await getOryUser()
+    if (oryUser == undefined) {
+      console.log("[PortalPage] no Ory user, redirecting to login", {
+        studyId: params.studyId,
+      });
+      redirect(`/${params.studyId}/login`)
+    }
+    const status = await fetchTaskStatus(params.studyId, oryUser)
+    const registery = new StudyProtocolRepository()
+    const protocol = await registery.getStudyProtocol(params.studyId)
+    console.log("[PortalPage] protocol result", {
+      studyId: params.studyId,
+      hasProtocol: !!protocol,
+      protocolStudyId: protocol?.studyId,
+      protocolName: protocol?.name,
+    });
+    const finishTitle = protocol?.studyUiConfig.finishContent?.title ?? 'Finished'
+    const finishContent = protocol?.studyUiConfig.finishContent?.content ?? 'Thank you for completing the study'
+    if ((params.studyId == 'paprka')) {
+      showFinishBanner = await paprkaEmails(params.studyId, oryUser, status)
+    }
+    return (
+      <main>
+        <TaskPanel armtStatuses={status} />
+        {showFinishBanner && <FinishBanner title={finishTitle} content={finishContent} />}
+      </main>
+    )
+  } catch (err) {
+    console.error("[PortalPage] render:error", {
+      studyId: params.studyId,
+      error: err instanceof Error ? err.message : String(err),
+      stack: err instanceof Error ? err.stack : undefined,
+    });
+    throw err;
   }
-  const status = await fetchTaskStatus(params.studyId, oryUser)
-  const registery = new StudyProtocolRepository()
-  const protocol = await registery.getStudyProtocol(params.studyId)
-  const finishTitle = protocol?.studyUiConfig.finishContent.title ?? 'Finished'
-  const finishContent = protocol?.studyUiConfig.finishContent.content ?? 'Thank you for completing the study'
-  if ((params.studyId == 'paprka')) {
-    showFinishBanner = await paprkaEmails(params.studyId, oryUser, status)
-  }
-  return (
-    <main>
-      <TaskPanel armtStatuses={status} />
-      {showFinishBanner && <FinishBanner title={finishTitle} content={finishContent} />}
-    </main>
-  )
 }

@@ -17,12 +17,23 @@ export class FallbackProtocolRepository implements StudyProtocolRepository {
     }
 
     async getStudyProtocol(studyId: string): Promise<StudyProtocol | undefined> {
+        const repoType = this.primary instanceof GitHubProtocolRepository ? "GITHUB" : "LOCAL";
+        console.log("[FallbackProtocolRepository] getStudyProtocol:start", {
+            studyId,
+            primary: repoType,
+            defaultStudyId: DEFAULT_STUDY_ID,
+        });
+
         // 1) Try primary (GitHub by default)
         try {
             const protocol = await this.primary.getStudyProtocol(studyId);
             if (protocol) return protocol;
-        } catch (_) {
-            // swallow and continue to fallback
+        } catch (err) {
+            console.warn("[FallbackProtocolRepository] primary repository failed", {
+                studyId,
+                primary: repoType,
+                error: err instanceof Error ? err.message : String(err),
+            });
         }
 
         // 2) Try the other source explicitly if primary failed (GitHub <-> Local)
@@ -33,8 +44,13 @@ export class FallbackProtocolRepository implements StudyProtocolRepository {
                     : this.githubRepo;
             const protocol = await secondary.getStudyProtocol(studyId);
             if (protocol) return protocol;
-        } catch (_) {
-            // swallow and continue to fallback
+        } catch (err) {
+            console.warn("[FallbackProtocolRepository] secondary repository failed", {
+                studyId,
+                secondary:
+                    this.primary instanceof GitHubProtocolRepository ? "LOCAL" : "GITHUB",
+                error: err instanceof Error ? err.message : String(err),
+            });
         }
 
         // 3) Fallback to default bundled study definition
@@ -43,10 +59,24 @@ export class FallbackProtocolRepository implements StudyProtocolRepository {
                 DEFAULT_STUDY_ID
             );
             // Return default UI but keep the requested studyId for routing and API calls
-            return defaultProtocol
+            const result = defaultProtocol
                 ? { ...defaultProtocol, studyId, name: studyId }
                 : undefined;
-        } catch (_) {
+            console.log("[FallbackProtocolRepository] getStudyProtocol:usingDefault", {
+                studyId,
+                defaultStudyId: DEFAULT_STUDY_ID,
+                hasDefault: !!defaultProtocol,
+            });
+            return result;
+        } catch (err) {
+            console.error(
+                "[FallbackProtocolRepository] default fallback failed",
+                {
+                    studyId,
+                    defaultStudyId: DEFAULT_STUDY_ID,
+                    error: err instanceof Error ? err.message : String(err),
+                },
+            );
             return undefined;
         }
     }

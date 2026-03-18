@@ -25,7 +25,7 @@ function CTAButton(cta: ICallToAction) {
   let sx = theme.components?.MuiButton?.defaultProps?.sx
   sx = {...sx, ...sx2}
   return <Button variant="contained" 
-                 href={cta.href}
+                 href={cta.href ? withBasePath(cta.href) : undefined}
                  onClick={cta.onClick}
                  sx={sx}>
           {cta.text}

@@ -55,7 +55,7 @@ export function FitbitPage() {
           <Typography mt={2} variant="body1">Once you have logged in to your account you will see a screen called Fitbit. Tick *both boxes, and then click “Allow” at the bottom to share your physical activity information with the study.</Typography>
           <Typography mt={2} variant="body1" fontStyle={'italic'}>* These 2 boxes capture your physical activity information such as time doing activities, distance travelled, step count, and heart rate which is needed for the PAPrKA study.</Typography>
           <Typography mt={2} variant="body1">Once you have completed the three steps, you will receive a message that will ask you if you want to link another device or if you are done. Click done, if you are not linking any other device.</Typography>
-          <Typography mt={2} variant="body1">If you have any questions about the information we ask for, please contact us on <Link href="mailto:paprka@manchester.ac.uk">paprka@manchester.ac.uk</Link></Typography>
+          <Typography mt={2} variant="body1">If you have any questions about the information we ask for, please find our contact details at the bottom of the page.</Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Image 
