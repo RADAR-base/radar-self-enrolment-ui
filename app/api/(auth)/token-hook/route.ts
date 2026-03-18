@@ -261,9 +261,6 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        // Log parsed payload
-        console.log('Token hook payload:', JSON.stringify(payload, null, 2))
-
         // Validate required fields
         if (!validatePayload(payload)) {
             console.error('Invalid payload structure:', payload)
@@ -340,9 +337,6 @@ export async function POST(request: NextRequest) {
                 { status: 403 }
             )
         }
-
-        // Log response
-        console.log('Token hook response:', JSON.stringify(enrichedSession, null, 2))
 
         return NextResponse.json(enrichedSession)
 
