@@ -36,7 +36,7 @@ export default async function Page({
         <Box marginTop={2} marginBottom={2} marginRight={"auto"} marginLeft={"auto"} maxWidth={600} justifySelf={'center'} width='100%'>
           <RadarCard>
             <Box padding={4}>
-              <SettingsComponent flow={flow} redirectTo='/auth/oauth-login' />
+              <SettingsComponent flow={flow} redirectTo='/auth/account/settings/success' />
             </Box>
           </RadarCard>
         </Box>
