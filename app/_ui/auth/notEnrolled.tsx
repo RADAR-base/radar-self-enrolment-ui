@@ -26,7 +26,7 @@ export function NotEnrolled({ studyId, projects }: NotEnrolledProps) {
 
   const handleLogout = async () => {
     await fetch(withBasePath("/api/auth/logout"))
-    router.push(withBasePath(`/${studyId}/login`))
+    router.push(`/${studyId}/login`)
   }
 
   return (
