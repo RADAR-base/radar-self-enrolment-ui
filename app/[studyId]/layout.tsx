@@ -19,6 +19,8 @@ import ThemeProviderFromObject from '../_ui/components/base/themeProviderFromObj
 import fetchProjectsFromMp from "@/app/_lib/github/services/mp-projects-fetcher";
 import { SearchParamsCapture } from '../_ui/components/base/searchParamsCapture';
 
+const RESERVED_PATHS = new Set(['auth', 'api', 'account', 'connect'])
+
 function makeRelativePaths(links: FooterItem[], studyId: string): FooterItem[] {
   return links.map(
     (link) => {
@@ -34,6 +36,7 @@ function makeRelativePaths(links: FooterItem[], studyId: string): FooterItem[] {
 
 export async function generateMetadata(props: {params: Promise<{studyId: string}>}) {
   const params = await props.params;
+  if (RESERVED_PATHS.has(params.studyId)) { return }
   const registery: StudyProtocolRepository = new ProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)
   if (protocol == undefined) { return }
@@ -52,6 +55,11 @@ export default async function StudyLayout(props: { params: Promise<{studyId: str
   
   const params = await props.params;
   const children = props.children;
+
+  if (RESERVED_PATHS.has(params.studyId)) {
+    notFound()
+  }
+
   // If project is not present in MP, render only the warning UI
   const projects = await fetchProjectsFromMp()
   const existsInMp = projects.some((p) => p.projectName === params.studyId)
