@@ -104,7 +104,7 @@ function ArmtContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
           Before you start please read through all the steps below. 
         </Typography>
         <Typography>
-          Read our <Link href={"/study/study/paprka/resources/guides/Study_Guide_iPhone.pdf"} target='_blank'>Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to connect with the aRMT app. 
+          Read our <Link>Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to connect with the aRMT app.
         </Typography>
       </Grid>
       <Grid size={12} textAlign={'left'}>
