@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -19,10 +19,12 @@
     "@mui/x-date-pickers": "^7.19.0",
     "@next/third-parties": "15.5.4",
     "@react-pdf/renderer": "^4.2.1",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/nodemailer": "^6.4.17",
     "dayjs": "^1.11.13",
     "formik": "^2.4.6",
     "glob": "^11.0.0",
+    "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "morph-expressions": "^1.1.1",
     "mui-markdown": "^1.2.2",
