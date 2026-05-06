@@ -98,7 +98,7 @@ function ArmtContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
           You can share data with us by downloading the RADAR aRMT app on your iPhone.
         </Typography>
         <Typography>
-          The RADAR aRMT app lets you send us your activity and questionnaire data.
+          The RADAR aRMT app lets you send us your wearable device and questionnaire data.
         </Typography>
         <Typography variant="h3" padding={2} textAlign={'center'}>
           Before you start please read through all the steps below. 
@@ -168,7 +168,7 @@ function ArmtContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
             <Typography>Return to this website</Typography>
           </ListItem>
           <ListItem sx={{display: 'list-item'}}>
-            <Typography>Click the green 'Mark as complete' button.</Typography>
+            <Typography>Click the 'Mark as complete' button.</Typography>
           </ListItem>
           <ListItem sx={{display: 'list-item'}}>
             <Typography>You’ll then be asked if you want to connect another device.</Typography>
