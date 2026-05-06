@@ -4,7 +4,6 @@ import React from "react";
 import { withBasePath } from "@/app/_lib/util/links";
 import { RadarCard } from "../base/card";
 import Image from 'next/image'
-import NextLink from 'next/link'
 
 
 export function FitbitPage() {
@@ -23,7 +22,7 @@ export function FitbitPage() {
               The first step will take you to Fitbit's website. For the second step <strong>you need to login to your Fitbit account.</strong> In the third step you will be asked to tick all the boxes in the Fitbit screen.
             </Typography>
             <Typography>
-              Read our <Link component={NextLink} href={'/study/paprka/resources/guides/PAPrKA_Study_Guide_Fitbit.pdf'} target="_blank">Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to share your Fitbit data.  
+              Read our <Link>Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to share your Fitbit data.
             </Typography>
           </div>
         </Grid>
@@ -53,7 +52,7 @@ export function FitbitPage() {
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 3: Select the data you want to share</Typography>
           <Typography mt={2} variant="body1">Once you have logged in to your account you will see a screen called Fitbit. Tick *both boxes, and then click “Allow” at the bottom to share your physical activity information with the study.</Typography>
-          <Typography mt={2} variant="body1" fontStyle={'italic'}>* These 2 boxes capture your physical activity information such as time doing activities, distance travelled, step count, and heart rate which is needed for the PAPrKA study.</Typography>
+          <Typography mt={2} variant="body1" fontStyle={'italic'}>* These 2 boxes capture your physical activity information such as time doing activities, distance travelled, step count, and heart rate which is needed for the study.</Typography>
           <Typography mt={2} variant="body1">Once you have completed the three steps, you will receive a message that will ask you if you want to link another device or if you are done. Click done, if you are not linking any other device.</Typography>
           <Typography mt={2} variant="body1">If you have any questions about the information we ask for, please find our contact details at the bottom of the page.</Typography>
         </Grid>
