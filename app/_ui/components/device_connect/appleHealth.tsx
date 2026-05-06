@@ -98,7 +98,7 @@ function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNod
           You can share data with us if you have an iPhone (6s or newer), or both an iPhone and an Apple Watch. 
         </Typography>
         <Typography>
-          We will ask you to download an app so you can send us a copy of your activity data
+          We will ask you to download an app so you can send us a copy of your wearable device data.
         </Typography>
         <Typography variant="h3" padding={2} textAlign={'center'}>
           Before you start please read through all the steps below. 
@@ -168,7 +168,7 @@ function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNod
             <Typography>Return to this website</Typography>
           </ListItem>
           <ListItem sx={{display: 'list-item'}}>
-            <Typography>Click the green 'Mark as complete' button.</Typography>
+            <Typography>Click the 'Mark as complete' button.</Typography>
           </ListItem>
           <ListItem sx={{display: 'list-item'}}>
             <Typography>You’ll then be asked if you want to connect another device.</Typography>

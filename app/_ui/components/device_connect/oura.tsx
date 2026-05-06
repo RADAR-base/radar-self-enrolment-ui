@@ -52,8 +52,8 @@ export function OuraPage() {
 
           <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
             <Typography variant="h3">Step 3: Select the data you want to share</Typography>
-            <Typography variant="body1" mt={2}>Once you have logged in to your Oura account you will see a screen called “Connect with Oura”.  Tick the 3 boxes, and then click “Accept” at the bottom to share your physical activity information with the study.</Typography>
-            <Typography variant="body1" fontStyle={'italic'} mt={2}>These 3 boxes capture your physical activity information such as time doing activities, distance travelled, step count, and heart rate which is needed for the study. Any information that we do not need such as sleep will be deleted at the end of the study.</Typography>
+            <Typography variant="body1" mt={2}>Once you have logged in to your Oura account you will see a screen called “Connect with Oura”.  Tick the 3 boxes, and then click “Accept” at the bottom to share your wearable device data with the study.</Typography>
+            <Typography variant="body1" fontStyle={'italic'} mt={2}>These 3 boxes capture wearable device data such as step count, heart rate, movement, and distance, which is needed for the study. Any information that we do not need will be deleted at the end of the study.</Typography>
             <Typography variant="body1" mt={2}>Once you have completed the 3 steps, you will receive a message that will ask you if you want to link another device or if you are done. Click done, if you are not linking any other device.</Typography>
             <Typography mt={2} variant="body1">If you have any questions about the information we ask for, please find our contact details at the bottom of the page.</Typography>
           </Grid>
