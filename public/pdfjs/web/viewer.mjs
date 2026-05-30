@@ -17056,6 +17056,15 @@ initCom(PDFViewerApplication);
     if (fileOrigin === viewerOrigin) {
       return;
     }
+    const queryString = document.location.search.substring(1);
+    const params = parseQueryString(queryString);
+    const allowedOriginsParam = params.get("allowedOrigins");
+    if (allowedOriginsParam) {
+      const allowedOrigins = new Set(decodeURIComponent(allowedOriginsParam).split(",").map(origin => origin.trim()).filter(Boolean));
+      if (allowedOrigins.has(fileOrigin)) {
+        return;
+      }
+    }
     const ex = new Error("file origin does not match viewer's");
     PDFViewerApplication._documentError("pdfjs-loading-error", {
       message: ex.message

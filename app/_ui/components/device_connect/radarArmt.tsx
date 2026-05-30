@@ -18,8 +18,6 @@ const SCOPES = [
   'SUBJECT.READ',
   'SUBJECT.UPDATE',
   'MEASUREMENT.CREATE',
-  'SOURCEDATA.CREATE',
-  'SOURCETYPE.UPDATE',
   'offline_access'
 ]
 const AUDIENCE = ['res_ManagementPortal', 'res_gateway', 'res_AppServer'].join(' ')
