@@ -154,6 +154,10 @@ function convertJWKToPEM(jwk: any): string {
     return publicKey.export({ type: 'spki', format: 'pem' })
 }
 
+function isClientCredentialsGrant(payload: any): boolean {
+    return payload?.request?.grant_types?.includes('client_credentials') ?? false
+}
+
 function validatePayload(payload: any): payload is HydraTokenHookRequest {
     return (
         payload &&
@@ -259,6 +263,14 @@ export async function POST(request: NextRequest) {
                 { error: 'Invalid JSON payload' },
                 { status: 400 }
             )
+        }
+
+        // client_credentials has no user session — skip Kratos enrichment
+        if (isClientCredentialsGrant(payload)) {
+            console.log('Skipping token hook for client_credentials grant:', {
+                client_id: payload.request?.client_id,
+            })
+            return new NextResponse(null, { status: 204 })
         }
 
         // Validate required fields
