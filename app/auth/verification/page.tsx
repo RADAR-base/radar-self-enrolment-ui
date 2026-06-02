@@ -34,7 +34,7 @@ export default async function Page({
   const csrfToken = cookieJar.getAll().find((c) => c.name.startsWith('csrf_token_'))
   const sp = await searchParams
   const flowId = sp.flowId ?? sp.flow
-  if (userSession.identity.traits.projects.length > 0) {
+  if ((userSession.identity.traits.projects?.length ?? 0) > 0) {
     let redirectUri = `/${userSession.identity.traits.projects[0].id}/verification`
     if (flowId) {
       redirect(`${redirectUri}?flow=${flowId}`)
