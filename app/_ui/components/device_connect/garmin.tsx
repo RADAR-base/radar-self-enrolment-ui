@@ -6,7 +6,12 @@ import { RadarCard } from "../base/card";
 import Image from 'next/image'
 
 
-export function GarminPage() {
+interface GarminPageProps {
+  guideUrl?: string
+  videoUrl?: string
+}
+
+export function GarminPage({ guideUrl, videoUrl }: GarminPageProps) {
   const linkUrl = withBasePath('/api/connect/rsa?device=Garmin')
   return (
   <Container maxWidth="lg" disableGutters>
@@ -22,7 +27,8 @@ export function GarminPage() {
             The first step will take you to Garmin's website. For the second step <strong>you need to login to your Garmin account.</strong> In the third step you will be asked to click the buttons in the “Control the information you share” screen. 
             </Typography>
             <Typography>
-              Read our <Link>Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to share your Garmin data.
+              {guideUrl && <>Read our <Link href={withBasePath(guideUrl)} target="_blank">Guide</Link>{videoUrl ? ' or view our ' : ''}</>}
+              {videoUrl && <><Link href={withBasePath(videoUrl!)} target="_blank">Video</Link>{' for more detailed instructions on how to share your Garmin data.'}</>}
             </Typography>
           </div>
         </Grid>

@@ -6,7 +6,12 @@ import { RadarCard } from "../base/card";
 import Image from 'next/image'
 
 
-export function FitbitPage() {
+interface FitbitPageProps {
+  guideUrl?: string
+  videoUrl?: string
+}
+
+export function FitbitPage({ guideUrl, videoUrl }: FitbitPageProps) {
   const linkUrl = withBasePath('/api/connect/rsa?device=FitBit')
   return (
   <Container maxWidth="lg" disableGutters>
@@ -22,7 +27,8 @@ export function FitbitPage() {
               The first step will take you to Fitbit's website. For the second step <strong>you need to login to your Fitbit account.</strong> In the third step you will be asked to tick all the boxes in the Fitbit screen.
             </Typography>
             <Typography>
-              Read our <Link>Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to share your Fitbit data.
+              {guideUrl && <>Read our <Link href={withBasePath(guideUrl)} target="_blank">Guide</Link>{videoUrl ? ' or view our ' : ''}</>}
+              {videoUrl && <><Link href={withBasePath(videoUrl!)} target="_blank">Video</Link>{' for more detailed instructions on how to share your Fitbit data.'}</>}
             </Typography>
           </div>
         </Grid>

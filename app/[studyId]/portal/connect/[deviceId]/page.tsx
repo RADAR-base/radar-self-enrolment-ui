@@ -5,6 +5,8 @@ import { GarminPage } from '@/app/_ui/components/device_connect/garmin';
 import { OuraPage } from '@/app/_ui/components/device_connect/oura';
 import { ArmtPage } from '@/app/_ui/components/device_connect/radarArmt';
 import { PrmtPage } from '@/app/_ui/components/device_connect/radarPrmt';
+import { ConnectDeviceConfig } from '@/app/_lib/study/protocol';
+import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
 import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 
@@ -12,26 +14,33 @@ import type { JSX } from "react";
 
 export default async function Page(props: { params: Promise<{ studyId: string, deviceId: string}> }) {
   const params = await props.params;
+
+  const registry = new StudyProtocolRepository()
+  const protocol = await registry.getStudyProtocol(params.studyId)
+  const connectTask = protocol?.protocols.find(p => p.id === 'connect')
+  const deviceConfig = (connectTask?.metadata.options.devices as ConnectDeviceConfig[] | undefined)
+    ?.find(d => d.id === params.deviceId)
+
   var content: JSX.Element
 
   switch (params.deviceId) {
     case "fitbit":
-      content = <FitbitPage /> 
+      content = <FitbitPage guideUrl={deviceConfig?.guideUrl} videoUrl={deviceConfig?.videoUrl} />
       break
     case "apple_health":
-      content = <HealthKitPage />
+      content = <HealthKitPage guideUrl={deviceConfig?.guideUrl} videoUrl={deviceConfig?.videoUrl} />
       break
     case "garmin":
-      content = <GarminPage />
+      content = <GarminPage guideUrl={deviceConfig?.guideUrl} videoUrl={deviceConfig?.videoUrl} />
       break
     case "oura":
-      content = <OuraPage />
+      content = <OuraPage guideUrl={deviceConfig?.guideUrl} videoUrl={deviceConfig?.videoUrl} />
       break
     case "radar_armt":
-      content = <ArmtPage />
+      content = <ArmtPage guideUrl={deviceConfig?.guideUrl} videoUrl={deviceConfig?.videoUrl} />
       break
     case "radar_prmt":
-      content = <PrmtPage />
+      content = <PrmtPage guideUrl={deviceConfig?.guideUrl} videoUrl={deviceConfig?.videoUrl} />
       break
     default:
       return notFound()

@@ -85,7 +85,7 @@ return (<div>
         </div>)
 }
 
-function ArmtContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
+function ArmtContent({armtAuthUrl, guideUrl, videoUrl}: {armtAuthUrl?: string, guideUrl?: string, videoUrl?: string}): React.ReactNode {
   const protocol = useContext(ProtocolContext);
   const theme = useTheme()
   return (
@@ -101,9 +101,13 @@ function ArmtContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
         <Typography variant="h3" padding={2} textAlign={'center'}>
           Before you start please read through all the steps below. 
         </Typography>
-        <Typography>
-          Read our <Link>Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to connect with the aRMT app.
-        </Typography>
+        {(guideUrl || videoUrl) && (
+          <Typography>
+            {guideUrl && <>Read our <Link href={withBasePath(guideUrl)} target="_blank">Guide</Link>{videoUrl ? ' or view our ' : ''}</>}
+            {videoUrl && <><Link href={withBasePath(videoUrl!)} target="_blank">Video</Link></>}
+            {' for more detailed instructions on how to connect with the aRMT app.'}
+          </Typography>
+        )}
       </Grid>
       <Grid size={12} textAlign={'left'}>
         <Typography  variant="h3">
@@ -220,7 +224,12 @@ function createShortToken(token: any) {
 }
 
 
-export function ArmtPage() {
+interface ArmtPageProps {
+  guideUrl?: string
+  videoUrl?: string
+}
+
+export function ArmtPage({ guideUrl, videoUrl }: ArmtPageProps) {
   const [isFetchingToken, setIsFetchingToken] = useState(false)
   const [armtAuthUrl, setArmtAuthUrl] = useState<any>(undefined)
 
@@ -251,7 +260,7 @@ export function ArmtPage() {
           (<GetOauthToken clientId="aRMT" scopes={SCOPES} audience={AUDIENCE} codeFunc={async (code:string) => setCode(code)} redirectUri={REDIRECT_URI} />) : 
           (<Box display={'inline'} gap={2} aria-live="polite" paddingLeft={4}>
             <Grid container spacing={2} gap={2} rowGap={4}>
-              <ArmtContent armtAuthUrl={armtAuthUrl} />
+              <ArmtContent armtAuthUrl={armtAuthUrl} guideUrl={guideUrl} videoUrl={videoUrl} />
             </Grid>
             <br />
           </Box>)
