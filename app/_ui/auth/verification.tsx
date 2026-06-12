@@ -109,11 +109,13 @@ function PassedChallengeComponent(props: PassedChallengeComponentProps): React.R
 
 interface VerificationComponentProps {
   flow?: IOryVerificationFlow
+  redirectTo?: string
 }
 
 
 export function VerificationComponent(props: VerificationComponentProps): React.ReactElement<any> {
   const pathname = usePathname()
+  const router = useRouter()
   const [flow, setFlow] = useState<IOryVerificationFlow | undefined>(props.flow)
   const [content, setContent] = useState<React.ReactElement<any>>(<CircularProgress style={{alignSelf: 'center'}}/>)
   const studyContext = useContext(ProtocolContext)
@@ -132,6 +134,8 @@ export function VerificationComponent(props: VerificationComponentProps): React.
           if (studyContext) {
             window.location.replace(withBasePath(`/${studyContext.studyId}/portal`))
             window.location.reload()
+          } else if (props.redirectTo) {
+            router.push(props.redirectTo)
           } else {
             window.location.replace(withBasePath('/'))
             window.location.reload()
