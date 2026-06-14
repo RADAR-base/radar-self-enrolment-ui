@@ -131,14 +131,12 @@ export function VerificationComponent(props: VerificationComponentProps): React.
           setContent(<EmailSentComponent flow={flow} setFlow={setFlow} />)
           break
         case 'passed_challenge':
-          if (studyContext) {
+          if (studyContext?.studyId) {
             window.location.replace(withBasePath(`/${studyContext.studyId}/portal`))
-            window.location.reload()
           } else if (props.redirectTo) {
             router.push(props.redirectTo)
           } else {
             window.location.replace(withBasePath('/'))
-            window.location.reload()
           }
           setContent(<PassedChallengeComponent />)
           break
