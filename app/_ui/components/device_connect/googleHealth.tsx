@@ -108,7 +108,7 @@ export function GoogleHealthPage({ guideUrl, videoUrl }: GoogleHealthPageProps) 
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 3: Select the data you want to share</Typography>
           <Typography mt={2} variant="body1">Once you have logged in to your account you will see a Google consent screen. Review the permissions requested, grant access to your health data, and then click &quot;Continue&quot; to share your wearable device data with the study.</Typography>
-          <Typography mt={2} variant="body1" fontStyle={'italic'}>These permissions cover your activity (steps, exercise, calories), sleep, heart rate and related vital signs, ECG, irregular rhythm notifications, and GPS location during exercise, which the study needs.</Typography>
+          <Typography mt={2} variant="body1" fontStyle={'italic'}>Depending on the study, these permissions cover your activity (steps, exercise, calories), sleep, heart rate and related vital signs, ECG, irregular rhythm notifications, and GPS location during exercise, which the study needs.</Typography>
           <Typography mt={2} variant="body1">Once you have completed the three steps, you will receive a message that will ask you if you want to link another device or if you are done. Click done, if you are not linking any other device.</Typography>
           <Typography mt={2} variant="body1">If you have any questions about the information we ask for, please find our contact details at the bottom of the page.</Typography>
         </Grid>
