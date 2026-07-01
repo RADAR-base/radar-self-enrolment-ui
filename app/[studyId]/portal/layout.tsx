@@ -6,6 +6,7 @@ import React from 'react';
 import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
 import { OrySessionResponse } from '@/app/_lib/auth/ory/types';
 import { GetOauthToken } from '@/app/_ui/auth/oauthToken';
+import { NotEnrolled } from '@/app/_ui/auth/notEnrolled';
 
 
 export async function generateMetadata(props: {params: Promise<{studyId: string}>}) {
@@ -18,7 +19,12 @@ export async function generateMetadata(props: {params: Promise<{studyId: string}
   }
 }
 
-function token_matches_session(token: string, session: any, studyId: string): boolean {
+function isEnrolledInStudy(session: OrySessionResponse, studyId: string): boolean {
+  const projects = session.identity.traits.projects ?? []
+  return projects.some((project) => project.id === studyId)
+}
+
+function token_matches_session(token: string, session: OrySessionResponse, studyId: string): boolean {
   const env = process.env.NODE_ENV
   if (env == 'development') {
     return true
@@ -27,9 +33,9 @@ function token_matches_session(token: string, session: any, studyId: string): bo
   try {
     const jwtToken = jwtDecode(token)
     const tokenUserId = jwtToken.sub
-    const projects: {userId: string, id: string}[] = session['identity']['traits']['projects']
-    const sessionUserId = projects.find((project) => project.id == studyId)?.userId
-  return ((sessionUserId != undefined) && (tokenUserId != undefined) && (sessionUserId == tokenUserId))
+    const projects = session.identity.traits.projects ?? []
+    const sessionUserId = projects.find((project) => project.id === studyId)?.userId
+    return ((sessionUserId != undefined) && (tokenUserId != undefined) && (sessionUserId == tokenUserId))
   } catch (err) {
     if (err instanceof InvalidTokenError) {
       console.warn('An invalid JWT token was used')
@@ -54,6 +60,14 @@ export default async function StudyLayout(props: LayoutProps<'/[studyId]/portal'
         redirect(`/${params.studyId}/verification`)
       }
   }
+
+  if (!isEnrolledInStudy(userSession, params.studyId)) {
+    const projects = (userSession.identity.traits.projects ?? []).map(
+      (p) => ({ id: p.id, name: p.name })
+    )
+    return <NotEnrolled studyId={params.studyId} projects={projects} />
+  }
+
   const accessToken = (cookieStore.get('sep_access_token'))
   const hasAccess = ((accessToken != undefined) && (token_matches_session(accessToken.value, userSession, params.studyId)))
   return <React.Fragment>{hasAccess ? <React.Fragment>{children}</React.Fragment> : <GetOauthToken />}</React.Fragment>

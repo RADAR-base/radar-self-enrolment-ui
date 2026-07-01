@@ -3,7 +3,7 @@ import Yup from "@/app/_lib/armt/validation/yup"
 import { IOrySettingsFlow } from "@/app/_lib/auth/ory/flows.interface"
 import { getCsrfToken } from "@/app/_lib/auth/ory/util"
 import { withBasePath } from "@/app/_lib/util/links"
-import { Box, Typography, TextField, Button } from "@mui/material"
+import { Box, Typography, Button } from "@mui/material"
 import { useFormik } from "formik"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -129,4 +129,5 @@ export default function SettingsComponent(props: SettingsProps) {
         </Button>
       </Box>
     </form>
-)}
+  )
+}

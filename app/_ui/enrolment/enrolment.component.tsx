@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Yup from '@/app/_lib/armt/validation/yup'
 import { useFormik } from 'formik';
 import { Box, Button, Container, Divider, Stack, Typography } from '@mui/material';
@@ -19,6 +19,7 @@ import { getCsrfToken } from '@/app/_lib/auth/ory/util';
 import { sendGAEvent } from '@next/third-parties/google'
 import { IOryRegistrationFlow } from '@/app/_lib/auth/ory/flows.interface';
 import StepperProgress from '../components/base/stepperProgress';
+import { buildAdditionalInitialValues, clearCapturedParams } from '../components/base/searchParamsCapture';
 
 
 function generateEligibilitySchema(protocol: EnrolmentProtocol): Yup.Schema {
@@ -72,7 +73,6 @@ const registerSchema = Yup.object().shape({
   email: Yup.string().email("Invalid Email").required(""),
   password: Yup.string().min(12, "Password must be at least 12 characters").required("")
 })
-
 
 interface NextButtonProps {
   disabled: boolean,
@@ -132,6 +132,34 @@ interface EnrolmentContentProps {
 }
 const isBrowser = () => typeof window !== 'undefined';
 
+type ContinueWithFlow = {
+  id?: string
+}
+
+type ContinueWithItem = {
+  flow?: ContinueWithFlow | ContinueWithFlow[]
+}
+
+type JoinResponse = {
+  continue_with?: ContinueWithItem[]
+}
+
+function getVerificationFlowId(data: JoinResponse): string | undefined {
+  const continueWith = Array.isArray(data?.continue_with) ? data.continue_with : []
+  const firstContinueWith = continueWith[0]
+  const flow = firstContinueWith?.flow
+
+  if (!flow) {
+    return undefined
+  }
+
+  if (Array.isArray(flow)) {
+    return flow[0]?.id
+  }
+
+  return flow.id
+}
+
 function scrollToTop() {
     if (!isBrowser()) return;
     setTimeout(function () {
@@ -142,6 +170,7 @@ function scrollToTop() {
 export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
   const protocol = studyProtocol.enrolment
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [disabled, setDisabled] = React.useState(true)
   const [stepIdx, setStep] = React.useState(0)
   let [flow, setFlow] = useState<any>();
@@ -197,7 +226,9 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
     initialValues: {
       'eligibility': generateEligibilityInitialValues(protocol),
       'consent': generateConsentInitialValues(protocol),
-      'additional': {},
+      'additional': protocol.additional
+        ? buildAdditionalInitialValues(protocol.additional.items, searchParams, studyProtocol.studyId)
+        : {},
       'register': {'email': undefined, 'password': undefined}
     },
     validationSchema: Yup.object(schemas),
@@ -218,10 +249,12 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
       }).then(
         (res) => {
           if (res.ok) {
+            clearCapturedParams(studyProtocol.studyId)
             sendGAEvent('event', 'study_enrolment', {status: 'joined'})
             res.json().then(
               (data) => {
-                const verificationFlow = data.continue_with[0].flow.id
+                const verificationFlow = getVerificationFlowId(data as JoinResponse)
+
                 if (verificationFlow) {
                   router.push(`/${studyProtocol.studyId}/verification?flow=${verificationFlow}`)
                   router.refresh()

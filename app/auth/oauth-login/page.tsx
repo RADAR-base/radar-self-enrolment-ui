@@ -71,6 +71,14 @@ function userIsParticipant(userSession: any): boolean {
   return userSession?.identity?.schema_id == "subject"
 }
 
+function isEmailVerified(userSession: any): boolean {
+  const email = userSession?.identity?.traits?.email
+  const address = userSession?.identity?.verifiable_addresses?.find(
+    (a: any) => a.value === email
+  )
+  return address?.verified ?? false
+}
+
 function LoginCard(params: {children: React.ReactElement<any>}) {
   return <RadarCard>
           <Box padding={4} maxWidth={600} justifySelf={'center'} width='100%'>
@@ -116,6 +124,10 @@ export default function Page() {
       //   </LoginCard>)
       // }
     } else {
+      if (!isEmailVerified(userSession)) {
+        window.location.replace(withBasePath('/auth/verification'))
+        return
+      }
       if (userIsParticipant(userSession)) {
         acceptWithCurrentAccount(loginChallenge, router)
         return
