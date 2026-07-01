@@ -1,6 +1,8 @@
 "use server";
 import { HealthKitPage } from '@/app/_ui/components/device_connect/appleHealth';
 import { FitbitPage } from '@/app/_ui/components/device_connect/fitbit';
+import { GoogleHealthPage } from '@/app/_ui/components/device_connect/googleHealth';
+import { HuaweiPage } from '@/app/_ui/components/device_connect/huawei';
 import { GarminPage } from '@/app/_ui/components/device_connect/garmin';
 import { OuraPage } from '@/app/_ui/components/device_connect/oura';
 import { ArmtPage } from '@/app/_ui/components/device_connect/radarArmt';
@@ -26,6 +28,12 @@ export default async function Page(props: { params: Promise<{ studyId: string, d
   switch (params.deviceId) {
     case "fitbit":
       content = <FitbitPage guideUrl={deviceConfig?.guideUrl} videoUrl={deviceConfig?.videoUrl} />
+      break
+    case "google_health":
+      content = <GoogleHealthPage guideUrl={deviceConfig?.guideUrl} videoUrl={deviceConfig?.videoUrl} />
+      break
+    case "huawei":
+      content = <HuaweiPage guideUrl={deviceConfig?.guideUrl} videoUrl={deviceConfig?.videoUrl} />
       break
     case "apple_health":
       content = <HealthKitPage guideUrl={deviceConfig?.guideUrl} videoUrl={deviceConfig?.videoUrl} />
