@@ -48,7 +48,7 @@ export function GoogleHealthPage({ guideUrl, videoUrl }: GoogleHealthPageProps) 
               How RADAR-base uses your Google Health data
             </Typography>
             <Typography variant="body1">
-              This study uses RADAR-base to collect health and fitness data from your Google account, including your activity (steps, exercise sessions, calories), sleep, heart rate, heart-rate variability, blood oxygen, respiratory rate, ECG recordings, irregular rhythm notifications, and GPS location recorded during exercise. This enables the remote health monitoring you consented to as part of this study.
+              This study's research team uses RADAR-base to collect health and fitness data from your Google account, including your activity (steps, exercise sessions, calories), sleep, heart rate, heart-rate variability, blood oxygen, respiratory rate, ECG recordings, irregular rhythm notifications, and GPS location recorded during exercise. This enables the remote health monitoring you consented to as part of this study.
             </Typography>
             <Typography variant="body1" mt={2}>
               RADAR-base requests read-only access and never changes the data in your Google account. Your data is shared only with this study&apos;s research team, is never used for advertising, and is never sold. You can disconnect your Google account at any time. For full details, read our{' '}
