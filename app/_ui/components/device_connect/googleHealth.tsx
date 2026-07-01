@@ -49,7 +49,7 @@ export function GoogleHealthPage({ guideUrl, videoUrl }: GoogleHealthPageProps) 
           <Image 
               src={withBasePath('/devices/google_health/google_health_login.png')}
               width={380}
-              height={320}
+              height={229}
               alt='An image showing the Google login page'
               style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
             />
@@ -66,7 +66,7 @@ export function GoogleHealthPage({ guideUrl, videoUrl }: GoogleHealthPageProps) 
           <Image 
               src={withBasePath('/devices/google_health/google_health_scopes.png')}
               width={380}
-              height={320}
+              height={362}
               alt='An image showing the Google Health OAuth consent page'
               style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
             />
