@@ -1,4 +1,5 @@
 "use client"
+import { resolvePdfFileUrl } from "@/app/_lib/util/resources";
 import { withBasePath } from "@/app/_lib/util/links";
 import React, { useMemo } from "react";
 
@@ -6,17 +7,30 @@ const DEFAULT_ALLOWED_ORIGINS = [
   "https://raw.githubusercontent.com",
 ];
 
-function getAllowedOrigins(extraOrigins: string[] = []): string[] {
+function getAllowedOrigins(fileUrl: string, extraOrigins: string[] = []): string[] {
   const fromEnv = (process.env.NEXT_PUBLIC_PDF_ALLOWED_ORIGINS ?? "")
     .split(",")
     .map((origin) => origin.trim())
     .filter(Boolean);
 
-  return [...new Set([...DEFAULT_ALLOWED_ORIGINS, ...fromEnv, ...extraOrigins])];
+  const origins = new Set([
+    ...DEFAULT_ALLOWED_ORIGINS,
+    ...fromEnv,
+    ...extraOrigins,
+    window.location.origin,
+  ]);
+
+  try {
+    origins.add(new URL(resolvePdfFileUrl(fileUrl)).origin);
+  } catch {
+    // ignore invalid URLs
+  }
+
+  return [...origins];
 }
 
 export type PdfViewerProps = {
-  fileUrl: string; // Same-origin path or absolute http(s) URL to the PDF
+  fileUrl: string; // GitHub raw URL, /study/{id}/resources/... path, or same-origin path
   allowedOrigins?: string[]; // Additional allowed file origins beyond same-origin
   viewerHash?: string; // Initial hash settings for PDF.js viewer: e.g. "zoom=page-fit" or "page=3&zoom=page-width"
   height?: string | number; // e.g. "100vh", 800
@@ -33,12 +47,13 @@ const PdfViewer: React.FC<PdfViewerProps> = ({
   viewerPath = withBasePath("/pdfjs/web/viewer.html"),
 }) => {
   const src = useMemo(() => {
-    const encodedFile = encodeURIComponent(withBasePath(fileUrl));
+    const absoluteFileUrl = resolvePdfFileUrl(fileUrl);
+    const encodedFile = encodeURIComponent(absoluteFileUrl);
     const encodedAllowedOrigins = encodeURIComponent(
-      getAllowedOrigins(allowedOrigins).join(",")
+      getAllowedOrigins(fileUrl, allowedOrigins).join(",")
     );
     const hash = viewerHash ? `#${viewerHash}` : "";
-    return `${viewerPath}?file=${encodedFile}&allowedOrigins=${encodedAllowedOrigins}${hash}`;
+    return `${viewerPath}?file=${encodedFile}&allowedorigins=${encodedAllowedOrigins}${hash}`;
   }, [fileUrl, allowedOrigins, viewerHash, viewerPath]);
 
 

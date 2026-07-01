@@ -19,7 +19,7 @@ import ThemeProviderFromObject from '../_ui/components/base/themeProviderFromObj
 import fetchProjectsFromMp from "@/app/_lib/github/services/mp-projects-fetcher";
 import { SearchParamsCapture } from '../_ui/components/base/searchParamsCapture';
 
-const RESERVED_PATHS = new Set(['auth', 'api', 'account', 'connect'])
+const RESERVED_PATHS = new Set(['auth', 'api', 'account', 'connect', 'recovery'])
 
 function makeRelativePaths(links: FooterItem[], studyId: string): FooterItem[] {
   return links.map(

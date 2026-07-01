@@ -51,17 +51,22 @@
             {
               "id": "fitbit",
               "title": "Fitbit Tab",
-              "description": "Before clicking Connect, you can read [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_Fitbit.pdf) or [watch a video](https://youtu.be/nPRRGlkdrvg) to see how to share your Fitbit physical activity data.\n"
+              "description": "Before clicking Connect, you can read [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_Fitbit.pdf) or [watch a video](https://youtu.be/nPRRGlkdrvg) to see how to share your Fitbit physical activity data.\n",
+              "guideUrl": "/study/paprka/resources/guides/PAPrKA_Study_Guide_Fitbit.pdf",
+              "videoUrl": "https://youtu.be/nPRRGlkdrvg"
             },
             {
               "id": "oura",
               "title": "Oura Ring Tab",
-              "description": "Before clicking Connect, you can read [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_Oura.pdf) or [watch a video](https://youtu.be/m_4rbNYphXs) to see how to share your Oura Ring physical activity data.\n"
+              "description": "Before clicking Connect, you can read [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_Oura.pdf) or [watch a video](https://youtu.be/m_4rbNYphXs) to see how to share your Oura Ring physical activity data.\n",
+              "guideUrl": "/study/paprka/resources/guides/PAPrKA_Study_Guide_Oura.pdf",
+              "videoUrl": "https://youtu.be/m_4rbNYphXs"
             },
             {
               "id": "apple_health",
               "title": "Apple Health",
-              "description": "Before clicking Connect, you can [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_iPhone.docx) or [watch a video](#) to see how to share your iPhone or Apple Watch physical activity data.\n"
+              "description": "Before clicking Connect, you can [step-by-step instructions](/study/paprka/resources/guides/PAPrKA_Study_Guide_iPhone.docx) or [watch a video](#) to see how to share your iPhone or Apple Watch physical activity data.\n",
+              "guideUrl": "/study/paprka/resources/guides/PAPrKA_Study_Guide_iPhone.docx"
             }
           ]
         }

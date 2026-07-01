@@ -6,7 +6,12 @@ import { RadarCard } from "../base/card";
 import Image from 'next/image'
 
 
-export function OuraPage() {
+interface OuraPageProps {
+  guideUrl?: string
+  videoUrl?: string
+}
+
+export function OuraPage({ guideUrl, videoUrl }: OuraPageProps) {
   const linkUrl = withBasePath('/api/connect/rsa?device=Oura')
   return (
     <Container maxWidth="lg" disableGutters>
@@ -22,7 +27,8 @@ export function OuraPage() {
                 The first step will take you to Oura's website. For the second step <strong>you need to login to your Oura account.</strong> In the third step you will be asked to tick all the 3 boxes in the “Connect with Oura” screen.  
               </Typography>
               <Typography>
-                Read our <Link>Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to share your Oura data.
+                {guideUrl && <>Read our <Link href={withBasePath(guideUrl)} target="_blank">Guide</Link>{videoUrl ? ' or view our ' : ''}</>}
+                {videoUrl && <><Link href={withBasePath(videoUrl!)} target="_blank">Video</Link>{' for more detailed instructions on how to share your Oura data.'}</>}
               </Typography>
             </div>
           </Grid>

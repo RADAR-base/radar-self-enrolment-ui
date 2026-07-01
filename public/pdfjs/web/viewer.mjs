@@ -17058,7 +17058,7 @@ initCom(PDFViewerApplication);
     }
     const queryString = document.location.search.substring(1);
     const params = parseQueryString(queryString);
-    const allowedOriginsParam = params.get("allowedOrigins");
+    const allowedOriginsParam = params.get("allowedorigins");
     if (allowedOriginsParam) {
       const allowedOrigins = new Set(decodeURIComponent(allowedOriginsParam).split(",").map(origin => origin.trim()).filter(Boolean));
       if (allowedOrigins.has(fileOrigin)) {

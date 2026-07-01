@@ -132,6 +132,34 @@ interface EnrolmentContentProps {
 }
 const isBrowser = () => typeof window !== 'undefined';
 
+type ContinueWithFlow = {
+  id?: string
+}
+
+type ContinueWithItem = {
+  flow?: ContinueWithFlow | ContinueWithFlow[]
+}
+
+type JoinResponse = {
+  continue_with?: ContinueWithItem[]
+}
+
+function getVerificationFlowId(data: JoinResponse): string | undefined {
+  const continueWith = Array.isArray(data?.continue_with) ? data.continue_with : []
+  const firstContinueWith = continueWith[0]
+  const flow = firstContinueWith?.flow
+
+  if (!flow) {
+    return undefined
+  }
+
+  if (Array.isArray(flow)) {
+    return flow[0]?.id
+  }
+
+  return flow.id
+}
+
 function scrollToTop() {
     if (!isBrowser()) return;
     setTimeout(function () {
@@ -225,7 +253,8 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
             sendGAEvent('event', 'study_enrolment', {status: 'joined'})
             res.json().then(
               (data) => {
-                const verificationFlow = data.continue_with[0].flow.id
+                const verificationFlow = getVerificationFlowId(data as JoinResponse)
+
                 if (verificationFlow) {
                   router.push(`/${studyProtocol.studyId}/verification?flow=${verificationFlow}`)
                   router.refresh()

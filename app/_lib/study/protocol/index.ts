@@ -88,6 +88,14 @@ export interface ArmtMetadataInbuilt extends ArmtMetadataBase {
   options: any
 }
 
+export type ConnectDeviceConfig = {
+  id: string
+  title: string
+  description?: string
+  guideUrl?: string
+  videoUrl?: string
+}
+
 export type ArmtMetadata = ArmtMetadataGithub | ArmtMetadataInbuilt | ArmtMetadataLocal
 
 export type ArmtProtocol = {
