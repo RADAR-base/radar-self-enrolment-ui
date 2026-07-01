@@ -31,13 +31,15 @@ export interface IOryMessage {
   context?: any
 }
 
+export interface IOryContinueWithFlow {
+  id: string,
+  url: string,
+  verifiable_address: string
+}
+
 export interface IOryContinueWith {
   action: string,
-  flow: {
-    id: string,
-    url: string,
-    verifiable_address: string
-  }[]
+  flow?: IOryContinueWithFlow | IOryContinueWithFlow[]
 }
 
 export interface IOryErrorFlow {

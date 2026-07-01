@@ -4,10 +4,14 @@ import React from "react";
 import { withBasePath } from "@/app/_lib/util/links";
 import { RadarCard } from "../base/card";
 import Image from 'next/image'
-import NextLink from 'next/link'
 
 
-export function GarminPage() {
+interface GarminPageProps {
+  guideUrl?: string
+  videoUrl?: string
+}
+
+export function GarminPage({ guideUrl, videoUrl }: GarminPageProps) {
   const linkUrl = withBasePath('/api/connect/rsa?device=Garmin')
   return (
   <Container maxWidth="lg" disableGutters>
@@ -23,7 +27,8 @@ export function GarminPage() {
             The first step will take you to Garmin's website. For the second step <strong>you need to login to your Garmin account.</strong> In the third step you will be asked to click the buttons in the “Control the information you share” screen. 
             </Typography>
             <Typography>
-              Read our <Link component={NextLink} href={'/study/paprka/resources/guides/PAPrKA_Study_Guide_Garmin.pdf'}>Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to share your Garmin data.  
+              {guideUrl && <>Read our <Link href={withBasePath(guideUrl)} target="_blank">Guide</Link>{videoUrl ? ' or view our ' : ''}</>}
+              {videoUrl && <><Link href={withBasePath(videoUrl!)} target="_blank">Video</Link>{' for more detailed instructions on how to share your Garmin data.'}</>}
             </Typography>
           </div>
         </Grid>
@@ -51,10 +56,10 @@ export function GarminPage() {
 
         <Grid size={{xs: 12, sm: 6}} textAlign={'left'}>
           <Typography variant="h3">Step 3: Select the data you want to share</Typography>
-          <Typography mt={2} variant="body1">Once you have logged in to your Garmin account you will see a screen called “Control the information you share”.  Click both buttons (Activities and Daily Health Stats), and then click “Save” at the bottom to share your physical activity information with the study.</Typography>
-          <Typography mt={2} variant="body1" fontStyle={'italic'}>These 2 boxes captures your physical activity information such as time doing activities, distance travelled, step count, and heart rate which is needed for the study. Any information that we do not need will be deleted at the end of the study</Typography>
+          <Typography mt={2} variant="body1">Once you have logged in to your Garmin account you will see a screen called “Control the information you share”.  Click both buttons (Activities and Daily Health Stats), and then click “Save” at the bottom to share your wearable device data with the study.</Typography>
+          <Typography mt={2} variant="body1" fontStyle={'italic'}>These 2 boxes capture wearable device data such as step count, heart rate, movement, and distance, which is needed for the study. Any information that we do not need will be deleted at the end of the study.</Typography>
           <Typography mt={2} variant="body1">Once you have completed the 3 steps, you will receive a thank you message that will ask you if you want to link another device or if you are done. Click done, if you are not linking any other device.</Typography>
-          <Typography mt={2} variant="body1">If you have any questions about the information we ask for, please contact us on <Link href="mailto:paprka@manchester.ac.uk">paprka@manchester.ac.uk</Link></Typography>
+          <Typography mt={2} variant="body1">If you have any questions about the information we ask for, please find our contact details at the bottom of the page.</Typography>
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Image 

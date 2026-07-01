@@ -11,6 +11,13 @@ interface LoggedInButtonsProps {
   studyId?: string
 }
 
+function settingsPath(studyId?: string): string {
+  if (studyId && studyId !== 'auth') {
+    return `/${studyId}/account/settings`
+  }
+  return '/account/settings'
+}
+
 function LoggedInButtons(props: LoggedInButtonsProps) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => setAnchorElNav(event.currentTarget);
@@ -41,12 +48,12 @@ function LoggedInButtons(props: LoggedInButtonsProps) {
       open={Boolean(anchorElNav)}
       onClose={handleCloseNavMenu}
     >
-        {/*    
         <MenuItem onClick={() => {
           handleCloseNavMenu()
+          router.push(settingsPath(props.studyId))
         }}>
-          My Account
-        </MenuItem> */}
+          Settings
+        </MenuItem>
 
         <MenuItem onClick={() => {
           handleCloseNavMenu()

@@ -1,4 +1,4 @@
-import { completeVerificationFlow, createRecoveryFlow, createVerificationFlow, getVerificationFlow, whoAmI } from "@/app/_lib/auth/ory/kratos"
+import { completeVerificationFlow, createVerificationFlow, getVerificationFlow, whoAmI } from "@/app/_lib/auth/ory/kratos"
 import { getCsrfToken } from "@/app/_lib/auth/ory/util"
 import { VerificationComponent } from "@/app/_ui/auth/verification"
 import { Container, Box } from "@mui/material"
@@ -19,10 +19,8 @@ async function getUserSession() {
 
 
 export default async function Page({
-  params,
   searchParams,
 }: {
-  params: Promise<{}>
   searchParams: Promise<{ flow?: string, code?: string, flowId?: string }>
 }) {
   const userSession: OrySession | undefined = await getUserSession()
@@ -34,14 +32,6 @@ export default async function Page({
   const csrfToken = cookieJar.getAll().find((c) => c.name.startsWith('csrf_token_'))
   const sp = await searchParams
   const flowId = sp.flowId ?? sp.flow
-  if (userSession.identity.traits.projects.length > 0) {
-    let redirectUri = `/${userSession.identity.traits.projects[0].id}/verification`
-    if (flowId) {
-      redirect(`${redirectUri}?flow=${flowId}`)
-    }
-    redirect(redirectUri)
-  }
-
   let flow: IOryVerificationFlow | undefined
 
   if (csrfToken != undefined) {
@@ -69,7 +59,7 @@ export default async function Page({
     <main>
       <Container maxWidth="lg" disableGutters>
         <Box marginTop={2} marginBottom={2} maxWidth={600} justifySelf={'center'} width='100%'>
-          <VerificationComponent flow={flow} />
+          <VerificationComponent flow={flow} redirectTo='/auth/verification/success' />
         </Box>
       </Container>
     </main>

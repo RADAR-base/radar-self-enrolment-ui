@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { notFound, redirect } from 'next/navigation'
 import { Box, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { Alert, Container } from "@mui/material";
@@ -17,6 +17,9 @@ import ProtocolRepository, { StudyProtocolRepository } from "@/app/_lib/study/pr
 import { StudyProtocol } from '@/app/_lib/study/protocol';
 import ThemeProviderFromObject from '../_ui/components/base/themeProviderFromObject';
 import fetchProjectsFromMp from "@/app/_lib/github/services/mp-projects-fetcher";
+import { SearchParamsCapture } from '../_ui/components/base/searchParamsCapture';
+
+const RESERVED_PATHS = new Set(['auth', 'api', 'account', 'connect', 'recovery'])
 
 function makeRelativePaths(links: FooterItem[], studyId: string): FooterItem[] {
   return links.map(
@@ -33,6 +36,7 @@ function makeRelativePaths(links: FooterItem[], studyId: string): FooterItem[] {
 
 export async function generateMetadata(props: {params: Promise<{studyId: string}>}) {
   const params = await props.params;
+  if (RESERVED_PATHS.has(params.studyId)) { return }
   const registery: StudyProtocolRepository = new ProtocolRepository()
   const protocol = await registery.getStudyProtocol(params.studyId)
   if (protocol == undefined) { return }
@@ -51,6 +55,11 @@ export default async function StudyLayout(props: { params: Promise<{studyId: str
   
   const params = await props.params;
   const children = props.children;
+
+  if (RESERVED_PATHS.has(params.studyId)) {
+    notFound()
+  }
+
   // If project is not present in MP, render only the warning UI
   const projects = await fetchProjectsFromMp()
   const existsInMp = projects.some((p) => p.projectName === params.studyId)
@@ -93,6 +102,9 @@ export default async function StudyLayout(props: { params: Promise<{studyId: str
       <ThemeProvider theme={themeObject}>      
       <ThemeProviderFromObject themeObject={themeObject}>
       <CssBaseline />
+      <Suspense>
+        <SearchParamsCapture />
+      </Suspense>
       <ProtocolProvider protocol={protocol}>
         <Box
           sx={{

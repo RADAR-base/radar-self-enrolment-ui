@@ -9,10 +9,8 @@ import { IOryLoginFlow } from '@/app/_lib/auth/ory/flows.interface';
 
 
 export default async function Page({
-    params,
     searchParams,
 }: {
-    params: Promise<{ studyId: string }>
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {  
   const flowId = (await searchParams).flowId
@@ -35,7 +33,7 @@ export default async function Page({
         <Box marginTop={2} marginBottom={2} maxWidth={600} justifySelf={'center'} width='100%'>
           <RadarCard>
             <Box padding={4}>
-              <LoginComponent redirectTo={redirectTo} flow={flow} />
+              <LoginComponent redirectTo={redirectTo} flow={flow} recoveryHref={withBasePath('/auth/recovery')} />
             </Box>
           </RadarCard>
       </Box>

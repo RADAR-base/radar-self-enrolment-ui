@@ -52,7 +52,7 @@ function QRContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
   )
 }
 
-function PrmtContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
+function PrmtContent({armtAuthUrl, guideUrl, videoUrl}: {armtAuthUrl?: string, guideUrl?: string, videoUrl?: string}): React.ReactNode {
   const protocol = useContext(ProtocolContext);
   const theme = useTheme()
 
@@ -64,8 +64,15 @@ function PrmtContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
           Please read the three steps before you connect the RADAR Passive RMT app to your study.
         </Typography>
         <Typography>
-          Learn more about pRMT in the official documentation: <Link component={NextLink} href={'https://www.radar-base.org/docs/prmt/'} target="_blank">pRMT (Passive App)</Link>.  
+          Learn more about pRMT in the official documentation: <Link component={NextLink} href={'https://www.radar-base.org/docs/prmt/'} target="_blank">pRMT (Passive App)</Link>.
         </Typography>
+        {(guideUrl || videoUrl) && (
+          <Typography>
+            {guideUrl && <>Read our <Link href={withBasePath(guideUrl)} target="_blank">Guide</Link>{videoUrl ? ' or view our ' : ''}</>}
+            {videoUrl && <><Link href={withBasePath(videoUrl!)} target="_blank">Video</Link></>}
+            {' for more detailed instructions on how to connect with the pRMT app.'}
+          </Typography>
+        )}
       </Grid>
       <Grid size={12} textAlign={'left'}>
         <Typography variant="h3">
@@ -194,7 +201,12 @@ function createShortToken(token: any) {
 }
 
 
-export function PrmtPage() {
+interface PrmtPageProps {
+  guideUrl?: string
+  videoUrl?: string
+}
+
+export function PrmtPage({ guideUrl, videoUrl }: PrmtPageProps) {
   const [isFetchingToken, setIsFetchingToken] = useState(false)
   const [armtAuthUrl, setArmtAuthUrl] = useState<any>(undefined)
 
@@ -225,7 +237,7 @@ export function PrmtPage() {
           (<GetOauthToken clientId="pRMT" scopes={SCOPES} audience={AUDIENCE} codeFunc={async (code:string) => setCode(code)} redirectUri={REDIRECT_URI} />) : 
           (<Box display={'inline'} gap={2} aria-live="polite" paddingLeft={4}>
             <Grid container spacing={2} gap={2} rowGap={4}>
-              <PrmtContent armtAuthUrl={armtAuthUrl} />
+              <PrmtContent armtAuthUrl={armtAuthUrl} guideUrl={guideUrl} videoUrl={videoUrl} />
             </Grid>
             <br />
           </Box>)

@@ -18,8 +18,6 @@ const SCOPES = [
   'SUBJECT.READ',
   'SUBJECT.UPDATE',
   'MEASUREMENT.CREATE',
-  'SOURCEDATA.CREATE',
-  'SOURCETYPE.UPDATE',
   'offline_access'
 ]
 const AUDIENCE = ['res_ManagementPortal', 'res_gateway', 'res_AppServer'].join(' ')
@@ -87,7 +85,7 @@ return (<div>
         </div>)
 }
 
-function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
+function HealthKitContent({armtAuthUrl, guideUrl, videoUrl}: {armtAuthUrl?: string, guideUrl?: string, videoUrl?: string}): React.ReactNode {
   const protocol = useContext(ProtocolContext);
   const theme = useTheme()
   return (
@@ -98,13 +96,14 @@ function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNod
           You can share data with us if you have an iPhone (6s or newer), or both an iPhone and an Apple Watch. 
         </Typography>
         <Typography>
-          We will ask you to download an app so you can send us a copy of your activity data
+          We will ask you to download an app so you can send us a copy of your wearable device data.
         </Typography>
         <Typography variant="h3" padding={2} textAlign={'center'}>
           Before you start please read through all the steps below. 
         </Typography>
         <Typography>
-          Read our <Link href={"/study/study/paprka/resources/guides/Study_Guide_iPhone.pdf"} target='_blank'>Guide</Link> or view our <Link>Video</Link> for more detailed instructions on how to share your Apple data. 
+          {guideUrl && <>Read our <Link href={withBasePath(guideUrl)} target="_blank">Guide</Link>{videoUrl ? ' or view our ' : ''}</>}
+          {videoUrl && <><Link href={withBasePath(videoUrl!)} target="_blank">Video</Link>{' for more detailed instructions on how to share your Apple data.'}</>}
         </Typography>
       </Grid>
       <Grid size={12} textAlign={'left'}>
@@ -168,7 +167,7 @@ function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNod
             <Typography>Return to this website</Typography>
           </ListItem>
           <ListItem sx={{display: 'list-item'}}>
-            <Typography>Click the green 'Mark as complete' button.</Typography>
+            <Typography>Click the 'Mark as complete' button.</Typography>
           </ListItem>
           <ListItem sx={{display: 'list-item'}}>
             <Typography>You’ll then be asked if you want to connect another device.</Typography>
@@ -181,7 +180,7 @@ function HealthKitContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNod
             </div>
           </ListItem>
         </List>
-        <Typography>If you have any questions, contact us at: <Link href='mailto:paprka@manchester.ac.uk'>paprka@manchester.ac.uk</Link></Typography>
+        <Typography>If you have any questions, please find our contact details at the bottom of the page.</Typography>
       </Grid>
       <Grid size={12}>
         <SubmitButton disabled={armtAuthUrl == undefined} />
@@ -222,7 +221,12 @@ function createShortToken(token: any) {
 }
 
 
-export function HealthKitPage() {
+interface HealthKitPageProps {
+  guideUrl?: string
+  videoUrl?: string
+}
+
+export function HealthKitPage({ guideUrl, videoUrl }: HealthKitPageProps) {
   const [isFetchingToken, setIsFetchingToken] = useState(false)
   const [armtAuthUrl, setArmtAuthUrl] = useState<any>(undefined)
 
@@ -253,7 +257,7 @@ export function HealthKitPage() {
           (<GetOauthToken clientId="aRMT" scopes={SCOPES} audience={AUDIENCE} codeFunc={async (code:string) => setCode(code)} redirectUri={REDIRECT_URI} />) : 
           (<Box display={'inline'} gap={2} aria-live="polite" paddingLeft={4}>
             <Grid container spacing={2} gap={2} rowGap={4}>
-              <HealthKitContent armtAuthUrl={armtAuthUrl} />
+              <HealthKitContent armtAuthUrl={armtAuthUrl} guideUrl={guideUrl} videoUrl={videoUrl} />
             </Grid>
             <br />
           </Box>)
