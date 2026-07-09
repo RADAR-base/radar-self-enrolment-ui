@@ -194,7 +194,7 @@ const extractSession = (identity: any, grantScope: string[]) => {
     }
 }
 
-function enrichSessionWithClaims(session: any, identity: any, grantScope: string[]): HydraTokenHookResponse {
+function enrichSessionWithClaims(session: any, identity: any, grantScope: string[], grantType?: string): HydraTokenHookResponse {
     try {
         // Use the same extractSession logic as the consent route
         const enrichedClaims = extractSession(identity, grantScope)
@@ -206,6 +206,7 @@ function enrichSessionWithClaims(session: any, identity: any, grantScope: string
             sources: enrichedClaims.sources,
             user_name: enrichedClaims.user_name,
             scope: grantScope,
+            grant_type: grantType,
             kratos_id: enrichedClaims.kratos_id
         }
 
@@ -270,7 +271,18 @@ export async function POST(request: NextRequest) {
             console.log('Skipping token hook for client_credentials grant:', {
                 client_id: payload.request?.client_id,
             })
-            return new NextResponse(null, { status: 204 })
+            return NextResponse.json({
+                session: {
+                    access_token: {
+                        grant_type: payload.request?.grant_types?.[0],
+                        scope: payload.request?.granted_scopes || [],
+                        audience: payload.request?.granted_audience || [],
+                        aud: payload.request?.granted_audience || [],
+                        client_id: payload.request?.client_id,
+                    },
+                    id_token: {}
+                }
+            })
         }
 
         // Validate required fields
@@ -341,7 +353,8 @@ export async function POST(request: NextRequest) {
         // Enrich session with additional claims using Kratos identity
         let enrichedSession: HydraTokenHookResponse
         try {
-            enrichedSession = enrichSessionWithClaims(payload.session, identity, grantScope)
+            const grantType = payload.request.grant_types?.[0]
+            enrichedSession = enrichSessionWithClaims(payload.session, identity, grantScope, grantType)
         } catch (error) {
             console.error('Error enriching session with claims:', error)
             return NextResponse.json(
