@@ -10,7 +10,7 @@ import { MarkdownContainer } from "../components/base/markdown";
 import { withBasePath } from "@/app/_lib/util/links";
 import { useRouter } from "next/navigation";
 import NextButton from "../components/base/nextButton";
-import { DeviceConnectedBanner } from "../components/device_connect/successBanner";
+import { DeviceConnectedBanner, GoogleHealthConnectedBanner } from "../components/device_connect/successBanner";
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 
 
@@ -83,6 +83,7 @@ export function DevicesPanel(props: DevicePanelProps) {
   if (device) {
     deviceConnectedName = devices.find(d => d.id == device)?.title ?? device
   }
+  const isGoogleHealth = (device ?? '').replace(/[_\s]/g, '').toLowerCase() == 'googlehealth'
 
   const title: string = task.options.title ?? "Connect Your Device"
   const description: string = task.options.description ?? "Please click on the device below which you would like to connect"
@@ -97,7 +98,11 @@ export function DevicesPanel(props: DevicePanelProps) {
         </Alert>
       </Box>
     ) : null}
-    {(device != undefined && !errorMsg) ? <DeviceConnectedBanner device={deviceConnectedName} onFinish={onSubmit} /> : null}
+    {(device != undefined && !errorMsg) ? (
+      isGoogleHealth
+        ? <GoogleHealthConnectedBanner onFinish={onSubmit} />
+        : <DeviceConnectedBanner device={deviceConnectedName} onFinish={onSubmit} />
+    ) : null}
     <Grid container spacing={2} gridAutoColumns={'3lf'} gridAutoFlow={"column"}>
       <Grid size={12}>
         <RadarCard>
