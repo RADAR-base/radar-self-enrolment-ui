@@ -88,12 +88,26 @@ export interface ArmtMetadataInbuilt extends ArmtMetadataBase {
   options: any
 }
 
+export type ConnectConfirmationItem = {
+  label?: string
+  description?: string
+}
+
+export type ConnectDeviceConfirmation = {
+  whatHappensNext?: string
+  dataSharedItems?: ConnectConfirmationItem[]
+  privacyPolicyUrl?: string
+  publicationsUrl?: string
+  adminEmail?: string
+}
+
 export type ConnectDeviceConfig = {
   id: string
   title: string
   description?: string
   guideUrl?: string
   videoUrl?: string
+  confirmation?: ConnectDeviceConfirmation
 }
 
 export type ArmtMetadata = ArmtMetadataGithub | ArmtMetadataInbuilt | ArmtMetadataLocal

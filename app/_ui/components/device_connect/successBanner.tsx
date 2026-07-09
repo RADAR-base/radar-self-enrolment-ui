@@ -2,10 +2,7 @@
 import { Button, Modal, Box, Typography, Grow, Backdrop, Link } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React from "react";
-
-const GOOGLE_PRIVACY_POLICY_URL = 'https://radar-base.org/google-privacy-policy/'
-const RADAR_PUBLICATIONS_URL = 'https://radar-base.org/publications/'
-const STUDY_ADMIN_EMAIL = 'radar-base@kcl.ac.uk'
+import { ConnectDeviceConfirmation } from "@/app/_lib/study/protocol";
 
 export function DeviceConnectedBanner(props: {device: string, onFinish?: () => {}}) {
   const [open, setOpen] = React.useState(true);
@@ -58,10 +55,10 @@ export function DeviceConnectedBanner(props: {device: string, onFinish?: () => {
   )
 }
 
-// A richer confirmation shown only for Google Health
-export function GoogleHealthConnectedBanner(props: {onFinish?: () => {}}) {
+export function GoogleHealthConnectedBanner(props: {confirmation: ConnectDeviceConfirmation, onFinish?: () => {}}) {
   const [open, setOpen] = React.useState(true);
   const router = useRouter()
+  const { confirmation } = props
   const handleAddMore = () => {
     setOpen(false)
     router.replace(window.location.href.split('?')[0])
@@ -97,37 +94,42 @@ export function GoogleHealthConnectedBanner(props: {onFinish?: () => {}}) {
             Thank you for authorizing your account. Your health and fitness data is now being securely transmitted to the RADAR-base research platform.
           </Typography>
 
-          <Typography variant="subtitle1" fontWeight={600} sx={{ mt: 3 }}>What happens next?</Typography>
-          <Typography variant="body2" sx={{ mt: 1 }}>
-            To maintain the scientific integrity of this study and prevent bias, this portal does not display your collected health data. Your information is securely routed directly to our clinical research team for analysis.
-          </Typography>
+          {confirmation.whatHappensNext && (
+            <>
+              <Typography variant="subtitle1" fontWeight={600} sx={{ mt: 3 }}>What happens next?</Typography>
+              <Typography variant="body2" sx={{ mt: 1 }}>{confirmation.whatHappensNext}</Typography>
+            </>
+          )}
 
-          <Typography variant="subtitle1" fontWeight={600} sx={{ mt: 3 }}>Data currently being shared</Typography>
-          <Typography variant="body2" sx={{ mt: 1 }}>
-            As agreed in the consent step, researchers have read-only access to your:
-          </Typography>
-          <Box component="ul" sx={{ pl: 3, mt: 1, mb: 0 }}>
-            <Typography component="li" variant="body2"><strong>Activity &amp; Fitness:</strong> Steps, total calories, and exercise sessions.</Typography>
-            <Typography component="li" variant="body2"><strong>Health Metrics:</strong> Heart rate, HRV, blood oxygen (oxy-heart-rate), sleep respiratory rate, and sleep temperature derivations.</Typography>
-            <Typography component="li" variant="body2"><strong>Sleep:</strong> Sleep stages and classic sleep data.</Typography>
-            <Typography component="li" variant="body2"><strong>Heart Health:</strong> Electrocardiogram (raw waveform) and irregular rhythm notifications (AFib).</Typography>
-            <Typography component="li" variant="body2"><strong>Location:</strong> GPS trackpoints (collected only during active exercise).</Typography>
-            <Typography component="li" variant="body2"><strong>Settings:</strong> Timezone information (to accurately align your daily data).</Typography>
-          </Box>
+          {confirmation.dataSharedItems && confirmation.dataSharedItems.length > 0 && (
+            <>
+              <Typography variant="subtitle1" fontWeight={600} sx={{ mt: 3 }}>Data currently being shared</Typography>
+              <Typography variant="body2" sx={{ mt: 1 }}>
+                As agreed in the consent step, researchers have read-only access to your:
+              </Typography>
+              <Box component="ul" sx={{ pl: 3, mt: 1, mb: 0 }}>
+                {confirmation.dataSharedItems.map((item, i) => (
+                  <Typography component="li" variant="body2" key={i}>
+                    {item.label && <strong>{item.label}{item.description ? ': ' : ''}</strong>}{item.description}
+                  </Typography>
+                ))}
+              </Box>
+            </>
+          )}
 
           <Typography variant="subtitle1" fontWeight={600} sx={{ mt: 3 }}>Managing your connection</Typography>
           <Typography variant="body2" sx={{ mt: 1 }}>
             Participation is entirely voluntary. If you wish to withdraw from the study or disconnect your Google Health account, please contact the study administration team at{' '}
-            <Link href={`mailto:${STUDY_ADMIN_EMAIL}`}>{STUDY_ADMIN_EMAIL}</Link>.
+            <Link href={`mailto:${confirmation.adminEmail}`}>{confirmation.adminEmail}</Link>.
           </Typography>
 
           <Typography variant="subtitle1" fontWeight={600} sx={{ mt: 3 }}>Learn more about our work</Typography>
           <Box component="ul" sx={{ pl: 3, mt: 1, mb: 0 }}>
             <Typography component="li" variant="body2">
-              <Link href={GOOGLE_PRIVACY_POLICY_URL} target="_blank" rel="noopener noreferrer">How we handle your data (Google Privacy Policy)</Link>
+              <Link href={confirmation.privacyPolicyUrl} target="_blank" rel="noopener noreferrer">How we handle your data (Google Privacy Policy)</Link>
             </Typography>
             <Typography component="li" variant="body2">
-              <Link href={RADAR_PUBLICATIONS_URL} target="_blank" rel="noopener noreferrer">View our peer-reviewed research publications</Link>
+              <Link href={confirmation.publicationsUrl} target="_blank" rel="noopener noreferrer">View our peer-reviewed research publications</Link>
             </Typography>
           </Box>
 

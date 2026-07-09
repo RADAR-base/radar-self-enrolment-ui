@@ -1,7 +1,7 @@
 "use client"
 import { Box, Container, Typography, Alert, AlertTitle } from "@mui/material"
 import Grid from '@mui/material/Grid2';
-import { ArmtMetadataInbuilt } from "@/app/_lib/study/protocol";
+import { ArmtMetadataInbuilt, ConnectDeviceConfirmation } from "@/app/_lib/study/protocol";
 import { usePathname, useSearchParams } from 'next/navigation'
 import React, { useContext, useEffect, useState } from "react";
 import { RadarDeviceCard } from "@/app/_ui/components/portal/deviceCard";
@@ -77,13 +77,14 @@ export function DevicesPanel(props: DevicePanelProps) {
   const task = (protocol.protocols
     .find((p) => ((p.metadata.type == 'inbuilt') && (p.metadata.inbuiltId == 'connect')))
     ?.metadata as ArmtMetadataInbuilt)
-  let devices = task.options.devices as {id: string, title: string, logo_src: string, description: string}[]
+  let devices = task.options.devices as {id: string, title: string, logo_src: string, description: string, confirmation?: ConnectDeviceConfirmation}[]
 
   let deviceConnectedName: string = ""
   if (device) {
     deviceConnectedName = devices.find(d => d.id == device)?.title ?? device
   }
   const isGoogleHealth = (device ?? '').replace(/[_\s]/g, '').toLowerCase() == 'googlehealth'
+  const confirmation = isGoogleHealth ? devices.find(d => d.id == 'google_health')?.confirmation : undefined
 
   const title: string = task.options.title ?? "Connect Your Device"
   const description: string = task.options.description ?? "Please click on the device below which you would like to connect"
@@ -99,8 +100,8 @@ export function DevicesPanel(props: DevicePanelProps) {
       </Box>
     ) : null}
     {(device != undefined && !errorMsg) ? (
-      isGoogleHealth
-        ? <GoogleHealthConnectedBanner onFinish={onSubmit} />
+      confirmation
+        ? <GoogleHealthConnectedBanner confirmation={confirmation} onFinish={onSubmit} />
         : <DeviceConnectedBanner device={deviceConnectedName} onFinish={onSubmit} />
     ) : null}
     <Grid container spacing={2} gridAutoColumns={'3lf'} gridAutoFlow={"column"}>
