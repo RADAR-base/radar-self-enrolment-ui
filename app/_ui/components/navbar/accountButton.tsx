@@ -46,11 +46,11 @@ function LoggedOutMenuItems({onClick}: LoggedOutMenuItemsProps) {
         Sign In
       </Link>
     </MenuItem>
-    <MenuItem>
+    {/* <MenuItem>
       <Link color='primary' role='menuitem' href={joinLink} underline='none'>
         Join Study
       </Link>
-    </MenuItem>
+    </MenuItem> */}
   </React.Fragment>  
 }
 
@@ -115,7 +115,7 @@ export function AccountButton(props: AccountButtonProps) {
     return (
       <React.Fragment>
         <Button variant='outlined' href={signInLink} style={{'textWrap': 'nowrap'}}>Sign In</Button>
-        <Button variant='contained' href={joinLink} style={{'textWrap': 'nowrap'}}>Join Study</Button>
+        {/* <Button variant='contained' href={joinLink} style={{'textWrap': 'nowrap'}}>Join Study</Button> */}
       </React.Fragment>
     )
   }

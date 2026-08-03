@@ -20,7 +20,7 @@
           {
             "blockType": "markdown",
             "title": "What will I be asked to do if I decide to join the study?", 
-            "content": "1. Check you can take part.\n2. Sign an electronic consent form.\n3. Set up a study account.\n4. Complete up to 4 tasks (3 you must complete, 1 is optional).\n\n\n<br />\nCompleting all 4 should take approximately 35 minutes.\n\n<br />\n<button variant='contained' href='#'>Join Study</button>"
+            "content": "1. Check you can take part.\n2. Sign an electronic consent form.\n3. Set up a study account.\n4. Complete up to 4 tasks (3 you must complete, 1 is optional).\n\n\n<br />\nCompleting all 4 should take approximately 35 minutes.\n"
           }
         ]
 }

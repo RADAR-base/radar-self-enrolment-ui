@@ -18,6 +18,9 @@ export default async function Page(props: { params: Promise<{ studyId: string }>
   if (protocol == undefined) {
     notFound()
   }
+  if (protocol.studyId == 'paprka') {
+    notFound()
+  }
   return (
     <main>
       <Box sx={{ flexGrow: 1, margin: {xs: 0, sm: 2}}} 
