@@ -28,6 +28,10 @@ export async function POST(
     return NextResponse.json({error: 'No such study'}, {status: 400})
   }
 
+  if (protocol.studyId == 'paprka') {
+    return NextResponse.json({error: 'Study is closed to recruitment'}, {status: 400})
+  }
+
   const data = {
     method: 'password',
     password: password,
