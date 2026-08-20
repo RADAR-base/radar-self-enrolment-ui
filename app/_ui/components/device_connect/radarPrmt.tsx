@@ -12,6 +12,7 @@ import { getAuthLink } from "@/app/_lib/connect/prmt/authLink";
 import { GetOauthToken } from "../../auth/oauthToken";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import NextLink from 'next/link'
+import { useMobilePlatform, MobileLoginButton, CollapsibleManualLogin } from "./mobileLogin";
 
 const SCOPES = [
   'SUBJECT.READ',
@@ -52,9 +53,73 @@ function QRContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
   )
 }
 
+function ManualCredentialsList({studyId, studyName}: {studyId: string, studyName: string}): React.ReactNode {
+  return (
+    <List sx={{listStyle: 'lower-roman'}}>
+      <ListItem sx={{display: 'list-item'}}>
+        <Typography>
+          Study name:
+          <Typography color="primary" component={'span'} fontWeight={700} letterSpacing={2}>
+            {" " + studyId}
+          </Typography>
+          <IconButton onClick={() =>navigator.clipboard.writeText(studyId)}
+            color='primary'
+            >
+            <ContentCopyIcon />
+          </IconButton>
+        </Typography>
+      </ListItem>
+      <ListItem sx={{display: 'list-item'}}>
+        <Typography>The
+            <Typography color="primary" component={'span'} fontWeight={700}> email address </Typography>
+            you used to set up your {studyName} study account.
+          </Typography>
+      </ListItem>
+      <ListItem sx={{display: 'list-item'}}>
+      <Typography>The
+          <Typography color="primary" component={'span'} fontWeight={700}> password </Typography>
+          you used to set up your {studyName} study account.
+        </Typography>
+      </ListItem>
+    </List>
+  )
+}
+
+function LoginStep({armtAuthUrl, isMobile, studyId, studyName}: {armtAuthUrl?: string, isMobile: boolean, studyId: string, studyName: string}): React.ReactNode {
+  const theme = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"))
+  if (isMobile) {
+    return (
+      <Grid size={12} textAlign={'left'}>
+        <Typography variant="body1">Tap below to open the pRMT app and enrol directly:</Typography>
+        <MobileLoginButton authUrl={armtAuthUrl} />
+        <CollapsibleManualLogin toggleLabel="Having trouble? Show manual enrolment details">
+          <ManualCredentialsList studyId={studyId} studyName={studyName} />
+        </CollapsibleManualLogin>
+      </Grid>
+    )
+  }
+  return (
+    <React.Fragment>
+      <Grid size={{xs: 12, sm: 5.5}} textAlign={'left'} >
+        <QRContent armtAuthUrl={armtAuthUrl ?? ""} />
+      </Grid>
+      <Grid size={{xs: 12, sm: 1}} >
+        <Divider orientation={isSmallScreen ? "horizontal" : "vertical"}>OR</Divider>
+      </Grid>
+      <Grid size={{xs: 12, sm: 5.5}} textAlign={'left'}>
+        <div>
+          <Typography variant="body1">2] If you are enrolling manually, use the following details:</Typography>
+          <ManualCredentialsList studyId={studyId} studyName={studyName} />
+        </div>
+      </Grid>
+    </React.Fragment>
+  )
+}
+
 function PrmtContent({armtAuthUrl, guideUrl, videoUrl}: {armtAuthUrl?: string, guideUrl?: string, videoUrl?: string}): React.ReactNode {
   const protocol = useContext(ProtocolContext);
-  const theme = useTheme()
+  const { isMobile } = useMobilePlatform()
 
   return (
     <React.Fragment>
@@ -93,46 +158,9 @@ function PrmtContent({armtAuthUrl, guideUrl, videoUrl}: {armtAuthUrl?: string, g
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, sm: 8 }} textAlign={'left'}>
-        <Typography variant="h3">Step 2: Enrol in the app</Typography> 
+        <Typography variant="h3">Step 2: Enrol in the app</Typography>
       </Grid>
-      <Grid size={{xs: 12, sm: 5.5}} textAlign={'left'} >
-        <QRContent armtAuthUrl={armtAuthUrl ?? ""} />
-      </Grid>
-      <Grid size={{xs: 12, sm: 1}} >
-        <Divider orientation={useMediaQuery(theme.breakpoints.down("sm")) ? "horizontal" : "vertical"}>OR</Divider>
-      </Grid>
-      <Grid size={{xs: 12, sm: 5.5}} textAlign={'left'}>
-        <div>
-          <Typography variant="body1">2] If you are viewing this page on your Android phone, tap the link below to open the pRMT app and enrol directly:</Typography>
-          <List sx={{listStyle: 'lower-roman'}}>
-            <ListItem sx={{display: 'list-item'}}>
-              <Typography>
-                Study name: 
-                <Typography color="primary" component={'span'} fontWeight={700} letterSpacing={2}>
-                  {" " + protocol.studyId}
-                </Typography>
-                <IconButton onClick={() =>navigator.clipboard.writeText(protocol.studyId)}
-                  color='primary'
-                  >
-                  <ContentCopyIcon />
-                </IconButton>
-              </Typography>
-            </ListItem>
-            <ListItem sx={{display: 'list-item'}}>
-              <Typography>The 
-                <Typography color="primary" component={'span'} fontWeight={700}> email address </Typography>
-                you used to set up your {protocol.name} study account.
-              </Typography>
-            </ListItem>
-            <ListItem sx={{display: 'list-item'}}>
-            <Typography>The 
-                <Typography color="primary" component={'span'} fontWeight={700}> password </Typography>
-                you used to set up your {protocol.name} study account.
-              </Typography>            
-            </ListItem>
-          </List>
-        </div>
-      </Grid>
+      <LoginStep armtAuthUrl={armtAuthUrl} isMobile={isMobile} studyId={protocol.studyId} studyName={protocol.name} />
       <Grid size={12} textAlign={'left'}>
         <Typography  variant="h3">
           Step 3: Install the app 
