@@ -26,6 +26,7 @@ const AUDIENCE = ['res_ManagementPortal', 'res_gateway', 'res_AppServer'].join('
 const REDIRECT_URI = process.env.NEXT_PUBLIC_ARMT_REDIRECT_URI ?? ''
 
 const DEFAULT_APP_STORE_URL = 'https://apps.apple.com/us/app/radar-active-rmt/id1483953055?itscg=30200&itsct=apps_box_badge&mttnsubad=1483953055'
+const DEFAULT_PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=org.phidatalab.radar_armt'
 
 function AppStoreBadge({ url }: { url: string }) {
   return (
@@ -203,7 +204,7 @@ function ArmtContent({armtAuthUrl, guideUrl, videoUrl, appStoreUrl, playStoreUrl
         </Typography>
       </Grid>
 
-      <DownloadAppStep platform={platform} appStoreUrl={appStoreUrl ?? DEFAULT_APP_STORE_URL} playStoreUrl={playStoreUrl} />
+      <DownloadAppStep platform={platform} appStoreUrl={appStoreUrl ?? DEFAULT_APP_STORE_URL} playStoreUrl={playStoreUrl ?? DEFAULT_PLAY_STORE_URL} />
 
       <Grid size={{ xs: 12, sm: 8 }} textAlign={'left'}>
         <Typography variant="h3">Step 2: Log into the app</Typography>
