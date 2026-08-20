@@ -85,10 +85,10 @@ function ManualCredentialsList({studyId, studyName}: {studyId: string, studyName
   )
 }
 
-function LoginStep({armtAuthUrl, isMobile, studyId, studyName}: {armtAuthUrl?: string, isMobile: boolean, studyId: string, studyName: string}): React.ReactNode {
+function LoginStep({armtAuthUrl, isAndroid, studyId, studyName}: {armtAuthUrl?: string, isAndroid: boolean, studyId: string, studyName: string}): React.ReactNode {
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"))
-  if (isMobile) {
+  if (isAndroid) {
     return (
       <Grid size={12} textAlign={'left'}>
         <Typography variant="body1">Tap below to open the pRMT app and enrol directly:</Typography>
@@ -119,7 +119,7 @@ function LoginStep({armtAuthUrl, isMobile, studyId, studyName}: {armtAuthUrl?: s
 
 function PrmtContent({armtAuthUrl, guideUrl, videoUrl}: {armtAuthUrl?: string, guideUrl?: string, videoUrl?: string}): React.ReactNode {
   const protocol = useContext(ProtocolContext);
-  const { isMobile } = useMobilePlatform()
+  const { platform } = useMobilePlatform()
 
   return (
     <React.Fragment>
@@ -160,7 +160,7 @@ function PrmtContent({armtAuthUrl, guideUrl, videoUrl}: {armtAuthUrl?: string, g
       <Grid size={{ xs: 12, sm: 8 }} textAlign={'left'}>
         <Typography variant="h3">Step 2: Enrol in the app</Typography>
       </Grid>
-      <LoginStep armtAuthUrl={armtAuthUrl} isMobile={isMobile} studyId={protocol.studyId} studyName={protocol.name} />
+      <LoginStep armtAuthUrl={armtAuthUrl} isAndroid={platform === 'android'} studyId={protocol.studyId} studyName={protocol.name} />
       <Grid size={12} textAlign={'left'}>
         <Typography  variant="h3">
           Step 3: Install the app 
