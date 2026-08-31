@@ -68,11 +68,16 @@ export function DevicesPanel(props: DevicePanelProps) {
     .find((p) => ((p.metadata.type == 'inbuilt') && (p.metadata.inbuiltId == 'connect')))
     ?.metadata as ArmtMetadataInbuilt)
   let devices = task.options.devices as {id: string, title: string, logo_src: string, description: string}[]
+  
+  if (projectId == 'paprka') {
+    devices = []
+  }
 
   let deviceConnectedName: string = ""
   if (device) {
     deviceConnectedName = devices.find(d => d.id == device)?.title ?? device
   }
+
 
   const title: string = task.options.title ?? "Connect Your Device"
   const description: string = task.options.description ?? "Please click on the device below which you would like to connect"

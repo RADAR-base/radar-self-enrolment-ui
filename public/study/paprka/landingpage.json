@@ -24,15 +24,15 @@
           {
             "blockType": "markdown",
             "noCard": true,
-            "title": "PAPrKA recruitment is now closed​", 
+            "title": "PAPrKA is now closed to new participants", 
             "blockBackground": "white",
-            "content": "<p>Thank you to everyone who has expressed an interest in taking part in the study.</p><p>​We are no longer recruiting new participants. However, if you have already registered and set up your study account, you can still access the platform and complete any outstanding tasks by the 31<sup>st</sup> August 2026.</p><p>If you have any questions, please contact the study team on paprka@manchester.ac.uk or  0161 306 2719 (Monday – Friday 10-4)</p>"
+            "content": "<p>Thank you to everyone who took part in the study. We are now analysing the data collected and will share our findings with participants once the study is complete. Your contribution has been invaluable and will help improve our understanding of recovery after knee replacement surgery.</p>"
           },
           {
             "blockType": "markdown",
             "noCard": true,
             "blockBackground": "white",
-            "content": "<div style='position: fixed; bottom: 0; left: 0; transform: translateX(-50%); width: 100vw; max-width: none; z-index: 1110; box-sizing: border-box; padding: 16px 20px; background-color: #f28c28; color: #1f1f1f; text-align: center; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; font-weight: 600; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);'>Recruitment has now closed. Existing participants who have already created an account can still log in and complete any outstanding tasks.<br />New registrations are no longer being accepted.</div>"
+            "content": "<div style='position: fixed; bottom: 0; left: 0; transform: translateX(-50%); width: 100vw; max-width: none; z-index: 1110; box-sizing: border-box; padding: 16px 20px; background-color: #f28c28; color: #1f1f1f; text-align: center; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; font-weight: 600; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);'>PAPrKA is now closed to new participants. Thank you to everyone who took part.</div>"
           },
           {
             "blockType": "markdown",

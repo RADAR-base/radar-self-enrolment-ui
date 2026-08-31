@@ -48,6 +48,7 @@ export default async function Page(props: { params: Promise<{ studyId: string, t
   if (armtDef == undefined) { return notFound() }
 
   const taskResponse = await getTask(params.studyId, params.taskId)
+  const disabled = ((taskResponse != undefined) || (protocol.studyId == 'paprka'))
   return (
     <main>
       <Box sx={{ flexGrow: 1, margin: {xs: 0, sm: 2}}} 
@@ -59,7 +60,7 @@ export default async function Page(props: { params: Promise<{ studyId: string, t
           <RadarCard>
             <ArmtContent 
               studyId={params.studyId} taskId={params.taskId}
-              redcapDef={armtDef} disabled={taskResponse != undefined} 
+              redcapDef={armtDef} disabled={disabled} 
               initialResponse={taskResponse}
             />
           </RadarCard>

@@ -62,7 +62,9 @@ export async function PUT(request: NextRequest,
   if (protocol == undefined) {
     return NextResponse.json({error: {type: 'request', content: 'No such study exists'}}, {status: 400})
   }
-
+  if (protocol.studyId == 'paprka') {
+    return NextResponse.json({error: {type: 'request', content: 'The PAPrKA study is closed'}}, {status: 400})
+  }
   try {
     const resp = await whoAmI()
     if (resp.status != 200) {
@@ -130,6 +132,9 @@ export async function POST(
   const protocol = await registery.getStudyProtocol(studyId)
   if (protocol == undefined) {
     return NextResponse.json({error: {type: 'request', content: 'No such study exists'}}, {status: 400})
+  }
+  if (protocol.studyId == 'paprka') {
+    return NextResponse.json({error: {type: 'request', content: 'The PAPrKA study is closed'}}, {status: 400})
   }
 
   try {
