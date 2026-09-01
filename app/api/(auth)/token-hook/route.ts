@@ -239,20 +239,20 @@ function enrichSessionWithClaims(session: any, identity: any, grantScope: string
 
 export async function POST(request: NextRequest) {
     try {
-        // Log incoming request
+        // Log incoming request. Headers are deliberately not logged: they carry the
+        // Authorization bearer token used to authenticate the hook.
         console.log('Token hook request received:', {
-            timestamp: new Date().toISOString(),
-            headers: Object.fromEntries(request.headers.entries())
+            timestamp: new Date().toISOString()
         })
 
         // Validate authentication
-        // if (!(await validateAuth(request))) {
-        //     console.error('Token hook authentication failed')
-        //     return NextResponse.json(
-        //         { error: 'Unauthorized' },
-        //         { status: 401 }
-        //     )
-        // }
+        if (!(await validateAuth(request))) {
+            console.error('Token hook authentication failed')
+            return NextResponse.json(
+                { error: 'Unauthorized' },
+                { status: 401 }
+            )
+        }
 
         // Parse and validate request body
         let payload: any
