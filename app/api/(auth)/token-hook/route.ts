@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { timingSafeEqual } from "crypto"
 
 interface HydraTokenHookRequest {
     session: {
@@ -48,7 +49,8 @@ interface HydraTokenHookResponse {
 function validateAuth(request: NextRequest): boolean {
     const apiKey = process.env.TOKEN_HOOK_API_KEY
     if (!apiKey) {
-        return true
+        console.error('TOKEN_HOOK_API_KEY is not configured — rejecting request')
+        return false
     }
 
     const authHeader = request.headers.get('authorization')
@@ -60,7 +62,11 @@ function validateAuth(request: NextRequest): boolean {
         ? authHeader.substring(7)
         : authHeader
 
-    return token === apiKey
+    if (token.length !== apiKey.length) {
+        return false
+    }
+
+    return timingSafeEqual(Buffer.from(token), Buffer.from(apiKey))
 }
 
 function isClientCredentialsGrant(payload: any): boolean {
