@@ -23,6 +23,10 @@ export default async function Page(props: { params: Promise<{ studyId: string, d
   const deviceConfig = (connectTask?.metadata.options.devices as ConnectDeviceConfig[] | undefined)
     ?.find(d => d.id === params.deviceId)
 
+  if (!deviceConfig || deviceConfig.enabled === false) {
+    return notFound()
+  }
+
   var content: JSX.Element
 
   switch (params.deviceId) {
@@ -45,7 +49,7 @@ export default async function Page(props: { params: Promise<{ studyId: string, d
       content = <OuraPage guideUrl={deviceConfig?.guideUrl} videoUrl={deviceConfig?.videoUrl} />
       break
     case "radar_armt":
-      content = <ArmtPage guideUrl={deviceConfig?.guideUrl} videoUrl={deviceConfig?.videoUrl} />
+      content = <ArmtPage guideUrl={deviceConfig?.guideUrl} videoUrl={deviceConfig?.videoUrl} appStoreUrl={deviceConfig?.appStoreUrl} playStoreUrl={deviceConfig?.playStoreUrl} />
       break
     case "radar_prmt":
       content = <PrmtPage guideUrl={deviceConfig?.guideUrl} videoUrl={deviceConfig?.videoUrl} />
