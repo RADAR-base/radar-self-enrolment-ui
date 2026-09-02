@@ -85,55 +85,23 @@ function validatePayload(payload: any): payload is HydraTokenHookRequest {
     )
 }
 
-const extractSession = (identity: any, grantScope: string[]) => {
+function buildTokenHookResponse(identity: any, grantScope: string[], grantType?: string): HydraTokenHookResponse {
     return {
-        roles: identity.metadata_public.roles,
-        authorities: identity.metadata_public.authorities,
-        sources: identity.metadata_public.sources,
-        user_name: identity.metadata_public.mp_login,
-        email: identity.traits.email,
-        kratos_id: identity.id
-    }
-}
-
-function enrichSessionWithClaims(session: any, identity: any, grantScope: string[], grantType?: string): HydraTokenHookResponse {
-    try {
-        // Use the same extractSession logic as the consent route
-        const enrichedClaims = extractSession(identity, grantScope)
-
-        // Create access token claims (for API access)
-        const accessTokenClaims = {
-            roles: enrichedClaims.roles,
-            authorities: enrichedClaims.authorities,
-            sources: enrichedClaims.sources,
-            user_name: enrichedClaims.user_name,
-            scope: grantScope,
-            grant_type: grantType,
-            kratos_id: enrichedClaims.kratos_id
-        }
-
-        // Create ID token claims (for user identity)
-        const idTokenClaims = {
-            email: enrichedClaims.email,
-            roles: enrichedClaims.roles,
-            authorities: enrichedClaims.authorities,
-            user_name: enrichedClaims.user_name
-        }
-
-        // Return the token hook response format
-        return {
-            session: {
-                access_token: accessTokenClaims,
-                id_token: idTokenClaims
-            }
-        }
-    } catch (error) {
-        console.error('Error enriching session with claims:', error)
-        // Return empty session if enrichment fails
-        return {
-            session: {
-                access_token: {},
-                id_token: {}
+        session: {
+            access_token: {
+                roles: identity.metadata_public.roles,
+                authorities: identity.metadata_public.authorities,
+                sources: identity.metadata_public.sources,
+                user_name: identity.metadata_public.mp_login,
+                scope: grantScope,
+                grant_type: grantType,
+                kratos_id: identity.id
+            },
+            id_token: {
+                email: identity.traits.email,
+                roles: identity.metadata_public.roles,
+                authorities: identity.metadata_public.authorities,
+                user_name: identity.metadata_public.mp_login
             }
         }
     }
@@ -230,20 +198,17 @@ export async function POST(request: NextRequest) {
         // Extract grant scope from the request
         const grantScope = payload.request.granted_scopes || []
 
-        // Enrich session with additional claims using Kratos identity
-        let enrichedSession: HydraTokenHookResponse
+        // Build enriched token response using fresh Kratos identity
         try {
             const grantType = payload.request.grant_types?.[0]
-            enrichedSession = enrichSessionWithClaims(payload.session, identity, grantScope, grantType)
+            return NextResponse.json(buildTokenHookResponse(identity, grantScope, grantType))
         } catch (error) {
-            console.error('Error enriching session with claims:', error)
+            console.error('Error building token hook response:', error)
             return NextResponse.json(
                 { error: { type: 'session', content: { message: "User session could not be converted into token, may not have required role" } } },
                 { status: 403 }
             )
         }
-
-        return NextResponse.json(enrichedSession)
 
     } catch (error) {
         console.error('Token hook error:', error)
