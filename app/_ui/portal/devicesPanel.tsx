@@ -77,7 +77,8 @@ export function DevicesPanel(props: DevicePanelProps) {
   const task = (protocol.protocols
     .find((p) => ((p.metadata.type == 'inbuilt') && (p.metadata.inbuiltId == 'connect')))
     ?.metadata as ArmtMetadataInbuilt)
-  let devices = task.options.devices as {id: string, title: string, logo_src: string, description: string, confirmation?: ConnectDeviceConfirmation}[]
+  let devices = (task.options.devices as {id: string, title: string, logo_src: string, description: string, confirmation?: ConnectDeviceConfirmation, enabled?: boolean}[])
+    .filter(d => d.enabled !== false)
 
   let deviceConnectedName: string = ""
   if (device) {
