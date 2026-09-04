@@ -1,9 +1,5 @@
-import { whoAmI } from "@/app/_lib/auth/ory/kratos"
 import { NextRequest, NextResponse } from "next/server"
-import jwt from 'jsonwebtoken'
-
-const getHydraPublicKeyEnv = () => (process as any).env.HYDRA_PUBLIC_KEY || (process as any).env.TOKEN_HOOK_PUBLIC_KEY
-const getHydraAdminUrl = () => (process as any).env.HYDRA_ADMIN_URL
+import { timingSafeEqual } from "crypto"
 
 interface HydraTokenHookRequest {
     session: {
@@ -50,108 +46,27 @@ interface HydraTokenHookResponse {
     }
 }
 
-async function validateAuth(request: NextRequest): Promise<boolean> {
+function validateAuth(request: NextRequest): boolean {
+    const apiKey = process.env.TOKEN_HOOK_API_KEY
+    if (!apiKey) {
+        console.error('TOKEN_HOOK_API_KEY is not configured — rejecting request')
+        return false
+    }
+
     const authHeader = request.headers.get('authorization')
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    if (!authHeader) {
         return false
     }
 
-    const token = authHeader.substring(7) // Remove 'Bearer ' prefix
+    const token = authHeader.startsWith('Bearer ')
+        ? authHeader.substring(7)
+        : authHeader
 
-    try {
-        // Get public key for verification
-        const publicKey = await getHydraPublicKey()
-
-        // Verify JWT signature and decode payload using jsonwebtoken
-        const payload = jwt.verify(token, publicKey, {
-            algorithms: ['RS256'],
-            clockTolerance: 30 // Allow 30 seconds clock skew
-        }) as any
-
-        // Validate issuer contains 'hydra'
-        if (payload.iss && !payload.iss.includes('hydra')) {
-            throw new Error('Invalid JWT issuer')
-        }
-
-        console.log('JWT token validated successfully:', {
-            sub: payload.sub,
-            exp: payload.exp,
-            iat: payload.iat,
-            iss: payload.iss
-        })
-
-        return true
-    } catch (error) {
-        console.error('JWT validation failed:', error)
+    if (token.length !== apiKey.length) {
         return false
     }
-}
 
-async function getHydraPublicKey(): Promise<string> {
-    // If public key is provided via environment variable, use it
-    const publicKey = getHydraPublicKeyEnv()
-    if (publicKey) {
-        return publicKey
-    }
-
-    // Otherwise, fetch it from Hydra's JWKS endpoint
-    const adminUrl = getHydraAdminUrl()
-    if (!adminUrl) {
-        throw new Error('HYDRA_PUBLIC_KEY or HYDRA_ADMIN_URL must be configured')
-    }
-
-    try {
-        const jwksUrl = `${adminUrl}/.well-known/jwks.json`
-        const response = await fetch(jwksUrl)
-
-        if (!response.ok) {
-            throw new Error(`Failed to fetch JWKS: ${response.status}`)
-        }
-
-        const jwks = await response.json()
-
-        // Find the appropriate key (usually the first one or match by kid)
-        if (!jwks.keys || jwks.keys.length === 0) {
-            throw new Error('No keys found in JWKS')
-        }
-
-        // Convert JWK to PEM format
-        const key = jwks.keys[0]
-        return convertJWKToPEM(key)
-    } catch (error) {
-        console.error('Failed to fetch Hydra public key:', error)
-        throw new Error('Unable to retrieve Hydra public key')
-    }
-}
-
-function convertJWKToPEM(jwk: any): string {
-    // Convert JWK to PEM format using Node.js crypto
-    const crypto = require('crypto')
-
-    if (jwk.kty !== 'RSA') {
-        throw new Error('Only RSA keys are supported')
-    }
-
-    // Convert base64url to base64 and add padding if needed
-    const n = jwk.n.replace(/-/g, '+').replace(/_/g, '/')
-    const e = jwk.e.replace(/-/g, '+').replace(/_/g, '/')
-
-    // Add padding if needed
-    const nPadded = n + '='.repeat((4 - n.length % 4) % 4)
-    const ePadded = e + '='.repeat((4 - e.length % 4) % 4)
-
-    // Create RSA public key object
-    const publicKey = crypto.createPublicKey({
-        key: {
-            kty: 'RSA',
-            n: nPadded,
-            e: ePadded
-        },
-        format: 'jwk'
-    })
-
-    // Export as PEM
-    return publicKey.export({ type: 'spki', format: 'pem' })
+    return timingSafeEqual(Buffer.from(token), Buffer.from(apiKey))
 }
 
 function isClientCredentialsGrant(payload: any): boolean {
@@ -170,67 +85,23 @@ function validatePayload(payload: any): payload is HydraTokenHookRequest {
     )
 }
 
-function userIsParticipant(userSession: any): boolean {
-    return userSession?.identity?.schema_id == "subject"
-}
-
-function getUserId(userSession: any): string {
-    if (userIsParticipant(userSession)) {
-        const projects: any[] = userSession?.identity?.traits?.projects
-        return projects[0]?.userId
-    }
-    return userSession?.identity?.id
-}
-
-// Helper function to extract session data - similar to consent route
-const extractSession = (identity: any, grantScope: string[]) => {
+function buildTokenHookResponse(identity: any, grantScope: string[], grantType?: string): HydraTokenHookResponse {
     return {
-        roles: identity.metadata_public.roles,
-        authorities: identity.metadata_public.authorities,
-        sources: identity.metadata_public.sources,
-        user_name: identity.metadata_public.mp_login,
-        email: identity.traits.email,
-        kratos_id: identity.id
-    }
-}
-
-function enrichSessionWithClaims(session: any, identity: any, grantScope: string[]): HydraTokenHookResponse {
-    try {
-        // Use the same extractSession logic as the consent route
-        const enrichedClaims = extractSession(identity, grantScope)
-
-        // Create access token claims (for API access)
-        const accessTokenClaims = {
-            roles: enrichedClaims.roles,
-            authorities: enrichedClaims.authorities,
-            sources: enrichedClaims.sources,
-            user_name: enrichedClaims.user_name,
-            scope: grantScope,
-            kratos_id: enrichedClaims.kratos_id
-        }
-
-        // Create ID token claims (for user identity)
-        const idTokenClaims = {
-            email: enrichedClaims.email,
-            roles: enrichedClaims.roles,
-            authorities: enrichedClaims.authorities,
-            user_name: enrichedClaims.user_name
-        }
-
-        // Return the token hook response format
-        return {
-            session: {
-                access_token: accessTokenClaims,
-                id_token: idTokenClaims
-            }
-        }
-    } catch (error) {
-        console.error('Error enriching session with claims:', error)
-        // Return empty session if enrichment fails
-        return {
-            session: {
-                access_token: {},
-                id_token: {}
+        session: {
+            access_token: {
+                roles: identity.metadata_public.roles,
+                authorities: identity.metadata_public.authorities,
+                sources: identity.metadata_public.sources,
+                user_name: identity.metadata_public.mp_login,
+                scope: grantScope,
+                grant_type: grantType,
+                kratos_id: identity.id
+            },
+            id_token: {
+                email: identity.traits.email,
+                roles: identity.metadata_public.roles,
+                authorities: identity.metadata_public.authorities,
+                user_name: identity.metadata_public.mp_login
             }
         }
     }
@@ -238,20 +109,20 @@ function enrichSessionWithClaims(session: any, identity: any, grantScope: string
 
 export async function POST(request: NextRequest) {
     try {
-        // Log incoming request
+        // Log incoming request. Headers are deliberately not logged: they carry the
+        // Authorization bearer token used to authenticate the hook.
         console.log('Token hook request received:', {
-            timestamp: new Date().toISOString(),
-            headers: Object.fromEntries(request.headers.entries())
+            timestamp: new Date().toISOString()
         })
 
         // Validate authentication
-        // if (!(await validateAuth(request))) {
-        //     console.error('Token hook authentication failed')
-        //     return NextResponse.json(
-        //         { error: 'Unauthorized' },
-        //         { status: 401 }
-        //     )
-        // }
+        if (!validateAuth(request)) {
+            console.error('Token hook authentication failed')
+            return NextResponse.json(
+                { error: 'Unauthorized' },
+                { status: 401 }
+            )
+        }
 
         // Parse and validate request body
         let payload: any
@@ -270,7 +141,18 @@ export async function POST(request: NextRequest) {
             console.log('Skipping token hook for client_credentials grant:', {
                 client_id: payload.request?.client_id,
             })
-            return new NextResponse(null, { status: 204 })
+            return NextResponse.json({
+                session: {
+                    access_token: {
+                        grant_type: payload.request?.grant_types?.[0],
+                        scope: payload.request?.granted_scopes || [],
+                        audience: payload.request?.granted_audience || [],
+                        aud: payload.request?.granted_audience || [],
+                        client_id: payload.request?.client_id,
+                    },
+                    id_token: {}
+                }
+            })
         }
 
         // Validate required fields
@@ -282,42 +164,29 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        // Check for required subject field
-        if (!payload.session.id_token.id_token_claims.sub) {
-            console.error('Missing required subject field')
+        // Get kratos_id from session.extra (set as session.access_token during consent)
+        const kratosId = payload.session?.extra?.kratos_id
+        if (!kratosId) {
+            console.error('Missing kratos_id in session.extra')
             return NextResponse.json(
-                { error: 'Missing required field: session.id_token.id_token_claims.sub' },
+                { error: 'Missing kratos_id in session' },
                 { status: 400 }
             )
         }
 
-        // Get fresh user data from Kratos Admin API using the kratos identity
-        const kratosId = payload.session.extra.kratos_id
-        const subject = payload.session.id_token.id_token_claims.sub
         let identity: any
-
         try {
-            // Use Kratos admin API to get fresh user data
-            const kratosAdminUrl = (process as any).env.KRATOS_ADMIN_URL
-
+            const kratosAdminUrl = process.env.KRATOS_ADMIN_URL
             if (!kratosAdminUrl) {
-                throw new Error('KRATOS_ADMIN_URL or KRATOS_PUBLIC_URL must be configured')
+                throw new Error('KRATOS_ADMIN_URL must be configured')
             }
 
             const identityResponse = await fetch(`${kratosAdminUrl}/identities/${kratosId}`)
-
             if (!identityResponse.ok) {
                 throw new Error(`Failed to fetch identity from Kratos: ${identityResponse.status}`)
             }
 
-            const identityData = await identityResponse.json()
-            identity = identityData // This will have the latest metadata
-
-            console.log('Fresh identity data retrieved from Kratos:', {
-                subject: identity.id,
-                metadata_public: identity.metadata_public
-            })
-
+            identity = await identityResponse.json()
         } catch (error) {
             console.error('Error getting fresh identity from Kratos:', error)
             return NextResponse.json(
@@ -326,31 +195,20 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        // Verify the subject matches the identity we retrieved
-        if (identity.id !== kratosId) {
-            console.error(`Subject mismatch: expected ${identity.id}, got ${kratosId}`)
-            return NextResponse.json(
-                { error: 'Subject mismatch with retrieved identity' },
-                { status: 403 }
-            )
-        }
-
         // Extract grant scope from the request
         const grantScope = payload.request.granted_scopes || []
 
-        // Enrich session with additional claims using Kratos identity
-        let enrichedSession: HydraTokenHookResponse
+        // Build enriched token response using fresh Kratos identity
         try {
-            enrichedSession = enrichSessionWithClaims(payload.session, identity, grantScope)
+            const grantType = payload.request.grant_types?.[0]
+            return NextResponse.json(buildTokenHookResponse(identity, grantScope, grantType))
         } catch (error) {
-            console.error('Error enriching session with claims:', error)
+            console.error('Error building token hook response:', error)
             return NextResponse.json(
                 { error: { type: 'session', content: { message: "User session could not be converted into token, may not have required role" } } },
                 { status: 403 }
             )
         }
-
-        return NextResponse.json(enrichedSession)
 
     } catch (error) {
         console.error('Token hook error:', error)

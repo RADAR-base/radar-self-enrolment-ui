@@ -21,6 +21,12 @@ export async function GET(request: NextRequest) {
   if (token == null) {
     return NextResponse.json({error: 'Unknown error retrieving token'}, {status: 500})
   }
-  cookieStore.set('sep_access_token', token['access_token'])
+  // httpOnly is not set yet: checkAccessCookieExists() in app/_ui/auth/oauthToken.tsx
+  // reads this cookie from the browser. Set it once that check moves server-side.
+  cookieStore.set('sep_access_token', token['access_token'], {
+    secure: true,
+    sameSite: 'lax',
+    path: '/',
+  })
   return NextResponse.json(token)
 }

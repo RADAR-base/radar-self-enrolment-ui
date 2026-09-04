@@ -11,6 +11,7 @@ import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 import { getAuthLink } from "@/app/_lib/connect/armt/authLink";
 import { GetOauthToken } from "../../auth/oauthToken";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { useMobilePlatform, MobileLoginButton, CollapsibleManualLogin } from "./mobileLogin";
 
 const SCOPES = [
   'SOURCETYPE.READ',
@@ -24,104 +25,48 @@ const AUDIENCE = ['res_ManagementPortal', 'res_gateway', 'res_AppServer'].join('
 
 const REDIRECT_URI = process.env.NEXT_PUBLIC_ARMT_REDIRECT_URI ?? ''
 
-function AppStoreDownloadModalContent() {
-  const link = 'https://apps.apple.com/us/app/radar-active-rmt/id1483953055?itscg=30200&itsct=apps_box_badge&mttnsubad=1483953055'
+const DEFAULT_APP_STORE_URL = 'https://apps.apple.com/us/app/radar-active-rmt/id1483953055?itscg=30200&itsct=apps_box_badge&mttnsubad=1483953055'
+const DEFAULT_PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=org.phidatalab.radar_armt'
+
+function AppStoreBadge({ url }: { url: string }) {
   return (
-    <React.Fragment>
-      <a href={link} target='_blank'>
-        <Image
-          src={withBasePath('/devices/apple_download_app.svg')}
-          height={80}
-          width={200}
-          alt={"Download the RADAR App on the App Store"}
-          style={{cursor: 'pointer'}}
-        />
+    <a href={url} target='_blank'>
+      <Image
+        src={withBasePath('/devices/apple_download_app.svg')}
+        height={80}
+        width={200}
+        alt={"Download the RADAR App on the App Store"}
+        style={{cursor: 'pointer'}}
+      />
     </a>
-    </React.Fragment>
   )
 }
 
-function QRContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
-  return (<Box>
-    <Typography variant="body1" fontWeight={700}>If you're on a computer or tablet</Typography>
-    <Typography>When prompted, scan this QR code to log in:</Typography>
-    <Box margin={'auto'} textAlign={'center'} padding={2}>
-        <QRCodeSVG value={armtAuthUrl ?? ''} size={200} />
-    </Box>
-    </Box>
-    )
+function PlayStoreBadge({ url }: { url: string }) {
+  return (
+    <a href={url} target='_blank'>
+      <Image
+        src={withBasePath('/devices/playstore_download_app.webp')}
+        height={80}
+        width={200}
+        alt={"Download the RADAR App on the Play Store"}
+        style={{cursor: 'pointer'}}
+      />
+    </a>
+  )
 }
 
-function LoginInfoContent({studyId, studyName}: {studyId: string, studyName: string}): React.ReactNode {
-return (<div>
-          <Typography variant="body1" fontWeight={700}>If you're using an iPhone to view this page:</Typography>
-            <Typography>Log in manually using:</Typography>
-            <List sx={{listStyle: 'lower-roman'}}>
-              <ListItem sx={{display: 'list-item'}}>
-                <Typography>
-                  Study name: 
-                  <Typography color="primary" component={'span'} fontWeight={700} letterSpacing={2}>
-                    {" " + studyId}
-                  </Typography>
-                  <IconButton onClick={() =>navigator.clipboard.writeText(studyId)}
-                    color='primary'
-                    >
-                    <ContentCopyIcon />
-                  </IconButton>
-                </Typography>
-              </ListItem>
-              <ListItem sx={{display: 'list-item'}}>
-                <Typography>
-                  Email address: the one you used for your {studyName} account.
-                </Typography>
-              </ListItem>
-              <ListItem sx={{display: 'list-item'}}>
-              <Typography>
-                Password: the one you used for your {studyName} account.
-                </Typography>            
-              </ListItem>
-              <Typography fontStyle={'italic'}>Note: Use your study account email and password (the same as this portal).</Typography>
-            </List>
-        </div>)
-}
-
-function ArmtContent({armtAuthUrl, guideUrl, videoUrl}: {armtAuthUrl?: string, guideUrl?: string, videoUrl?: string}): React.ReactNode {
-  const protocol = useContext(ProtocolContext);
+function DownloadAppStep({ platform, appStoreUrl, playStoreUrl }: { platform: 'ios' | 'android' | 'other', appStoreUrl: string, playStoreUrl?: string }) {
   const theme = useTheme()
   return (
     <React.Fragment>
-      <Grid size={12} textAlign={'left'}>
-        <Typography variant="h2">How to Connect with the RADAR aRMT App</Typography>
-        <Typography>
-          You can share data with us by downloading the RADAR aRMT app on your iPhone.
-        </Typography>
-        <Typography>
-          The RADAR aRMT app lets you send us your wearable device and questionnaire data.
-        </Typography>
-        <Typography variant="h3" padding={2} textAlign={'center'}>
-          Before you start please read through all the steps below. 
-        </Typography>
-        {(guideUrl || videoUrl) && (
-          <Typography>
-            {guideUrl && <>Read our <Link href={withBasePath(guideUrl)} target="_blank">Guide</Link>{videoUrl ? ' or view our ' : ''}</>}
-            {videoUrl && <><Link href={withBasePath(videoUrl!)} target="_blank">Video</Link></>}
-            {' for more detailed instructions on how to connect with the aRMT app.'}
-          </Typography>
-        )}
-      </Grid>
-      <Grid size={12} textAlign={'left'}>
-        <Typography  variant="h3">
-          Step 1: Download the App
-        </Typography>
-      </Grid>
-
       <Grid size={{xs: 12, sm: 5.5}} textAlign={'left'} >
         <Typography variant="body1" fontWeight={700}>
-          If you're on a computer or tablet: 
+          If you're on a computer or tablet:
         </Typography>
         <List  sx={{listStyle: 'lower-alpha'}}>
           <ListItem sx={{display: 'list-item'}}>
-            <Typography>On your iPhone, open the App Store.</Typography>
+            <Typography>On your phone, open the App Store or Play Store.</Typography>
           </ListItem>
           <ListItem sx={{display: 'list-item'}}>
             <Typography>Search for <Typography color='primary' fontWeight={700} component={'span'}>RADAR active RMT</Typography></Typography>
@@ -140,26 +85,134 @@ function ArmtContent({armtAuthUrl, guideUrl, videoUrl}: {armtAuthUrl?: string, g
       </Grid>
       <Grid size={{xs: 12, sm: 5.5}} textAlign={'left'}>
         <Typography variant="body1" fontWeight={700}>
-          If you're on your iPhone:
+          If you're on your phone:
         </Typography>
         <Typography>Tap below to download directly:</Typography>
-        <AppStoreDownloadModalContent />
+        <Box display={'flex'} flexDirection={'column'} gap={2} alignItems={'flex-start'} paddingTop={1}>
+          {platform !== 'android' && <AppStoreBadge url={appStoreUrl} />}
+          {platform !== 'ios' && (
+            playStoreUrl
+              ? <PlayStoreBadge url={playStoreUrl} />
+              : (platform === 'android' && <Typography fontStyle={'italic'}>Android app coming soon</Typography>)
+          )}
+        </Box>
       </Grid>
-      <Grid size={{ xs: 12, sm: 8 }} textAlign={'left'}>
-        <Typography variant="h3">Step 2: Log into the app</Typography> 
-        <Typography variant="body1" fontWeight={700}>
-          There are two ways to log into the app once it's installed 
-        </Typography>
+    </React.Fragment>
+  )
+}
+
+function QRContent({armtAuthUrl}: {armtAuthUrl?: string}): React.ReactNode {
+  return (<Box>
+    <Typography variant="body1" fontWeight={700}>If you're on a computer or tablet</Typography>
+    <Typography>When prompted, scan this QR code to log in:</Typography>
+    <Box margin={'auto'} textAlign={'center'} padding={2}>
+        <QRCodeSVG value={armtAuthUrl ?? ''} size={200} />
+    </Box>
+    </Box>
+    )
+}
+
+function LoginInfoContent({studyId, studyName}: {studyId: string, studyName: string}): React.ReactNode {
+return (<div>
+          <Typography variant="body1" fontWeight={700}>If you're using your phone to view this page:</Typography>
+            <Typography>Log in manually using:</Typography>
+            <List sx={{listStyle: 'lower-roman'}}>
+              <ListItem sx={{display: 'list-item'}}>
+                <Typography>
+                  Study name:
+                  <Typography color="primary" component={'span'} fontWeight={700} letterSpacing={2}>
+                    {" " + studyId}
+                  </Typography>
+                  <IconButton onClick={() =>navigator.clipboard.writeText(studyId)}
+                    color='primary'
+                    >
+                    <ContentCopyIcon />
+                  </IconButton>
+                </Typography>
+              </ListItem>
+              <ListItem sx={{display: 'list-item'}}>
+                <Typography>
+                  Email address: the one you used for your {studyName} account.
+                </Typography>
+              </ListItem>
+              <ListItem sx={{display: 'list-item'}}>
+              <Typography>
+                Password: the one you used for your {studyName} account.
+                </Typography>
+              </ListItem>
+              <Typography fontStyle={'italic'}>Note: Use your study account email and password (the same as this portal).</Typography>
+            </List>
+        </div>)
+}
+
+function LoginStep({armtAuthUrl, isMobile, studyId, studyName}: {armtAuthUrl?: string, isMobile: boolean, studyId: string, studyName: string}): React.ReactNode {
+  const theme = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"))
+  if (isMobile) {
+    return (
+      <Grid size={12} textAlign={'left'}>
+        <Typography variant="body1" fontWeight={700}>Tap below to log in directly:</Typography>
+        <MobileLoginButton authUrl={armtAuthUrl} />
+        <CollapsibleManualLogin>
+          <LoginInfoContent studyId={studyId} studyName={studyName} />
+        </CollapsibleManualLogin>
       </Grid>
+    )
+  }
+  return (
+    <React.Fragment>
       <Grid size={{xs: 12, sm: 5.5}} textAlign={'left'} >
         <QRContent armtAuthUrl={armtAuthUrl ?? ""} />
       </Grid>
       <Grid size={{xs: 12, sm: 1}} >
-        <Divider orientation={useMediaQuery(theme.breakpoints.down("sm")) ? "horizontal" : "vertical"}>OR</Divider>
+        <Divider orientation={isSmallScreen ? "horizontal" : "vertical"}>OR</Divider>
       </Grid>
       <Grid size={{xs: 12, sm: 5.5}} textAlign={'left'}>
-        <LoginInfoContent studyId={protocol.studyId} studyName={protocol.name} />
+        <LoginInfoContent studyId={studyId} studyName={studyName} />
       </Grid>
+    </React.Fragment>
+  )
+}
+
+function ArmtContent({armtAuthUrl, guideUrl, videoUrl, appStoreUrl, playStoreUrl}: {armtAuthUrl?: string, guideUrl?: string, videoUrl?: string, appStoreUrl?: string, playStoreUrl?: string}): React.ReactNode {
+  const protocol = useContext(ProtocolContext);
+  const { platform, isMobile } = useMobilePlatform()
+  return (
+    <React.Fragment>
+      <Grid size={12} textAlign={'left'}>
+        <Typography variant="h2">How to Connect with the RADAR aRMT App</Typography>
+        <Typography>
+          You can share data with us by downloading the RADAR aRMT app on your phone.
+        </Typography>
+        <Typography>
+          The RADAR aRMT app lets you send us your wearable device and questionnaire data.
+        </Typography>
+        <Typography variant="h3" padding={2} textAlign={'center'}>
+          Before you start please read through all the steps below.
+        </Typography>
+        {(guideUrl || videoUrl) && (
+          <Typography>
+            {guideUrl && <>Read our <Link href={withBasePath(guideUrl)} target="_blank">Guide</Link>{videoUrl ? ' or view our ' : ''}</>}
+            {videoUrl && <><Link href={withBasePath(videoUrl!)} target="_blank">Video</Link></>}
+            {' for more detailed instructions on how to connect with the aRMT app.'}
+          </Typography>
+        )}
+      </Grid>
+      <Grid size={12} textAlign={'left'}>
+        <Typography  variant="h3">
+          Step 1: Download the App
+        </Typography>
+      </Grid>
+
+      <DownloadAppStep platform={platform} appStoreUrl={appStoreUrl ?? DEFAULT_APP_STORE_URL} playStoreUrl={playStoreUrl ?? DEFAULT_PLAY_STORE_URL} />
+
+      <Grid size={{ xs: 12, sm: 8 }} textAlign={'left'}>
+        <Typography variant="h3">Step 2: Log into the app</Typography>
+        <Typography variant="body1" fontWeight={700}>
+          There are two ways to log into the app once it's installed
+        </Typography>
+      </Grid>
+      <LoginStep armtAuthUrl={armtAuthUrl} isMobile={isMobile} studyId={protocol.studyId} studyName={protocol.name} />
       <Grid size={12} textAlign={'left'}>
         <Typography  variant="h3">
           Step 3
@@ -198,7 +251,7 @@ interface SubmitButtonProps {
 function SubmitButton(props: SubmitButtonProps) {
   const router = useRouter();
   const protocol = useContext(ProtocolContext);
-  return  <Button color="primary" variant="contained" 
+  return  <Button color="primary" variant="contained"
                   disabled={props.disabled}
                   onClick={() => {
                     router.push(`/${protocol.studyId}/portal/connect?success=armt`)
@@ -212,12 +265,12 @@ function SubmitButton(props: SubmitButtonProps) {
 function createShortToken(token: any) {
   if (token?.access_token && token?.expires_in) {
     token['iat'] =  Math.floor(Date.now() / 1000)
-    const shortToken = { 
-      iat: token.iat, 
-      expires_in: token.expires_in, 
-      refresh_token: token.refresh_token, 
-      scope: token.scope, 
-      token_type: token.token_type 
+    const shortToken = {
+      iat: token.iat,
+      expires_in: token.expires_in,
+      refresh_token: token.refresh_token,
+      scope: token.scope,
+      token_type: token.token_type
     }
     return shortToken
   }
@@ -227,14 +280,16 @@ function createShortToken(token: any) {
 interface ArmtPageProps {
   guideUrl?: string
   videoUrl?: string
+  appStoreUrl?: string
+  playStoreUrl?: string
 }
 
-export function ArmtPage({ guideUrl, videoUrl }: ArmtPageProps) {
+export function ArmtPage({ guideUrl, videoUrl, appStoreUrl, playStoreUrl }: ArmtPageProps) {
   const [isFetchingToken, setIsFetchingToken] = useState(false)
   const [armtAuthUrl, setArmtAuthUrl] = useState<any>(undefined)
 
   const [code, setCode] = useState<string>()
-  
+
   useEffect(() => {
     const handleToken = async () => {
       if (isFetchingToken || (armtAuthUrl != undefined) || (code == undefined)) return
@@ -256,11 +311,11 @@ export function ArmtPage({ guideUrl, videoUrl }: ArmtPageProps) {
   <Container maxWidth="lg" disableGutters >
     <RadarCard>
       <Container sx={{ pl: 4, pr: 4}}>
-        {armtAuthUrl == undefined ? 
-          (<GetOauthToken clientId="aRMT" scopes={SCOPES} audience={AUDIENCE} codeFunc={async (code:string) => setCode(code)} redirectUri={REDIRECT_URI} />) : 
+        {armtAuthUrl == undefined ?
+          (<GetOauthToken clientId="aRMT" scopes={SCOPES} audience={AUDIENCE} codeFunc={async (code:string) => setCode(code)} redirectUri={REDIRECT_URI} />) :
           (<Box display={'inline'} gap={2} aria-live="polite" paddingLeft={4}>
             <Grid container spacing={2} gap={2} rowGap={4}>
-              <ArmtContent armtAuthUrl={armtAuthUrl} guideUrl={guideUrl} videoUrl={videoUrl} />
+              <ArmtContent armtAuthUrl={armtAuthUrl} guideUrl={guideUrl} videoUrl={videoUrl} appStoreUrl={appStoreUrl} playStoreUrl={playStoreUrl} />
             </Grid>
             <br />
           </Box>)

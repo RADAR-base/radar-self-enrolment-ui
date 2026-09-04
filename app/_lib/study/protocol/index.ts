@@ -108,6 +108,9 @@ export type ConnectDeviceConfig = {
   guideUrl?: string
   videoUrl?: string
   confirmation?: ConnectDeviceConfirmation
+  enabled?: boolean
+  appStoreUrl?: string
+  playStoreUrl?: string
 }
 
 export type ArmtMetadata = ArmtMetadataGithub | ArmtMetadataInbuilt | ArmtMetadataLocal
