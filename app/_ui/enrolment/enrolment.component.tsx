@@ -137,6 +137,7 @@ type ContinueWithFlow = {
 }
 
 type ContinueWithItem = {
+  action?: string
   flow?: ContinueWithFlow | ContinueWithFlow[]
 }
 
@@ -146,18 +147,20 @@ type JoinResponse = {
 
 function getVerificationFlowId(data: JoinResponse): string | undefined {
   const continueWith = Array.isArray(data?.continue_with) ? data.continue_with : []
-  const firstContinueWith = continueWith[0]
-  const flow = firstContinueWith?.flow
 
-  if (!flow) {
-    return undefined
+  for (const item of continueWith) {
+    if (item?.action !== 'show_verification_ui') continue
+    const flow = item?.flow
+    if (!flow) continue
+
+    if (Array.isArray(flow)) {
+      if (flow[0]?.id) return flow[0].id
+    } else if (flow.id) {
+      return flow.id
+    }
   }
 
-  if (Array.isArray(flow)) {
-    return flow[0]?.id
-  }
-
-  return flow.id
+  return undefined
 }
 
 function scrollToTop() {

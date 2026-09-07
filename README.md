@@ -73,6 +73,13 @@ Defined in `app/_lib/github/config/github-config.ts` and `app/_lib/study/config.
 - `MP_PROJECTS_ENDPOINT` (optional, default `api/public/projects`)  
   Endpoint used to fetch the list of projects.
 
+### Token hook
+
+- `TOKEN_HOOK_API_KEY` (required in production)
+  Shared secret used to authenticate Hydra's token hook webhook requests.
+  Must match the API key configured in Hydra's webhook auth settings.
+  If not set, the token hook endpoint rejects all requests.
+
 ### Device connect (SEP, pRMT, aRMT)
 
 - SEP (Study Extension Platform):
