@@ -15,7 +15,9 @@ const extractSession = (identity: any, grantScope: string[]) => {
       kratos_id: identity.id
     },
     id_token: {
-      email: identity.traits.email
+      email: identity.traits.email,
+      roles: identity.metadata_public.roles,
+      authorities: identity.metadata_public.authorities
     },
   }
   return session

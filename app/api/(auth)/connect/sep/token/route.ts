@@ -21,6 +21,14 @@ export async function GET(request: NextRequest) {
   if (token == null) {
     return NextResponse.json({error: 'Unknown error retrieving token'}, {status: 500})
   }
-  cookieStore.set('sep_access_token', token['access_token'])
+  // The cookie carries a bearer access token, so it is kept out of reach of scripts.
+  // Client code that needs to know whether a token is held asks /api/connect/sep/status
+  // rather than reading the cookie.
+  cookieStore.set('sep_access_token', token['access_token'], {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax',
+    path: '/',
+  })
   return NextResponse.json(token)
 }
