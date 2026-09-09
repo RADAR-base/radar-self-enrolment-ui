@@ -193,8 +193,21 @@ async function clearCookies() {
   await fetch(withBasePath('/api/ory/login/browser'))
 }
 
-function checkAccessCookieExists() {
-  return document.cookie.split(';').some((c) => c.trim().startsWith('sep_access_token'))
+/**
+ * Asks the server whether an access token cookie is present. The cookie is httpOnly,
+ * so it cannot be read from the browser; the server reports its presence instead of
+ * exposing the token to scripts.
+ */
+async function checkAccessCookieExists(): Promise<boolean> {
+  try {
+    const res = await fetch(withBasePath('/api/connect/sep/status'), { cache: 'no-store' })
+    if (!res.ok) {
+      return false
+    }
+    return (await res.json())['connected'] === true
+  } catch {
+    return false
+  }
 }
 
 interface OauthTokenProps {
@@ -239,7 +252,7 @@ export function GetOauthToken(props: OauthTokenProps): React.ReactNode {
           maxTimeout: 30000,
           onFailedAttempt: async (attempt) => {
             // await clearCookies()
-            if (checkAccessCookieExists()) {
+            if (await checkAccessCookieExists()) {
               window.location.reload()
             }
             setContent(
