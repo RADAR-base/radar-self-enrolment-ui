@@ -3,9 +3,6 @@ const githubOrg = process.env.GITHUB_ORG || "RADAR-base";
 const githubRepo = process.env.GITHUB_REPO_NAME || "radar-self-enrolment-definitions";
 const githubBranch = process.env.GITHUB_REPO_BRANCH_NAME || "main";
 
-// Content Security Policy. 'unsafe-inline' and 'unsafe-eval' are required by Next.js
-// for its hydration and runtime scripts; a nonce-based policy set from middleware would
-// remove them, at the cost of a larger change.
 const contentSecurityPolicy = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com",
@@ -21,7 +18,6 @@ const contentSecurityPolicy = [
 const nextConfig = {
     reactStrictMode: false,
     basePath: process.env.BASEPATH,
-    // Do not advertise the framework in responses.
     poweredByHeader: false,
     env: {
       NEXT_PUBLIC_BASEPATH: process.env.BASEPATH,
