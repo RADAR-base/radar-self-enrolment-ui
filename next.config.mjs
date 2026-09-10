@@ -59,9 +59,18 @@ const nextConfig = {
                 value: 'camera=(), microphone=(), geolocation=(), payment=()'
               }
             ]
+          },
+          {
+            source: '/api/:path*',
+            headers: [
+              {
+                key: 'Cache-Control',
+                value: 'no-store'
+              }
+            ]
           }
         ]
-      } 
+      }
 };
 
 export default nextConfig;
