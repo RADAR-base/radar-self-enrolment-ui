@@ -5,7 +5,7 @@ const ALLOWED_HOSTS = new Set([
   "raw.githubusercontent.com",
 ])
 
-const MAX_PDF_SIZE = GITHUB_CONFIG.MAX_CONTENT_LENGTH
+const MAX_CONTENT_SIZE = GITHUB_CONFIG.MAX_CONTENT_LENGTH
 
 export async function GET(request: NextRequest) {
   const url = request.nextUrl.searchParams.get("url")
@@ -40,12 +40,12 @@ export async function GET(request: NextRequest) {
     }
 
     const contentLength = parseInt(response.headers.get("content-length") ?? "0", 10)
-    if (contentLength > MAX_PDF_SIZE) {
+    if (contentLength > MAX_CONTENT_SIZE) {
       return NextResponse.json({ error: "File too large" }, { status: 413 })
     }
 
     const buffer = await response.arrayBuffer()
-    if (buffer.byteLength > MAX_PDF_SIZE) {
+    if (buffer.byteLength > MAX_CONTENT_SIZE) {
       return NextResponse.json({ error: "File too large" }, { status: 413 })
     }
 
