@@ -4,9 +4,11 @@ function generateCspHeaders(nonce: string, isPdfViewer: boolean): string {
   const directives = [
     "default-src 'self'",
     isPdfViewer
-      ? `script-src 'self' 'unsafe-eval'`
+      ? "script-src 'self'"
       : `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'`,
-    `style-src-elem 'self' 'nonce-${nonce}'`,
+    isPdfViewer
+      ? "style-src 'self' 'unsafe-inline'"
+      : `style-src-elem 'self' 'nonce-${nonce}'`,
     "style-src-attr 'unsafe-inline'",
     "img-src 'self' data: blob: https://raw.githubusercontent.com https://avatars.githubusercontent.com",
     "font-src 'self' data:",
