@@ -7,7 +7,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import defaultTheme from "@/app/_lib/theme/default";
 import ParticipantProvider, { Participant } from "./_lib/auth/provider.client";
 import { whoAmI } from "./_lib/auth/ory/kratos";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { GetCSRF } from "./_ui/auth/getCSRF";
 import { Montserrat } from "next/font/google";
 import { withBasePath } from "./_lib/util/links";
@@ -52,12 +52,13 @@ export default async function RootLayout({
     }
   const cookieJar = await cookies()
   const csrfToken = cookieJar.getAll().find((c) => c.name.startsWith('csrf_token_'))
+  const nonce = (await headers()).get('x-nonce') ?? ''
   return (
     <html lang="en">
       {/* <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /> */}
       <meta name="viewport" content="initial-scale=1, width=device-width" />
       <body className={[msrt_font.variable].join(' ')}>
-        <AppRouterCacheProvider>
+        <AppRouterCacheProvider options={{ nonce }}>
           <ThemeProvider theme={defaultTheme}>
           <CssBaseline />
             <ParticipantProvider participant={participant}>
