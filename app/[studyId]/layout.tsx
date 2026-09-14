@@ -11,6 +11,7 @@ import { cookies } from 'next/headers';
 import { GoogleAnalytics } from '@next/third-parties/google';
 
 import { isAbsolutePath, withBasePath } from "@/app/_lib/util/links";
+import { resolveResourceUrl } from "@/app/_lib/util/resources";
 
 import ProtocolProvider from '@/app/_lib/study/protocol/provider.client';
 import ProtocolRepository, { StudyProtocolRepository } from "@/app/_lib/study/protocol/repository";
@@ -44,8 +45,8 @@ export async function generateMetadata(props: {params: Promise<{studyId: string}
     title: protocol.name + ' Study',
     icons: [
       {
-        href: withBasePath(protocol.studyUiConfig.faviconSrc),
-        url: withBasePath(protocol.studyUiConfig.faviconSrc)
+        href: resolveResourceUrl(protocol.studyUiConfig.faviconSrc),
+        url: resolveResourceUrl(protocol.studyUiConfig.faviconSrc)
       }
     ]
   }
