@@ -9,7 +9,7 @@ function generateCspHeaders(nonce: string, isPdfViewer: boolean): string {
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https://raw.githubusercontent.com https://avatars.githubusercontent.com",
     "font-src 'self' data:",
-    "connect-src 'self' https://raw.githubusercontent.com",
+    "connect-src 'self'",
     "frame-ancestors 'self'",
     "frame-src 'self'",
     "base-uri 'self'",
