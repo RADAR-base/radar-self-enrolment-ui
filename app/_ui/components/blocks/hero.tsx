@@ -1,5 +1,6 @@
 "use client"
 import { withBasePath } from "@/app/_lib/util/links";
+import { resolveResourceUrl } from "@/app/_lib/util/resources";
 import { Box, Button, Container, Typography, useTheme } from "@mui/material";
 import Image from "next/image";
 import { MarkdownContainer } from "../base/markdown";
@@ -85,7 +86,7 @@ export function HeroBlock(props: IHeroBlock) {
               minHeight: "max(20rem, min(50vw, 50vh))",
               maxHeight: '50vh'
           }}>
-            <Image src={withBasePath(props.heroImage.src)} fill alt={props.heroImage.altText} style={{objectFit: 'cover'}} />
+            <Image src={resolveResourceUrl(props.heroImage.src)} fill alt={props.heroImage.altText} style={{objectFit: 'cover'}} />
           </Container>
       </Box>
       }

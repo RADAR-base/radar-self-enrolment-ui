@@ -11,16 +11,26 @@ function usesGithubDefinitions(): boolean {
   return (process.env.NEXT_PUBLIC_STUDY_DEFINITION_REPOSITORY ?? "GITHUB") !== "LOCAL";
 }
 
-/** Resolve a study resource path or absolute URL for PDF/asset loading. */
-export function resolvePdfFileUrl(fileUrl: string): string {
+/** Proxy an external URL through the /api/github route so it becomes same-origin. */
+function proxyUrl(externalUrl: string): string {
+  const proxyPath = withBasePath(`/api/github?url=${encodeURIComponent(externalUrl)}`);
+  if (typeof window === "undefined") {
+    return proxyPath;
+  }
+  return `${window.location.origin}${proxyPath.startsWith("/") ? proxyPath : `/${proxyPath}`}`;
+}
+
+/** Resolve a study resource path or absolute URL, proxying external GitHub URLs through /api/github. */
+export function resolveResourceUrl(fileUrl: string): string {
   if (/^https?:\/\//i.test(fileUrl)) {
-    return fileUrl;
+    return proxyUrl(fileUrl);
   }
 
   const studyResourceMatch = fileUrl.match(/^\/study\/(?:study\/)?([^/]+)\/(.+)$/);
   if (usesGithubDefinitions() && studyResourceMatch) {
     const [, studyId, resourcePath] = studyResourceMatch;
-    return `${getGithubRawBase()}/projects/${studyId}/${resourcePath}`;
+    const githubUrl = `${getGithubRawBase()}/projects/${studyId}/${resourcePath}`;
+    return proxyUrl(githubUrl);
   }
 
   const path = withBasePath(fileUrl);
