@@ -93,7 +93,7 @@ export async function PUT(request: NextRequest,
     const armtDef = fromRedcapDefinition(redcapDef)
     const schema = schemaFromDefinition(armtDef)
     try {
-      await schema.validate(values)
+      await schema.validate(values, { context: values })
     } catch (error) {
       return NextResponse.json({error: {type: 'validation', content: error}} , {status: 400})
     }
@@ -158,7 +158,7 @@ export async function POST(
     const armtDef = fromRedcapDefinition(redcapDef)
     const schema = schemaFromDefinition(armtDef)
     try {
-      await schema.validate(values)
+      await schema.validate(values, { context: values })
     } catch (error) {
       return NextResponse.json({error: {type: 'validation', content: error}} , {status: 400})
     }
