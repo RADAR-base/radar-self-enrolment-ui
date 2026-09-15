@@ -3,6 +3,7 @@ import { Box, Link, Typography } from "@mui/material";
 import { ForwardedRef } from "react";
 import Image from 'next/image'
 import { withBasePath } from "@/app/_lib/util/links";
+import { resolveResourceUrl } from "@/app/_lib/util/resources";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
@@ -63,7 +64,7 @@ export function CarouselBlock({ title, subtitle, items, blockType }: ICarouselBl
                     draggable={false}
                     height={180}
                     width={180}
-                    src={withBasePath(item.imgSrc)}
+                    src={resolveResourceUrl(item.imgSrc)}
                     alt={item.title ?? 'image on a carousel'}
                     style={{ 
                       borderRadius: 100, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)',

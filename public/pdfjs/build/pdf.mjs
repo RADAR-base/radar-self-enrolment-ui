@@ -495,12 +495,7 @@ function isLittleEndian() {
   return view32[0] === 1;
 }
 function isEvalSupported() {
-  try {
-    new Function("");
-    return true;
-  } catch {
-    return false;
-  }
+  return false;
 }
 class util_FeatureTest {
   static get isLittleEndian() {

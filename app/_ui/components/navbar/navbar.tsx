@@ -7,6 +7,7 @@ import { AppBar, Box, Button, Container, Divider, IconButton, Link, Menu, MenuIt
 import MenuIcon from '@mui/icons-material/Menu';
 import { withBasePath } from '@/app/_lib/util/links'
 import { AccountButton, AccountMenuItemsFragment } from './accountButton'
+import { resolveResourceUrl } from '@/app/_lib/util/resources'
 import { ProtocolContext } from '@/app/_lib/study/protocol/provider.client'
 import { ParticipantContext } from '@/app/_lib/auth/provider.client'
 import { useRouter } from 'next/navigation'
@@ -156,7 +157,7 @@ function NavBar(props: NavBarProps) {
                alignItems={'center'} gap={1}>
             {props.logo_src &&
               <Box height={"3rem"}>
-                <img src={withBasePath(props.logo_src)}
+                <img src={resolveResourceUrl(props.logo_src)}
                     alt='Study logo' height={"100%"}>
                 </img>
               </Box>

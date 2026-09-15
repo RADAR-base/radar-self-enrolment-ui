@@ -1,5 +1,5 @@
 "use client"
-import { resolvePdfFileUrl } from "@/app/_lib/util/resources";
+import { resolveResourceUrl } from "@/app/_lib/util/resources";
 import { withBasePath } from "@/app/_lib/util/links";
 import React, { useMemo } from "react";
 
@@ -20,7 +20,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({
   viewerPath = withBasePath("/pdfjs/web/viewer.html"),
 }) => {
   const src = useMemo(() => {
-    const resolvedUrl = resolvePdfFileUrl(fileUrl);
+    const resolvedUrl = resolveResourceUrl(fileUrl);
     const encodedFile = encodeURIComponent(resolvedUrl);
     const allowedOrigins = encodeURIComponent(window.location.origin);
     const hash = viewerHash ? `#${viewerHash}` : "";

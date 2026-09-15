@@ -1,4 +1,5 @@
 import { withBasePath } from "@/app/_lib/util/links";
+import { resolveResourceUrl } from "@/app/_lib/util/resources";
 import { Box, Container, Typography } from "@mui/material";
 import { ForwardedRef } from "react";
 
@@ -12,7 +13,7 @@ function isVideoYoutube(video: VideoFile | VideoYoutube): video is VideoYoutube 
 
 function DirectVideoComponent({video}: {video: VideoFile}) {
   return <video width={video.width} height={video.height} {...video.params}>
-            <source src={withBasePath(video.src)} type={video.type}></source>
+            <source src={resolveResourceUrl(video.src)} type={video.type}></source>
           </video>
 }
 
