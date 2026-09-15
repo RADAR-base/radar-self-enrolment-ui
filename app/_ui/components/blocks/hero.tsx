@@ -51,6 +51,7 @@ export interface IHeroBlock {
   title?: any
   subtitle?: string
   heroImage?: IHeroImage
+  cta?: ICallToAction
   ctas?: ICallToAction[]
 }
 
@@ -69,7 +70,9 @@ export function HeroBlock(props: IHeroBlock) {
     return protocol?.studyId ? `/${protocol.studyId}/${trimmed}` : `/${trimmed}`
   }
 
-  const ctasResolved = props.ctas?.map(cta => ({ ...cta, href: resolveHref(cta.href) }))
+  // Support both old cta prop and new ctas[] array
+  const allCtas = props.ctas ?? (props.cta ? [props.cta] : [])
+  const ctasResolved = allCtas.length > 0 ? allCtas.map(cta => ({ ...cta, href: resolveHref(cta.href) })) : undefined
   return (
     <Box
       display={"flex"}
