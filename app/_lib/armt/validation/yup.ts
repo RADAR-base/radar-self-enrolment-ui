@@ -11,12 +11,12 @@ declare module "yup" {
 
 Yup.addMethod<Yup.StringSchema>(Yup.string, "nhsNumber", 
   function testNhsNumber(this, message: string) {
-    return this.test('nhs-number-valid', message, (s) => s ? nhsNumber(s) : false)
+    return this.test('nhs-number-valid', message, (s) => s ? nhsNumber(s) : true)
 })
 
 Yup.addMethod<Yup.StringSchema>(Yup.string, "ukPostcode", 
   function testUkPostcode(this, message: string) {
-    return this.test('uk-postcode-valid', message, (s) => s ? ukPostcode(s) : false)
+    return this.test('uk-postcode-valid', message, (s) => s ? ukPostcode(s) : true)
   }
 )
 

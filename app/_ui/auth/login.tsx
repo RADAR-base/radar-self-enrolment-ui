@@ -14,7 +14,6 @@ interface LoginProps {
     redirectTo?: string
     loginChallenge?: string
     flow?: IOryLoginFlow
-    recoveryHref?: string
 }
 
 export function LoginComponent(props: LoginProps) {
@@ -145,7 +144,7 @@ export function LoginComponent(props: LoginProps) {
             error={formik.touched.password && Boolean(formik.errors.password)}
             autoComplete='current-password'
             />
-        <Link href={props.recoveryHref ?? 'recovery'}>Forgot password?</Link>
+        <Link href={'recovery'}>Forgot password?</Link>
         <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} width={'100%'}>
           <Button color="primary" variant="contained" onClick={() => router.back()}>
               Back
