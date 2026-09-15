@@ -19,7 +19,11 @@ interface IHeroImage {
 }
 
 
-function CTAButton(cta: ICallToAction) {
+interface CTAButtonProps {
+  cta: ICallToAction,
+}
+
+function CTAButton({cta}: CTAButtonProps) {
   const theme = useTheme()
   let sx2 = {width: { xs: "auto", sm: "auto" }}
   let sx = theme.components?.MuiButton?.defaultProps?.sx
@@ -32,11 +36,13 @@ function CTAButton(cta: ICallToAction) {
         </Button>
 }
 
-function CTAButtons(cta?: ICallToAction, cta2?: ICallToAction) {
 
-  const cta1Button = cta ? CTAButton(cta) : undefined
-  const cta2Button = cta2 ? CTAButton(cta2) : undefined
-  return <Box display={"flex"} flexShrink={0} gap={2} flexDirection={{xs: 'column', sm: 'row'}}>{cta1Button}{cta2Button}</Box>
+function CTAButtons(ctas: ICallToAction[]) {
+  return <Box display={"flex"} flexShrink={0} gap={2} flexDirection={{xs: 'column', sm: 'row'}}>
+            {ctas.map(
+              (cta, i) => <CTAButton cta={cta} key={i} />
+            )}
+          </Box>
 }
 
 export interface IHeroBlock {
@@ -44,8 +50,7 @@ export interface IHeroBlock {
   title?: any
   subtitle?: string
   heroImage?: IHeroImage
-  cta?: ICallToAction
-  cta2?: ICallToAction
+  ctas?: ICallToAction[]
 }
 
 export function HeroBlock(props: IHeroBlock) {
@@ -63,11 +68,10 @@ export function HeroBlock(props: IHeroBlock) {
     return protocol?.studyId ? `/${protocol.studyId}/${trimmed}` : `/${trimmed}`
   }
 
-  const ctaResolved = props.cta ? { ...props.cta, href: resolveHref(props.cta.href) } : undefined
-  const cta2Resolved = props.cta2 ? { ...props.cta2, href: resolveHref(props.cta2.href) } : undefined
+  const ctasResolved = props.ctas?.map(cta => ({ ...cta, href: resolveHref(cta.href) }))
   return (
-    <Box 
-      display={"flex"} 
+    <Box
+      display={"flex"}
       flexDirection={{xs: "column-reverse", sm: "row"}}
       justifyContent={'flex-start'}
       minHeight={"40vh"}
@@ -75,7 +79,7 @@ export function HeroBlock(props: IHeroBlock) {
       <Box display={"flex"} flexDirection={"column"} justifyContent={'center'} textAlign={{xs: "center", sm: "left"}} flexShrink={1} flex={flex} gap={1}>
         {props.title?.children ? <Typography variant="h1" {...props.title}></Typography> : <Typography variant="h1">{props.title}</Typography> }
         <MarkdownContainer>{props.subtitle}</MarkdownContainer>
-        {CTAButtons(ctaResolved, cta2Resolved)}
+        {ctasResolved && CTAButtons(ctasResolved)}
       </Box>
       {props.heroImage && <Box flex={1}>
           <Container 
