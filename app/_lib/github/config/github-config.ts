@@ -4,7 +4,7 @@ export const GITHUB_CONFIG = {
     process.env.GITHUB_REPO_NAME || "radar-self-enrolment-definitions",
   DEFINITIONS_BRANCH: process.env.GITHUB_REPO_BRANCH_NAME || "main",
   MAX_CONTENT_LENGTH: parseInt(
-    process.env.GITHUB_RESPONSE_CONTENT_LENGTH || "1000000",
+    process.env.GITHUB_RESPONSE_CONTENT_LENGTH || "40000000",
     10,
   ),
   CACHE_DURATION: parseInt(
@@ -25,8 +25,3 @@ export const REMOTE_DEFINITIONS_CONFIG = {
   PROTOCOL_DEFINITION_FILE_NAME_CONTENT: "protocol",
 }
 
-export const MP_CONFIG = {
-  BASE_URL:
-    process.env.MP_CONFIG_BASE_URL || "http://localhost:8080/managementportal",
-  PROJECTS_ENDPOINT: process.env.MP_PROJECTS_ENDPOINT || "api/public/projects",
-}

@@ -1,7 +1,7 @@
 import { PageRepository, createPageRepository } from "@/app/_lib/study/siteContent/repository";
 import { BlockPage } from "@/app/_ui/components/blocks/blockPage";
 import ProtocolRepository, { StudyProtocolRepository } from "@/app/_lib/study/protocol/repository";
-import fetchProjectsFromMp from "@/app/_lib/github/services/mp-projects-fetcher";
+import { getProjectStatus } from "@/app/_lib/study/projectStatus";
 import { notFound } from "next/navigation";
 import { Alert, Box, Container } from "@mui/material";
 
@@ -16,19 +16,18 @@ export async function generateStaticParams() {
 export default async function Page(props: { params: Promise<{ studyId: string }> }) {
   const params = await props.params;
 
-  // Ensure the study exists in Management Portal before rendering
-  const projects = await fetchProjectsFromMp()
-  const existsInMp = projects.some((p) => p.projectName === params.studyId)
-  if (!existsInMp) {
+  // Ensure the project is active before rendering
+  const projectStatus = await getProjectStatus(params.studyId)
+  if (projectStatus && !projectStatus.tags.includes('project_active')) {
     return (
       <main>
-        <Box sx={{ flexGrow: 1, margin: {xs: 0, sm: 2}}} 
+        <Box sx={{ flexGrow: 1, margin: {xs: 0, sm: 2}}}
               display="flex"
               justifyContent="center"
               alignItems="center">
           <Container maxWidth="md">
             <Alert severity="warning" variant="outlined">
-              Project "{params.studyId}" does not exist in Management Portal.
+              Project "{params.studyId}" is not active.
             </Alert>
           </Container>
         </Box>

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
 import { updateRegistrationFlow } from "@/app/_lib/auth/ory/kratos";
 import { setStudyStatus } from "@/app/_lib/study/status";
+import { getProjectStatus } from "@/app/_lib/study/projectStatus";
 
 type StudyJoinRequestBody = {
   email: string,
@@ -15,8 +16,14 @@ export async function POST(
   { params }: { params: Promise<{ studyId: string }> }
 ) {
   const {studyId }  = (await params)
+
+  const projectStatus = await getProjectStatus(studyId)
+  if (projectStatus && !projectStatus.acceptingEnrolment) {
+    return NextResponse.json({error: 'Enrolment is closed for this study'}, {status: 403})
+  }
+
   const {email, password, traits, csrf_token} = (await request.json()) as StudyJoinRequestBody
-  
+
   const flowId = request.nextUrl.searchParams.get('flow')
   if (flowId == null) {
     return NextResponse.json({error: 'No flow (flow id) param provided'}, {status: 400})

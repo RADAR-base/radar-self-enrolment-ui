@@ -20,8 +20,8 @@ function proxyUrl(externalUrl: string): string {
   return `${window.location.origin}${proxyPath.startsWith("/") ? proxyPath : `/${proxyPath}`}`;
 }
 
-/** Resolve a study resource path or absolute URL for PDF/asset loading. */
-export function resolvePdfFileUrl(fileUrl: string): string {
+/** Resolve a study resource path or absolute URL, proxying external GitHub URLs through /api/github. */
+export function resolveResourceUrl(fileUrl: string): string {
   if (/^https?:\/\//i.test(fileUrl)) {
     return proxyUrl(fileUrl);
   }

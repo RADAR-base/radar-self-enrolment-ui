@@ -4,14 +4,18 @@ function generateCspHeaders(nonce: string, isPdfViewer: boolean): string {
   const directives = [
     "default-src 'self'",
     isPdfViewer
-      ? `script-src 'self' 'unsafe-eval'`
+      ? "script-src 'self'"
       : `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'`,
-    "style-src 'self' 'unsafe-inline'",
+    isPdfViewer
+      ? "style-src 'self' 'unsafe-inline'"
+      : `style-src-elem 'self' 'nonce-${nonce}'`,
+    "style-src-attr 'unsafe-inline'",
     "img-src 'self' data: blob: https://raw.githubusercontent.com https://avatars.githubusercontent.com",
     "font-src 'self' data:",
     "connect-src 'self'",
     "frame-ancestors 'self'",
     "frame-src 'self'",
+    "form-action 'self'",
     "base-uri 'self'",
     "object-src 'none'",
   ]
@@ -68,7 +72,7 @@ export const config = {
      * - favicon.ico, sitemap.xml, robots.txt (metadata files)
      */
     {
-      source: '/((?!_next/static|_next/image|favicon\\.ico|sitemap\\.xml|robots\\.txt).*)',
+      source: '/((?!_next/static|_next/image).*)',
       missing: [
         { type: 'header', key: 'next-router-prefetch' },
         { type: 'header', key: 'purpose', value: 'prefetch' },

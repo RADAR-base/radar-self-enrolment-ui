@@ -1,4 +1,5 @@
 import { withBasePath } from "@/app/_lib/util/links";
+import { resolveResourceUrl } from "@/app/_lib/util/resources";
 import { Box, Container, Typography } from "@mui/material";
 import { ForwardedRef } from "react";
 
@@ -12,7 +13,7 @@ function isVideoYoutube(video: VideoFile | VideoYoutube): video is VideoYoutube 
 
 function DirectVideoComponent({video}: {video: VideoFile}) {
   return <video width={video.width} height={video.height} {...video.params}>
-            <source src={withBasePath(video.src)} type={video.type}></source>
+            <source src={resolveResourceUrl(video.src)} type={video.type}></source>
           </video>
 }
 
@@ -20,7 +21,7 @@ function YoutubeVideoComponent({video}: {video: VideoYoutube}) {
   return (
     <div style={{position: 'relative', overflow: 'hidden', width: '100%', paddingTop: '56.25%'}}>
       <iframe width='100%' height='100%' style={{position: 'absolute', top: 0, bottom: 0, right: 0, left: 0, width: '100%', height: '100%'}}
-              src={"https://www.youtube-nocookie.com/embed/" + video.youtubeId + "?rel=0&modestbranding=1"} 
+              src={"https://www.youtube-nocookie.com/embed/" + video.youtubeId + "?rel=0&modestbranding=1"}
               title="Video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" 
               referrerPolicy="strict-origin-when-cross-origin" allowFullScreen>  
       </iframe>
