@@ -59,7 +59,7 @@ export default async function Page({
     <main>
       <Container maxWidth="lg" disableGutters>
         <Box marginTop={2} marginBottom={2} maxWidth={600} justifySelf={'center'} width='100%'>
-          <VerificationComponent flow={flow} redirectTo='/auth/verification/success' />
+          <VerificationComponent flow={flow} />
         </Box>
       </Container>
     </main>

@@ -33,7 +33,7 @@ export default async function Page({
         <Box marginTop={2} marginBottom={2} maxWidth={600} justifySelf={'center'} width='100%'>
           <RadarCard>
             <Box padding={4}>
-              <LoginComponent redirectTo={redirectTo} flow={flow} recoveryHref={withBasePath('/auth/recovery')} />
+              <LoginComponent redirectTo={redirectTo} flow={flow} />
             </Box>
           </RadarCard>
       </Box>
