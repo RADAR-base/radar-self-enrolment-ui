@@ -3,7 +3,6 @@ import { BlockPage } from "@/app/_ui/components/blocks/blockPage";
 import ProtocolRepository, { StudyProtocolRepository } from "@/app/_lib/study/protocol/repository";
 import { getProjectStatus } from "@/app/_lib/study/projectStatus";
 import { notFound } from "next/navigation";
-import { Alert, Box, Container } from "@mui/material";
 
 export const dynamicParams = true
 
@@ -16,23 +15,9 @@ export async function generateStaticParams() {
 export default async function Page(props: { params: Promise<{ studyId: string }> }) {
   const params = await props.params;
 
-  // Ensure the project is active before rendering
-  const projectStatus = await getProjectStatus(params.studyId)
-  if (projectStatus && !projectStatus.tags.includes('project_active')) {
-    return (
-      <main>
-        <Box sx={{ flexGrow: 1, margin: {xs: 0, sm: 2}}}
-              display="flex"
-              justifyContent="center"
-              alignItems="center">
-          <Container maxWidth="md">
-            <Alert severity="warning" variant="outlined">
-              Project "{params.studyId}" is not active.
-            </Alert>
-          </Container>
-        </Box>
-      </main>
-    )
+  const projectResult = await getProjectStatus(params.studyId)
+  if (projectResult.status === 'not_found') {
+    notFound()
   }
 
   var pageRegistry: PageRepository = createPageRepository()

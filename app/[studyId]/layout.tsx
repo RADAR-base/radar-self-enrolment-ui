@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react';
 import { notFound, redirect } from 'next/navigation'
 import { Box, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-import { Alert, Container } from "@mui/material";
 
 import NavBar from "@/app/_ui/components/navbar/navbar";
 import {Footer, FooterItem } from "@/app/_ui/components/footer";
@@ -17,7 +16,6 @@ import ProtocolProvider from '@/app/_lib/study/protocol/provider.client';
 import ProtocolRepository, { StudyProtocolRepository } from "@/app/_lib/study/protocol/repository";
 import { StudyProtocol } from '@/app/_lib/study/protocol';
 import ThemeProviderFromObject from '../_ui/components/base/themeProviderFromObject';
-import { getProjectStatus } from "@/app/_lib/study/projectStatus";
 import { SearchParamsCapture } from '../_ui/components/base/searchParamsCapture';
 
 const RESERVED_PATHS = new Set(['auth', 'api', 'account', 'connect', 'recovery'])
@@ -61,24 +59,6 @@ export default async function StudyLayout(props: { params: Promise<{studyId: str
     notFound()
   }
 
-  // If project is not active, render only the warning UI
-  const projectStatus = await getProjectStatus(params.studyId)
-  if (projectStatus && !projectStatus.tags.includes('project_active')) {
-    return (
-      <React.Fragment>
-        <Box sx={{ flexGrow: 1, margin: {xs: 0, sm: 2}}}
-              display="flex"
-              justifyContent="center"
-              alignItems="center">
-          <Container maxWidth="md">
-            <Alert severity="warning" variant="outlined">
-              Project "{params.studyId}" is not active.
-            </Alert>
-          </Container>
-        </Box>
-      </React.Fragment>
-    )
-  }
   const cookieStore = await cookies()
   const cookieChoice = cookieStore.get("cookieChoice")
   const registery: StudyProtocolRepository = new ProtocolRepository()

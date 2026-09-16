@@ -17,8 +17,8 @@ export default async function Page(props: { params: Promise<{ studyId: string }>
   const loggedIn = await auth.isLoggedIn()
   if (loggedIn) {redirect(withBasePath('portal'))}
 
-  const projectStatus = await getProjectStatus(params.studyId)
-  if (projectStatus && !projectStatus.acceptingEnrolment) {
+  const projectResult = await getProjectStatus(params.studyId)
+  if (projectResult.status === 'not_found' || (projectResult.status === 'found' && !projectResult.data.acceptingEnrolment)) {
     return (
       <main>
         <Box sx={{ flexGrow: 1, margin: {xs: 0, sm: 2}}}

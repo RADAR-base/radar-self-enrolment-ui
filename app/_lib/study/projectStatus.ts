@@ -6,19 +6,22 @@ export interface ProjectStatus {
   tags: string[]
 }
 
-export async function getProjectStatus(projectId: string): Promise<ProjectStatus | null> {
+export type ProjectStatusResult =
+  | { status: 'found', data: ProjectStatus }
+  | { status: 'not_found' }
+
+export async function getProjectStatus(projectId: string): Promise<ProjectStatusResult> {
   const baseUrl = process.env.DELEGATE_API_URL
   if (!baseUrl) {
-    // If delegate API is not configured, allow enrolment by default
-    return null
+    return { status: 'found', data: { projectName: projectId, acceptingEnrolment: true, tags: [] } }
   }
   try {
     const res = await fetch(`${baseUrl}/projects/${encodeURIComponent(projectId)}/status`, {
       cache: 'no-store',
     })
-    if (!res.ok) return null
-    return await res.json() as ProjectStatus
+    if (!res.ok) return { status: 'not_found' }
+    return { status: 'found', data: await res.json() as ProjectStatus }
   } catch {
-    return null
+    return { status: 'not_found' }
   }
 }

@@ -17,8 +17,11 @@ export async function POST(
 ) {
   const {studyId }  = (await params)
 
-  const projectStatus = await getProjectStatus(studyId)
-  if (projectStatus && !projectStatus.acceptingEnrolment) {
+  const projectResult = await getProjectStatus(studyId)
+  if (projectResult.status === 'not_found') {
+    return NextResponse.json({error: 'No such project'}, {status: 404})
+  }
+  if (projectResult.status === 'found' && !projectResult.data.acceptingEnrolment) {
     return NextResponse.json({error: 'Enrolment is closed for this study'}, {status: 403})
   }
 
