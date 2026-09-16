@@ -5,10 +5,9 @@ const githubBranch = process.env.GITHUB_REPO_BRANCH_NAME || "main";
 
 const nextConfig = {
     reactStrictMode: false,
-    basePath: process.env.BASEPATH,
+    assetPrefix: process.env.ASSET_PREFIX || undefined,
     poweredByHeader: false,
     env: {
-      NEXT_PUBLIC_BASEPATH: process.env.BASEPATH,
       NEXT_PUBLIC_STUDY_DEFINITION_REPOSITORY: process.env.STUDY_DEFINITION_REPOSITORY || "GITHUB",
       NEXT_PUBLIC_GITHUB_RAW_BASE_URL: `https://raw.githubusercontent.com/${githubOrg}/${githubRepo}/refs/heads/${githubBranch}`,
     },
