@@ -5,6 +5,7 @@ import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { withBasePath } from "@/app/_lib/util/links";
+import { resolveResourceUrl } from "@/app/_lib/util/resources";
 
 
 // ---------- Types ----------
@@ -115,7 +116,7 @@ export function ImageGalleryBlock({
             <Box sx={{ position: "relative", width: "100%", aspectRatio, overflow: "hidden", borderRadius }}>
               <Image
                 unoptimized
-                src={withBasePath(img.src)}
+                src={resolveResourceUrl(img.src)}
                 alt={img.alt}
                 fill
                 sizes="(max-width: 600px) 100vw, 50vw"

@@ -4,7 +4,7 @@ export const GITHUB_CONFIG = {
     process.env.GITHUB_REPO_NAME || "radar-self-enrolment-definitions",
   DEFINITIONS_BRANCH: process.env.GITHUB_REPO_BRANCH_NAME || "main",
   MAX_CONTENT_LENGTH: parseInt(
-    process.env.GITHUB_RESPONSE_CONTENT_LENGTH || "1000000",
+    process.env.GITHUB_RESPONSE_CONTENT_LENGTH || "40000000",
     10,
   ),
   CACHE_DURATION: parseInt(
