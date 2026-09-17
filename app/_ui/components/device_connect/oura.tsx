@@ -48,7 +48,7 @@ export function OuraPage({ guideUrl, videoUrl }: OuraPageProps) {
           </Grid>
           <Grid size={{xs: 12, sm: 6}}>
             <Image 
-                src={withBasePath('/devices/oura/oura_login.png')}
+                src={'/devices/oura/oura_login.png'}
                 width={240}
                 height={320}
                 alt='An image showing the Oura login page'
@@ -65,7 +65,7 @@ export function OuraPage({ guideUrl, videoUrl }: OuraPageProps) {
           </Grid>
           <Grid size={{xs: 12, sm: 6}}>
             {/* <Image 
-                src={withBasePath('/devices/oura/oura_scopes.png')}
+                src={'/devices/oura/oura_scopes.png'}
                 width={224}
                 height={400}
                 alt='An image showing the Oura OAuth Scope page'

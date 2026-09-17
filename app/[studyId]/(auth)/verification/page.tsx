@@ -6,6 +6,7 @@ import { VerificationComponent } from "@/app/_ui/auth/verification"
 import { Container, Box } from "@mui/material"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import { withBasePath } from "@/app/_lib/util/links"
 
 export const fetchCache = 'force-no-store';
 
@@ -28,7 +29,7 @@ export default async function Page({
   const userSession: OrySession | undefined = await getUserSession()
   const { studyId } = await params
   if (userSession == undefined) {
-    redirect('/' + studyId)
+    redirect(withBasePath('/' + studyId))
   }
   const cookieJar = await cookies()
   const csrfToken = cookieJar.getAll().find((c) => c.name.startsWith('csrf_token_'))
@@ -56,7 +57,7 @@ export default async function Page({
   }
 
   if (flow?.state == 'passed_challenge') {
-    redirect(`/${studyId}/portal`)
+    redirect(withBasePath(`/${studyId}/portal`))
   }
   return (
     <main>

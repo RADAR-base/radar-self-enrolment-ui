@@ -6,6 +6,7 @@ import SettingsComponent from '@/app/_ui/auth/settings';
 import { RadarCard } from '@/app/_ui/components/base/card';
 import { Download } from '@mui/icons-material';
 import { Box, Container } from '@mui/material';
+import { withBasePath } from '@/app/_lib/util/links';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 
@@ -39,7 +40,7 @@ export default async function Page({
           <Box marginTop={2} marginBottom={2} marginRight={"auto"} marginLeft={"auto"} maxWidth={600} justifySelf={'center'} width='100%'>
             <RadarCard>
               <Box padding={4}>
-              <SettingsComponent flow={flow} redirectTo='/' />
+              <SettingsComponent flow={flow} redirectTo={withBasePath('/')} />
               </Box>
             </RadarCard>
         </Box>

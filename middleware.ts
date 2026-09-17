@@ -23,9 +23,21 @@ function generateCspHeaders(nonce: string, isPdfViewer: boolean): string {
 }
 
 export async function middleware(request: NextRequest) {
-  const basePath = request.nextUrl.basePath ?? ''
-  const pathname = request.nextUrl.pathname
+  const basePath = process.env.NEXT_PUBLIC_BASEPATH ?? ''
+  let pathname = request.nextUrl.pathname
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
+
+  // Strip prefix from incoming requests (ingress forwards as-is)
+  let rewriteUrl: URL | undefined
+  const assetPrefix = process.env.ASSET_PREFIX ?? ''
+  const prefix = [basePath, assetPrefix].find(
+    p => p && (pathname.startsWith(p + '/') || pathname === p)
+  )
+  if (prefix) {
+    pathname = pathname.slice(prefix.length) || '/'
+    rewriteUrl = request.nextUrl.clone()
+    rewriteUrl.pathname = pathname
+  }
 
   // Auth verification redirect
   if (pathname === '/auth/verification') {
@@ -40,7 +52,7 @@ export async function middleware(request: NextRequest) {
         const projects: { id: string }[] = session?.identity?.traits?.projects ?? []
         if (projects.length > 0) {
           const target = request.nextUrl.clone()
-          target.pathname = `/${projects[0].id}/verification`
+          target.pathname = `${basePath}/${projects[0].id}/verification`
           const redirectResponse = NextResponse.redirect(target)
           redirectResponse.headers.set('Content-Security-Policy', generateCspHeaders(nonce, false))
           return redirectResponse
@@ -57,7 +69,9 @@ export async function middleware(request: NextRequest) {
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-nonce', nonce)
 
-  const response = NextResponse.next({ request: { headers: requestHeaders } })
+  const response = rewriteUrl
+    ? NextResponse.rewrite(rewriteUrl, { request: { headers: requestHeaders } })
+    : NextResponse.next({ request: { headers: requestHeaders } })
   response.headers.set('Content-Security-Policy', csp)
 
   return response

@@ -79,7 +79,7 @@ export function GoogleHealthPage({ guideUrl, videoUrl }: GoogleHealthPageProps) 
                 }}
               >
                 <Image
-                  src={withBasePath('/devices/google_health.png')}
+                  src={'/devices/google_health.png'}
                   width={20}
                   height={20}
                   alt=""
@@ -97,7 +97,7 @@ export function GoogleHealthPage({ guideUrl, videoUrl }: GoogleHealthPageProps) 
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Image 
-              src={withBasePath('/devices/google_health/google_health_login.png')}
+              src={'/devices/google_health/google_health_login.png'}
               width={380}
               height={229}
               alt='An image showing the Google login page'
@@ -114,7 +114,7 @@ export function GoogleHealthPage({ guideUrl, videoUrl }: GoogleHealthPageProps) 
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Image 
-              src={withBasePath('/devices/google_health/google_health_scopes.png')}
+              src={'/devices/google_health/google_health_scopes.png'}
               width={380}
               height={362}
               alt='An image showing the Google Health OAuth consent page'

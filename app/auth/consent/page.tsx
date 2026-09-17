@@ -163,7 +163,7 @@ export default function Page() {
 
   useEffect(() => {
     if (consentChallenge == "") {
-      router.replace('/')
+      router.replace(withBasePath('/'))
       return
     }
     if (userSession == undefined) {

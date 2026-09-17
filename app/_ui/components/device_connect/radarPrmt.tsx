@@ -30,7 +30,7 @@ function AppStoreDownloadModalContent() {
     <React.Fragment>
       <a href={link} target='_blank'>
         <Image
-          src={withBasePath('/devices/playstore_download_app.webp')}
+          src={'/devices/playstore_download_app.webp'}
           height={80}
           width={200}
           alt={"Download the RADAR Passive RMT App on the App Store"}
@@ -175,7 +175,7 @@ function PrmtContent({armtAuthUrl, guideUrl, videoUrl}: {armtAuthUrl?: string, g
       </Grid>
       <Grid size={{ xs: 12, sm: 6 }} alignContent={'center'}>
         <Image
-          src={withBasePath('/radar/playstore_prmt.png')}
+          src={'/radar/playstore_prmt.png'}
           width={254}
           height={291}
           alt={"RADAR Passive RMT app in Play Store"}
@@ -206,7 +206,7 @@ function SubmitButton(props: SubmitButtonProps) {
   return  <Button color="primary" variant="contained" 
                   disabled={props.disabled}
                   onClick={() => {
-                    router.push(`/${protocol.studyId}/portal/connect?success=apple_health`)
+                    router.push(withBasePath(`/${protocol.studyId}/portal/connect?success=apple_health`))
                   }}
                   >
             Mark as Complete
