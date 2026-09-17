@@ -12,6 +12,7 @@ const nextConfig = {
       NEXT_PUBLIC_GITHUB_RAW_BASE_URL: `https://raw.githubusercontent.com/${githubOrg}/${githubRepo}/refs/heads/${githubBranch}`,
     },
       images: {
+        path: `${process.env.ASSET_PREFIX || ''}/_next/image`,
         remotePatterns: [{
           protocol: 'https',
           hostname: 'avatars.githubusercontent.com',

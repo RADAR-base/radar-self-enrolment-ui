@@ -47,7 +47,7 @@ export function HuaweiPage({ guideUrl, videoUrl }: HuaweiPageProps) {
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Image 
-              src={withBasePath('/devices/huawei/huawei_login.png')}
+              src={'/devices/huawei/huawei_login.png'}
               width={380}
               height={320}
               alt='An image showing the Huawei ID login page'
@@ -64,7 +64,7 @@ export function HuaweiPage({ guideUrl, videoUrl }: HuaweiPageProps) {
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Image 
-              src={withBasePath('/devices/huawei/huawei_scopes.png')}
+              src={'/devices/huawei/huawei_scopes.png'}
               width={380}
               height={320}
               alt='An image showing the Huawei Health OAuth consent page'
