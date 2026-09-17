@@ -87,7 +87,7 @@ export function LoginComponent(props: LoginProps) {
   }, [flow])
 
   const onLogin = props.onLogin ? props.onLogin : () => {
-    router.replace(props.redirectTo ?? '/')
+    router.replace(props.redirectTo ?? withBasePath('/'))
     router.refresh()
   }
 

@@ -254,7 +254,7 @@ function SubmitButton(props: SubmitButtonProps) {
   return  <Button color="primary" variant="contained"
                   disabled={props.disabled}
                   onClick={() => {
-                    router.push(`/${protocol.studyId}/portal/connect?success=armt`)
+                    router.push(withBasePath(`/${protocol.studyId}/portal/connect?success=armt`))
                   }}
                   >
             Mark as Complete

@@ -5,6 +5,7 @@ import { Container, Box } from "@mui/material"
 import { cookies } from "next/headers"
 import { OrySession } from "@/app/_lib/auth/ory/types"
 import { redirect } from "next/navigation"
+import { withBasePath } from "@/app/_lib/util/links"
 import { IOryVerificationFlow } from "@/app/_lib/auth/ory/flows.interface"
 
 async function getUserSession() {
@@ -25,7 +26,7 @@ export default async function Page({
 }) {
   const userSession: OrySession | undefined = await getUserSession()
   if (userSession == undefined) {
-    redirect('/')
+    redirect(withBasePath('/'))
   }
 
   const cookieJar = await cookies()

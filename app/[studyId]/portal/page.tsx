@@ -9,6 +9,7 @@ import { FinishBanner } from '@/app/_ui/components/portal/finishBanner';
 import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
 import { OrySession } from '@/app/_lib/auth/ory/types';
 import { redirect } from 'next/navigation';
+import { withBasePath } from '@/app/_lib/util/links';
 
 async function getOryUser() {
   const resp = await whoAmI()
@@ -61,7 +62,7 @@ export default async function Page(props: { params: Promise<{ studyId: string }>
       console.log("[PortalPage] no Ory user, redirecting to login", {
         studyId: params.studyId,
       });
-      redirect(`/${params.studyId}/login`)
+      redirect(withBasePath(`/${params.studyId}/login`))
     }
     const status = await fetchTaskStatus(params.studyId, oryUser)
     const registery = new StudyProtocolRepository()

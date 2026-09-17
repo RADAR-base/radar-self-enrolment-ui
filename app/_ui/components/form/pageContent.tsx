@@ -83,7 +83,7 @@ function ArmtFormContainer({armtDef, schema, studyId, taskId, disabled, initialV
           'task_id': taskId,
           'task_status': 'submitted'
         })
-        router.push('/' + studyId + '/portal')
+        router.push(withBasePath('/' + studyId + '/portal'))
         router.refresh()
       } else {
         sendGAEvent('event', 'study_task', {
