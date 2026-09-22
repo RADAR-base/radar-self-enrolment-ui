@@ -6,9 +6,9 @@ export function parseSetCookie(c: string): [string, string, {[key: string]: stri
   var opts = Object.fromEntries(split.slice(1).map(
     (opt) => {
       var kv = opt.split('=')
-      var k = kv[0].trim()
-      var k = k.charAt(0).toLowerCase() + k.slice(1).replaceAll('-', '')
-      return [k, kv[1] ? kv[1] : true]
+      var key = kv[0].trim()
+      key = key.charAt(0).toLowerCase() + key.slice(1).replaceAll('-', '')
+      return [key, kv[1] ? kv[1] : true]
     }
   ))
   return [namevalue[0], namevalue[1], opts]

@@ -1,20 +1,6 @@
-import { RecoveryPageComponent } from "@/app/_ui/auth/recovery/page"
-import { Container, Box } from "@mui/material"
+import { redirect } from 'next/navigation'
+import { withBasePath } from '@/app/_lib/util/links'
 
-export default async function Page({
-    params,
-    searchParams,
-  }: {
-    params: Promise<{ studyId: string }>
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-  }) {
-  return (
-    <main>
-      <Container maxWidth="lg" disableGutters>
-      <Box marginTop={2} marginBottom={2} marginRight={"auto"} marginLeft={"auto"} maxWidth={600} justifySelf={'center'} width='100%'>
-          <RecoveryPageComponent  ></RecoveryPageComponent>
-        </Box>
-      </Container>
-    </main>
-    )
-  }
+export default async function Page() {
+  redirect(withBasePath('/auth/recovery'))
+}

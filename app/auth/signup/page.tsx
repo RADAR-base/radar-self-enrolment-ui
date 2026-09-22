@@ -1,5 +1,5 @@
 "use client";
-import Register from "@/app/_ui/auth/register";
+import Register from "@/app/auth/_components/register";
 import { Card } from '@mui/material';
 
 export default function Page() {

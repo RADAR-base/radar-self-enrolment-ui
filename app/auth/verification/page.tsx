@@ -1,6 +1,6 @@
 import { completeVerificationFlow, createVerificationFlow, getVerificationFlow, whoAmI } from "@/app/_lib/auth/ory/kratos"
 import { getCsrfToken } from "@/app/_lib/auth/ory/util"
-import { VerificationComponent } from "@/app/_ui/auth/verification"
+import { VerificationComponent } from "@/app/auth/_components/verification"
 import { Container, Box } from "@mui/material"
 import { cookies } from "next/headers"
 import { OrySession } from "@/app/_lib/auth/ory/types"

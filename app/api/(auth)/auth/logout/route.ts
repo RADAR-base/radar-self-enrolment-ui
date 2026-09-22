@@ -1,18 +1,12 @@
 import { createLogoutFlow, updateLogoutFlow } from "@/app/_lib/auth/ory/kratos"
-import { cookies } from "next/headers"
-import { NextRequest, NextResponse } from "next/server"
+import { clearAuthCookies } from "@/app/_lib/auth/clearAuthCookies"
 
-export async function GET(request: NextRequest) {
-  const cookieJar = await cookies()
-
+export async function GET() {
   const flowResponse = await createLogoutFlow()
-  if (!flowResponse.ok) { return flowResponse}
-  const flow = (await flowResponse.json())
-  cookieJar.delete('sep_access_token')
-  for (let c of cookieJar.getAll()) {
-    if (c.name.includes('hydra')) {
-      cookieJar.delete(c.name)
-    }
-  }
-  return await updateLogoutFlow(flow['logout_token'])
+  if (!flowResponse.ok) return flowResponse
+
+  const flow = await flowResponse.json()
+  await clearAuthCookies()
+
+  return await updateLogoutFlow(flow.logout_token)
 }

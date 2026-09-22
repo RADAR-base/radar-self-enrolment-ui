@@ -1,14 +1,30 @@
 import { NextRequest, NextResponse } from "next/server"
 import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
 import { updateRegistrationFlow } from "@/app/_lib/auth/ory/kratos";
-import { setStudyStatus } from "@/app/_lib/study/status";
 import { getProjectStatus } from "@/app/_lib/study/projectStatus";
+
+const DELEGATE_API_URL = process.env.DELEGATE_API_URL
 
 type StudyJoinRequestBody = {
   email: string,
   password: string,
   csrf_token: string,
   traits: {[key: string]: any}
+}
+
+async function createParticipant(studyId: string): Promise<string> {
+  if (!DELEGATE_API_URL) {
+    throw new Error('DELEGATE_API_URL is not configured')
+  }
+  const res = await fetch(
+    `${DELEGATE_API_URL}/projects/${encodeURIComponent(studyId)}/participants`,
+    { method: 'POST', headers: { 'Content-Type': 'application/json' } },
+  )
+  if (!res.ok) {
+    throw new Error(`Failed to create participant: ${res.statusText}`)
+  }
+  const data = await res.json()
+  return data.userId
 }
 
 export async function POST(
@@ -32,10 +48,18 @@ export async function POST(
     return NextResponse.json({error: 'No flow (flow id) param provided'}, {status: 400})
   }
 
-  var registery: StudyProtocolRepository = new StudyProtocolRepository()
+  const registery = new StudyProtocolRepository()
   const protocol = await registery.getStudyProtocol(studyId)
   if (protocol == undefined) {
     return NextResponse.json({error: 'No such study'}, {status: 400})
+  }
+
+  let userId: string
+  try {
+    userId = await createParticipant(studyId)
+  } catch (error) {
+    console.error('Failed to create participant:', error)
+    return NextResponse.json({error: 'Failed to create participant'}, {status: 500})
   }
 
   const data = {
@@ -48,17 +72,12 @@ export async function POST(
         {
           id: studyId,
           name: protocol.name,
-          userId: crypto.randomUUID(),
+          userId,
           ...traits,
-          version: protocol.enrolment.version      
+          version: protocol.enrolment.version
         }
       ]
     },
   }
-  const registrationResponse = await updateRegistrationFlow(flowId, data)
-  if (registrationResponse.ok) {
-    const data = await registrationResponse.clone().json()
-    await setStudyStatus(studyId, data['identity']['id'], 'enrolled')
-  }
-  return registrationResponse
+  return await updateRegistrationFlow(flowId, data)
 }

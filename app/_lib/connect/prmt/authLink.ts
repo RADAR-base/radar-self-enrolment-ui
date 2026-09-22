@@ -1,14 +1,6 @@
 "use client"
+import { buildAuthLink } from "../authLink"
 
-export async function getAuthLink(
-  accessToken: any,
-): Promise<string> {
-  const token = JSON.stringify(accessToken)
-  const referrer = window.location.href.split("?")[0]
-  const UrlParams = new URLSearchParams([
-    ['data', token],
-    ['referrer', referrer]
-  ])
-  const appUrl = 'org.radarbase.prmt://login?' + UrlParams.toString()
-  return appUrl
+export async function getAuthLink(accessToken: any): Promise<string> {
+  return buildAuthLink('org.radarbase.prmt://login', accessToken)
 }
