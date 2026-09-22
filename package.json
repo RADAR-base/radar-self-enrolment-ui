@@ -28,7 +28,6 @@
     "mui-markdown": "^1.2.2",
     "next": "15.5.25",
     "nodemailer": "^9.1.0",
-    "p-retry": "^6.2.1",
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^5.4.149",
     "qrcode.react": "^4.2.0",

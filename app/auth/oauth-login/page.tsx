@@ -4,7 +4,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import { useState, useEffect, type JSX } from 'react';
 import { withBasePath } from '@/app/_lib/util/links';
-import { LogoutButton } from "@/app/_ui/auth/logout";
+import { LogoutButton } from "@/app/auth/_components/logout";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { RadarCard } from "@/app/_ui/components/base/card";
 
@@ -55,7 +55,7 @@ function createLoginFlow(loginChallenge: string, setFlow: (value: any) => void) 
 }
 
 async function acceptWithCurrentAccount(loginChallenge: string, router: AppRouterInstance): Promise<void> {
-  const response = await fetch(withBasePath(`/api/oauth-login?login_challenge=${loginChallenge}`),
+  const response = await fetch(withBasePath(`/api/oauth/login/accept?login_challenge=${loginChallenge}`),
     {
       method: 'POST',
       body: JSON.stringify({remember: true})

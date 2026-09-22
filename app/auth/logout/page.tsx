@@ -1,35 +1,30 @@
 "use client"
-import { redirect, useRouter } from 'next/navigation'
-import { withBasePath } from '@/app/_lib/util/links';
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
+import { withBasePath } from '@/app/_lib/util/links'
 
 async function logout(): Promise<Response> {
   const flowResponse = await fetch(withBasePath('/api/ory/logout/browser'))
   if (flowResponse.ok) {
     const flowData = await flowResponse.json()
-    const logoutResponse = await fetch(withBasePath('/api/ory/logout?') + 
-      new URLSearchParams({
-        logout_token: flowData['logout_token']
-      })
+    return await fetch(withBasePath('/api/ory/logout?') +
+      new URLSearchParams({ logout_token: flowData['logout_token'] })
     )
-    return logoutResponse
-  } else {
-    return flowResponse
   }
+  return flowResponse
 }
 
-
-export default function Page({ 
-  params 
-}: { 
-  params: Promise<{ studyId: string }>
-}) {
+export default function Page() {
   const router = useRouter()
-  const redirect_uri = withBasePath('/')
-  logout().then(
-    (resp) => {
-      router.push(redirect_uri)
+  const searchParams = useSearchParams()
+  const returnTo = searchParams.get('return_to') ?? withBasePath('/')
+
+  useEffect(() => {
+    logout().then(() => {
+      router.push(returnTo)
       router.refresh()
-    }
-  )
+    })
+  }, [])
+
   return <div></div>
 }

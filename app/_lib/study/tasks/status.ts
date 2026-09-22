@@ -1,5 +1,5 @@
 "use server"
-import { ArmtStatus } from "@/app/api/study/[studyId]/tasks/status/route"
+import { ArmtStatus } from "./types"
 import { ActiveTaskResponse } from "../../armt/response/response.interface"
 import StudyProtocolRepository from "../protocol/repository"
 

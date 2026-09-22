@@ -1,7 +1,7 @@
 "use server"
 import { IOrySettingsFlow } from '@/app/_lib/auth/ory/flows.interface';
 import { createSettingsFlow, getSettingsFlow } from '@/app/_lib/auth/ory/kratos';
-import SettingsComponent from '@/app/_ui/auth/settings';
+import SettingsComponent from '@/app/auth/_components/settings';
 import { RadarCard } from '@/app/_ui/components/base/card';
 import { Box, Container } from '@mui/material';
 import { withBasePath } from '@/app/_lib/util/links';

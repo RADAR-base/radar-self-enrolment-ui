@@ -1,6 +1,6 @@
 import { IOryRecoveryFlow, IOryErrorFlow } from "@/app/_lib/auth/ory/flows.interface"
 import { createRecoveryFlow } from "@/app/_lib/auth/ory/kratos"
-import { RecoveryPageComponent } from "@/app/_ui/auth/recovery/page"
+import { RecoveryPageComponent } from "@/app/auth/_components/recovery/page"
 import { Container, Box } from "@mui/material"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"

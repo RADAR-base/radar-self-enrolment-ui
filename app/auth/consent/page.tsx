@@ -27,7 +27,7 @@ function getUserSession(setSession: (value: any) => void) {
 function getConsentRequest(consentChallenge: string,
                            setConsent: (value: any) => void,
                            setScopes: (value: string[]) => void) {
-  fetch(withBasePath('/api/ory/consent?consent_challenge=' + consentChallenge)).then(
+  fetch(withBasePath('/api/oauth/consent?consent_challenge=' + consentChallenge)).then(
     (response) => {
       if (response.ok) {
         response.json().then((data => {
@@ -114,7 +114,7 @@ export default function Page() {
     }
     if (accepted) { return }
     setAccepted(true)
-    fetch(withBasePath('/api/consent?' + new URLSearchParams({
+    fetch(withBasePath('/api/oauth/consent?' + new URLSearchParams({
       consent_challenge: consentChallenge
     })), {
       method: 'POST',
@@ -141,7 +141,7 @@ export default function Page() {
       grantScope: scopes,
       remember: 'true',
     }
-    fetch(withBasePath('/api/consent?' + new URLSearchParams({
+    fetch(withBasePath('/api/oauth/consent?' + new URLSearchParams({
       consent_challenge: consentChallenge
     })), {
       method: 'POST',

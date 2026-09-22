@@ -2,7 +2,7 @@ import { Box, Stack, TextField, Typography } from "@mui/material";
 import React, { ChangeEvent } from "react";
 import { MarkdownContainer } from "../components/base/markdown";
 import { ArmtDescriptiveField } from "../components/fields/descriptive";
-import { PasswordTextField } from "../auth/passwordField";
+import { PasswordTextField } from "@/app/auth/_components/passwordField";
 
 interface EnrolmentRegisterProps {
   title?: string

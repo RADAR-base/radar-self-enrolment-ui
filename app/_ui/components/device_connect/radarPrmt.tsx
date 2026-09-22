@@ -1,5 +1,5 @@
 "use client"
-import { Box, IconButton, Button, Container, Divider, List, ListItem, Typography, useMediaQuery, useTheme, Link } from "@mui/material"
+import { Box, IconButton, Button, CircularProgress, Container, Divider, List, ListItem, Stack, Typography, useMediaQuery, useTheme, Link } from "@mui/material"
 import Grid from '@mui/material/Grid2';
 import React, { useContext, useEffect, useState } from "react";
 import { withBasePath } from "@/app/_lib/util/links";
@@ -9,7 +9,6 @@ import {QRCodeSVG} from 'qrcode.react'
 import Image from 'next/image'
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
 import { getAuthLink } from "@/app/_lib/connect/prmt/authLink";
-import { GetOauthToken } from "../../auth/oauthToken";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import NextLink from 'next/link'
 import { useMobilePlatform, MobileLoginButton, CollapsibleManualLogin } from "./mobileLogin";
@@ -20,9 +19,6 @@ const SCOPES = [
   'MEASUREMENT.CREATE',
   'offline_access'
 ]
-const AUDIENCE = ['res_ManagementPortal', 'res_gateway', 'res_appconfig'].join(' ')
-
-const REDIRECT_URI = process.env.NEXT_PUBLIC_PRMT_REDIRECT_URI ?? ''
 
 function AppStoreDownloadModalContent() {
   const link = 'https://play.google.com/store/apps/details?id=org.radarcns.detail&hl=en_IN&pli=1'
@@ -235,41 +231,49 @@ interface PrmtPageProps {
 }
 
 export function PrmtPage({ guideUrl, videoUrl }: PrmtPageProps) {
-  const [isFetchingToken, setIsFetchingToken] = useState(false)
-  const [armtAuthUrl, setArmtAuthUrl] = useState<any>(undefined)
+  const [armtAuthUrl, setArmtAuthUrl] = useState<string | undefined>(undefined)
+  const [error, setError] = useState(false)
 
-  const [code, setCode] = useState<string>()
-  
   useEffect(() => {
-    const handleToken = async () => {
-      if (isFetchingToken || (armtAuthUrl != undefined) || (code == undefined)) return
-      setIsFetchingToken(true)
-      const tokenResponse = await fetch(withBasePath('/api/connect/prmt/token?code=' + code))
-      if (tokenResponse.ok) {
-        let token = await tokenResponse.json()
+    const authorize = async () => {
+      try {
+        const scopes = SCOPES.join(',')
+        const res = await fetch(
+          withBasePath(`/api/oauth/authorize?client=prmt&scopes=${encodeURIComponent(scopes)}`),
+          { method: 'POST' }
+        )
+        if (!res.ok) throw new Error('Authorization failed')
+        const token = await res.json()
         const url = await getAuthLink(createShortToken(token))
         setArmtAuthUrl(url)
+      } catch {
+        setError(true)
       }
     }
-    handleToken()
-  }, [code])
-
-
-  const disabled = false
+    authorize()
+  }, [])
 
   return (
   <Container maxWidth="lg" disableGutters >
     <RadarCard>
       <Container sx={{ pl: 4, pr: 4}}>
-        {armtAuthUrl == undefined ? 
-          (<GetOauthToken clientId="pRMT" scopes={SCOPES} audience={AUDIENCE} codeFunc={async (code:string) => setCode(code)} redirectUri={REDIRECT_URI} />) : 
-          (<Box display={'inline'} gap={2} aria-live="polite" paddingLeft={4}>
+        {error ? (
+          <Typography m={4}>There was a problem connecting to RADAR-base. Please try again later.</Typography>
+        ) : armtAuthUrl == undefined ? (
+          <Box sx={{ alignSelf: 'center', margin: 'auto', pt: 16, pb: 16 }}>
+            <Stack alignContent='center' alignItems='center' justifyContent='center' textAlign='center' gap={2}>
+              <CircularProgress />
+              <Typography>Authenticating with RADAR-base</Typography>
+            </Stack>
+          </Box>
+        ) : (
+          <Box display={'inline'} gap={2} aria-live="polite" paddingLeft={4}>
             <Grid container spacing={2} gap={2} rowGap={4}>
               <PrmtContent armtAuthUrl={armtAuthUrl} guideUrl={guideUrl} videoUrl={videoUrl} />
             </Grid>
             <br />
-          </Box>)
-        }
+          </Box>
+        )}
       </Container>
     </RadarCard>
   </Container>

@@ -1,14 +1,9 @@
-import { whoAmI } from "@/app/_lib/auth/ory/kratos"
+import { getAuthenticatedUser } from "@/app/_lib/auth/session"
 import { generateConsentPdf } from "@/app/_lib/email/paprka"
 import { NextResponse } from "next/server"
 import { headers } from 'next/headers'
 
-type MimePreference = {
-  type: string;
-  q: number;
-};
-
-function parseAcceptHeader(accept: string): MimePreference[] {
+function parseAcceptHeader(accept: string): { type: string; q: number }[] {
   return accept
     .split(',')
     .map(entry => {
@@ -17,25 +12,20 @@ function parseAcceptHeader(accept: string): MimePreference[] {
       const q = qParam ? parseFloat(qParam.slice(2)) : 1;
       return { type, q };
     })
-    .sort((a, b) => b.q - a.q); // highest q-value first
+    .sort((a, b) => b.q - a.q);
 }
 
-export async function GET(
-  request: Request
-) {
-  const userResp = await whoAmI()
-  if (userResp.status != 200) {
-    return NextResponse.json({error: {type: 'authentication', content: {message: "No user session"}}}, {status: 403})
-  }
-  const user = (await userResp.json())
-  const acceptType = ((await headers()).get('Accept'))
-  if (acceptType) {
-    const prio = parseAcceptHeader(acceptType)[0]['type']
-    if (prio == 'application/json') {
-      return NextResponse.json(user['identity']['traits']['projects'][0]['consent'])
+export async function GET() {
+  const auth = await getAuthenticatedUser()
+  if (!auth.ok) return auth.response
 
+  const acceptType = (await headers()).get('Accept')
+  if (acceptType) {
+    const prio = parseAcceptHeader(acceptType)[0].type
+    if (prio === 'application/json') {
+      return NextResponse.json(auth.user.identity.traits.projects[0].consent)
     }
   }
-  const blob = await generateConsentPdf(user)
-  return new NextResponse(blob, {headers: {'Content-Type': 'application/pdf'}})
+  const blob = await generateConsentPdf(auth.user.session)
+  return new NextResponse(blob, { headers: { 'Content-Type': 'application/pdf' } })
 }

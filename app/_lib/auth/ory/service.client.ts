@@ -1,4 +1,4 @@
-import { AuthResponse, ClientAuthService, ServerAuthService } from '../service.interface'
+import { AuthResponse, ClientAuthService } from '../service.interface'
 import * as ory from './kratos'
 import { OrySession } from './types'
 import { getCsrfToken } from './util'
@@ -27,7 +27,7 @@ class OryAuthServerService extends ClientAuthService {
     return (await this.getSession())?.identity.traits.email
   }
   async getUid(): Promise<string | undefined> {
-    throw (await this.getSession())?.identity.id
+    return (await this.getSession())?.identity.id
   }
   async signIn(email: string, password: string): Promise<AuthResponse> {
     var createLoginResponse = await ory.createLoginFlow()

@@ -1,7 +1,7 @@
 "use server"
 import { Box, Container } from '@mui/material';
 import { RadarCard } from '@/app/_ui/components/base/card';
-import LoginComponent from '@/app/_ui/auth/login';
+import LoginComponent from '@/app/auth/_components/login';
 import { withBasePath } from '@/app/_lib/util/links';
 import { createLoginFlow } from '@/app/_lib/auth/ory/kratos';
 import { cookies } from 'next/headers';
