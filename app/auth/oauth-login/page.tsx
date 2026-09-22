@@ -106,7 +106,7 @@ export default function Page() {
     if (userSession === undefined) {
       getUserSession(setUserSession)
     } else if (userSession === null) {
-      window.location.replace(withBasePath(`/auth/login?redirect_to=${"/auth/oauth-login?" + searchParams.toString()}`))
+      window.location.replace(withBasePath(`/auth/login?redirect_to=${encodeURIComponent(withBasePath("/auth/oauth-login?" + searchParams.toString()))}`))
       // if (flow == undefined) {
       //   createLoginFlow(loginChallenge ?? '', setFlow)
       // } else {

@@ -87,8 +87,7 @@ export function LoginComponent(props: LoginProps) {
   }, [flow])
 
   const onLogin = props.onLogin ? props.onLogin : () => {
-    router.replace(props.redirectTo ?? withBasePath('/'))
-    router.refresh()
+    window.location.replace(props.redirectTo ?? withBasePath('/'))
   }
 
   const formik = useFormik({
