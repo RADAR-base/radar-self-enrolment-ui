@@ -4,7 +4,8 @@ import { RadarCard } from '@/app/_ui/components/base/card';
 import LoginComponent from '@/app/_ui/auth/login';
 import { createLoginFlow } from '@/app/_lib/auth/ory/kratos';
 import { cookies, headers } from 'next/headers';
-import { IOryLoginFlow } from '@/app/_lib/auth/ory/flows.interface';
+import { IOryLoginFlow } from '@/app/_lib/auth/ory/flows.interface'
+import { withBasePath } from '@/app/_lib/util/links';
 
 export default async function Page({
     params,
@@ -15,7 +16,7 @@ export default async function Page({
 }) {  
   const studyId = (await params).studyId
   const flowId = (await searchParams).flowId
-  const redirectTo = (await searchParams).redirectTo?.toString() ?? ('/' + studyId + '/portal')
+  const redirectTo = (await searchParams).redirectTo?.toString() ?? withBasePath('/' + studyId + '/portal')
   const cookieJar = await cookies()
   const csrfToken = cookieJar.getAll().find((c) => c.name.startsWith('csrf_token_'))
 

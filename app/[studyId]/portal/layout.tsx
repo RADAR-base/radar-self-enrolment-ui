@@ -1,6 +1,7 @@
 import { whoAmI } from '@/app/_lib/auth/ory/kratos';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { withBasePath } from '@/app/_lib/util/links';
 import { InvalidTokenError, jwtDecode } from "jwt-decode";
 import React from 'react';
 import StudyProtocolRepository from '@/app/_lib/study/protocol/repository';
@@ -50,14 +51,14 @@ export default async function StudyLayout(props: LayoutProps<'/[studyId]/portal'
 
   const cookieStore = await cookies()
   const kratos_cookie = cookieStore.get('ory_kratos_session')
-  if (kratos_cookie == undefined) {redirect(`/${params.studyId}/login`)}
+  if (kratos_cookie == undefined) {redirect(withBasePath(`/${params.studyId}/login`))}
   const userSessionResponse = await whoAmI()
-  if (!userSessionResponse.ok) { redirect(`/${params.studyId}/login`)}
+  if (!userSessionResponse.ok) { redirect(withBasePath(`/${params.studyId}/login`))}
   const userSession = (await userSessionResponse.json()) as OrySessionResponse
   const verifiableAddress = userSession.identity.verifiable_addresses.find((a) => a.value == userSession.identity.traits.email)
   if (verifiableAddress != undefined) {
       if (!verifiableAddress.verified) {
-        redirect(`/${params.studyId}/verification`)
+        redirect(withBasePath(`/${params.studyId}/verification`))
       }
   }
 

@@ -58,6 +58,7 @@ export default async function RootLayout({
       {/* <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /> */}
       <meta name="viewport" content="initial-scale=1, width=device-width" />
       <body className={[msrt_font.variable].join(' ')}>
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: `window.__BASE_PATH__=${JSON.stringify(process.env.NEXT_PUBLIC_BASEPATH || '')}` }} />
         <AppRouterCacheProvider options={{ nonce }}>
           <ThemeProvider theme={defaultTheme}>
           <CssBaseline />

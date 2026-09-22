@@ -32,7 +32,7 @@ function AppStoreBadge({ url }: { url: string }) {
   return (
     <a href={url} target='_blank'>
       <Image
-        src={withBasePath('/devices/apple_download_app.svg')}
+        src={'/devices/apple_download_app.svg'}
         height={80}
         width={200}
         alt={"Download the RADAR App on the App Store"}
@@ -46,7 +46,7 @@ function PlayStoreBadge({ url }: { url: string }) {
   return (
     <a href={url} target='_blank'>
       <Image
-        src={withBasePath('/devices/playstore_download_app.webp')}
+        src={'/devices/playstore_download_app.webp'}
         height={80}
         width={200}
         alt={"Download the RADAR App on the Play Store"}
@@ -73,7 +73,7 @@ function DownloadAppStep({ platform, appStoreUrl, playStoreUrl }: { platform: 'i
           </ListItem>
         </List>
         <Image
-          src={withBasePath('/radar/app_store_armt.png')}
+          src={'/radar/app_store_armt.png'}
           width={254}
           height={291}
           alt={"RADAR Active RMT app in app store"}
@@ -254,7 +254,7 @@ function SubmitButton(props: SubmitButtonProps) {
   return  <Button color="primary" variant="contained"
                   disabled={props.disabled}
                   onClick={() => {
-                    router.push(`/${protocol.studyId}/portal/connect?success=armt`)
+                    router.push(withBasePath(`/${protocol.studyId}/portal/connect?success=armt`))
                   }}
                   >
             Mark as Complete

@@ -4,6 +4,7 @@ import { RecoveryPageComponent } from "@/app/_ui/auth/recovery/page"
 import { Container, Box } from "@mui/material"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import { withBasePath } from "@/app/_lib/util/links"
 
 export default async function Page({
     params,
@@ -31,7 +32,7 @@ export default async function Page({
     flow = flow as IOryRecoveryFlow
   } else {
     console.log(flow as IOryErrorFlow)
-    redirect('/')
+    redirect(withBasePath('/'))
   }
 
   return (

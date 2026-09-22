@@ -47,7 +47,7 @@ export function FitbitPage({ guideUrl, videoUrl }: FitbitPageProps) {
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Image 
-              src={withBasePath('/devices/fitbit/fitbit_login.png')}
+              src={'/devices/fitbit/fitbit_login.png'}
               width={240}
               height={400}
               alt='An image showing the Fitbit login page'
@@ -64,7 +64,7 @@ export function FitbitPage({ guideUrl, videoUrl }: FitbitPageProps) {
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Image 
-              src={withBasePath('/devices/fitbit/fitbit_scopes.png')}
+              src={'/devices/fitbit/fitbit_scopes.png'}
               width={380}
               height={320}
               alt='An image showing the Fitbit OAuth scopes page'

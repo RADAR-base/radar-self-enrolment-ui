@@ -46,7 +46,7 @@ export function GarminPage({ guideUrl, videoUrl }: GarminPageProps) {
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Image 
-              src={withBasePath('/devices/garmin/garmin_login.png')}
+              src={'/devices/garmin/garmin_login.png'}
               width={240}
               height={320}
               alt='An image showing the Garmin Portal login page'
@@ -63,7 +63,7 @@ export function GarminPage({ guideUrl, videoUrl }: GarminPageProps) {
         </Grid>
         <Grid size={{xs: 12, sm: 6}}>
           <Image 
-              src={withBasePath('/devices/garmin/garmin_scopes.png')}
+              src={'/devices/garmin/garmin_scopes.png'}
               width={224}
               height={400}
               alt='An image showing the Garmin OAuth Scope page'

@@ -21,7 +21,7 @@ async function logout(): Promise<Response> {
 export default function Page(props: { params: Promise<{ studyId: string }> }) {
   const params = use(props.params);
   const router = useRouter()
-  const redirect_uri = '/' + params.studyId
+  const redirect_uri = withBasePath('/' + params.studyId)
 
   useEffect(() => {
     logout().then(

@@ -24,7 +24,7 @@ export default function Page({
   params: Promise<{ studyId: string }>
 }) {
   const router = useRouter()
-  const redirect_uri = '/'
+  const redirect_uri = withBasePath('/')
   logout().then(
     (resp) => {
       router.push(redirect_uri)

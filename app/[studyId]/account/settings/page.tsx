@@ -9,6 +9,7 @@ import { Download } from '@mui/icons-material';
 import { Box, Container } from '@mui/material';
 import { cookies } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
+import { withBasePath } from '@/app/_lib/util/links';
 import { useContext } from 'react';
 
 export default async function Page({
@@ -26,7 +27,7 @@ export default async function Page({
 
   const r = await whoAmI()
   if (!r.ok) {
-    redirect(`/${studyId}`)
+    redirect(withBasePath(`/${studyId}`))
   }
 
   if (csrfToken != undefined) {
@@ -52,7 +53,7 @@ export default async function Page({
           <Box marginTop={2} marginBottom={2} marginRight={"auto"} marginLeft={"auto"} maxWidth={600} justifySelf={'center'} width='100%'>
             <RadarCard>
               <Box padding={4}>
-              <SettingsComponent redirectTo={`/${studyId}/portal`} flow={flow} />
+              <SettingsComponent redirectTo={withBasePath(`/${studyId}/portal`)} flow={flow} />
               </Box>
             </RadarCard>
         </Box>

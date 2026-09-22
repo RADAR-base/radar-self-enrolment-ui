@@ -67,7 +67,7 @@ export function DevicesPanel(props: DevicePanelProps) {
   async function onSubmit() {
     markDeviceConnected('').then(
       () => {
-        router.push('/' + protocol.studyId + '/portal')
+        router.push(withBasePath('/' + protocol.studyId + '/portal'))
       }
     )
   }

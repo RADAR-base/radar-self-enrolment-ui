@@ -69,7 +69,7 @@ const Register: React.FC<{onRegister?: () => void}> = (props: {onRegister?: () =
     }
   }, [flow])
 
-  const onRegister = props.onRegister ? props.onRegister : () => router.push('/')
+  const onRegister = props.onRegister ? props.onRegister : () => router.push(withBasePath('/'))
   const formik = useFormik({
       validateOnMount: false,
       initialValues: {

@@ -31,7 +31,7 @@ export const RadarDeviceCard = React.forwardRef(function RadarDeviceCard({device
     <Box display='flex' gap={2} height={"100%"} flexDirection={'row'} justifyItems={'center'}>
       <Box width={100} height={100}>
       <Image width={100} height={100} 
-          src={withBasePath('/devices/' + deviceId + '.png')} 
+          src={'/devices/' + deviceId + '.png'}
           alt={deviceId}
           style={{borderRadius: 16, boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.15)'}}
       />

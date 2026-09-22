@@ -77,7 +77,7 @@ function SmallMenu(props: MenuProps) {
           <MenuItem
             onClick={() => {
                 handleCloseNavMenu()
-                router.push(resolveHref(link))
+                router.push(withBasePath(resolveHref(link)))
               }
             }
             key={i}>
@@ -88,7 +88,7 @@ function SmallMenu(props: MenuProps) {
         <MenuItem
           onClick={() => {
               handleCloseNavMenu()
-              router.push(`/${props.studyId}/portal`)
+              router.push(withBasePath(`/${props.studyId}/portal`))
             }
         }>
           <Typography color='primary'>Tasks</Typography>
@@ -139,7 +139,7 @@ function NavBar(props: NavBarProps) {
   const study = useContext(ProtocolContext)
   const router = useRouter()
   const onLogoClick = () => {
-    router.push(`/${study.studyId}`)
+    router.push(withBasePath(`/${study.studyId}`))
   }
   return (
   <AppBar color='inherit' sx={{'overflowX': 'auto'}} position='sticky'>

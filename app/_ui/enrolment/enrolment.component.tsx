@@ -259,10 +259,10 @@ export function EnrolmentContent({studyProtocol}: EnrolmentContentProps) {
                 const verificationFlow = getVerificationFlowId(data as JoinResponse)
 
                 if (verificationFlow) {
-                  router.push(`/${studyProtocol.studyId}/verification?flow=${verificationFlow}`)
+                  router.push(withBasePath(`/${studyProtocol.studyId}/verification?flow=${verificationFlow}`))
                   router.refresh()
                 } else {
-                  router.push(`/${studyProtocol.studyId}/portal`)
+                  router.push(withBasePath(`/${studyProtocol.studyId}/portal`))
                   router.refresh()
                 }
               }

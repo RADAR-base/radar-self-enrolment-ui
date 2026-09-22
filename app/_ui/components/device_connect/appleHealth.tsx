@@ -30,7 +30,7 @@ function AppStoreDownloadModalContent() {
     <React.Fragment>
       <a href={link} target='_blank'>
         <Image
-          src={withBasePath('/devices/apple_download_app.svg')}
+          src={'/devices/apple_download_app.svg'}
           height={80}
           width={200}
           alt={"Download the RADAR App on the App Store"}
@@ -125,7 +125,7 @@ function HealthKitContent({armtAuthUrl, guideUrl, videoUrl}: {armtAuthUrl?: stri
           </ListItem>
         </List>
         <Image
-          src={withBasePath('/radar/app_store_armt.png')}
+          src={'/radar/app_store_armt.png'}
           width={254}
           height={291}
           alt={"RADAR Active RMT app in app store"}
@@ -198,7 +198,7 @@ function SubmitButton(props: SubmitButtonProps) {
   return  <Button color="primary" variant="contained" 
                   disabled={props.disabled}
                   onClick={() => {
-                    router.push(`/${protocol.studyId}/portal/connect?success=apple_health`)
+                    router.push(withBasePath(`/${protocol.studyId}/portal/connect?success=apple_health`))
                   }}
                   >
             Mark as Complete
