@@ -35,27 +35,21 @@ interface Answers {
  */
 export function parseAndEvalLogic(logic: string, answers: Answers): boolean {
     const parser = new Parser();
-    // logic = logic.replace(/[\[\]]/g, '')
-    //     .replace(/\(([^()]+)\)/g, '[$1]')
-    //     .replace(/ or /g, ' || ')
-    //     .replace(/ and /g, ' && ')
-    //     .replace(/ = /g, ' == ');
-
-    // logic = logic.replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\b/g, (match) => {
-    //     const value = answers[match];
-    //     // Return the JSON representation of the value if found, otherwise return the original match
-    //     return value !== undefined ? JSON.stringify(value) : match;
-    // });
-
-    // console.log("Started evaluating 2: ", logic);
-
-    // const caseReplacement = logic.replace(/lower\[['"]([^'"]+)['"]]/gi, (_, s) => {
-    //     return `'${s.toLowerCase()}'`;
-    // })
-    //     .replace(/upper\[['"]([^'"]+)['"]]/gi, (_, s) => {
-    //         return `'${s.toUpperCase()}'`;
-    //     });
-    // const val = parser.parse(caseReplacement).eval();
+    parser.registerFunction('regex', (value: string, pattern: string) => {
+        console.log('regex func', value, pattern)
+        if (typeof value !== 'string') return false;
+        const regex = new RegExp(pattern); 
+        return regex.test(value);
+        });
+    parser.registerFunction('substringEquals', (str: string, start: number, end: number, substr: string) => {
+        if (typeof str !== 'string') return '';
+        console.log(str, start, end, str.substring(start, end), substr)
+        return str.substring(start, end) == substr;
+        }); 
+    parser.registerFunction('substring', (str: string, start: number, end: number) => {
+        if (typeof str !== 'string') return '';
+        return str.substring(start, end);
+        }); 
     let results = {results: answers}
     return parser.parseAndEval(logic,results)
 }

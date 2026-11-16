@@ -5,15 +5,15 @@ import React, { useContext } from "react";
 import { acceptOrRejectCookies } from "./actions";
 import NextLink from 'next/link'
 import { ProtocolContext } from "@/app/_lib/study/protocol/provider.client";
-
+import { grantConsent, denyConsent } from "./GAConsent";
 
 export function CookieBanner() {
   const [open, setOpen] = React.useState(true);
   const studyProtocol = useContext(ProtocolContext)
-  const router = useRouter()
   const cookiePolicyLink = studyProtocol ? `/${studyProtocol.studyId}/cookies` : '/cookies'
   const handleAll = () => {
     acceptOrRejectCookies("all")
+    grantConsent()
     setOpen(false)
   }
   const handleFunctional = () => {
@@ -22,6 +22,7 @@ export function CookieBanner() {
   }
   const handleReject = () => {
     acceptOrRejectCookies("reject")
+    denyConsent()
     setOpen(false)
   }
   return (

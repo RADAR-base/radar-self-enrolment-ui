@@ -109,13 +109,11 @@ function PassedChallengeComponent(props: PassedChallengeComponentProps): React.R
 
 interface VerificationComponentProps {
   flow?: IOryVerificationFlow
-  redirectTo?: string
 }
 
 
 export function VerificationComponent(props: VerificationComponentProps): React.ReactElement<any> {
   const pathname = usePathname()
-  const router = useRouter()
   const [flow, setFlow] = useState<IOryVerificationFlow | undefined>(props.flow)
   const [content, setContent] = useState<React.ReactElement<any>>(<CircularProgress style={{alignSelf: 'center'}}/>)
   const studyContext = useContext(ProtocolContext)
@@ -131,12 +129,12 @@ export function VerificationComponent(props: VerificationComponentProps): React.
           setContent(<EmailSentComponent flow={flow} setFlow={setFlow} />)
           break
         case 'passed_challenge':
-          if (studyContext?.studyId) {
+          if (studyContext) {
             window.location.replace(withBasePath(`/${studyContext.studyId}/portal`))
-          } else if (props.redirectTo) {
-            router.push(props.redirectTo)
+            window.location.reload()
           } else {
             window.location.replace(withBasePath('/'))
+            window.location.reload()
           }
           setContent(<PassedChallengeComponent />)
           break
